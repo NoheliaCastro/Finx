@@ -52,34 +52,94 @@ body {
 
 /* Custom Styles */
 .navbar {
-    height: var(--navbar-height);
-    padding: var(--navbar-padding);
-    backdrop-filter: blur(10px);
-    background-color: rgba(var(--background-color), 0.95) !important;
-    transition: var(--navbar-transition);
-    box-shadow: var(--navbar-shadow);
+    padding: 0.15rem 0;
+    transition: all 0.3s ease;
+    background-color: #fff !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.navbar-brand {
+    padding: 0;
+    margin-right: 5rem;
+}
+
+.navbar-brand img {
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.02);
+}
+
+.nav-link {
+    color: #1f2937 !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    transition: color 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.nav-link:hover {
+    color: #0d6efd !important;
+}
+
+.navbar .btn-primary {
+    padding: 0.6rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    transition: all 0.3s ease;
+}
+
+.navbar .btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0b5ed7;
+    transform: translateY(-1px);
+}
+
+.navbar-nav {
+    align-items: center;
+}
+
+.navbar-nav .nav-item {
+    margin: 0 0.2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+    .navbar-brand img {
+        height: 70px !important;
+    }
+    
+    .navbar {
+        padding: 0.4rem 0;
+    }
+    
+    .navbar-brand {
+        margin-right: 0;
+    }
+    
+    .navbar-nav {
+        padding: 1rem 0;
+        gap: 0.5rem;
+    }
+    
+    .nav-item {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .btn-primary {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
 }
 
 .navbar.scrolled {
     height: calc(var(--navbar-height) - 20px);
     padding: calc(var(--navbar-padding) - 0.5rem);
     background-color: var(--background-color) !important;
-}
-
-.navbar-brand {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.logo-img {
-    height: 40px;
-    width: auto;
-    transition: var(--navbar-transition);
-}
-
-.navbar.scrolled .logo-img {
-    height: 35px;
 }
 
 .navbar-brand h1 {
@@ -95,25 +155,9 @@ body {
     font-size: 1.3rem;
 }
 
-.nav-link {
-    position: relative;
-    font-weight: 500;
-    color: var(--text-color) !important;
-    padding: 0.5rem 1rem !important;
-    transition: var(--navbar-transition);
-}
-
 .nav-link i {
     font-size: 0.9rem;
     transition: var(--navbar-transition);
-}
-
-.nav-link:hover {
-    color: var(--primary-color) !important;
-}
-
-.nav-link:hover i {
-    transform: translateY(-2px);
 }
 
 .nav-link::after {
@@ -205,21 +249,88 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--light-background) 0%, var(--background-color) 100%);
+    background-color: #fff;
+    padding: 12rem 0 8rem;
+    position: relative;
+    background-image: url('https://media.istockphoto.com/id/1685705296/es/foto/tecnolog%C3%ADa-financiera-empresarial-mundial-y-concepto-de-mercado-de-valores.jpg?s=612x612&w=0&k=20&c=13k4l5m3YzIn1VOuH6Zq-9nJhkSw7WsDA8lOMwhgm6E=');
+    background-size: cover;
+    background-position: center;
     min-height: 100vh;
     display: flex;
     align-items: center;
-    position: relative;
-    overflow: hidden;
 }
 
 .hero::before {
     content: '';
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.5;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2;
+    margin-top: -2rem;
+}
+
+.hero h1 {
+    color: #ffffff;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.hero .lead {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+    font-weight: 300;
+}
+
+.hero .btn {
+    padding: 0.8rem 2rem;
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.hero .btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.hero .btn-outline-primary {
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+.hero .btn-outline-primary:hover {
+    background-color: #ffffff;
+    color: #0d6efd;
+    border-color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 9rem 0 5rem;
+        min-height: 80vh;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero .lead {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+    }
+
+    .hero .btn {
+        padding: 0.6rem 1.5rem;
+    }
 }
 
 .hero-content {

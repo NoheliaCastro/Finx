@@ -49,16 +49,47 @@ function updateThemeIcon(icon, theme) {
     }
 }
 
-// Cargar componentes cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
-    // Cargar header y footer si existen los elementos
-    const headerElement = document.getElementById('header');
-    const footerElement = document.getElementById('footer');
+// Header Component
+function loadHeader() {
+    const header = document.getElementById('header');
+    header.innerHTML = `
+        <nav class="navbar navbar-expand-lg fixed-top bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="images/finx-logo.png" alt="Finx Logo" style="height: 100px; width: auto; object-fit: contain;">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav align-items-center gap-3">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contacts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#signin">Sign in</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" href="#register">Register</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    `;
+}
 
-    if (headerElement) {
-        loadComponent('header', '/components/header.html');
-    }
-    if (footerElement) {
-        loadComponent('footer', '/components/footer.html');
-    }
+// Footer Component
+function loadFooter() {
+    const footer = document.getElementById('footer');
+    // Footer content will be added later
+}
+
+// Load components when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    loadHeader();
+    loadFooter();
 }); 
