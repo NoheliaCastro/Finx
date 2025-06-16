@@ -14,23 +14,26 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         .hero {
-            background-image: url('https://eudita.es/wp-content/uploads/2024/09/Importe-de-las-tasas.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-color: #f8f9fa;
             position: relative;
-            color: white;
+            color: #333;
+            padding: 100px 0;
+            margin-top: 0;
+            border-top: 1px solid rgba(0,0,0,0.1);
         }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
+
+        [data-bs-theme="dark"] .hero {
+            background-color: #1a1a1a;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        [data-bs-theme="dark"] .hero h1,
+        [data-bs-theme="dark"] .hero p.lead {
+            color: white !important;
+        }
+
+        [data-bs-theme="dark"] .hero-image-container {
+            background-color: #2d3748;
         }
 
         .hero .container {
@@ -39,49 +42,222 @@
         }
 
         .hero .text-primary {
-            color: white !important;
+            color: #11254b !important;
         }
 
         .hero .bg-primary.bg-opacity-10 {
-            background-color: rgba(255, 255, 255, 0.2) !important;
+            background-color: rgba(17, 37, 75, 0.1) !important;
         }
 
-        .hero .btn-primary,
+        .hero .btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .hero .btn:active {
+            transform: translateY(1px);
+        }
+
+        .hero .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .hero .btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        [data-bs-theme="dark"] .hero .btn:hover {
+            box-shadow: 0 5px 15px rgba(255,255,255,0.1);
+        }
+
         .hero .btn-outline-primary {
+            background-color: transparent !important;
+            color: #11254b !important;
+            border: 2px solid #11254b !important;
+        }
+
+        [data-bs-theme="dark"] .hero .btn-outline-primary {
+            color: #fff !important;
+            border-color: #fff !important;
+            background-color: transparent !important;
+        }
+
+        [data-bs-theme="dark"] .hero .btn-outline-primary:hover {
+            background-color: #fff !important;
+            color: #11254b !important;
+        }
+
+        .hero-image-container {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            height: 100%;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        [data-bs-theme="dark"] .statistics .card {
+            background: #2d3748;
+        }
+
+        [data-bs-theme="dark"] .statistics .card h3,
+        [data-bs-theme="dark"] .statistics .card p {
+            color: white;
+        }
+
+        [data-bs-theme="dark"] .statistics .gradient-card {
+            background: linear-gradient(145deg, #2d3748, #1a202c);
+        }
+
+        /* Estilos unificados para todos los botones */
+        .btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Estilos específicos para botones outline */
+        .btn-outline-primary {
+            background-color: transparent !important;
+            color: #11254b !important;
+            border: 2px solid #11254b !important;
+        }
+
+        [data-bs-theme="dark"] .btn-outline-primary {
+            color: #fff !important;
+            border-color: #fff !important;
+            background-color: transparent !important;
+        }
+
+        [data-bs-theme="dark"] .btn-outline-primary:hover {
+            background-color: #fff !important;
+            color: #11254b !important;
+        }
+
+        /* Estilos específicos para botones primarios */
+        .btn-primary {
             background-color: #11254b !important;
             border-color: #11254b !important;
-            color: #fff !important;
+            color: white !important;
         }
 
-        .hero .btn-outline-primary:hover {
+        .btn-primary:hover {
             background-color: #0d6efd !important;
             border-color: #0d6efd !important;
-            color: #fff !important;
         }
 
-        .hero .btn-outline-primary i {
-            color: #ffffff;
+        /* Ajustes específicos para botones en cards */
+        .card .btn {
+            margin-top: 1rem;
         }
 
-        .hero .card {
-            background: transparent;
-        }
-        
-        .hero .card i {
-            color: white !important;
+        /* Ajustes para botones en modo oscuro */
+        [data-bs-theme="dark"] .btn-primary {
+            background-color: #11254b !important;
+            border-color: #11254b !important;
         }
 
-        .hero .card h3 {
-            color: white !important;
+        [data-bs-theme="dark"] .btn-primary:hover {
+            background-color: #0d6efd !important;
+            border-color: #0d6efd !important;
         }
 
-        .hero .card p {
-            color: rgba(255, 255, 255, 0.8) !important;
+        .statistics .card {
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #ffffff, #f0f2f5);
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
         }
 
-        .hero h1,
-        .hero p.lead {
-            color: #111 !important;
+        .statistics .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+            border-color: rgba(17, 37, 75, 0.2);
+        }
+
+        .statistics .card-body {
+            padding: 2rem;
+        }
+
+        .statistics .card h3 {
+            color: #11254b;
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+
+        .statistics .card p {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+
+        .statistics .card i {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        [data-bs-theme="dark"] .statistics .card {
+            background: linear-gradient(145deg, #2d3748, #1a202c);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        [data-bs-theme="dark"] .statistics .card:hover {
+            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        [data-bs-theme="dark"] .statistics .card h3,
+        [data-bs-theme="dark"] .statistics .card p {
+            color: white;
+        }
+
+        [data-bs-theme="dark"] .statistics .card p {
+            color: rgba(255,255,255,0.7);
         }
     </style>
 </head>
@@ -90,19 +266,24 @@
     <div id="header"></div>
 
     <!-- Hero Section -->
-    <section class="hero py-5 mt-5">
-        <div class="container text-center">
-            <div class="row justify-content-center">
-                <div class="col-lg-8" data-aos="fade-up">
+    <section class="hero py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6" data-aos="fade-right">
                     <h1 class="display-4 fw-bold mb-4">Welcome to Finx</h1>
                     <p class="lead mb-4">Track, Manage, and Save with Ease!</p>
-                    <div class="d-flex justify-content-center gap-3">
+                    <div class="d-flex gap-3">
                         <button class="btn btn-primary btn-lg">
                             Get Started
                         </button>
                         <button class="btn btn-outline-primary btn-lg">
                             Watch demo
                         </button>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-left">
+                    <div class="hero-image-container">
+                        <!-- Aquí irá la imagen -->
                     </div>
                 </div>
             </div>
@@ -115,37 +296,37 @@
             <div class="row g-4">
                 <div class="col-md-6 col-lg-3" data-aos="fade-up">
                     <div class="card h-100 border-0 shadow-sm gradient-card">
-                        <div class="card-body text-center">
-                            <img src="https://mundojuridico.info/wp-content/uploads/2021/06/ejecucion-de-los-gastos-extraordinarios-recogidos-en-el-convenio-regulador-450x316.jpg" alt="Transparency" class="mb-3" style="width:100px;height:100px;object-fit:cover;border-radius:8px;">
-                            <h3 class="h4 mb-2">Transparency</h3>
-                            <p>Everything clear, no fine print.</p>
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center text-center">
+                            <i class="fa-solid fa-magnifying-glass fa-shake mb-3" style="color: #FFD43B; font-size: 3rem;"></i>
+                            <h3 class="h4 mb-2 text-center">Transparency</h3>
+                            <p class="text-center">Everything clear, no fine print.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
                     <div class="card h-100 border-0 shadow-sm gradient-card">
-                        <div class="card-body text-center">
-                            <img src="https://www.lifeder.com/wp-content/uploads/2019/05/escuela-empirica-de-la-administracion.jpg" alt="Security" class="mb-3" style="width:100px;height:100px;object-fit:cover;border-radius:8px;">
-                            <h3 class="h4 mb-2">Security</h3>
-                            <p>Your data and money protected</p>
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center text-center">
+                            <i class="fas fa-shield-alt mb-3" style="color: #2c5282; font-size: 3rem;"></i>
+                            <h3 class="h4 mb-2 text-center">Security</h3>
+                            <p class="text-center">Your data and money protected</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
                     <div class="card h-100 border-0 shadow-sm gradient-card">
-                        <div class="card-body text-center">
-                            <img src="https://imecaf.com/blog/wp-content/uploads/ahorro.jpg" alt="Financial Education" class="mb-3" style="width:100px;height:100px;object-fit:cover;border-radius:8px;">
-                            <h3 class="h4 mb-2">Financial Education</h3>
-                            <p>Learn while managing your money</p>
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center text-center">
+                            <i class="fas fa-book-open mb-3" style="color: #ff7a33; font-size: 3.5rem;"></i>
+                            <h3 class="h4 mb-2 text-center">Financial Education</h3>
+                            <p class="text-center">Learn while managing your money</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
                     <div class="card h-100 border-0 shadow-sm gradient-card">
-                        <div class="card-body text-center">
-                            <img src="https://encolombia.com/wp-content/smush-webp/2022/03/Finanzas.jpg.webp" alt="Ease of Use" class="mb-3" style="width:100px;height:100px;object-fit:cover;border-radius:8px;">
-                            <h3 class="h4 mb-2">Ease of Use</h3>
-                            <p>Intuitive, fast and made for you</p>
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center text-center">
+                            <i class="fas fa-gem mb-3" style="color: #74C0FC; font-size: 3.5rem;"></i>
+                            <h3 class="h4 mb-2 text-center">Ease of Use</h3>
+                            <p class="text-center">Intuitive, fast and made for you</p>
                         </div>
                     </div>
                 </div>
@@ -163,7 +344,7 @@
             <div class="row align-items-center">
                 <div class="col-md-6 text-start">
                     <p style="font-size:1.5rem; text-align: justify;">At Finx, we believe that managing your finances shouldn't be a daunting task. Our mission is to empower individuals to take control of their money and achieve financial stability.</p>
-                    <button class="btn" style="background:#11254b;color:#fff;font-weight:500;">View more</button>
+                    <button class="btn btn-primary btn-lg" style="background:#11254b;color:#fff;font-weight:500;">View more</button>
                 </div>
                 <div class="col-md-6 text-center">
                     <img src="https://img.freepik.com/fotos-premium/graficos-tablas_55997-2974.jpg" alt="Finx" style="width:80%;height:80%;object-fit:cover;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,0.08);display:block;margin:auto;">
@@ -181,12 +362,12 @@
             </div>
             <div class="row align-items-center flex-row-reverse">
                 <div class="col-md-6 text-start">
-                    <p class="lead mb-3" style="font-size:1.5rem; text-align: justify;">Track, manage, and save with ease. Finx is your smart financial app designed to simplify money management and help you achieve your financial goals.</p>
+                    <p class="mb-4" style="font-size:1.5rem; text-align: justify;">Track, manage, and save with ease. Finx is your smart financial app designed to simplify money management and help you achieve your financial goals.</p>
                     <p class="mb-4" style="font-size:1.5rem; text-align: justify;">Experience seamless budgeting, insightful spending analytics, and personalized saving plans all in one place. Discover how effortless keeping your finances in check can be.</p>
                     <button class="btn btn-primary btn-lg" style="background:#11254b;color:#fff;font-weight:500;">View our plans</button>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img src="https://www.curs.com/ai/60f7727e1f440d12e9b9c02d/60f7727e1f440d12e9b9c02d/image_9.jpeg" alt="Finx App" class="img-fluid rounded-4 shadow-lg">
+                    <img src="images/mi-imagen.png" alt="Finx App" class="img-fluid rounded-4 shadow-lg" style="max-width: 90%; height: 550px; object-fit: contain;">
                 </div>
             </div>
         </div>
@@ -267,7 +448,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="contact py-5" id="contact">
+    <section class="contact py-5 mb-0" id="contact">
         <div class="container">
             <div class="text-center mb-5">
                 <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Contact</span>
