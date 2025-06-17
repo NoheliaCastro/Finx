@@ -22,4 +22,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         lastScroll = currentScroll;
     });
+
+    // Inicializar el carrusel
+    const heroCarousel = new bootstrap.Carousel(document.getElementById('heroCarousel'), {
+        interval: 3000, // Cambia cada 3 segundos
+        wrap: true, // Vuelve al principio después de la última imagen
+        keyboard: true, // Permite navegación con teclado
+        pause: 'hover' // Pausa al pasar el mouse por encima
+    });
 }); 
