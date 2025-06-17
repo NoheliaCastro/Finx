@@ -22,11 +22,14 @@ function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
     const icon = themeToggle.querySelector('i');
+    const logoLight = document.getElementById('logoLight');
+    const logoDark = document.getElementById('logoDark');
 
     // Recuperar el tema guardado
     const savedTheme = localStorage.getItem('theme') || 'light';
     html.setAttribute('data-bs-theme', savedTheme);
     updateThemeIcon(icon, savedTheme);
+    updateLogoVisibility(savedTheme);
 
     themeToggle.addEventListener('click', () => {
         const currentTheme = html.getAttribute('data-bs-theme');
@@ -35,6 +38,7 @@ function initThemeToggle() {
         html.setAttribute('data-bs-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         updateThemeIcon(icon, newTheme);
+        updateLogoVisibility(newTheme);
     });
 }
 
@@ -46,6 +50,20 @@ function updateThemeIcon(icon, theme) {
     } else {
         icon.classList.remove('fa-sun');
         icon.classList.add('fa-moon');
+    }
+}
+
+// Función para actualizar la visibilidad de los logos
+function updateLogoVisibility(theme) {
+    const logoLight = document.getElementById('logoLight');
+    const logoDark = document.getElementById('logoDark');
+    
+    if (theme === 'dark') {
+        logoLight.style.display = 'none';
+        logoDark.style.display = 'inline-block';
+    } else {
+        logoLight.style.display = 'inline-block';
+        logoDark.style.display = 'none';
     }
 }
 
