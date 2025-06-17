@@ -1,7 +1,7 @@
 /* Custom Variables */
 :root {
-    --primary-color: #6366f1;
-    --secondary-color: #4f46e5;
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
     --accent-color: #818cf8;
     --text-color: #1f2937;
     --light-text: #6b7280;
@@ -16,6 +16,14 @@
     --navbar-padding: 1rem 0;
     --navbar-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
     --navbar-transition: all 0.3s ease;
+    --success-color: #28a745;
+    --info-color: #17a2b8;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --header-height: 80px;
+    --transition-speed: 0.3s;
 }
 
 /* Dark Mode Variables */
@@ -43,7 +51,8 @@ html {
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--light-background);
@@ -60,10 +69,10 @@ body {
     box-shadow: var(--navbar-shadow);
 }
 
-.navbar.scrolled {
-    height: calc(var(--navbar-height) - 20px);
-    padding: calc(var(--navbar-padding) - 0.5rem);
-    background-color: var(--background-color) !important;
+.navbar .container-fluid {
+    max-width: 100%;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 .navbar-brand {
@@ -93,6 +102,10 @@ body {
 
 .navbar.scrolled .navbar-brand h1 {
     font-size: 1.3rem;
+}
+
+.navbar-nav {
+    margin-left: auto;
 }
 
 .nav-link {
@@ -203,6 +216,23 @@ body {
     transform: rotate(180deg);
 }
 
+/* Tipografía */
+.title-font {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
+}
+
+p, .lead, .text-muted {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
 /* Hero Section */
 .hero {
     background: linear-gradient(135deg, var(--light-background) 0%, var(--background-color) 100%);
@@ -255,15 +285,105 @@ body {
 .hero-image-container {
     position: relative;
     z-index: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--hover-shadow);
 }
 
-.hero-image img {
-    max-width: 100%;
+#heroCarousel {
+    width: 100%;
     height: 500px;
-    border-radius: 2rem;
-    box-shadow: var(--hover-shadow);
-    animation: float 6s ease-in-out infinite;
+}
+
+#heroCarousel .carousel-inner {
+    height: 100%;
+}
+
+#heroCarousel .carousel-item {
+    height: 100%;
+    transition: transform 1.2s ease-in-out;
+}
+
+#heroCarousel .carousel-item img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    border-radius: 12px;
+}
+
+#heroCarousel .carousel-item-next:not(.carousel-item-start),
+#heroCarousel .active.carousel-item-end {
+    transform: translateX(100%);
+}
+
+#heroCarousel .carousel-item-prev:not(.carousel-item-end),
+#heroCarousel .active.carousel-item-start {
+    transform: translateX(-100%);
+}
+
+/* Estilos para los controles del carrusel */
+#heroCarousel .carousel-control-prev,
+#heroCarousel .carousel-control-next {
+    width: 10%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#heroCarousel:hover .carousel-control-prev,
+#heroCarousel:hover .carousel-control-next {
+    opacity: 0.8;
+}
+
+#heroCarousel .carousel-control-prev-icon,
+#heroCarousel .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1.5rem;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+#heroCarousel .carousel-control-prev:hover .carousel-control-prev-icon,
+#heroCarousel .carousel-control-next:hover .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Estilos para los indicadores */
+#heroCarousel .carousel-indicators {
+    margin-bottom: 1rem;
+}
+
+#heroCarousel .carousel-indicators button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    transition: background-color 0.3s ease;
+}
+
+#heroCarousel .carousel-indicators button:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+#heroCarousel .carousel-indicators button.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Ajustes para el tema oscuro */
+[data-bs-theme="dark"] .hero-image-container {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+[data-bs-theme="dark"] #heroCarousel .carousel-control-prev-icon,
+[data-bs-theme="dark"] #heroCarousel .carousel-control-next-icon {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-bs-theme="dark"] #heroCarousel .carousel-indicators button {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .floating-card {
