@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finx - Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .dashboard-section {
+            padding: 4rem 0 2rem 0;
+            background: linear-gradient(135deg, var(--light-background) 0%, var(--background-color) 100%);
+            min-height: 100vh;
+        }
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+        .summary-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        .summary-card {
+            background: var(--background-color);
+            border-radius: 1.5rem;
+            box-shadow: var(--card-shadow);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+        .chart-container {
+            background: var(--background-color);
+            border-radius: 1.5rem;
+            box-shadow: var(--card-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .table thead th {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: #fff;
+            border: none;
+        }
+        .table tbody tr {
+            background: var(--light-background);
+        }
+        .table tbody tr:hover {
+            background: var(--background-color);
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            word-break: break-all;
+        }
+        @media (max-width: 991.98px) {
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 767.98px) {
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header"></div>
+
+    <section class="dashboard-section">
+        <div class="container">
+            <h1 class="dashboard-title mb-4">Panel de Control</h1>
+            <!-- Tarjetas resumen -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="summary-card">
+                        <i class="fas fa-wallet"></i>
+                        <h3 class="h5 mt-2">Saldo actual</h3>
+                        <div class="stat-number" data-count="1250">$1,250.00</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="summary-card">
+                        <i class="fas fa-arrow-up"></i>
+                        <h3 class="h5 mt-2">Ingresos</h3>
+                        <div class="stat-number" data-count="3200">$3,200.00</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="summary-card">
+                        <i class="fas fa-arrow-down"></i>
+                        <h3 class="h5 mt-2">Gastos</h3>
+                        <div class="stat-number" data-count="1950">$1,950.00</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="summary-card">
+                        <i class="fas fa-piggy-bank"></i>
+                        <h3 class="h5 mt-2">Ahorro</h3>
+                        <div class="stat-number" data-count="500">$500.00</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Gráfico de ejemplo -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="chart-container">
+                        <h3 class="h5 mb-4">Historial de Ingresos y Gastos</h3>
+                        <canvas id="userBarChart" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- Tabla de movimientos recientes -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card p-3 shadow-sm">
+                        <h3 class="h5 mb-3">Movimientos recientes</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Descripción</th>
+                                        <th>Categoría</th>
+                                        <th>Monto</th>
+                                        <th>Tipo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2024-06-01</td>
+                                        <td>Salario</td>
+                                        <td>Ingresos</td>
+                                        <td class="text-success">+$1,200.00</td>
+                                        <td><span class="badge bg-success">Ingreso</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-06-03</td>
+                                        <td>Supermercado</td>
+                                        <td>Alimentación</td>
+                                        <td class="text-danger">-$150.00</td>
+                                        <td><span class="badge bg-danger">Gasto</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-06-05</td>
+                                        <td>Transporte</td>
+                                        <td>Movilidad</td>
+                                        <td class="text-danger">-$50.00</td>
+                                        <td><span class="badge bg-danger">Gasto</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-06-07</td>
+                                        <td>Venta online</td>
+                                        <td>Ingresos</td>
+                                        <td class="text-success">+$200.00</td>
+                                        <td><span class="badge bg-success">Ingreso</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-06-08</td>
+                                        <td>Restaurante</td>
+                                        <td>Ocio</td>
+                                        <td class="text-danger">-$60.00</td>
+                                        <td><span class="badge bg-danger">Gasto</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js para el gráfico -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Components JS (header/footer y tema) -->
+    <script src="js/components.js"></script>
+    <!-- Animación de números (CountUp.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script>
+    <script>
+        // Animar los números de las tarjetas
+        document.querySelectorAll('.stat-number').forEach(stat => {
+            const target = parseInt(stat.getAttribute('data-count'));
+            if (!isNaN(target)) {
+                const countUp = new CountUp(stat, target, {
+                    duration: 2,
+                    separator: ',',
+                    decimal: '.'
+                });
+                countUp.start();
+            }
+        });
+
+        // Gráfico de ejemplo
+        const ctx = document.getElementById('dashboardChart').getContext('2d');
+        const dashboardChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                datasets: [
+                    {
+                        label: 'Ingresos',
+                        data: [1200, 1500, 1100, 1800, 1600, 2000],
+                        borderColor: '#007bff',
+                        backgroundColor: 'rgba(0,123,255,0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Gastos',
+                        data: [800, 900, 950, 1200, 1100, 1300],
+                        borderColor: '#dc3545',
+                        backgroundColor: 'rgba(220,53,69,0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de barras de ingresos y gastos
+        const barCtx = document.getElementById('userBarChart').getContext('2d');
+        const userBarChart = new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+                datasets: [
+                    {
+                        label: 'Ingresos',
+                        data: [1200, 1500, 1100, 1800, 1600, 2000],
+                        backgroundColor: 'rgba(0,123,255,0.7)',
+                        borderRadius: 8
+                    },
+                    {
+                        label: 'Gastos',
+                        data: [800, 900, 950, 1200, 1100, 1300],
+                        backgroundColor: 'rgba(220,53,69,0.7)',
+                        borderRadius: 8
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
