@@ -1581,4 +1581,232 @@ p, .lead, .text-muted {
 @keyframes icon-bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
+}
+
+[data-bs-theme="dark"] .dashboard-section .summary-card,
+[data-bs-theme="dark"] .dashboard-section .card {
+    background: #23272b !important;
+    color: #fff !important;
+    border: 1.5px solid #444 !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+[data-bs-theme="dark"] .dashboard-section .summary-card h3,
+[data-bs-theme="dark"] .dashboard-section .summary-card .stat-number,
+[data-bs-theme="dark"] .dashboard-section .card h3,
+[data-bs-theme="dark"] .dashboard-section .card .stat-number {
+    color: #fff !important;
+}
+[data-bs-theme="dark"] .dashboard-section .summary-card:hover,
+[data-bs-theme="dark"] .dashboard-section .card:hover {
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.35);
+    transform: translateY(-8px) scale(1.03);
+}
+[data-bs-theme="dark"] .dashboard-section .summary-card i,
+[data-bs-theme="dark"] .dashboard-section .card i {
+    color: #1976d2 !important;
+}
+
+[data-bs-theme="dark"] .dashboard-section,
+[data-bs-theme="dark"] .dashboard-section h1,
+[data-bs-theme="dark"] .dashboard-section h2,
+[data-bs-theme="dark"] .dashboard-section h3,
+[data-bs-theme="dark"] .dashboard-section h4,
+[data-bs-theme="dark"] .dashboard-section h5,
+[data-bs-theme="dark"] .dashboard-section h6,
+[data-bs-theme="dark"] .dashboard-section p,
+[data-bs-theme="dark"] .dashboard-section .text-primary,
+[data-bs-theme="dark"] .dashboard-section .dashboard-title {
+    color: #fff !important;
+}
+[data-bs-theme="dark"] .dashboard-section .stat-number {
+    color: #EEE95B !important;
+}
+
+/* Estilos modernos para formularios en dashboard */
+.dashboard-section .card form {
+    animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+.dashboard-section .card {
+    border-radius: 18px !important;
+    box-shadow: 0 8px 32px rgba(17,37,75,0.10) !important;
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+.dashboard-section .card:hover {
+    box-shadow: 0 16px 48px rgba(17,37,75,0.18) !important;
+    transform: translateY(-4px) scale(1.01);
+}
+.dashboard-section .form-control, .dashboard-section .form-select {
+    border-radius: 10px;
+    border: 1.5px solid #bfc9d1;
+    box-shadow: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.dashboard-section .form-control:focus, .dashboard-section .form-select:focus {
+    border-color: #004AAD;
+    box-shadow: 0 0 0 2px rgba(0,74,173,0.10);
+}
+.dashboard-section .btn-primary {
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0,74,173,0.10);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.dashboard-section .btn-primary:hover {
+    background: #0d6efd !important;
+    box-shadow: 0 4px 16px rgba(0,74,173,0.18);
+    transform: translateY(-2px) scale(1.04);
+}
+.dashboard-section .btn-secondary {
+    border-radius: 8px;
+    font-weight: 600;
+    background: #6c757d;
+    color: #fff;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.dashboard-section .btn-secondary:hover {
+    background: #495057;
+    transform: translateY(-2px) scale(1.04);
+}
+[data-bs-theme="dark"] .dashboard-section .card {
+    background: #23272b !important;
+    color: #fff !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25) !important;
+}
+[data-bs-theme="dark"] .dashboard-section .form-control, [data-bs-theme="dark"] .dashboard-section .form-select {
+    background: #181a1b;
+    color: #fff;
+    border: 1.5px solid #444;
+}
+[data-bs-theme="dark"] .dashboard-section .form-control:focus, [data-bs-theme="dark"] .dashboard-section .form-select:focus {
+    border-color: #74C0FC;
+    box-shadow: 0 0 0 2px rgba(116,192,252,0.10);
+}
+[data-bs-theme="dark"] .dashboard-section .btn-primary {
+    background: #74C0FC !important;
+    color: #23272b !important;
+}
+[data-bs-theme="dark"] .dashboard-section .btn-primary:hover {
+    background: #0d6efd !important;
+    color: #fff !important;
+}
+[data-bs-theme="dark"] .dashboard-section .btn-secondary {
+    background: #444;
+    color: #fff;
+}
+[data-bs-theme="dark"] .dashboard-section .btn-secondary:hover {
+    background: #222;
+}
+
+/* FORMULARIO DASHBOARD MODERNO CON COLORES DEL PROYECTO */
+.dashboard-section .card.form-modern {
+    background: linear-gradient(135deg, #f8fafc 70%, #e6e5e5 100%);
+    border-radius: 18px !important;
+    box-shadow: 0 8px 32px rgba(0,74,173,0.10) !important;
+    border: 2px solid #004AAD !important;
+    padding: 2.5rem 2rem;
+    max-width: 520px;
+    margin: 0 auto 2rem auto;
+    animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.dashboard-section .card.form-modern h5 {
+    text-align: center;
+    color: #004AAD;
+    font-weight: 800;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    letter-spacing: 1px;
+}
+.dashboard-section .form-modern .form-label {
+    color: #11254b;
+    font-weight: 600;
+}
+.dashboard-section .form-modern .form-control, .dashboard-section .form-modern .form-select {
+    border-radius: 10px;
+    border: 2px solid #bfc9d1;
+    background: #fff;
+    color: #11254b;
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.dashboard-section .form-modern .form-control:focus, .dashboard-section .form-modern .form-select:focus {
+    border-color: #004AAD;
+    box-shadow: 0 0 0 2px #EEE95B44;
+}
+.dashboard-section .form-modern .btn-primary {
+    background: linear-gradient(90deg, #004AAD 60%, #11254b 100%) !important;
+    color: #EEE95B !important;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px #004AAD22;
+    padding: 0.7rem 2.2rem;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.dashboard-section .form-modern .btn-primary:hover {
+    background: linear-gradient(90deg, #11254b 60%, #004AAD 100%) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 16px #004AAD33;
+    transform: translateY(-2px) scale(1.04);
+}
+.dashboard-section .form-modern .btn-secondary {
+    background: #EEE95B;
+    color: #004AAD;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.7rem 2.2rem;
+    margin-right: 0.5rem;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.dashboard-section .form-modern .btn-secondary:hover {
+    background: #004AAD;
+    color: #EEE95B;
+    transform: translateY(-2px) scale(1.04);
+}
+@media (max-width: 600px) {
+    .dashboard-section .card.form-modern {
+        padding: 1.2rem 0.5rem;
+    }
+}
+[data-bs-theme="dark"] .dashboard-section .card.form-modern {
+    background: linear-gradient(135deg, #23272b 70%, #181a1b 100%);
+    border: 2px solid #EEE95B !important;
+    box-shadow: 0 8px 32px rgba(238,233,91,0.10) !important;
+}
+[data-bs-theme="dark"] .dashboard-section .form-modern .form-label {
+    color: #EEE95B;
+}
+[data-bs-theme="dark"] .dashboard-section .form-modern .form-control, [data-bs-theme="dark"] .dashboard-section .form-modern .form-select {
+    background: #181a1b;
+    color: #EEE95B;
+    border: 2px solid #444;
+}
+[data-bs-theme="dark"] .dashboard-section .form-modern .form-control:focus, [data-bs-theme="dark"] .dashboard-section .form-modern .form-select:focus {
+    border-color: #EEE95B;
+    box-shadow: 0 0 0 2px #EEE95B44;
+}
+[data-bs-theme="dark"] .dashboard-section .form-modern .btn-primary {
+    background: linear-gradient(90deg, #EEE95B 60%, #bdb82e 100%) !important;
+    color: #23272b !important;
+}
+[data-bs-theme="dark"] .dashboard-section .form-modern .btn-primary:hover {
+    background: linear-gradient(90deg, #bdb82e 60%, #EEE95B 100%) !important;
+    color: #23272b !important;
+}
+[data-bs-theme="dark"] .dashboard-section .form-modern .btn-secondary {
+    background: #23272b;
+    color: #EEE95B;
+}
+[data-bs-theme="dark"] .dashboard-section .form-modern .btn-secondary:hover {
+    background: #EEE95B;
+    color: #23272b;
 } 

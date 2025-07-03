@@ -6,12 +6,124 @@
   <title>Add Expense - Finx</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .card.form-modern {
+      background: linear-gradient(135deg, #f8fafc 70%, #e6e5e5 100%);
+      border-radius: 18px !important;
+      box-shadow: 0 8px 32px rgba(0,74,173,0.10) !important;
+      border: 2px solid #004AAD !important;
+      padding: 2.5rem 2rem;
+      max-width: 520px;
+      margin: 0 auto 2rem auto;
+      animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .card.form-modern h2 {
+      text-align: center;
+      color: #004AAD;
+      font-weight: 800;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      letter-spacing: 1px;
+    }
+    .form-modern .form-label {
+      color: #11254b;
+      font-weight: 600;
+    }
+    .form-modern .form-control, .form-modern .form-select {
+      border-radius: 10px;
+      border: 2px solid #bfc9d1;
+      background: #fff;
+      color: #11254b;
+      font-size: 1.1rem;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-modern .form-control:focus, .form-modern .form-select:focus {
+      border-color: #004AAD;
+      box-shadow: 0 0 0 2px #EEE95B44;
+    }
+    .form-modern .btn-primary {
+      background: linear-gradient(90deg, #004AAD 60%, #11254b 100%) !important;
+      color: #EEE95B !important;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px #004AAD22;
+      padding: 0.7rem 2.2rem;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .form-modern .btn-primary:hover {
+      background: linear-gradient(90deg, #11254b 60%, #004AAD 100%) !important;
+      color: #fff !important;
+      box-shadow: 0 4px 16px #004AAD33;
+      transform: translateY(-2px) scale(1.04);
+    }
+    .form-modern .btn-secondary {
+      background: #EEE95B;
+      color: #004AAD;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 0.7rem 2.2rem;
+      margin-right: 0.5rem;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .form-modern .btn-secondary:hover {
+      background: #004AAD;
+      color: #EEE95B;
+      transform: translateY(-2px) scale(1.04);
+    }
+    @media (max-width: 600px) {
+      .card.form-modern {
+        padding: 1.2rem 0.5rem;
+      }
+    }
+    html[data-bs-theme="dark"] .card.form-modern {
+      background: linear-gradient(135deg, #23272b 70%, #181a1b 100%);
+      border: 2px solid #EEE95B !important;
+      box-shadow: 0 8px 32px rgba(238,233,91,0.10) !important;
+    }
+    html[data-bs-theme="dark"] .form-modern .form-label {
+      color: #EEE95B;
+    }
+    html[data-bs-theme="dark"] .form-modern .form-control, html[data-bs-theme="dark"] .form-modern .form-select {
+      background: #181a1b;
+      color: #EEE95B;
+      border: 2px solid #444;
+    }
+    html[data-bs-theme="dark"] .form-modern .form-control:focus, html[data-bs-theme="dark"] .form-modern .form-select:focus {
+      border-color: #EEE95B;
+      box-shadow: 0 0 0 2px #EEE95B44;
+    }
+    html[data-bs-theme="dark"] .form-modern .btn-primary {
+      background: linear-gradient(90deg, #EEE95B 60%, #bdb82e 100%) !important;
+      color: #23272b !important;
+    }
+    html[data-bs-theme="dark"] .form-modern .btn-primary:hover {
+      background: linear-gradient(90deg, #bdb82e 60%, #EEE95B 100%) !important;
+      color: #23272b !important;
+    }
+    html[data-bs-theme="dark"] .form-modern .btn-secondary {
+      background: #23272b;
+      color: #EEE95B;
+    }
+    html[data-bs-theme="dark"] .form-modern .btn-secondary:hover {
+      background: #EEE95B;
+      color: #23272b;
+    }
+  </style>
 </head>
 <body>
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-md-7 col-lg-6">
-        <div class="card shadow p-4">
+        <div class="card form-modern shadow p-4">
           <h2 class="mb-4 text-center">Add Expense</h2>
           <form id="expenseForm">
             <div class="mb-3">
