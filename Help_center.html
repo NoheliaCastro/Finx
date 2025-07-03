@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <title>Finx Help Center</title>
     <!-- FontAwesome para los íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
     <style>
         html, body {
             height: 100%;
@@ -16,60 +27,65 @@
             flex-direction: column;
         }
 
-        header {
-            background: #002366;
-            color: #fff;
-            padding: 0;
-            text-align: left;
+        /* MODO OSCURO */
+        html[data-bs-theme="dark"],
+        html[data-bs-theme="dark"] body {
+            background: #111827 !important;
+            color: #f1f1f1;
         }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 32px;
+        html[data-bs-theme="dark"] .content-section,
+        html[data-bs-theme="dark"] .custom-image-area,
+        html[data-bs-theme="dark"] .plan-card,
+        html[data-bs-theme="dark"] .custom-image-area-who,
+        html[data-bs-theme="dark"] .contact-form,
+        html[data-bs-theme="dark"] .card {
+            background: #1f2937;
+            color: #f1f1f1;
         }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 16px;
+        html[data-bs-theme="dark"] .plan-header.basic-header,
+        html[data-bs-theme="dark"] .plan-footer.basic-footer {
+            background: #bdb82e;
+            color: #23272b;
         }
-
-        .logo {
-            height: 48px;
-            width: 48px;
-            background: #fff;
-            border-radius: 12px;
-            padding: 6px;
-            object-fit: contain;
-        }
-
-        .divider {
-            width: 2px;
-            height: 36px;
-            background: #e0e0e0;
-            margin: 0 16px;
-            border-radius: 2px;
-        }
-
-        .help-center-title {
-            font-size: 1.3em;
-            font-weight: bold;
+        html[data-bs-theme="dark"] .plan-header.standard-header,
+        html[data-bs-theme="dark"] .plan-footer.standard-footer {
+            background: #0d6efd;
             color: #fff;
         }
-
-        .home-link {
+        html[data-bs-theme="dark"] .plan-header.premium-header,
+        html[data-bs-theme="dark"] .plan-footer.premium-footer {
+            background: #181a1b;
             color: #fff;
-            text-decoration: underline;
-            font-size: 1em;
-            position: static;
-            right: unset;
-            top: unset;
+        }
+        html[data-bs-theme="dark"] .card {
+            background: #23272b;
+            color: #f1f1f1;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+        }
+        html[data-bs-theme="dark"] .card h3,
+        html[data-bs-theme="dark"] .card p {
+            color: #f1f1f1;
+        }
+        html[data-bs-theme="dark"] .input-with-icon {
+            background: #181a1b;
+            border: 1px solid #444;
+        }
+        html[data-bs-theme="dark"] .contact-form textarea {
+            background: #181a1b;
+            border: 1px solid #444;
+            color: #f1f1f1;
+        }
+        html[data-bs-theme="dark"] .submit-btn {
+            background: #0d6efd;
+            color: #fff;
+        }
+        html[data-bs-theme="dark"] .submit-btn:hover {
+            background: #23272b;
+            color: #0d6efd;
         }
 
         h1 {
-            margin: 0;
+            margin: 32px 0 0 0;
             font-size: 2em;
         }
 
@@ -141,23 +157,7 @@
             font-weight: normal;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 24px;
-            margin-left: auto;
-        }
 
-        .nav-link {
-            color: #FFFFFF;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.1em;
-            transition: color 0.2s;
-        }
-
-        .nav-link:hover {
-            color: #EEE95B;
-        }
 
         .mockup-section {
             width: 100%;
@@ -834,23 +834,42 @@
                 height: 250px;
             }
         }
+
+        /* Fuerza color de texto negro en modo claro y blanco en modo oscuro para todos los textos principales */
+        body, .content-section, .custom-image-area, .custom-image-area-who, .plan-card, .contact-form, .card, .who-text-content, .plan-card ul li, .form-group, .input-with-icon input, .contact-form textarea,
+        .plan-header, .plan-footer, .plan-header h3, .plan-footer .price, .plan-card h3, .plan-card ul li, .card h3, .card p, h1, h2, h3, h4, h5, h6, p, label, input, textarea, span, b, strong {
+            color: #222 !important;
+        }
+        html[data-bs-theme="dark"] body,
+        html[data-bs-theme="dark"] .content-section,
+        html[data-bs-theme="dark"] .custom-image-area,
+        html[data-bs-theme="dark"] .custom-image-area-who,
+        html[data-bs-theme="dark"] .plan-card,
+        html[data-bs-theme="dark"] .contact-form,
+        html[data-bs-theme="dark"] .card,
+        html[data-bs-theme="dark"] .who-text-content,
+        html[data-bs-theme="dark"] .plan-card ul li,
+        html[data-bs-theme="dark"] .form-group,
+        html[data-bs-theme="dark"] .input-with-icon input,
+        html[data-bs-theme="dark"] .contact-form textarea,
+        html[data-bs-theme="dark"] .plan-header,
+        html[data-bs-theme="dark"] .plan-footer,
+        html[data-bs-theme="dark"] .plan-header h3,
+        html[data-bs-theme="dark"] .plan-footer .price,
+        html[data-bs-theme="dark"] .plan-card h3,
+        html[data-bs-theme="dark"] .plan-card ul li,
+        html[data-bs-theme="dark"] .card h3,
+        html[data-bs-theme="dark"] .card p,
+        html[data-bs-theme="dark"] h1, html[data-bs-theme="dark"] h2, html[data-bs-theme="dark"] h3, html[data-bs-theme="dark"] h4, html[data-bs-theme="dark"] h5, html[data-bs-theme="dark"] h6, html[data-bs-theme="dark"] p, html[data-bs-theme="dark"] label, html[data-bs-theme="dark"] input, html[data-bs-theme="dark"] textarea, html[data-bs-theme="dark"] span, html[data-bs-theme="dark"] b, html[data-bs-theme="dark"] strong {
+            color: #fff !important;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="logo-section">
-                <img src="https://i.imgur.com/j4TVaMm.png" alt="Finx Logo" class="logo">
-                <div class="divider"></div>
-                <span class="help-center-title">Help Center</span>
-            </div>
-            <nav class="nav-links">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="about_us.html" class="nav-link">About us</a>
-            </nav>
-        </div>
-    </header>
-    <main>
+<!-- Header Component -->
+  <!-- Header -->
+    <div id="header"></div>
+ <main>
         <h1>How can we help?</h1>
         <h2>Categories:</h2>
         <div class="main-cards-and-image-container">
@@ -871,18 +890,13 @@
                     <p>If you need more information or need help be sure to contacts us.</p>
                 </div>
             </div>
-            <section class="mockup-section">
-                <div class="custom-image-area">
-                    <img src="https://i.imgur.com/S5twxGb.jpeg" alt="Laptop con gráficos financieros" class="screen-img">
-                </div>
-            </section>
         </div>
 
         <section id="who-section" class="content-section">
             <h2>Who we are?</h2>
             <div class="who-content-layout">
                 <div class="custom-image-area-who">
-                    <img src="https://i.imgur.com/Qj4S100.png" alt="Who We Are Image" class="section-img">
+                    <img src="images/Img2.jpg" alt="Who We Are Image" class="section-img">
                 </div>
                 <div class="who-text-content">
                     <p>
@@ -943,7 +957,7 @@
                 </div>
 
                 <div class="plan-card">
-                    <div class="plan-header premium-header">
+                    <div class="plan-header basic-header">
                         <h3>Premium Plan</h3>
                     </div>
                     <div class="plan-body">
@@ -959,7 +973,7 @@
                             <li>Shared Savings Goals</li>
                         </ul>
                     </div>
-                    <div class="plan-footer premium-footer">
+                    <div class="plan-footer basic-footer">
                         <p class="price">$20/month</p>
                     </div>
                 </div>
@@ -1061,6 +1075,22 @@
                 this.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.05)';
             });
         });
-    </script>
+
+        // Load components
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load header and footer if elements exist
+            const headerElement = document.getElementById('header');
+            const footerElement = document.getElementById('footer');
+
+            if (headerElement) {
+                loadComponent('header', 'components/header.html');
+            }
+            if (footerElement) {
+                loadComponent('footer', 'components/footer.html');
+            }
+        });
+</script>
+<!-- Components Script -->
+<script src="js/components.js"></script>
 </body>
 </html> 

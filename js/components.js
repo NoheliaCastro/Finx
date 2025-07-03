@@ -11,6 +11,10 @@ async function loadComponent(elementId, componentPath) {
         // Si es el header, inicializar el toggle del tema
         if (elementId === 'header') {
             initThemeToggle();
+            // Si es el header_dashboard, asignar logout
+            if (componentPath.includes('header_dashboard')) {
+                assignDashboardLogout();
+            }
         }
     } catch (error) {
         console.error('Error al cargar el componente:', error);
@@ -67,6 +71,21 @@ function updateLogoVisibility(theme) {
     }
 }
 
+// Si es el header del dashboard, asignar el evento de logout después de cargar el componente
+function assignDashboardLogout() {
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+            if (confirm('¿Estás seguro que deseas cerrar sesión y salir del sitio?')) {
+                // Aquí puedes limpiar localStorage/sessionStorage si usas autenticación
+                // localStorage.clear();
+                // sessionStorage.clear();
+                window.location.href = 'index.html';
+            }
+        });
+    }
+}
+
 // Cargar componentes cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     // Cargar header y footer si existen los elementos
@@ -74,9 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const footerElement = document.getElementById('footer');
 
     if (headerElement) {
-        loadComponent('header', '/components/header.html');
+        // Si el header tiene el atributo data-dashboard, carga el header especial
+        if (headerElement.hasAttribute('data-dashboard')) {
+            loadComponent('header', 'components/header_dashboard.html');
+        } else {
+            loadComponent('header', 'components/header.html');
+        }
     }
     if (footerElement) {
-        loadComponent('footer', '/components/footer.html');
+        loadComponent('footer', 'components/footer.html');
     }
 }); 

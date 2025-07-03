@@ -15,6 +15,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
     <style>
+        body {
+            background: #E6E5E5;
+        }
         .dashboard-section {
             padding: 4rem 0 2rem 0;
             background: linear-gradient(135deg, var(--light-background) 0%, var(--background-color) 100%);
@@ -23,53 +26,38 @@
         .dashboard-title {
             font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: none;
+            -webkit-text-fill-color: unset;
             margin-bottom: 2rem;
+            color: #002366;
         }
         .summary-card i {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: var(--primary-color);
+            color: #004AAD;
         }
         .summary-card {
-            background: var(--background-color);
+            background: #FFFFFF;
             border-radius: 1.5rem;
-            box-shadow: var(--card-shadow);
+            box-shadow: 0 2px 8px #00236622;
             padding: 2rem 1.5rem;
             text-align: center;
             transition: all 0.3s ease;
-            border: 1px solid rgba(99, 102, 241, 0.1);
+            border: 2px solid #004AAD;
         }
         .summary-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--hover-shadow);
         }
-        .chart-container {
-            background: var(--background-color);
-            border-radius: 1.5rem;
-            box-shadow: var(--card-shadow);
-            padding: 2rem;
-            margin-bottom: 2rem;
+        .summary-card h3 {
+            color: #004AAD;
         }
-        .table thead th {
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: #fff;
-            border: none;
-        }
-        .table tbody tr {
-            background: var(--light-background);
-        }
-        .table tbody tr:hover {
-            background: var(--background-color);
-        }
-        .stat-number {
+        .summary-card .stat-number {
+            color: #EEE95B;
+            background: none;
+            -webkit-text-fill-color: unset;
             font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
             word-break: break-all;
         }
@@ -83,108 +71,143 @@
                 font-size: 1.5rem;
             }
         }
+        .table thead th {
+            background: #004AAD;
+            color: #fff;
+            border: none;
+        }
+        .table tbody tr {
+            background: var(--light-background);
+        }
+        .table tbody tr:hover {
+            background: var(--background-color);
+        }
+        .table-responsive-scroll {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .btn-primary {
+            background: #004AAD;
+            border-color: #004AAD;
+        }
+        .btn-primary:hover {
+            background: #002366;
+            border-color: #002366;
+        }
+        .btn-danger {
+            background: #EEE95B;
+            color: #002366;
+            border: none;
+        }
+        .btn-danger:hover {
+            background: #004AAD;
+            color: #fff;
+        }
+        .card {
+            background: #FFFFFF;
+            border: 1.5px solid #004AAD;
+        }
+        .table {
+            background: #FFFFFF;
+        }
+        .table tbody tr:nth-child(even) {
+            background: #E6E5E5;
+        }
+        #typeSelector {
+            border: 2px solid #004AAD;
+            color: #002366;
+        }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <div id="header"></div>
+    <div id="header" data-dashboard></div>
 
     <section class="dashboard-section">
         <div class="container">
             <h1 class="dashboard-title mb-4">Panel de Control</h1>
             <!-- Tarjetas resumen -->
-            <div class="row g-4 mb-4">
-                <div class="col-md-3">
-                    <div class="summary-card">
-                        <i class="fas fa-wallet"></i>
-                        <h3 class="h5 mt-2">Saldo actual</h3>
-                        <div class="stat-number" data-count="1250">$1,250.00</div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="summary-card">
+            <div class="row g-4 mb-4 justify-content-center">
+                <div class="col-md-4">
+                    <div class="summary-card" id="incomeCard" style="cursor:pointer;" onclick="window.location.href='income.html'">
                         <i class="fas fa-arrow-up"></i>
-                        <h3 class="h5 mt-2">Ingresos</h3>
-                        <div class="stat-number" data-count="3200">$3,200.00</div>
+                        <h3 class="h5 mt-2">Income</h3>
+                        <div class="stat-number" id="incomeTotal">$0.00</div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="summary-card">
+                <div class="col-md-4">
+                    <div class="summary-card" id="expenseCard" style="cursor:pointer;" onclick="window.location.href='expense.html'">
                         <i class="fas fa-arrow-down"></i>
-                        <h3 class="h5 mt-2">Gastos</h3>
-                        <div class="stat-number" data-count="1950">$1,950.00</div>
+                        <h3 class="h5 mt-2">Expenses</h3>
+                        <div class="stat-number" id="expenseTotal">$0.00</div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="summary-card">
                         <i class="fas fa-piggy-bank"></i>
-                        <h3 class="h5 mt-2">Ahorro</h3>
+                        <h3 class="h5 mt-2">Savings</h3>
                         <div class="stat-number" data-count="500">$500.00</div>
                     </div>
                 </div>
             </div>
-            <!-- Gráfico de ejemplo -->
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="chart-container">
-                        <h3 class="h5 mb-4">Historial de Ingresos y Gastos</h3>
-                        <canvas id="userBarChart" height="100"></canvas>
-                    </div>
-                </div>
+
+            <!-- Income Form Section (hidden by default) -->
+            <div id="incomeFormSection" style="display:none; max-width:500px; margin:0 auto 2rem auto;">
+              <div class="card p-4 shadow-sm">
+                <h5 class="mb-3">Add Income</h5>
+                <form id="incomeForm">
+                  <div class="mb-3">
+                    <label for="incomeAmount" class="form-label">Amount</label>
+                    <input type="number" class="form-control" id="incomeAmount" name="amount" required min="0.01" step="0.01">
+                  </div>
+                  <div class="mb-3">
+                    <label for="incomeDescription" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="incomeDescription" name="description" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="incomeDate" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="incomeDate" name="date" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="incomeCategory" class="form-label">Category</label>
+                    <select class="form-select" id="incomeCategory" name="category" required>
+                      <option value="Salary">Salary</option>
+                      <option value="Business">Business</option>
+                      <option value="Gift">Gift</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-secondary" id="cancelIncomeBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Income</button>
+                  </div>
+                </form>
+              </div>
             </div>
-            <!-- Tabla de movimientos recientes -->
+
+            <!-- Selector de tipo y tabla de movimientos recientes -->
             <div class="row">
                 <div class="col-12">
+                    <div class="d-flex flex-wrap gap-2 justify-content-end align-items-center mb-2">
+                        <select id="typeSelector" class="form-select w-auto">
+                            <option value="all" selected>All</option>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                    </div>
                     <div class="card p-3 shadow-sm">
-                        <h3 class="h5 mb-3">Movimientos recientes</h3>
-                        <div class="table-responsive">
+                        <h3 class="h5 mb-3">Recent Movements</h3>
+                        <div class="table-responsive table-responsive-scroll">
                             <table class="table table-hover align-middle mb-0">
                                 <thead>
                                     <tr>
-                                        <th>Fecha</th>
-                                        <th>Descripción</th>
-                                        <th>Categoría</th>
-                                        <th>Monto</th>
-                                        <th>Tipo</th>
+                                        <th>Date</th>
+                                        <th>Category</th>
+                                        <th>Amount</th>
+                                        <th>Type</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>2024-06-01</td>
-                                        <td>Salario</td>
-                                        <td>Ingresos</td>
-                                        <td class="text-success">+$1,200.00</td>
-                                        <td><span class="badge bg-success">Ingreso</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2024-06-03</td>
-                                        <td>Supermercado</td>
-                                        <td>Alimentación</td>
-                                        <td class="text-danger">-$150.00</td>
-                                        <td><span class="badge bg-danger">Gasto</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2024-06-05</td>
-                                        <td>Transporte</td>
-                                        <td>Movilidad</td>
-                                        <td class="text-danger">-$50.00</td>
-                                        <td><span class="badge bg-danger">Gasto</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2024-06-07</td>
-                                        <td>Venta online</td>
-                                        <td>Ingresos</td>
-                                        <td class="text-success">+$200.00</td>
-                                        <td><span class="badge bg-success">Ingreso</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2024-06-08</td>
-                                        <td>Restaurante</td>
-                                        <td>Ocio</td>
-                                        <td class="text-danger">-$60.00</td>
-                                        <td><span class="badge bg-danger">Gasto</span></td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="movementsTableBody"></tbody>
                             </table>
                         </div>
                     </div>
@@ -203,116 +226,61 @@
     <!-- Components JS (header/footer y tema) -->
     <script src="js/components.js"></script>
     <!-- Animación de números (CountUp.js) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script> -->
     <script>
-        // Animar los números de las tarjetas
-        document.querySelectorAll('.stat-number').forEach(stat => {
-            const target = parseInt(stat.getAttribute('data-count'));
-            if (!isNaN(target)) {
-                const countUp = new CountUp(stat, target, {
-                    duration: 2,
-                    separator: ',',
-                    decimal: '.'
-                });
-                countUp.start();
+        // Actualizar totales de tarjetas Income y Expenses
+        function updateDashboardTotals() {
+            const movements = JSON.parse(localStorage.getItem('finx_movements') || '[]');
+            let totalIncome = 0;
+            let totalExpense = 0;
+            movements.forEach(mov => {
+                if (mov.type === 'income') totalIncome += Number(mov.amount);
+                if (mov.type === 'expense') totalExpense += Number(mov.amount);
+            });
+            // Mostrar sin decimales si es entero, con dos decimales si es necesario
+            function formatAmount(num) {
+                return Number.isInteger(num) ? num.toLocaleString() : num.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
             }
-        });
+            document.getElementById('incomeTotal').textContent = `$${formatAmount(totalIncome)}`;
+            document.getElementById('expenseTotal').textContent = `$${formatAmount(totalExpense)}`;
+        }
 
-        // Gráfico de ejemplo
-        const ctx = document.getElementById('dashboardChart').getContext('2d');
-        const dashboardChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-                datasets: [
-                    {
-                        label: 'Ingresos',
-                        data: [1200, 1500, 1100, 1800, 1600, 2000],
-                        borderColor: '#007bff',
-                        backgroundColor: 'rgba(0,123,255,0.1)',
-                        tension: 0.4,
-                        fill: true
-                    },
-                    {
-                        label: 'Gastos',
-                        data: [800, 900, 950, 1200, 1100, 1300],
-                        borderColor: '#dc3545',
-                        backgroundColor: 'rgba(220,53,69,0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        ticks: {
-                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
-                        }
-                    },
-                    y: {
-                        ticks: {
-                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
-                        }
-                    }
-                }
+        // Llenar tabla de movimientos recientes filtrada por tipo
+        function fillMovementsTableByType() {
+            const movements = JSON.parse(localStorage.getItem('finx_movements') || '[]');
+            const tbody = document.getElementById('movementsTableBody');
+            const type = document.getElementById('typeSelector').value;
+            tbody.innerHTML = '';
+            if (movements.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center">No movements yet</td></tr>';
+                return;
             }
-        });
-
-        // Gráfico de barras de ingresos y gastos
-        const barCtx = document.getElementById('userBarChart').getContext('2d');
-        const userBarChart = new Chart(barCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
-                datasets: [
-                    {
-                        label: 'Ingresos',
-                        data: [1200, 1500, 1100, 1800, 1600, 2000],
-                        backgroundColor: 'rgba(0,123,255,0.7)',
-                        borderRadius: 8
-                    },
-                    {
-                        label: 'Gastos',
-                        data: [800, 900, 950, 1200, 1100, 1300],
-                        backgroundColor: 'rgba(220,53,69,0.7)',
-                        borderRadius: 8
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        ticks: {
-                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
-                        }
-                    }
-                }
+            let filtered = movements;
+            if (type !== 'all') {
+                filtered = movements.filter(mov => mov.type === type);
             }
+            filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+            // Mostrar todos los movimientos (ordenados por fecha ascendente)
+            filtered.forEach(mov => {
+                const sign = mov.type === 'income' ? '+' : '-';
+                const color = mov.type === 'income' ? 'text-success' : 'text-danger';
+                const badge = mov.type === 'income' ? 'bg-success' : 'bg-danger';
+                tbody.innerHTML += `
+                <tr>
+                    <td>${mov.date}</td>
+                    <td>${mov.category}</td>
+                    <td class="${color}">${sign}$${Number(mov.amount).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
+                    <td><span class="badge ${badge}">${mov.type.charAt(0).toUpperCase() + mov.type.slice(1)}</span></td>
+                </tr>`;
+            });
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center">No movements in this filter</td></tr>';
+            }
+        }
+        document.getElementById('typeSelector').addEventListener('change', fillMovementsTableByType);
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDashboardTotals();
+            fillMovementsTableByType();
         });
     </script>
 </body>
