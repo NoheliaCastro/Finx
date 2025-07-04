@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Nosotros</title>
+    <title>About Us - Finx</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,19 +17,50 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Animación de flotar e iluminar botones */
+        /* Estilos consistentes con el homepage */
+        .hero-section {
+            background-color: #f8f9fa;
+            position: relative;
+            color: #333;
+            padding: 100px 0;
+            margin-top: 0;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        [data-bs-theme="dark"] .hero-section {
+            background-color: #1a1a1a;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        [data-bs-theme="dark"] .hero-section h1,
+        [data-bs-theme="dark"] .hero-section p.lead {
+            color: white !important;
+        }
+
+        .hero-section .text-primary {
+            color: #11254b !important;
+        }
+
+        .hero-section .bg-primary.bg-opacity-10 {
+            background-color: rgba(17, 37, 75, 0.1) !important;
+        }
+
+        /* Estilos para botones consistentes */
         .btn {
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
+
         .btn:hover {
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
+
         .btn:active {
             transform: translateY(1px);
         }
+
         .btn::after {
             content: '';
             position: absolute;
@@ -42,18 +73,237 @@
             transform: translate(-50%, -50%);
             transition: width 0.6s ease, height 0.6s ease;
         }
+
         .btn:hover::after {
             width: 300px;
             height: 300px;
         }
-        /* Borde blanco solo para el botón de login */
-        .btn-outline-primary[href="login.html"] {
-            border-color: #fff !important;
-            color: #fff !important;
+
+        .btn-primary {
+            background-color: #11254b !important;
+            border-color: #11254b !important;
+            color: white !important;
         }
-        .btn-outline-primary[href="login.html"]:hover {
-            background: #fff !important;
-            color: #000 !important;
+
+        .btn-primary:hover {
+            background-color: #0d6efd !important;
+            border-color: #0d6efd !important;
+        }
+
+        .btn-outline-primary {
+            background-color: transparent !important;
+            color: #11254b !important;
+            border: 2px solid #11254b !important;
+        }
+
+        [data-bs-theme="dark"] .btn-outline-primary {
+            color: #fff !important;
+            border-color: #fff !important;
+            background-color: transparent !important;
+        }
+
+        [data-bs-theme="dark"] .btn-outline-primary:hover {
+            background-color: #fff !important;
+            color: #11254b !important;
+        }
+
+        /* Estilos para cards consistentes */
+        .feature-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #ffffff, #f0f2f5);
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+            border-color: rgba(17, 37, 75, 0.2);
+        }
+
+        [data-bs-theme="dark"] .feature-card {
+            background: linear-gradient(145deg, #2d3748, #1a202c);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        [data-bs-theme="dark"] .feature-card:hover {
+            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: #11254b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .feature-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        /* Estilos para estadísticas */
+        .stats-section {
+            background: #f8f9fa;
+            padding: 80px 0;
+        }
+
+        [data-bs-theme="dark"] .stats-section {
+            background-color: #1a1a1a;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #11254b;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+
+        /* Estilos para sección única */
+        .unique-features {
+            padding: 100px 0;
+            background: white;
+        }
+
+        [data-bs-theme="dark"] .unique-features {
+            background-color: #1a1a1a;
+        }
+
+        .unique-card {
+            background: linear-gradient(145deg, #ffffff, #f0f2f5);
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+            border-radius: 15px;
+            padding: 2.5rem;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .unique-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+            border-color: rgba(17, 37, 75, 0.2);
+        }
+
+        [data-bs-theme="dark"] .unique-card {
+            background: linear-gradient(145deg, #2d3748, #1a202c);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .unique-icon {
+            width: 100px;
+            height: 100px;
+            background: #11254b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+        }
+
+        .unique-icon i {
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        /* Estilos para equipo */
+        .team-section {
+            background: #f8f9fa;
+            padding: 100px 0;
+        }
+
+        [data-bs-theme="dark"] .team-section {
+            background-color: #1a1a1a;
+        }
+
+        .team-card {
+            text-align: center;
+            background: linear-gradient(145deg, #ffffff, #f0f2f5);
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+            border-color: rgba(17, 37, 75, 0.2);
+        }
+
+        [data-bs-theme="dark"] .team-card {
+            background: linear-gradient(145deg, #2d3748, #1a202c);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            background: #11254b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 3rem;
+            color: white;
+        }
+
+        /* Estilos para CTA */
+        .cta-section {
+            background: #11254b;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn-cta {
+            background: white;
+            color: #11254b;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cta:hover {
+            background: #f8f9fa;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
     </style>
 </head>
@@ -61,55 +311,191 @@
     <!-- Header reutilizable -->
     <div id="header"></div>
 
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1 class="display-4 fw-bold mb-4">Transforming Your Financial Life</h1>
+                    <p class="lead mb-4">At Finx, we believe everyone deserves to have complete control over their personal finances. Our platform helps you make smart decisions about your money.</p>
+                    <a href="register.html" class="btn btn-primary btn-lg">Get Started Now</a>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <img src="images/mi-imagen.png" alt="Finx App" class="img-fluid rounded-3 shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-item">
+                        <span class="stat-number">10K+</span>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-item">
+                        <span class="stat-number">$2M+</span>
+                        <div class="stat-label">Savings Generated</div>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-item">
+                        <span class="stat-number">98%</span>
+                        <div class="stat-label">Satisfaction</div>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <div class="stat-label">Support</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="unique-features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h2 class="display-4 fw-bold mb-4">Our Mission</h2>
+                    <p class="lead mb-4">Empowering people to take control of their personal finances in a simple, secure, and effective way.</p>
+                    <p class="text-muted">We believe that financial education is fundamental to personal success. That's why Finx not only helps you manage your money but also educates you about personal finance.</p>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="unique-card">
+                        <h3 class="mb-3">Our Values</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check me-2 text-primary"></i>Total transparency</li>
+                            <li class="mb-2"><i class="fas fa-check me-2 text-primary"></i>Data security</li>
+                            <li class="mb-2"><i class="fas fa-check me-2 text-primary"></i>Simplicity in use</li>
+                            <li class="mb-2"><i class="fas fa-check me-2 text-primary"></i>Financial education</li>
+                            <li class="mb-2"><i class="fas fa-check me-2 text-primary"></i>Constant innovation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What Makes Finx Unique Section -->
+    <section class="unique-features">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Unique Features</span>
+                <h2 class="display-4 fw-bold" data-aos="fade-up">What Makes Finx Unique</h2>
+                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">Discover the innovative features that set us apart from traditional financial apps</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="unique-card text-center">
+                        <div class="unique-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Interactive & Modern Financial Learning Model</h3>
+                        <p class="text-muted">Learn financial concepts through interactive modules, real-world scenarios, and gamified experiences. Our adaptive learning system personalizes your educational journey based on your knowledge level and goals.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="unique-card text-center">
+                        <div class="unique-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Real Tools for Financial Control Early in Life</h3>
+                        <p class="text-muted">Start building healthy financial habits from day one. Our platform provides practical tools and guidance specifically designed for young adults and beginners, making financial management accessible to everyone.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="unique-card text-center">
+                        <div class="unique-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Smart, Personalized Financial Chatbot</h3>
+                        <p class="text-muted">Get instant, personalized financial advice through our AI-powered chatbot. Ask questions, get recommendations, and receive guidance tailored to your specific financial situation and goals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Features Section -->
     <section class="features py-5" id="features">
         <div class="container">
             <div class="text-center mb-5">
                 <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Features</span>
-                <h2 class="display-4 fw-bold" data-aos="fade-up">Why Choose Us</h2>
+                <h2 class="display-4 fw-bold" data-aos="fade-up">Why Choose Finx?</h2>
+                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">Discover the tools that will transform your relationship with money</p>
             </div>
             <div class="row g-4">
-                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card h-100 border-0 shadow-sm hover-card">
-                        <div class="card-body text-center">
-                            <div class="feature-icon rounded-circle bg-primary bg-opacity-10 p-3 mb-3 mx-auto">
-                                <i class="fas fa-star fa-2x text-primary"></i>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card feature-card h-100 border-0">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
                             </div>
-                            <h3 class="h5 mb-3">Feature One</h3>
-                            <p class="text-muted">Short description of feature one goes here</p>
+                            <h3 class="h5 mb-3">Smart Tracking</h3>
+                            <p class="text-muted">Automatically monitor your income and expenses with intelligent categorization and detailed analysis of your spending patterns.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card h-100 border-0 shadow-sm hover-card">
-                        <div class="card-body text-center">
-                            <div class="feature-icon rounded-circle bg-primary bg-opacity-10 p-3 mb-3 mx-auto">
-                                <i class="fas fa-rocket fa-2x text-primary"></i>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card feature-card h-100 border-0">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-piggy-bank"></i>
                             </div>
-                            <h3 class="h5 mb-3">Feature Two</h3>
-                            <p class="text-muted">Short description of feature two goes here</p>
+                            <h3 class="h5 mb-3">Savings Goals</h3>
+                            <p class="text-muted">Set and achieve your financial goals with advanced planning tools and personalized reminders.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card h-100 border-0 shadow-sm hover-card">
-                        <div class="card-body text-center">
-                            <div class="feature-icon rounded-circle bg-primary bg-opacity-10 p-3 mb-3 mx-auto">
-                                <i class="fas fa-chart-pie fa-2x text-primary"></i>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card feature-card h-100 border-0">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
                             </div>
-                            <h3 class="h5 mb-3">Feature Three</h3>
-                            <p class="text-muted">Short description of feature three goes here</p>
+                            <h3 class="h5 mb-3">Total Security</h3>
+                            <p class="text-muted">Your data is protected with bank-level encryption and we never share your personal information.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-                    <div class="card h-100 border-0 shadow-sm hover-card">
-                        <div class="card-body text-center">
-                            <div class="feature-icon rounded-circle bg-primary bg-opacity-10 p-3 mb-3 mx-auto">
-                                <i class="fas fa-cog fa-2x text-primary"></i>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card feature-card h-100 border-0">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-mobile-alt"></i>
                             </div>
-                            <h3 class="h5 mb-3">Feature Four</h3>
-                            <p class="text-muted">Short description of feature four goes here</p>
+                            <h3 class="h5 mb-3">Mobile Access</h3>
+                            <p class="text-muted">Manage your finances from anywhere with our intuitive and responsive mobile application.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="card feature-card h-100 border-0">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="h5 mb-3">Financial Education</h3>
+                            <p class="text-muted">Access educational resources, tips, and best practices to improve your financial literacy.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="card feature-card h-100 border-0">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <h3 class="h5 mb-3">Auto Sync</h3>
+                            <p class="text-muted">Connect your bank accounts for automatic synchronization and real-time updates.</p>
                         </div>
                     </div>
                 </div>
@@ -117,46 +503,57 @@
         </div>
     </section>
 
-    <!-- Benefits Section -->
-    <section class="benefits py-5" id="benefits">
+    <!-- Team Section -->
+    <section class="team-section">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Benefits</span>
-                <h2 class="display-4 fw-bold" data-aos="fade-up">What You Get</h2>
+                <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Team</span>
+                <h2 class="display-4 fw-bold" data-aos="fade-up">Meet Our Team</h2>
+                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">Passionate about personal finance and technology</p>
             </div>
             <div class="row g-4">
-                <div class="col-lg-4" data-aos="fade-right">
-                    <div class="card h-100 border-0 shadow-sm hover-card">
-                        <div class="card-body">
-                            <div class="benefit-icon rounded-circle bg-primary bg-opacity-10 p-3 mb-3">
-                                <i class="fas fa-check fa-2x text-primary"></i>
-                            </div>
-                            <h3 class="h4 mb-3">Benefit One</h3>
-                            <p class="text-muted">Description of benefit one goes here</p>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <i class="fas fa-user"></i>
                         </div>
+                        <h4>Maria Gonzalez</h4>
+                        <p class="text-primary mb-2">CEO & Founder</p>
+                        <p class="text-muted">Expert in personal finance with over 10 years of experience in financial technology.</p>
                     </div>
                 </div>
-                <div class="col-lg-4" data-aos="fade-up">
-                    <div class="card h-100 border-0 shadow-sm hover-card">
-                        <div class="card-body">
-                            <div class="benefit-icon rounded-circle bg-primary bg-opacity-10 p-3 mb-3">
-                                <i class="fas fa-star fa-2x text-primary"></i>
-                            </div>
-                            <h3 class="h4 mb-3">Benefit Two</h3>
-                            <p class="text-muted">Description of benefit two goes here</p>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <i class="fas fa-user"></i>
                         </div>
+                        <h4>Carlos Rodriguez</h4>
+                        <p class="text-primary mb-2">CTO</p>
+                        <p class="text-muted">Senior developer specialized in financial applications and data security.</p>
                     </div>
                 </div>
-                <div class="col-lg-4" data-aos="fade-left">
-                    <div class="card h-100 border-0 shadow-sm hover-card">
-                        <div class="card-body">
-                            <div class="benefit-icon rounded-circle bg-primary bg-opacity-10 p-3 mb-3">
-                                <i class="fas fa-shield-alt fa-2x text-primary"></i>
-                            </div>
-                            <h3 class="h4 mb-3">Benefit Three</h3>
-                            <p class="text-muted">Description of benefit three goes here</p>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <i class="fas fa-user"></i>
                         </div>
+                        <h4>Ana Martinez</h4>
+                        <p class="text-primary mb-2">Product Director</p>
+                        <p class="text-muted">Specialist in user experience and design of innovative financial products.</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center" data-aos="fade-up">
+                    <h2>Ready to Transform Your Finances?</h2>
+                    <p>Join thousands of users who have already taken control of their financial life with Finx.</p>
+                    <a href="register.html" class="btn btn-cta btn-lg">Start Free</a>
                 </div>
             </div>
         </div>
