@@ -142,6 +142,63 @@
                 color: #002366;
             }
         }
+        [data-bs-theme="dark"] .navbar {
+            background: #23272b !important;
+            color: #EEE95B !important;
+            border-bottom: 1.5px solid #EEE95B;
+        }
+        [data-bs-theme="dark"] .navbar .nav-link,
+        [data-bs-theme="dark"] .navbar .navbar-brand,
+        [data-bs-theme="dark"] .navbar .nav-link i {
+            color: #EEE95B !important;
+        }
+        [data-bs-theme="dark"] .navbar .nav-link.active {
+            color: #fff !important;
+            font-weight: bold;
+        }
+        [data-bs-theme="dark"] .navbar .btn-primary {
+            background: #EEE95B !important;
+            color: #23272b !important;
+            border: none;
+        }
+        [data-bs-theme="dark"] .navbar .btn-primary:hover {
+            background: #bdb82e !important;
+            color: #23272b !important;
+        }
+        .goal-achieved-card {
+            border: 2.5px solid #004AAD;
+            background: #fff;
+            color: #23272b;
+            font-weight: 700;
+            font-size: 1.15rem;
+            border-radius: 1.1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 24px #004AAD22;
+            padding: 1.1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            animation: goal-shine 1.2s ease-in-out;
+        }
+        .goal-achieved-card .goal-emoji {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+        @keyframes goal-shine {
+            0% { box-shadow: 0 0 0 0 #EEE95B44; }
+            60% { box-shadow: 0 0 32px 8px #EEE95B88; }
+            100% { box-shadow: 0 4px 24px #004AAD22; }
+        }
+        [data-bs-theme="dark"] .goal-achieved-card {
+            border: 2.5px solid #EEE95B;
+            background: #002366;
+            color: #fff;
+            box-shadow: 0 4px 24px #EEE95B22;
+        }
+        .goal-progress-text {
+            color: #fff !important;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -218,8 +275,17 @@
             }
             goals.forEach((goal, idx) => {
                 const percent = Math.min(100, Math.round((goal.saved || 0) / goal.target * 100));
+                let achievedCard = '';
+                let actions = '';
+                if ((goal.saved || 0) >= goal.target) {
+                    achievedCard = `<div class="goal-achieved-card"><span class="goal-emoji">🏆</span>¡Logro alcanzado! Puedes ir por tu <b>${goal.name}</b></div>`;
+                    actions = `<button class="btn btn-sm btn-outline-danger" onclick="deleteGoal(${idx})">Delete</button>`;
+                } else {
+                    actions = `<button class="btn btn-sm btn-outline-success" onclick="addToGoal(${idx})">Add Saving</button>\n<button class="btn btn-sm btn-outline-danger" onclick="deleteGoal(${idx})">Delete</button>`;
+                }
                 container.innerHTML += `
                 <div class="goal-card">
+                    ${achievedCard}
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h4 class="goal-title mb-0">${goal.name}</h4>
                         <div>
@@ -230,11 +296,10 @@
                     <div class="progress-bar mb-2">
                         <div class="progress" style="width:${percent}%;"></div>
                     </div>
-                    <div class="mb-2 text-muted" style="font-size:0.98em;">$${(goal.saved || 0).toLocaleString()} / $${Number(goal.target).toLocaleString()}</div>
+                    <div class="mb-2 goal-progress-text" style="font-size:0.98em;">$${(goal.saved || 0).toLocaleString()} / $${Number(goal.target).toLocaleString()}</div>
                     ${goal.deadline ? `<div class="mb-2 text-muted" style="font-size:0.95em;">Deadline: ${goal.deadline}</div>` : ''}
                     <div class="goal-actions">
-                        <button class="btn btn-sm btn-outline-success" onclick="addToGoal(${idx})">Add Saving</button>
-                        <button class="btn btn-sm btn-outline-danger" onclick="deleteGoal(${idx})">Delete</button>
+                        ${actions}
                     </div>
                 </div>`;
             });

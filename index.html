@@ -285,6 +285,120 @@
         [data-bs-theme="dark"] .particle-img {
             border: 3px solid #fff;
         }
+        .features-beautiful-section {
+            background: #f8fafc;
+            border-radius: 2.2rem;
+            box-shadow: 0 8px 32px rgba(17,37,75,0.10);
+            padding: 3.5rem 2.5rem 3.5rem 2.5rem;
+            margin-bottom: 3rem;
+            align-items: center;
+            transition: box-shadow 0.3s;
+            color: #23272b;
+        }
+        .features-beautiful-section:hover {
+            box-shadow: 0 16px 48px rgba(17,37,75,0.16);
+        }
+        .features-img-beautiful {
+            border-radius: 1.2rem;
+            box-shadow: 0 4px 24px rgba(17,37,75,0.13);
+            transition: transform 0.4s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+            max-width: 95%;
+            height: auto;
+        }
+        .features-img-beautiful:hover {
+            transform: scale(1.04) rotate(-2deg);
+            box-shadow: 0 12px 36px rgba(17,37,75,0.18);
+        }
+        .features-beautiful-section .btn-primary {
+            background: #004AAD !important;
+            color: #fff !important;
+            font-weight: 700;
+            border-radius: 10px;
+            padding: 0.8rem 2.5rem;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px #004AAD33;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+            margin-top: 1.5rem;
+        }
+        .features-beautiful-section .btn-primary:hover {
+            background: #11254b !important;
+            color: #EEE95B !important;
+            box-shadow: 0 4px 16px #004AAD55;
+            transform: translateY(-2px) scale(1.04);
+        }
+        @media (max-width: 991px) {
+            .features-beautiful-section {
+                padding: 2rem 0.5rem;
+            }
+        }
+        .benefits-hero {
+            background: linear-gradient(120deg, #11254b 60%, #004AAD 100%);
+            border-radius: 2.2rem;
+            box-shadow: 0 8px 32px rgba(17,37,75,0.10);
+            margin-bottom: 3rem;
+            padding: 4rem 2rem 4rem 2rem;
+            color: #fff;
+        }
+        .benefits-hero-title {
+            color: #fff;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            line-height: 1.1;
+        }
+        .benefits-hero-subtitle {
+            color: #004AAD;
+            font-size: 1.35rem;
+            font-weight: 500;
+        }
+        .benefits-hero-btn-main {
+            background: #004AAD !important;
+            color: #fff !important;
+            font-weight: 700;
+            border-radius: 10px;
+            padding: 0.8rem 2.5rem;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px #004AAD33;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+        .benefits-hero-btn-main:hover {
+            background: #11254b !important;
+            color: #EEE95B !important;
+            box-shadow: 0 4px 16px #004AAD55;
+            transform: translateY(-2px) scale(1.04);
+        }
+        .benefits-hero-btn-secondary {
+            border: 2px solid #004AAD;
+            color: #004AAD !important;
+            background: transparent !important;
+            font-weight: 700;
+            border-radius: 10px;
+            padding: 0.8rem 2.5rem;
+            font-size: 1.2rem;
+            transition: background 0.2s, color 0.2s, border 0.2s, transform 0.2s;
+        }
+        .benefits-hero-btn-secondary:hover {
+            background: #004AAD !important;
+            color: #fff !important;
+            border: 2px solid #fff;
+            transform: translateY(-2px) scale(1.04);
+        }
+        .benefits-hero-img {
+            box-shadow: 0 8px 32px #EEE95B33;
+            border-radius: 1.5rem;
+            transition: transform 0.4s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+        }
+        .benefits-hero-img:hover {
+            transform: scale(1.04) rotate(-2deg);
+            box-shadow: 0 16px 48px #EEE95B55;
+        }
+        @media (max-width: 991px) {
+            .benefits-hero {
+                padding: 2rem 0.5rem;
+            }
+            .benefits-hero-img {
+                height: 320px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -403,218 +517,33 @@
     <section class="features py-5" id="features" data-aos="fade-up">
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-down">
-                <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Features</span>
                 <h2 class="display-4 fw-bold title-font" data-aos="fade-up">Why Choose Us</h2>
             </div>
-            <div class="row align-items-center">
+            <div class="row align-items-center features-beautiful-section">
                 <div class="col-md-6 text-start" data-aos="fade-right" data-aos-delay="100">
                     <p style="font-size:1.5rem; text-align: justify;">At Finx, we believe that managing your finances shouldn't be a daunting task. Our mission is to empower individuals to take control of their money and achieve financial stability.</p>
                     <button class="btn btn-primary btn-lg" style="background:#11254b;color:#fff;font-weight:500;" data-aos="zoom-in" data-aos-delay="200">View more</button>
                 </div>
                 <div class="col-md-6 text-center" data-aos="fade-left" data-aos-delay="200">
-                    <img src="https://img.freepik.com/fotos-premium/graficos-tablas_55997-2974.jpg" alt="Finx" style="width:80%;height:80%;object-fit:cover;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,0.08);display:block;margin:auto;" data-aos="zoom-in-up" data-aos-delay="300">
+                    <img src="https://img.freepik.com/fotos-premium/graficos-tablas_55997-2974.jpg" alt="Finx" class="features-img-beautiful" data-aos="zoom-in-up" data-aos-delay="300">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Benefits Section -->
-    <section class="benefits py-5" id="benefits" data-aos="fade-up">
+    <section class="benefits py-5 benefits-hero" id="benefits" data-aos="fade-up">
         <div class="container">
-            <div class="text-center mb-5" data-aos="fade-down">
-                <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Benefits</span>
-                <h2 class="display-4 fw-bold title-font" data-aos="fade-up">What You Get</h2>
-            </div>
-            <div class="row align-items-center flex-row-reverse">
-                <div class="col-md-6 text-start" data-aos="fade-left" data-aos-delay="100">
-                    <p class="mb-4" style="font-size:1.5rem; text-align: justify;">Track, manage, and save with ease. Finx is your smart financial app designed to simplify money management and help you achieve your financial goals.</p>
-                    <p class="mb-4" style="font-size:1.5rem; text-align: justify;">Experience seamless budgeting, insightful spending analytics, and personalized saving plans all in one place. Discover how effortless keeping your finances in check can be.</p>
-                    <button class="btn btn-primary btn-lg" style="background:#11254b;color:#fff;font-weight:500;" data-aos="zoom-in" data-aos-delay="200">View our plans</button>
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center mb-4 mb-md-0">
+                    <img src="images/cerdito.jpg" alt="Finx App" class="img-fluid rounded-4 shadow-lg benefits-hero-img" style="max-width: 90%; height: 480px; object-fit: contain;">
                 </div>
-                <div class="col-md-6 text-center" data-aos="fade-right" data-aos-delay="200">
-                    <img src="images/mi-imagen.png" alt="Finx App" class="img-fluid rounded-4 shadow-lg" style="max-width: 90%; height: 550px; object-fit: contain;" data-aos="zoom-in-up" data-aos-delay="300">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Plans Section -->
-    <section class="plans py-5" id="plans" data-aos="fade-up">
-        <div class="container">
-            <div class="text-center mb-5" data-aos="fade-down">
-                <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Plans</span>
-                <h2 class="display-4 fw-bold" data-aos="fade-up">Choose Your Plan</h2>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="card h-100 border-0 shadow-sm hover-card">
-                        <div class="card-body text-center">
-                            <div class="plan-icon rounded-circle bg-primary bg-opacity-10 p-3 mb-3 mx-auto">
-                                <i class="fas fa-paper-plane fa-2x text-primary"></i>
-                            </div>
-                            <h3 class="h4 mb-3">Basic Plan</h3>
-                            <div class="price h2 fw-bold mb-4">$9.99<span class="text-muted fs-6">/mo</span></div>
-                            <ul class="list-unstyled mb-4">
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Feature One</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Feature Two</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Feature Three</li>
-                            </ul>
-                            <button class="btn btn-primary w-100" data-aos="zoom-in" data-aos-delay="200">
-                                <i class="fas fa-arrow-right me-2"></i>Get Started
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="card h-100 border-0 shadow-sm hover-card popular">
-                        <div class="card-body text-center position-relative">
-                            <div class="position-absolute top-0 start-50 translate-middle">
-                                <span class="badge bg-primary text-white px-3 py-2">Most Popular</span>
-                            </div>
-                            <div class="plan-icon rounded-circle bg-primary bg-opacity-10 p-3 mb-3 mx-auto">
-                                <i class="fas fa-rocket fa-2x text-primary"></i>
-                            </div>
-                            <h3 class="h4 mb-3">Pro Plan</h3>
-                            <div class="price h2 fw-bold mb-4">$19.99<span class="text-muted fs-6">/mo</span></div>
-                            <ul class="list-unstyled mb-4">
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>All Basic Features</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Pro Feature One</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Pro Feature Two</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Pro Feature Three</li>
-                            </ul>
-                            <button class="btn btn-primary w-100" data-aos="zoom-in" data-aos-delay="300">
-                                <i class="fas fa-crown me-2"></i>Get Pro
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="card h-100 border-0 shadow-sm hover-card">
-                        <div class="card-body text-center">
-                            <div class="plan-icon rounded-circle bg-primary bg-opacity-10 p-3 mb-3 mx-auto">
-                                <i class="fas fa-building fa-2x text-primary"></i>
-                            </div>
-                            <h3 class="h4 mb-3">Enterprise</h3>
-                            <div class="price h2 fw-bold mb-4">Custom</div>
-                            <ul class="list-unstyled mb-4">
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>All Pro Features</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Enterprise Feature One</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Enterprise Feature Two</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Enterprise Feature Three</li>
-                            </ul>
-                            <button class="btn btn-primary w-100" data-aos="zoom-in" data-aos-delay="400">
-                                <i class="fas fa-envelope me-2"></i>Contact Us
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact py-5 mb-0" id="contact" data-aos="fade-up">
-        <div class="container">
-            <div class="text-center mb-5" data-aos="fade-down">
-                <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Contact</span>
-                <h2 class="display-4 fw-bold" data-aos="fade-up">Get In Touch</h2>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-4" data-aos="fade-right" data-aos-delay="100">
-                    <div class="contact-info-card" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="contact-info-header">
-                            <div class="contact-icon">
-                                <i class="fas fa-headset"></i>
-                            </div>
-                            <h3>Contact Information</h3>
-                        </div>
-                        <div class="contact-info-body">
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div class="info-content">
-                                    <h4>Email</h4>
-                                    <p>contact@example.com</p>
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <i class="fas fa-phone"></i>
-                                </div>
-                                <div class="info-content">
-                                    <h4>Phone</h4>
-                                    <p>+1 234 567 890</p>
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div class="info-content">
-                                    <h4>Address</h4>
-                                    <p>123 Street Name, City, Country</p>
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <i class="fas fa-clock"></i>
-                                </div>
-                                <div class="info-content">
-                                    <h4>Hours</h4>
-                                    <p>Mon - Fri: 9:00 AM - 5:00 PM</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contact-info-footer">
-                            <div class="social-links">
-                                <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8" data-aos="fade-left" data-aos-delay="200">
-                    <div class="contact-form-card" data-aos="zoom-in-up" data-aos-delay="300">
-                        <div class="contact-form-header">
-                            <h3>Send us a Message</h3>
-                            <p>Fill out the form below and we'll get back to you soon.</p>
-                        </div>
-                        <form class="contact-form">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="contactName" placeholder="Name" required>
-                                        <label for="contactName">Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="email" class="form-control" id="contactEmail" placeholder="Email" required>
-                                        <label for="contactEmail">Email</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="contactSubject" placeholder="Subject" required>
-                                        <label for="contactSubject">Subject</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" id="contactMessage" placeholder="Message" style="height: 150px" required></textarea>
-                                        <label for="contactMessage">Message</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary btn-lg w-100">
-                                        <i class="fas fa-paper-plane me-2"></i>Send Message
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                <div class="col-md-6 text-start text-md-start d-flex flex-column justify-content-center align-items-start">
+                    <h2 class="display-3 fw-bold mb-3 benefits-hero-title">Your money, your future.<br>Take control with <span style='color:#EEE95B'>Finx</span>.</h2>
+                    <p class="lead mb-4 benefits-hero-subtitle">Empower yourself to save, manage, and achieve your dreams. Finx makes your financial journey simple, smart, and secure.</p>
+                    <div class="d-flex gap-3">
+                        <a href="login.html" class="btn btn-lg btn-primary benefits-hero-btn-main">Log In</a>
+                        <a href="about_us.html" class="btn btn-lg btn-outline-primary benefits-hero-btn-secondary">Learn More</a>
                     </div>
                 </div>
             </div>
@@ -713,6 +642,14 @@
                 img.className = 'particle-img';
                 container.appendChild(img);
                 animateParticle(img);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const section = document.querySelector('.features-beautiful-section');
+            if(section) {
+                section.classList.add('animated-fadein');
+                setTimeout(() => section.classList.add('visible'), 200);
             }
         });
     </script>
