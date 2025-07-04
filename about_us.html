@@ -305,6 +305,93 @@
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
+
+        /* Estilos para secciones de contenido */
+        .content-section {
+            padding: 80px 0;
+        }
+
+        .content-section:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        [data-bs-theme="dark"] .content-section:nth-child(even) {
+            background-color: #1a1a1a;
+        }
+
+        .content-card {
+            background: linear-gradient(145deg, #ffffff, #f0f2f5);
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+            border-radius: 15px;
+            padding: 2.5rem;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+            border-color: rgba(17, 37, 75, 0.2);
+        }
+
+        [data-bs-theme="dark"] .content-card {
+            background: linear-gradient(145deg, #2d3748, #1a202c);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* NUEVO ESTILO DE TARJETAS TIPO IMAGEN */
+        .modern-card {
+            background: linear-gradient(135deg, #fff 80%, #e3f0ff 100%);
+            border-radius: 18px;
+            box-shadow: 0 4px 24px 0 rgba(30, 42, 73, 0.08);
+            padding: 2.5rem 1.5rem 2rem 1.5rem;
+            text-align: center;
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: box-shadow 0.2s, transform 0.2s;
+            border: none;
+        }
+        .modern-card:hover {
+            box-shadow: 0 8px 32px 0 rgba(30, 42, 73, 0.16);
+            transform: translateY(-4px) scale(1.03);
+        }
+        .modern-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+        }
+        .modern-title {
+            font-weight: 700;
+            color: #1a2340;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .modern-desc {
+            color: #6c757d;
+            font-size: 1.05rem;
+            font-weight: 400;
+        }
+        /* Colores de iconos variados */
+        .icon-yellow { color: #FFD600; }
+        .icon-blue { color: #1976D2; }
+        .icon-cyan { color: #00B8D9; }
+        .icon-green { color: #43A047; }
+        .icon-orange { color: #FF9800; }
+        .icon-navy { color: #11254b; }
+        .icon-pink { color: #E040FB; }
+        .icon-red { color: #E53935; }
+        .icon-lightblue { color: #40C4FF; }
+        .icon-teal { color: #009688; }
+        .icon-purple { color: #7C4DFF; }
+        .icon-lime { color: #C6FF00; }
     </style>
 </head>
 <body>
@@ -316,8 +403,8 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6" data-aos="fade-right">
-                    <h1 class="display-4 fw-bold mb-4">Transforming Your Financial Life</h1>
-                    <p class="lead mb-4">At Finx, we believe everyone deserves to have complete control over their personal finances. Our platform helps you make smart decisions about your money.</p>
+                    <h1 class="display-4 fw-bold mb-4">Track, manage, and save with ease</h1>
+                    <p class="lead mb-4">Feeling overwhelmed by your finances? If you're like most people, managing your money — from tracking income and expenses to trying to save — can feel like a never-ending job.</p>
                     <a href="register.html" class="btn btn-primary btn-lg">Get Started Now</a>
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
@@ -327,219 +414,129 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats-section">
+    <!-- Overwhelmed & Why does this matter Section -->
+    <section class="content-section">
         <div class="container">
-            <div class="row">
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
-                    <div class="stat-item">
-                        <span class="stat-number">10K+</span>
-                        <div class="stat-label">Active Users</div>
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="modern-card">
+                        <div class="modern-icon icon-yellow"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="modern-title">Feeling overwhelmed by your finances?</div>
+                        <div class="modern-desc">Managing money can feel endless and stressful. You're not alone—Finx is here to help.</div>
                     </div>
                 </div>
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
-                    <div class="stat-item">
-                        <span class="stat-number">$2M+</span>
-                        <div class="stat-label">Savings Generated</div>
-                    </div>
-                </div>
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
-                    <div class="stat-item">
-                        <span class="stat-number">98%</span>
-                        <div class="stat-label">Satisfaction</div>
-                    </div>
-                </div>
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
-                    <div class="stat-item">
-                        <span class="stat-number">24/7</span>
-                        <div class="stat-label">Support</div>
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="modern-card">
+                        <div class="modern-icon icon-blue"><i class="fas fa-question-circle"></i></div>
+                        <div class="modern-title">Why does this matter?</div>
+                        <div class="modern-desc">Most people, especially the young, lack financial education. This makes saving and smart spending harder.</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Mission Section -->
-    <section class="unique-features">
+    <!-- Mission & Vision Section -->
+    <section class="content-section">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6" data-aos="fade-right">
-                    <h2 class="display-4 fw-bold mb-4">Our Mission</h2>
-                    <p class="lead mb-4">Empowering people to take control of their personal finances in a simple, secure, and effective way.</p>
-                    <p class="text-muted">We believe that financial education is fundamental to personal success. That's why Finx not only helps you manage your money but also educates you about personal finance.</p>
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="modern-card">
+                        <div class="modern-icon icon-green"><i class="fas fa-bullseye"></i></div>
+                        <div class="modern-title">Our Mission</div>
+                        <div class="modern-desc">Our mission is to help people — especially young people — understand and manage their money through easy, visual, and practical tools.</div>
+                    </div>
                 </div>
-                <div class="col-lg-6" data-aos="fade-left">
-                    <div class="unique-card">
-                        <h3 class="mb-3">Our Values</h3>
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><i class="fas fa-check me-2 text-primary"></i>Total transparency</li>
-                            <li class="mb-2"><i class="fas fa-check me-2 text-primary"></i>Data security</li>
-                            <li class="mb-2"><i class="fas fa-check me-2 text-primary"></i>Simplicity in use</li>
-                            <li class="mb-2"><i class="fas fa-check me-2 text-primary"></i>Financial education</li>
-                            <li class="mb-2"><i class="fas fa-check me-2 text-primary"></i>Constant innovation</li>
-                        </ul>
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="modern-card">
+                        <div class="modern-icon icon-cyan"><i class="fas fa-eye"></i></div>
+                        <div class="modern-title">Our Vision</div>
+                        <div class="modern-desc">We aim to become the top financial app for young people across Latin America, known for being educational, simple to use, and powered by helpful, personalized support.</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- What Makes Finx Unique Section -->
-    <section class="unique-features">
+    <!-- What Makes FINX Unique Section -->
+    <section class="content-section">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Unique Features</span>
-                <h2 class="display-4 fw-bold" data-aos="fade-up">What Makes Finx Unique</h2>
-                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">Discover the innovative features that set us apart from traditional financial apps</p>
+                <h2 class="display-5 fw-bold" data-aos="fade-up">What makes FINX unique?</h2>
             </div>
             <div class="row g-4">
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="unique-card text-center">
-                        <div class="unique-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <h3 class="h4 mb-3">Interactive & Modern Financial Learning Model</h3>
-                        <p class="text-muted">Learn financial concepts through interactive modules, real-world scenarios, and gamified experiences. Our adaptive learning system personalizes your educational journey based on your knowledge level and goals.</p>
+                    <div class="modern-card">
+                        <div class="modern-icon icon-navy"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="modern-title">Interactive and Modern Financial Learning Model</div>
+                        <div class="modern-desc">Learn with quizzes, challenges, and games—fun, visual, and practical.</div>
                     </div>
                 </div>
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="unique-card text-center">
-                        <div class="unique-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3 class="h4 mb-3">Real Tools for Financial Control Early in Life</h3>
-                        <p class="text-muted">Start building healthy financial habits from day one. Our platform provides practical tools and guidance specifically designed for young adults and beginners, making financial management accessible to everyone.</p>
+                    <div class="modern-card">
+                        <div class="modern-icon icon-orange"><i class="fas fa-chart-line"></i></div>
+                        <div class="modern-title">Real Tools for Financial Control Early in Life</div>
+                        <div class="modern-desc">Track your money, set goals, and manage your finances easily from day one.</div>
                     </div>
                 </div>
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
-                    <div class="unique-card text-center">
-                        <div class="unique-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <h3 class="h4 mb-3">Smart, Personalized Financial Chatbot</h3>
-                        <p class="text-muted">Get instant, personalized financial advice through our AI-powered chatbot. Ask questions, get recommendations, and receive guidance tailored to your specific financial situation and goals.</p>
+                    <div class="modern-card">
+                        <div class="modern-icon icon-teal"><i class="fas fa-robot"></i></div>
+                        <div class="modern-title">Smart, Personalized Financial Chatbot</div>
+                        <div class="modern-desc">Get instant, tailored advice and support 24/7 with our AI assistant.</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features py-5" id="features">
+    <!-- Why Choose Us Section -->
+    <section class="content-section">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Features</span>
-                <h2 class="display-4 fw-bold" data-aos="fade-up">Why Choose Finx?</h2>
-                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">Discover the tools that will transform your relationship with money</p>
+                <h2 class="display-4 fw-bold" data-aos="fade-up">Why Choose Us?</h2>
             </div>
             <div class="row g-4">
                 <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card feature-card h-100 border-0">
-                        <div class="card-body text-center p-4">
-                            <div class="feature-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <h3 class="h5 mb-3">Smart Tracking</h3>
-                            <p class="text-muted">Automatically monitor your income and expenses with intelligent categorization and detailed analysis of your spending patterns.</p>
-                        </div>
+                    <div class="modern-card">
+                        <div class="modern-icon icon-yellow"><i class="fas fa-search"></i></div>
+                        <div class="modern-title">Transparency</div>
+                        <div class="modern-desc">Everything is clear and simple.<br>No fine print, no surprises.<br>You always know what's happening.</div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card feature-card h-100 border-0">
-                        <div class="card-body text-center p-4">
-                            <div class="feature-icon">
-                                <i class="fas fa-piggy-bank"></i>
-                            </div>
-                            <h3 class="h5 mb-3">Savings Goals</h3>
-                            <p class="text-muted">Set and achieve your financial goals with advanced planning tools and personalized reminders.</p>
-                        </div>
+                    <div class="modern-card">
+                        <div class="modern-icon icon-navy"><i class="fas fa-shield-alt"></i></div>
+                        <div class="modern-title">Security</div>
+                        <div class="modern-desc">Your data and money are safe.<br>Protected with top encryption.<br>Privacy is always our priority.</div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card feature-card h-100 border-0">
-                        <div class="card-body text-center p-4">
-                            <div class="feature-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <h3 class="h5 mb-3">Total Security</h3>
-                            <p class="text-muted">Your data is protected with bank-level encryption and we never share your personal information.</p>
-                        </div>
+                    <div class="modern-card">
+                        <div class="modern-icon icon-blue"><i class="fas fa-book-open"></i></div>
+                        <div class="modern-title">Financial Education</div>
+                        <div class="modern-desc">Learn while managing your money.<br>Access tips and resources.<br>Grow your financial knowledge.</div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
-                    <div class="card feature-card h-100 border-0">
-                        <div class="card-body text-center p-4">
-                            <div class="feature-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <h3 class="h5 mb-3">Mobile Access</h3>
-                            <p class="text-muted">Manage your finances from anywhere with our intuitive and responsive mobile application.</p>
-                        </div>
+                    <div class="modern-card">
+                        <div class="modern-icon icon-cyan"><i class="fas fa-gem"></i></div>
+                        <div class="modern-title">Ease of Use</div>
+                        <div class="modern-desc">Intuitive and fast experience.<br>Designed for everyone.<br>Manage your money with ease.</div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
-                    <div class="card feature-card h-100 border-0">
-                        <div class="card-body text-center p-4">
-                            <div class="feature-icon">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <h3 class="h5 mb-3">Financial Education</h3>
-                            <p class="text-muted">Access educational resources, tips, and best practices to improve your financial literacy.</p>
-                        </div>
+                    <div class="modern-card">
+                        <div class="modern-icon icon-green"><i class="fas fa-users"></i></div>
+                        <div class="modern-title">Community</div>
+                        <div class="modern-desc">Join others like you.<br>Share and learn together.<br>Grow your financial confidence.</div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
-                    <div class="card feature-card h-100 border-0">
-                        <div class="card-body text-center p-4">
-                            <div class="feature-icon">
-                                <i class="fas fa-sync-alt"></i>
-                            </div>
-                            <h3 class="h5 mb-3">Auto Sync</h3>
-                            <p class="text-muted">Connect your bank accounts for automatic synchronization and real-time updates.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team Section -->
-    <section class="team-section">
-        <div class="container">
-            <div class="text-center mb-5">
-                <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Team</span>
-                <h2 class="display-4 fw-bold" data-aos="fade-up">Meet Our Team</h2>
-                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">Passionate about personal finance and technology</p>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="team-card">
-                        <div class="team-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h4>Maria Gonzalez</h4>
-                        <p class="text-primary mb-2">CEO & Founder</p>
-                        <p class="text-muted">Expert in personal finance with over 10 years of experience in financial technology.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="team-card">
-                        <div class="team-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h4>Carlos Rodriguez</h4>
-                        <p class="text-primary mb-2">CTO</p>
-                        <p class="text-muted">Senior developer specialized in financial applications and data security.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
-                    <div class="team-card">
-                        <div class="team-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h4>Ana Martinez</h4>
-                        <p class="text-primary mb-2">Product Director</p>
-                        <p class="text-muted">Specialist in user experience and design of innovative financial products.</p>
+                    <div class="modern-card">
+                        <div class="modern-icon icon-orange"><i class="fas fa-chart-pie"></i></div>
+                        <div class="modern-title">Smart Analytics</div>
+                        <div class="modern-desc">See your spending clearly.<br>Get insights and suggestions.<br>Improve your financial habits.</div>
                     </div>
                 </div>
             </div>
@@ -551,9 +548,8 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center" data-aos="fade-up">
-                    <h2>Ready to Transform Your Finances?</h2>
-                    <p>Join thousands of users who have already taken control of their financial life with Finx.</p>
-                    <a href="register.html" class="btn btn-cta btn-lg">Start Free</a>
+                    <h2>Ready to take charge of your finances?</h2>
+                    <a href="login.html" class="btn btn-cta btn-lg">Start Free</a>
                 </div>
             </div>
         </div>
@@ -578,3 +574,5 @@
     </script>
 </body>
 </html>
+
+
