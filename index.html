@@ -265,6 +265,26 @@
         [data-bs-theme="dark"] .statistics .card p {
             color: rgba(255,255,255,0.7);
         }
+
+        .particles-container {
+            pointer-events: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10;
+        }
+        .particle-img {
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            opacity: 0.8;
+            transition: transform 2s linear;
+            will-change: transform;
+            border-radius: 50%;
+            border: 3px solid #11254b;
+        }
+        [data-bs-theme="dark"] .particle-img {
+            border: 3px solid #fff;
+        }
     </style>
 </head>
 <body>
@@ -300,6 +320,7 @@
                             <span class="bubble bubble4"></span>
                             <span class="bubble bubble5"></span>
                         </div>
+                        <div class="particles-container"></div>
                         <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
@@ -643,6 +664,56 @@
 
         document.querySelectorAll('.stat-number').forEach(stat => {
             observer.observe(stat);
+        });
+
+        // Partículas animadas sobre el carrusel
+        document.addEventListener('DOMContentLoaded', function() {
+            const particleImages = [
+                'images/1.jpg',
+                'images/2.jpg',
+                'images/3.jpg'
+            ];
+            const NUM_PARTICLES = 3;
+            const container = document.querySelector('.particles-container');
+            if (!container) return;
+            function randomPosition() {
+                const width = container.offsetWidth - 32;
+                const height = container.offsetHeight - 32;
+                const overflow = 24; // Ahora se alejan menos del carrusel
+                const edge = Math.floor(Math.random() * 4); // 0: arriba, 1: abajo, 2: izquierda, 3: derecha
+                let x, y;
+                switch (edge) {
+                    case 0: // completamente arriba
+                        x = -overflow + Math.random() * (width + 2 * overflow);
+                        y = -overflow - 32; // completamente fuera arriba
+                        break;
+                    case 1: // completamente abajo
+                        x = -overflow + Math.random() * (width + 2 * overflow);
+                        y = height + overflow; // completamente fuera abajo
+                        break;
+                    case 2: // completamente izquierda
+                        x = -overflow - 32; // completamente fuera izquierda
+                        y = -overflow + Math.random() * (height + 2 * overflow);
+                        break;
+                    case 3: // completamente derecha
+                        x = width + overflow; // completamente fuera derecha
+                        y = -overflow + Math.random() * (height + 2 * overflow);
+                        break;
+                }
+                return { x, y };
+            }
+            function animateParticle(particle) {
+                const {x, y} = randomPosition();
+                particle.style.transform = `translate(${x}px, ${y}px)`;
+                setTimeout(() => animateParticle(particle), 2000 + Math.random() * 2000);
+            }
+            for (let i = 0; i < NUM_PARTICLES; i++) {
+                const img = document.createElement('img');
+                img.src = particleImages[i % particleImages.length];
+                img.className = 'particle-img';
+                container.appendChild(img);
+                animateParticle(img);
+            }
         });
     </script>
 </body>
