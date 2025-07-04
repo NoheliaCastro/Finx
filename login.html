@@ -353,6 +353,7 @@
             e.preventDefault();
             // Add your login logic here
             console.log('Login submitted');
+            localStorage.setItem('showWelcomeOverlay', 'true');
             window.location.href = "dashboard.html";
         });
     </script>

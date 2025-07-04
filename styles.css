@@ -1261,6 +1261,8 @@ p, .lead, .text-muted {
     max-width: 400px;
     position: relative;
     box-shadow: var(--hover-shadow);
+    cursor: pointer;
+    transition: box-shadow 0.3s, border-color 0.3s, transform 0.2s;
 }
 
 .close-modal {
@@ -1809,4 +1811,83 @@ p, .lead, .text-muted {
 [data-bs-theme="dark"] .dashboard-section .form-modern .btn-secondary:hover {
     background: #EEE95B;
     color: #23272b;
+}
+
+/* --- Bootstrap Modal Fixes --- */
+.modal-backdrop {
+  z-index: 1040 !important;
+}
+.modal {
+  z-index: 1050 !important;
+  pointer-events: auto !important;
+}
+body.modal-open {
+  overflow: hidden !important;
+}
+
+/* Forzar fondo azul más oscuro en el header del dashboard en todas las páginas */
+.navbar, #header .navbar {
+  background: #fff !important;
+  color: #23272b !important;
+}
+.navbar .nav-header-link, #header .nav-header-link {
+  color: #23272b !important;
+}
+.navbar .btn-logout, #header .btn-logout {
+  background: #EEE95B !important;
+  color: #002366 !important;
+}
+[data-bs-theme="dark"] .navbar, [data-bs-theme="dark"] #header .navbar {
+  background: #002366 !important;
+  color: #fff !important;
+}
+[data-bs-theme="dark"] .navbar .nav-header-link, [data-bs-theme="dark"] #header .nav-header-link {
+  color: #fff !important;
+}
+[data-bs-theme="dark"] .navbar .btn-logout, [data-bs-theme="dark"] #header .btn-logout {
+  background: #EEE95B !important;
+  color: #002366 !important;
+}
+
+/* Tarjetas dashboard: modo claro sin marco, números negros; modo oscuro marco azul y números amarillos */
+.dashboard-section .summary-card,
+.dashboard-section .card.form-modern,
+.goal-card,
+.modal-content {
+  cursor: pointer;
+  transition: box-shadow 0.3s, border-color 0.3s, transform 0.2s;
+}
+.dashboard-section .summary-card:hover,
+.dashboard-section .card.form-modern:hover,
+.goal-card:hover,
+.modal-content:hover {
+  box-shadow: 0 8px 32px rgba(0,74,173,0.18) !important;
+  border-color: #004AAD !important;
+  transform: translateY(-4px) scale(1.03);
+}
+[data-bs-theme="dark"] .dashboard-section .summary-card,
+[data-bs-theme="dark"] .dashboard-section .card.form-modern,
+[data-bs-theme="dark"] .goal-card,
+[data-bs-theme="dark"] .modal-content {
+  cursor: pointer;
+  box-shadow: 0 4px 16px #00236655 !important;
+  border-color: #EEE95B !important;
+  transition: box-shadow 0.3s, border-color 0.3s, transform 0.2s;
+}
+[data-bs-theme="dark"] .dashboard-section .summary-card:hover,
+[data-bs-theme="dark"] .dashboard-section .card.form-modern:hover,
+[data-bs-theme="dark"] .goal-card:hover,
+[data-bs-theme="dark"] .modal-content:hover {
+  box-shadow: 0 12px 36px #EEE95B55 !important;
+  border-color: #EEE95B !important;
+  transform: translateY(-4px) scale(1.04);
+}
+/* Formularios: campos y botones también con pointer si son interactivos */
+.dashboard-section .form-control,
+.dashboard-section .form-select,
+.dashboard-section .btn,
+.form-modern .form-control,
+.form-modern .form-select,
+.form-modern .btn {
+  cursor: pointer;
 } 
