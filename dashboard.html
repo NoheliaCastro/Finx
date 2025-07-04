@@ -117,6 +117,15 @@
             border: 2px solid #004AAD;
             color: #002366;
         }
+        .animated-fadein {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+        }
+        .animated-fadein.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -125,9 +134,9 @@
 
     <section class="dashboard-section">
         <div class="container">
-            <h1 class="dashboard-title mb-4">Resumen de Ingresos y Egresos</h1>
+            <h1 class="dashboard-title mb-4 animated-fadein" id="dashboardTitle">Personal Area</h1>
             <!-- Tarjetas resumen -->
-            <div class="row g-4 mb-4 justify-content-center">
+            <div class="row g-4 mb-4 justify-content-center animated-fadein" id="cardsRow">
                 <div class="col-md-4">
                     <div class="summary-card" id="incomeCard" style="cursor:pointer;" onclick="window.location.href='income.html'">
                         <i class="fas fa-arrow-up"></i>
@@ -182,7 +191,7 @@
                     <button type="submit" class="btn btn-primary">Add Income</button>
                   </div>
                 </form>
-              </div>
+                    </div>
             </div>
 
             <!-- Expense Form Section (hidden by default) -->
@@ -217,11 +226,11 @@
                     <button type="submit" class="btn btn-primary">Add Expense</button>
                   </div>
                 </form>
-              </div>
+                </div>
             </div>
 
             <!-- Selector de tipo y tabla de movimientos recientes -->
-            <div class="row">
+            <div class="row animated-fadein" id="movementsRow">
                 <div class="col-12">
                     <div class="d-flex flex-wrap gap-2 justify-content-end align-items-center mb-2">
                         <select id="typeSelector" class="form-select w-auto">
@@ -230,7 +239,7 @@
                             <option value="expense">Expense</option>
                         </select>
                     </div>
-                    <div class="card p-3 shadow-sm">
+                    <div class="card p-3 shadow-sm animated-fadein" id="movementsCard">
                         <h3 class="h5 mb-3">Recent Movements</h3>
                         <div class="table-responsive table-responsive-scroll">
                             <table class="table table-hover align-middle mb-0">
@@ -316,6 +325,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             updateDashboardTotals();
             fillMovementsTableByType();
+            setTimeout(function() {
+                document.querySelectorAll('.animated-fadein').forEach(el => el.classList.add('visible'));
+            }, 200);
         });
     </script>
 </body>
