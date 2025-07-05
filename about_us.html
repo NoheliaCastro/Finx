@@ -392,6 +392,15 @@
         .icon-teal { color: #009688; }
         .icon-purple { color: #7C4DFF; }
         .icon-lime { color: #C6FF00; }
+        .section-shadow {
+            box-shadow: 0 8px 32px 0 rgba(30, 42, 73, 0.10);
+            border-radius: 2rem;
+            background: rgba(255,255,255,0.85);
+            margin-bottom: 2.5rem;
+        }
+        [data-bs-theme="dark"] .section-shadow {
+            background: rgba(35,39,47,0.85);
+        }
     </style>
 </head>
 <body>
@@ -399,7 +408,7 @@
     <div id="header"></div>
 
     <!-- Hero Section -->
-    <section class="hero-section">
+    <section class="hero-section section-shadow" style="border-radius: 0 0 2rem 2rem;">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6" data-aos="fade-right">
@@ -414,26 +423,30 @@
         </div>
     </section>
 
-    <!-- Mission & Vision Section (agrandada y destacada) -->
-    <section class="content-section" style="background: linear-gradient(120deg, #f8fafc 60%, #e3f0ff 100%); border-radius: 2.2rem; box-shadow: 0 12px 48px rgba(17,37,75,0.13); margin: 4rem auto 3rem auto; max-width: 1200px;">
+    <!-- Mission & Vision Section (ahora con tarjetas modernas y fuera del fondo especial) -->
+    <section class="content-section section-shadow" style="padding-top: 32px; padding-bottom: 32px; margin-bottom: 1.5rem;">
         <div class="container">
-            <div class="row align-items-center mb-5">
-                <div class="col-lg-6 text-center mb-4 mb-lg-0">
-                    <div class="modern-icon icon-green" style="font-size: 5rem;"><i class="fas fa-bullseye"></i></div>
-                    <h2 class="fw-bold mt-4 display-4">Nuestra Misión</h2>
-                    <p class="lead mt-4" style="font-size:1.5rem; text-align: justify;">Ayudar a las personas —especialmente jóvenes— a entender y gestionar su dinero a través de herramientas fáciles, visuales y prácticas. Queremos que cada usuario gane confianza y control sobre sus finanzas, reduciendo el estrés y construyendo hábitos saludables.</p>
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <div class="modern-card h-100">
+                        <div class="modern-icon icon-green mb-3" style="font-size: 3rem;"><i class="fas fa-bullseye"></i></div>
+                        <h3 class="fw-bold mb-3">Nuestra Misión</h3>
+                        <p style="font-size:1rem; text-align: justify;">Ayudar a las personas —especialmente jóvenes— a entender y gestionar su dinero a través de herramientas fáciles, visuales y prácticas. Queremos que cada usuario gane confianza y control sobre sus finanzas, reduciendo el estrés y construyendo hábitos saludables.</p>
+                    </div>
                 </div>
-                <div class="col-lg-6 text-center">
-                    <div class="modern-icon icon-cyan" style="font-size: 5rem;"><i class="fas fa-eye"></i></div>
-                    <h2 class="fw-bold mt-4 display-4">Nuestra Visión</h2>
-                    <p class="lead mt-4" style="font-size:1.5rem; text-align: justify;">Ser la app financiera líder para jóvenes en Latinoamérica, reconocida por su educación, simplicidad y soporte personalizado. Buscamos empoderar a una generación para que tome decisiones inteligentes y alcance sus metas financieras.</p>
+                <div class="col-lg-5">
+                    <div class="modern-card h-100">
+                        <div class="modern-icon icon-cyan mb-3" style="font-size: 3rem;"><i class="fas fa-eye"></i></div>
+                        <h3 class="fw-bold mb-3">Nuestra Visión</h3>
+                        <p style="font-size:1rem; text-align: justify;">Ser la app financiera líder para jóvenes en Latinoamérica, reconocida por su educación, simplicidad y soporte personalizado. Buscamos empoderar a una generación para que tome decisiones inteligentes y alcance sus metas financieras.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- What Makes FINX Unique Section -->
-    <section class="content-section">
+    <section class="content-section section-shadow">
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="display-5 fw-bold" data-aos="fade-up">What makes FINX unique?</h2>
@@ -465,7 +478,7 @@
     </section>
 
     <!-- Why Choose Us Section -->
-    <section class="content-section">
+    <section class="content-section section-shadow">
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="display-4 fw-bold" data-aos="fade-up">Why Choose Us?</h2>
