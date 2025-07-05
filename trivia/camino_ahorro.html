@@ -1,419 +1,957 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camino de Niveles | Ahorro Inteligente</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <title>Finx - Camino de Ahorro Inteligente</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../styles.css">
+    <!-- Shared Sidebar CSS -->
+    <link rel="stylesheet" href="shared-sidebar.css">
     <style>
-        body {
-            display: flex;
-            flex-direction: row;
-            min-height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #fff 60%, #e3e6ea 100%);
-            color: #23272f;
-            font-family: 'Poppins', Arial, sans-serif;
-            overflow-x: hidden;
-            transition: background 0.4s;
+        /* Estilos específicos para el camino de ahorro que coinciden con el sitio principal */
+        .camino-hero {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border-radius: 2.2rem;
+            box-shadow: 0 8px 32px rgba(17,37,75,0.10);
+            padding: 3.5rem 2.5rem;
+            margin-bottom: 3rem;
+            transition: box-shadow 0.3s;
+            color: #23272b;
         }
-        .sidebar {
-            flex-shrink: 0;
-            position: relative;
-            width: 280px;
-            height: 100vh;
-            background: var(--color-card, #fff);
-            box-shadow: 2px 0 12px rgba(28,176,246,0.07);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            z-index: 100;
-            transition: background 0.3s;
-            border-top-right-radius: 36px;
-            border-bottom-right-radius: 36px;
+
+        [data-bs-theme="dark"] .camino-hero {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: #f3f4f6;
         }
-        .main-content {
-            flex: 1 1 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            margin-top: 0;
+
+        .camino-hero:hover {
+            box-shadow: 0 16px 48px rgba(17,37,75,0.16);
         }
-        .camino-container {
-            max-width: 380px;
-            width: 100%;
-            margin: 0 auto;
-            padding-left: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .camino-title {
-            background: linear-gradient(90deg, #1cb0f6 60%, #58cc02 100%);
-            color: #fff;
-            border-radius: 20px;
-            padding: 22px 32px 16px 32px;
-            font-size: 1.4rem;
-            font-family: 'Montserrat', Arial, sans-serif;
+
+        .camino-hero h1 {
+            font-size: 3.2rem;
             font-weight: 800;
-            margin-bottom: 48px;
-            box-shadow: 0 4px 24px rgba(28,176,246,0.13);
-            text-align: left;
-            width: 100%;
-            letter-spacing: 0.5px;
-            position: relative;
+            color: #11254b;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
         }
+
+        [data-bs-theme="dark"] .camino-hero h1 {
+            color: #f3f4f6;
+        }
+
+        .camino-hero .lead {
+            font-size: 1.35rem;
+            color: #52525b;
+            font-weight: 500;
+        }
+
+        [data-bs-theme="dark"] .camino-hero .lead {
+            color: #d1d5db;
+        }
+
+        /* Camino de niveles estilo feature cards */
+        .camino-container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            margin: 0 auto;
+        }
+
         .camino-niveles {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 54px;
+            gap: 2rem;
             position: relative;
+            padding: 2rem 0;
         }
+
         .camino-linea {
-            width: 10px;
-            height: 70px;
-            background: linear-gradient(180deg, #1cb0f6 0%, #58cc02 100%);
-            border-radius: 8px;
+            width: 8px;
+            height: 60px;
+            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+            border-radius: 1rem;
             margin: 0 auto;
-            opacity: 0.7;
-            box-shadow: 0 0 16px #1cb0f6, 0 0 8px #58cc02;
+            box-shadow: 0 0 20px rgba(129, 140, 248, 0.3);
             position: relative;
+            overflow: hidden;
         }
+
+        .camino-linea::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(255,255,255,0.8), transparent);
+            animation: flowDown 2s infinite;
+        }
+
         .camino-linea::after {
             content: '';
-            display: block;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #fff 0%, #1cb0f6 80%, transparent 100%);
             position: absolute;
-            left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0.18;
-        }
-        .camino-nodo {
-            width: 110px;
-            height: 110px;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8), transparent);
             border-radius: 50%;
-            background: #fff;
+            transform: translate(-50%, -50%);
+            opacity: 0.6;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes flowDown {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+
+        .camino-nodo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--light-background);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 2.6rem;
-            color: #1cb0f6;
-            box-shadow: 0 8px 32px 0 #1cb0f6aa, 0 2px 12px rgba(28,176,246,0.13);
-            border: 6px solid #1cb0f6;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            box-shadow: 0 4px 16px rgba(129, 140, 248, 0.1);
+            border: 3px solid var(--primary-color);
             position: relative;
-            transition: box-shadow 0.2s, border 0.2s, transform 0.2s;
+            transition: all 0.3s ease;
             cursor: pointer;
             z-index: 2;
-            animation: popIn 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+            animation: fadeInUp 0.6s ease-out;
         }
-        @keyframes popIn {
-            0% { transform: scale(0.7); opacity: 0; }
-            80% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .camino-nodo .bi {
-            font-size: 2.8rem;
+
+        .camino-nodo:hover:not(.bloqueado) {
+            transform: translateY(-10px) scale(1.1);
+            box-shadow: 0 8px 24px rgba(129, 140, 248, 0.3);
+            border-color: var(--accent-color);
         }
+
         .camino-nodo .nodo-label {
-            font-size: 1.08rem;
-            font-family: 'Montserrat', Arial, sans-serif;
-            font-weight: 800;
-            margin-top: 10px;
-            color: #23272f;
-            background: #eafbe7;
-            border-radius: 16px;
-            padding: 4px 16px;
-            box-shadow: 0 2px 8px rgba(28,176,246,0.07);
             position: absolute;
+            bottom: -40px;
             left: 50%;
-            bottom: -32px;
             transform: translateX(-50%);
-            min-width: 80px;
-            text-align: center;
+            background: var(--light-background);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(129, 140, 248, 0.1);
+            border: 1px solid rgba(129, 140, 248, 0.1);
         }
+
         .camino-nodo.bloqueado {
-            background: #3a3f47;
-            color: #888;
-            border: 6px solid #444b56;
-            box-shadow: none;
+            background: #e5e7eb;
+            color: #9ca3af;
+            border-color: #d1d5db;
             cursor: not-allowed;
-            opacity: 0.5;
-            filter: grayscale(0.3) brightness(0.8);
+            opacity: 0.6;
         }
+
+        [data-bs-theme="dark"] .camino-nodo.bloqueado {
+            background: #374151;
+            color: #6b7280;
+            border-color: #4b5563;
+        }
+
         .camino-nodo.bloqueado .nodo-label {
-            color: #888;
-            background: #444b56;
+            background: #e5e7eb;
+            color: #9ca3af;
         }
+
+        [data-bs-theme="dark"] .camino-nodo.bloqueado .nodo-label {
+            background: #374151;
+            color: #6b7280;
+        }
+
+        .camino-nodo.completado {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-color: #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .camino-nodo.completado .nodo-label {
+            background: #10b981;
+            color: white;
+        }
+
+        .camino-nodo.activo {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 30px rgba(129, 140, 248, 0.4);
+            animation: pulse 2s infinite;
+            position: relative;
+        }
+
+        .camino-nodo.activo::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            animation: ripple 2s infinite;
+            opacity: 0.6;
+        }
+
+        .camino-nodo.activo::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: ripple 2s infinite 0.5s;
+            opacity: 0.4;
+        }
+
+        .camino-nodo.activo .nodo-label {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 30px rgba(129, 140, 248, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(129, 140, 248, 0.6);
+            }
+            100% {
+                box-shadow: 0 0 30px rgba(129, 140, 248, 0.4);
+            }
+        }
+
         .camino-nodo.recompensa {
-            background: linear-gradient(135deg, #ffe259 0%, #ffa751 100%);
-            color: #fff;
-            border: 6px solid #ffd600;
-            box-shadow: 0 8px 32px 0 #ffd60099, 0 2px 12px #ffa75155;
-            animation: popIn 0.9s cubic-bezier(.68,-0.55,.27,1.55);
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            border-color: #f59e0b;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
         }
+
         .camino-nodo.recompensa .nodo-label {
-            color: #fff;
-            background: #ffa751;
+            background: #f59e0b;
+            color: white;
         }
+
         .camino-nodo.recompensa::after {
             content: '🎉';
             position: absolute;
-            top: -18px;
-            right: -18px;
-            font-size: 2rem;
-            animation: confetti 1.2s infinite alternate;
+            top: -15px;
+            right: -15px;
+            font-size: 1.5rem;
+            animation: bounce 1s infinite alternate;
         }
-        @keyframes confetti {
-            0% { transform: rotate(-10deg) scale(1); }
-            100% { transform: rotate(10deg) scale(1.15); }
-        }
-        .camino-nodo:hover:not(.bloqueado) {
-            box-shadow: 0 8px 40px #58cc02cc, 0 4px 24px #1cb0f6aa;
-            border: 6px solid #58cc02;
-            transform: scale(1.07) rotate(-2deg);
-        }
-        .camino-nodo:active:not(.bloqueado) {
-            transform: scale(0.97);
-        }
-        .camino-nodo.activo {
-            box-shadow: 0 0 0 6px #58cc02aa, 0 8px 32px 0 #1cb0f6aa;
-            border: 6px solid #58cc02;
-            animation: bounce 1.2s infinite alternate;
-        }
-        @keyframes bounce {
-            0% { transform: scale(1) translateY(0); }
-            60% { transform: scale(1.08) translateY(-8px); }
-            100% { transform: scale(1) translateY(0); }
-        }
-        @media (max-width: 900px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100vw; height: 70px; flex-direction: row; border-radius: 0; box-shadow: 0 2px 12px rgba(28,176,246,0.07); position: static; }
-            .main-content { margin-top: 90px; min-height: unset; }
-            .camino-container { max-width: 98vw; }
-            .camino-title { font-size: 1.1rem; padding: 12px 8px; }
-            .camino-nodo { width: 70px; height: 70px; font-size: 1.3rem; }
-            .camino-nodo .nodo-label { font-size: 0.9rem; min-width: 60px; bottom: -24px; }
-            .camino-linea { height: 40px; width: 7px; }
-        }
-        @media (max-width: 600px) {
-            .main-content { margin-top: 80px; }
-            .sidebar { height: 60px; }
-        }
-        .sidebar-home-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            background: var(--color-accent2, #1cb0f6);
-            color: #fff;
-            font-size: 2rem;
-            margin-top: 18px;
-            margin-left: 18px;
-            margin-bottom: 0;
-            box-shadow: 0 2px 8px rgba(28,176,246,0.10);
-            transition: background 0.2s, box-shadow 0.2s;
-            text-decoration: none;
+
+        /* Tooltips informativos */
+        .camino-nodo {
             position: relative;
         }
-        .sidebar-home-btn:hover {
-            background: var(--color-accent, #58cc02);
-            color: #fff;
-            box-shadow: 0 4px 16px rgba(44, 190, 255, 0.13);
+
+        .camino-nodo .tooltip {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.8rem;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        .sidebar-home-icon {
-            font-size: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        .camino-nodo .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(0, 0, 0, 0.9);
         }
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-            width: 100%;
-            align-items: flex-start;
-            margin-top: 38px;
+
+        .camino-nodo:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
         }
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            font-size: 1.35rem;
-            color: var(--color-text, #23272f);
-            text-decoration: none;
-            font-weight: 700;
-            padding: 18px 32px 18px 32px;
-            width: 100%;
-            border-radius: 0;
-            margin-left: 0;
-            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-            gap: 22px;
-            box-sizing: border-box;
+
+        [data-bs-theme="dark"] .camino-nodo .tooltip {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1f2937;
         }
-        .sidebar-link.active, .sidebar-link:hover {
-            background: linear-gradient(90deg, var(--color-accent2, #1cb0f6) 60%, var(--color-accent, #58cc02) 100%);
-            color: #fff;
-            box-shadow: 0 4px 18px 0 rgba(44, 190, 255, 0.10);
-            border-top-right-radius: 32px;
-            border-bottom-right-radius: 32px;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            font-weight: 800;
-            filter: brightness(1.05);
-            outline: none;
-            width: 100%;
-            margin-left: 0;
-            padding-left: 32px;
+
+        [data-bs-theme="dark"] .camino-nodo .tooltip::after {
+            border-top-color: rgba(255, 255, 255, 0.9);
         }
-        .sidebar-link.active .sidebar-icon, .sidebar-link.active .sidebar-text {
-            color: #fff;
-            text-shadow: 0 2px 8px rgba(44, 190, 255, 0.10);
+
+        @keyframes bounce {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
         }
-        .sidebar-icon {
-            font-size: 2.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .sidebar-text {
-            font-size: 1.25rem;
-            font-family: 'Montserrat', Arial, sans-serif;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        .dark-toggle-btn {
+
+        /* Efectos de confeti para recompensa */
+        .confeti {
             position: fixed;
-            top: 24px;
-            right: 36px;
-            z-index: 200;
-            background: #23272f;
+            width: 12px;
+            height: 12px;
+            background: #f59e0b;
+            animation: confetiFall 6s linear infinite;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .confeti:nth-child(2n) {
+            background: #10b981;
+            animation-delay: 0.5s;
+        }
+
+        .confeti:nth-child(3n) {
+            background: #3b82f6;
+            animation-delay: 1s;
+        }
+
+        .confeti:nth-child(4n) {
+            background: #ef4444;
+            animation-delay: 1.5s;
+        }
+
+        .confeti:nth-child(5n) {
+            background: #8b5cf6;
+            animation-delay: 2s;
+        }
+
+        @keyframes confetiFall {
+            0% {
+                transform: translateY(-20px) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(50vh) rotate(360deg);
+                opacity: 1;
+            }
+            80% {
+                transform: translateY(80vh) rotate(540deg);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Efecto de desbloqueo */
+        .camino-nodo.bloqueado {
+            position: relative;
+        }
+
+        .camino-nodo.bloqueado::before {
+            content: '🔒';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 1.2rem;
+            animation: lockShake 2s infinite;
+        }
+
+        @keyframes lockShake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        /* Botones estilo hero buttons */
+        .btn-camino-primary {
+            background: var(--primary-color);
             color: #fff;
+            border-radius: 1.8rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 0.85rem 2.2rem;
+            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
             border: none;
+            transition: background 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .btn-camino-primary:hover {
+            background: #6366f1;
+            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+            color: #fff;
+        }
+
+        /* Header y navegación estilo navbar principal */
+        .camino-navbar {
+            background-color: var(--background-color) !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 0.15rem 0;
+            min-height: 80px;
+            transition: all 0.3s ease;
+        }
+
+        .camino-navbar-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .camino-theme-toggle {
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            width: 48px;
-            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.7rem;
-            box-shadow: 0 2px 8px rgba(28,176,246,0.10);
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
         }
-        .dark-toggle-btn.light {
-            background: #fff;
-            color: #23272f;
-            border: 1px solid #bfc3c9;
+
+        .camino-theme-toggle:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
         }
-        .dark-mode {
+
+        /* Sidebar estilo dashboard */
+        .camino-sidebar {
+            background: var(--background-color);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 0 1.5rem 1.5rem 0;
+            padding: 2rem 0;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            z-index: 999;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0 0 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 0 1.5rem 1.5rem 0;
+            margin-right: 1rem;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            transform: translateX(10px);
+            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+        }
+
+        .sidebar-nav i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Contenido principal */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Avatar estilo dashboard */
+        .avatar-big {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 16px rgba(129, 140, 248, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 991.98px) {
+            .camino-sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-radius: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .camino-container {
+                max-width: 100%;
+            }
+
+            .camino-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .camino-navbar {
+                padding: 0.5rem 0;
+            }
+
+            .camino-navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .camino-hero {
+                padding: 2rem 1.5rem;
+            }
+
+            .camino-hero h1 {
+                font-size: 2rem;
+            }
+
+            .camino-nodo {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+
+            .camino-nodo .nodo-label {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.8rem;
+            }
+
+            .camino-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .btn-camino-primary,
+            .btn-camino-secondary,
+            .btn-camino-reward {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Estilos para los botones de acción */
+        .camino-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn-camino-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: #fff;
+            border-radius: 2rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 1rem 2.5rem;
+            box-shadow: 0 8px 25px rgba(129,140,248,0.3);
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-camino-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(129,140,248,0.4);
             color: #fff;
         }
-        .dark-bg {
-            background: linear-gradient(135deg, #23272f 60%, #44484d 100%) !important;
+
+        .btn-camino-secondary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            border-radius: 2rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 1rem 2.5rem;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-camino-secondary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.4);
             color: #fff;
         }
-        .dark-mode .sidebar {
-            background: #23272f !important;
+
+        .btn-camino-reward {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
             color: #fff;
+            border-radius: 2rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 1rem 2.5rem;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
         }
-        .dark-mode .sidebar-link,
-        .dark-mode .sidebar-home-btn {
+
+        .btn-camino-reward:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(245, 158, 11, 0.4);
             color: #fff;
-        }
-        .dark-mode .sidebar-link.active, .dark-mode .sidebar-link:hover {
-            background: linear-gradient(90deg, #44484d 60%, #23272f 100%) !important;
-            color: #fff;
-        }
-        .dark-mode .sidebar-home-btn {
-            background: #44484d;
-            color: #fff;
-            border: 1px solid #23272f;
         }
     </style>
 </head>
 <body>
-    <button class="dark-toggle-btn" id="toggle-dark" title="Modo oscuro/claro">
-        <i class="bi bi-moon-fill" id="icon-dark"></i>
-    </button>
-    <div class="sidebar">
-        <a href="trivia.html" class="sidebar-home-btn" title="Inicio">
-            <i class="bi bi-house-door-fill sidebar-home-icon"></i>
-        </a>
-        <nav class="sidebar-nav">
-            <a href="trivia.html" class="sidebar-link active">
-                <span class="sidebar-icon">📚</span>
-                <span class="sidebar-text">Lecciones</span>
-            </a>
-            <a href="logros.html" class="sidebar-link">
-                <span class="sidebar-icon">🏆</span>
-                <span class="sidebar-text">Logros</span>
-            </a>
-        </nav>
-    </div>
-    <div class="main-content">
-        <div class="camino-container">
-            <div class="camino-title">
-                <span style="font-size:0.95rem;opacity:0.8;">Ahorro Inteligente</span><br>
-                <span style="font-size:1.2rem;font-weight:800;">¡Recorre tu camino de aprendizaje!</span>
-            </div>
-            <div class="camino-niveles">
-                <!-- Nodo 1: Material -->
-                <a href="leccion.html" class="camino-nodo activo" title="Material de aprendizaje">
-                    <i class="bi bi-journal-text"></i>
-                    <div class="nodo-label">Material</div>
-                </a>
-                <div class="camino-linea"></div>
-                <!-- Nodo 2: Quiz (bloqueado) -->
-                <div class="camino-nodo bloqueado" title="Completa el material para desbloquear">
-                    <i class="bi bi-patch-question"></i>
-                    <div class="nodo-label">Quiz</div>
+    <!-- Navbar -->
+    <nav class="navbar camino-navbar">
+        <div class="container-fluid">
+            <div class="row align-items-center w-100">
+                <div class="col-md-6">
+                    <a class="navbar-brand camino-navbar-brand" href="../index.html">
+                        <i class="bi bi-currency-exchange me-2"></i>
+                        Finx
+                    </a>
                 </div>
-                <div class="camino-linea"></div>
-                <!-- Nodo 3: Recompensa (bloqueado) -->
-                <div class="camino-nodo bloqueado recompensa" title="Completa el quiz para desbloquear">
-                    <i class="bi bi-gift"></i>
-                    <div class="nodo-label">Recompensa</div>
+                <div class="col-md-6 text-end">
+                    <button class="camino-theme-toggle" id="themeToggle" title="Cambiar tema">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+    </button>
                 </div>
             </div>
         </div>
-    </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <nav class="camino-sidebar">
+        <div class="container-fluid">
+            <div class="text-center mb-4">
+                <div class="avatar-big">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <h5 class="mb-0">Usuario</h5>
+                <small class="text-muted">Nivel 2</small>
+            </div>
+            
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="bi bi-house-door-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="trivia.html" class="active">
+                        <i class="bi bi-book-fill"></i>
+                        <span>Lecciones</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="logros.html">
+                        <i class="bi bi-trophy-fill"></i>
+                        <span>Logros</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../goals.html">
+                        <i class="bi bi-flag-fill"></i>
+                        <span>Metas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../Help_center.html">
+                        <i class="bi bi-question-circle-fill"></i>
+                        <span>Ayuda</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </nav>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <div class="camino-container">
+            <div class="camino-hero">
+                <div class="text-center">
+                    <h1>Camino de Ahorro Inteligente</h1>
+                    <p class="lead">Recorre tu camino de aprendizaje paso a paso</p>
+                </div>
+            </div>
+
+            <div class="camino-niveles">
+                <!-- Nivel 1: Material de Estudio -->
+                <div class="camino-nodo completado" data-nivel="1">
+                    <img src="iconos_de_trivia/study.png" alt="Study" style="width: 50px; height: 50px;">
+                    <div class="nodo-label">Study</div>
+                    <div class="tooltip">Learn the fundamentals of smart saving</div>
+                </div>
+                <div class="camino-linea"></div>
+
+                <!-- Nivel 2: Quiz -->
+                <div class="camino-nodo activo" data-nivel="2">
+                    <img src="iconos_de_trivia/exam 2.png" alt="Quiz" style="width: 50px; height: 50px;">
+                    <div class="nodo-label">Quiz</div>
+                    <div class="tooltip">Test your knowledge with questions</div>
+                </div>
+                <div class="camino-linea"></div>
+
+                <!-- Nivel 3: Recompensa -->
+                <div class="camino-nodo recompensa" data-nivel="3">
+                    <img src="iconos_de_trivia/trophy.png" alt="Reward" style="width: 50px; height: 50px;">
+                    <div class="nodo-label">Reward</div>
+                    <div class="tooltip">Get your reward for completing the module!</div>
+                </div>
+            </div>
+
+            <div class="camino-actions">
+                <a href="leccion.html" class="btn-camino-primary">
+                    <img src="iconos_de_trivia/study.png" alt="Estudiar" style="width: 25px; height: 25px;">
+                    Ir al Material de Estudio
+                </a>
+                <a href="quiz.html" class="btn-camino-secondary" id="quizBtn" style="display: none;">
+                    <img src="iconos_de_trivia/exam 2.png" alt="Quiz" style="width: 25px; height: 25px;">
+                    Tomar Quiz
+                </a>
+                <a href="logros.html" class="btn-camino-reward" id="rewardBtn" style="display: none;">
+                    <img src="iconos_de_trivia/trophy.png" alt="Recompensa" style="width: 25px; height: 25px;">
+                    Ver Recompensa
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        // Mantener modo oscuro entre páginas
-        function setDarkMode(active) {
-            if(active) {
-                document.body.classList.add('dark-mode');
-                document.body.classList.add('dark-bg');
-                document.body.classList.remove('light-bg');
+        // Función para cambiar tema
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const currentTheme = html.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-bs-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            if (newTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
             } else {
-                document.body.classList.remove('dark-mode');
-                document.body.classList.remove('dark-bg');
-                document.body.classList.add('light-bg');
+                icon.className = 'bi bi-moon-fill';
             }
         }
-        // Inicializar según localStorage
-        const btn = document.getElementById('toggle-dark');
-        const icon = document.getElementById('icon-dark');
-        const darkPref = localStorage.getItem('modo-oscuro') === 'true';
-        setDarkMode(darkPref);
-        icon.className = darkPref ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
-        btn.classList.toggle('light', darkPref);
-        btn.addEventListener('click', function() {
-            const isDark = !document.body.classList.contains('dark-mode');
-            setDarkMode(isDark);
-            localStorage.setItem('modo-oscuro', isDark);
-            icon.className = isDark ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
-            btn.classList.toggle('light', isDark);
+
+        // Función para cargar progreso del usuario
+        function loadUserProgress() {
+            const progress = JSON.parse(localStorage.getItem('user_progress') || '{}');
+            const lessonProgress = JSON.parse(localStorage.getItem('lesson_ahorro_inteligente') || '{}');
+            const quizProgress = JSON.parse(localStorage.getItem('quiz_ahorro_inteligente') || '{}');
+            
+            return {
+                lessonCompleted: lessonProgress.completed || false,
+                quizCompleted: quizProgress.completed || false,
+                xp: progress.xp || 240
+            };
+        }
+
+        // Función para actualizar el estado del camino
+        function updatePathState() {
+            const progress = loadUserProgress();
+            const quizBtn = document.getElementById('quizBtn');
+            const rewardBtn = document.getElementById('rewardBtn');
+            
+            // Actualizar nodos según el progreso
+            const nodos = document.querySelectorAll('.camino-nodo');
+            
+            // Nodo 1 (Study) - siempre completado si hay progreso
+            if (progress.lessonCompleted) {
+                nodos[0].classList.remove('activo');
+                nodos[0].classList.add('completado');
+                nodos[1].classList.remove('bloqueado');
+                nodos[1].classList.add('activo');
+                
+                // Mostrar botón de quiz
+                quizBtn.style.display = 'inline-flex';
+            }
+            
+            // Nodo 2 (Quiz) - activo si la lección está completada
+            if (progress.quizCompleted) {
+                nodos[1].classList.remove('activo');
+                nodos[1].classList.add('completado');
+                nodos[2].classList.remove('bloqueado');
+                nodos[2].classList.add('recompensa');
+                
+                // Mostrar botón de recompensa
+                rewardBtn.style.display = 'inline-flex';
+                quizBtn.style.display = 'none';
+            }
+        }
+
+        // Inicializar tema
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            
+            const icon = document.getElementById('themeIcon');
+            if (savedTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
+            }
+            
+            // Event listener para el botón de tema
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+            // Actualizar estado del camino
+            updatePathState();
+            
+            // Interactividad de los nodos
+            document.querySelectorAll('.camino-nodo').forEach(nodo => {
+                nodo.addEventListener('click', function() {
+                    const nivel = this.getAttribute('data-nivel');
+                    console.log(`Nivel ${nivel} seleccionado`);
+                    
+                    // Lógica de navegación según el nivel
+                    if (nivel === '1') {
+                        // Material de estudio - ir a la lección
+                        window.location.href = 'leccion.html';
+                    } else if (nivel === '2') {
+                        // Quiz - ir a la página de quiz
+                        if (this.classList.contains('activo') || this.classList.contains('completado')) {
+                            window.location.href = 'quiz.html';
+                        } else {
+                            alert('Completa la lección primero para desbloquear el quiz.');
+                        }
+                    } else if (nivel === '3') {
+                        // Recompensa - mostrar mensaje de felicitación y confeti
+                        if (this.classList.contains('recompensa')) {
+                            createConfeti();
+                            setTimeout(() => {
+                                alert('¡Felicitaciones! Has completado el módulo de Ahorro Inteligente. ¡Obtienes 100 XP!');
+                                window.location.href = 'logros.html';
+                            }, 500);
+                        } else {
+                            alert('Completa el quiz primero para obtener tu recompensa.');
+                        }
+                    }
+                });
+            });
+
+            // Animación de entrada para los nodos
+            document.querySelectorAll('.camino-nodo').forEach((nodo, index) => {
+                nodo.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            // Función para crear confeti
+            function createConfeti() {
+                const body = document.body;
+                for (let i = 0; i < 100; i++) {
+                    const confeti = document.createElement('div');
+                    confeti.className = 'confeti';
+                    confeti.style.left = Math.random() * 100 + '%';
+                    confeti.style.top = '-20px';
+                    confeti.style.animationDelay = Math.random() * 2 + 's';
+                    confeti.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    body.appendChild(confeti);
+                    
+                    // Remover confeti después de 5 segundos
+                    setTimeout(() => {
+                        confeti.remove();
+                    }, 5000);
+                }
+            }
         });
     </script>
 </body>

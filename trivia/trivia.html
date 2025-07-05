@@ -1,608 +1,928 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finanzas para Jóvenes | Aprende Jugando</title>
-    <!-- Google Fonts: Montserrat y Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <title>Finx - Aprende Finanzas Jugando</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../styles.css">
+    <!-- Shared Sidebar CSS -->
+    <link rel="stylesheet" href="shared-sidebar.css">
     <style>
-        :root {
-            --color-bg: #f5f7fa;
-            --color-card: #fff;
-            --color-text: #333;
-            --color-accent: #58cc02;
-            --color-accent2: #1cb0f6;
-            --color-yellow: #ffd600;
-            --color-border: #e1e4e8;
-            --color-xp: #58cc02;
-            --color-module1: #eafbe7;
-            --color-module2: #e6f6fd;
-            --color-module3: #fff8e1;
+        /* Estilos específicos para la sección de trivia que coinciden con el sitio principal */
+        .trivia-hero {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border-radius: 2.2rem;
+            box-shadow: 0 8px 32px rgba(17,37,75,0.10);
+            padding: 3.5rem 2.5rem;
+            margin-bottom: 3rem;
+            transition: box-shadow 0.3s;
+            color: #23272b;
         }
-        body.dark-mode {
-            --color-bg: #23272f;
-            --color-card: #2c313a;
-            --color-text: #fff;
-            --color-accent: #58cc02;
-            --color-accent2: #1cb0f6;
-            --color-yellow: #ffd600;
-            --color-border: #22396a;
-            --color-xp: #58cc02;
-            --color-module1: #2e3d2f;
-            --color-module2: #23313a;
-            --color-module3: #3a3723;
+
+        [data-bs-theme="dark"] .trivia-hero {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: #f3f4f6;
         }
-        body {
-            color: #23272f;
-            font-family: 'Poppins', Arial, sans-serif;
-            margin: 0;
-            min-height: 100vh;
-            transition: background 0.4s;
+
+        .trivia-hero:hover {
+            box-shadow: 0 16px 48px rgba(17,37,75,0.16);
         }
-        .light-bg {
-            background: linear-gradient(135deg, #fff 60%, #e3e6ea 100%) !important;
+
+        .trivia-hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: #11254b;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
         }
-        .dark-bg {
-            background: linear-gradient(135deg, #23272f 60%, #44484d 100%) !important;
-            color: #fff;
+
+        [data-bs-theme="dark"] .trivia-hero h1 {
+            color: #f3f4f6;
         }
-        .dark-mode {
-            color: #fff;
+
+        .trivia-hero .lead {
+            font-size: 1.35rem;
+            color: #52525b;
+            font-weight: 500;
         }
-        h1, h2, h3, .path-title, .module-title {
-            font-family: 'Montserrat', Arial, sans-serif;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+
+        [data-bs-theme="dark"] .trivia-hero .lead {
+            color: #d1d5db;
         }
-        .container {
-            max-width: 900px;
+
+        /* Barra de progreso estilo Finx */
+        .xp-progress-container {
+            background: linear-gradient(145deg, #ffffff, #f0f2f5);
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .xp-progress-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+            border-color: rgba(17, 37, 75, 0.2);
+        }
+
+        [data-bs-theme="dark"] .xp-progress-container {
+            background: linear-gradient(145deg, #2d3748, #1a202c);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        [data-bs-theme="dark"] .xp-progress-container:hover {
+            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .xp-progress {
+            background: #e5e7eb;
+            border-radius: 1rem;
+            height: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        [data-bs-theme="dark"] .xp-progress {
+            background: #374151;
+        }
+
+        .xp-fill {
+            background: linear-gradient(90deg, #818cf8, #6366f1);
+            height: 100%;
+            border-radius: 1rem;
+            transition: width 0.5s ease;
+            width: 60%;
+        }
+
+        /* Módulos estilo feature cards del sitio principal */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px 10px 40px 10px;
         }
-        /* Header tipo Duolingo */
-        .header {
+
+        .module-card {
+            padding: 2.5rem;
+            background-color: var(--light-background);
+            border-radius: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            text-decoration: none;
+            color: var(--text-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        .module-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 16px rgba(129, 140, 248, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover .module-icon {
+            transform: scale(1.1);
+            box-shadow: 0 8px 24px rgba(129, 140, 248, 0.4);
+        }
+
+        .module-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .module-description {
+            color: var(--light-text);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .module-progress {
+            background: #e5e7eb;
+            border-radius: 0.5rem;
+            height: 8px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        [data-bs-theme="dark"] .module-progress {
+            background: #374151;
+        }
+
+        .module-progress-fill {
+            background: linear-gradient(90deg, #818cf8, #6366f1);
+            height: 100%;
+            border-radius: 0.5rem;
+            transition: width 0.5s ease;
+        }
+
+        .module-stats {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 0 10px 0;
-            border-bottom: none;
-            background: transparent;
+            font-size: 0.9rem;
+            color: var(--light-text);
         }
-        .logo {
-            font-family: 'Montserrat', Arial, sans-serif;
+
+
+
+        /* Botones estilo hero buttons */
+        .btn-trivia-primary {
+            background: var(--primary-color);
+            color: #fff;
+            border-radius: 1.8rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 0.85rem 2.2rem;
+            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
+            border: none;
+            transition: background 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-trivia-primary:hover {
+            background: #6366f1;
+            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+            color: #fff;
+        }
+
+        .btn-trivia-outline {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: #fff;
+            border-radius: 1.8rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 0.85rem 2.2rem;
+            box-shadow: 0 2px 8px rgba(129,140,248,0.07);
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        [data-bs-theme="dark"] .btn-trivia-outline {
+            background: #1f2937;
+            color: var(--primary-color);
+        }
+
+        .btn-trivia-outline:hover {
+            background: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+        }
+
+        /* Header y navegación estilo navbar principal */
+        .trivia-navbar {
+            background-color: var(--background-color) !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 0.15rem 0;
+            min-height: 80px;
+            transition: all 0.3s ease;
+        }
+
+        .trivia-navbar-brand {
+            font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            font-size: 28px;
-            color: var(--color-accent);
-            letter-spacing: 1px;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .trivia-theme-toggle {
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
         }
+
+        .trivia-theme-toggle:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+        }
+
+        /* Sidebar estilo dashboard */
+        .trivia-sidebar {
+            background: var(--background-color);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 0 1.5rem 1.5rem 0;
+            padding: 2rem 0;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            z-index: 999;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0 0 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 0 1.5rem 1.5rem 0;
+            margin-right: 1rem;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            transform: translateX(10px);
+            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+        }
+
+        .sidebar-nav i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Contenido principal */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        /* Avatar estilo dashboard */
         .avatar-big {
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: var(--color-accent2);
-            color: #fff;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.2rem;
-            font-weight: bold;
-            border: 4px solid var(--color-yellow);
-            box-shadow: 0 2px 8px rgba(28,176,246,0.10);
-            margin-right: 10px;
-        }
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .dark-toggle-btn {
-            position: fixed;
-            top: 24px;
-            right: 36px;
-            z-index: 200;
-            background: #23272f;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.7rem;
-            box-shadow: 0 2px 8px rgba(28,176,246,0.10);
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-        }
-        .dark-toggle-btn.light {
-            background: #fff;
-            color: #23272f;
-            border: 1px solid #bfc3c9;
-        }
-        .dark-mode .dark-toggle-btn {
-            background: #fff;
-            color: #23272f;
-            border: 1px solid #44484d;
-        }
-        /* Barra de progreso tipo Duolingo */
-        .xp-bar {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 30px 0 24px 0;
-            background: var(--color-card);
-            border-radius: 18px;
-            box-shadow: 0 2px 8px rgba(88,204,2,0.08);
-            padding: 14px 24px;
-            width: 100%;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .xp-label {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: var(--color-accent);
-        }
-        .xp-progress {
-            flex-grow: 1;
-            height: 16px;
-            background-color: #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
-            margin: 0 10px;
-        }
-        body.dark-mode .xp-progress {
-            background-color: #22396a;
-        }
-        .xp-filled {
-            height: 100%;
-            border-radius: 8px;
-            background: linear-gradient(90deg, var(--color-xp) 60%, var(--color-yellow) 100%);
-            width: 60%;
-            transition: width 0.5s;
-        }
-        .xp-star {
             font-size: 1.5rem;
-            color: var(--color-yellow);
-            margin-left: 8px;
-        }
-        /* Títulos y subtítulos */
-        .path-title {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            color: var(--color-accent2);
-            text-shadow: 0 2px 8px rgba(28,176,246,0.10);
-        }
-        .subtitle {
-            font-size: 1.2rem;
-            color: var(--color-text);
-            margin-bottom: 18px;
-        }
-        /* Módulos tipo tarjeta Duolingo */
-        .modules-grid {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-        .module-card {
-            background-color: var(--color-module1);
-            border-radius: 22px;
-            padding: 28px 22px 20px 22px;
-            box-shadow: 0 2px 12px rgba(88,204,2,0.10);
-            min-width: 220px;
-            max-width: 250px;
-            flex: 1 1 220px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            color: var(--color-text);
-            border: 3px solid transparent;
-        }
-        .module-card:nth-child(2) {
-            background-color: var(--color-module2);
-        }
-        .module-card:nth-child(3) {
-            background-color: var(--color-module3);
-        }
-        .module-card:hover {
-            transform: translateY(-6px) scale(1.04);
-            box-shadow: 0 6px 24px rgba(28,176,246,0.13);
-            border: 3px solid var(--color-accent2);
-        }
-        .module-icon {
-            font-size: 3rem;
-            margin-bottom: 12px;
-            color: var(--color-accent2);
-            background: #fff;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(28,176,246,0.10);
-        }
-        .module-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--color-accent);
-            text-align: center;
-        }
-        .module-card p {
-            font-size: 1rem;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        .module-progress {
-            width: 100%;
-            height: 8px;
-            background-color: #e0e0e0;
-            border-radius: 6px;
-            margin: 10px 0 4px 0;
-        }
-        body.dark-mode .module-progress {
-            background-color: #22396a;
-        }
-        .progress-bar {
-            height: 100%;
-            border-radius: 6px;
-            background: linear-gradient(90deg, var(--color-accent2) 60%, var(--color-accent) 100%);
-            transition: width 0.5s;
-        }
-        .module-card small {
-            color: #888;
-            font-size: 0.95rem;
-        }
-        /* Quiz tipo Duolingo */
-        .quiz-container {
-            background-color: var(--color-card);
-            border-radius: 22px;
-            padding: 32px 24px 24px 24px;
-            margin-top: 40px;
-            box-shadow: 0 2px 12px rgba(28,176,246,0.10);
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-            color: var(--color-text);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .quiz-question {
-            font-size: 1.3rem;
-            margin-bottom: 18px;
-            font-weight: 700;
-            color: var(--color-accent2);
-            text-align: center;
-        }
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            width: 100%;
-        }
-        .option {
-            padding: 16px;
-            border: 2px solid var(--color-border);
-            border-radius: 14px;
-            cursor: pointer;
-            transition: background-color 0.2s, border 0.2s, color 0.2s;
-            font-size: 1.1rem;
-            background: #fff;
-            color: var(--color-text);
-            font-weight: 500;
-        }
-        .option:hover {
-            background-color: var(--color-accent2);
-            color: #fff;
-        }
-        body.dark-mode .option {
-            background: var(--color-card);
-        }
-        body.dark-mode .option:hover {
-            background-color: var(--color-accent2);
-            color: #fff;
-        }
-        .option.correct {
-            border-color: var(--color-accent);
-            background-color: rgba(88,204,2,0.13);
-            color: var(--color-accent);
-        }
-        .option.incorrect {
-            border-color: #e74c3c;
-            background-color: rgba(231, 76, 60, 0.1);
-        }
-        /* Botones grandes */
-        .main-btn, .secondary-btn {
-            padding: 16px 32px;
-            border-radius: 22px;
-            border: none;
-            font-size: 1.1rem;
             font-weight: bold;
-            cursor: pointer;
-            margin: 10px 8px 0 0;
-            box-shadow: 0 2px 8px rgba(28,176,246,0.10);
-            transition: background 0.2s, color 0.2s;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 16px rgba(129, 140, 248, 0.3);
         }
-        .main-btn {
-            background: var(--color-accent);
-            color: #fff;
+
+        /* Responsive */
+        @media (max-width: 991.98px) {
+            .trivia-sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-radius: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
         }
-        .main-btn:hover {
-            background: var(--color-accent2);
-            color: #fff;
+
+            .trivia-hero h1 {
+                font-size: 2.5rem;
+            }
         }
-        .secondary-btn {
-            background: #fff;
-            color: var(--color-accent2);
-            border: 2px solid var(--color-accent2);
+
+        @media (max-width: 768px) {
+            .trivia-navbar {
+                padding: 0.5rem 0;
+            }
+
+            .trivia-navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .trivia-hero {
+                padding: 2rem 1.5rem;
+            }
+
+            .trivia-hero h1 {
+                font-size: 2rem;
+            }
+
+            .module-card {
+                padding: 2rem;
+            }
+
+            .quiz-container {
+                padding: 2rem;
+            }
         }
-        .secondary-btn:hover {
-            background: var(--color-accent2);
-            color: #fff;
+
+        /* Animaciones mejoradas y divertidas */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        @media (max-width: 700px) {
-            .container { padding: 10px 2px 30px 2px; }
-            .modules-grid { flex-direction: column; gap: 18px; }
-            .header { flex-direction: column; gap: 10px; }
-            .xp-bar { padding: 10px 10px; }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
         }
-        /* Sidebar Mejorada */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 280px;
-            height: 100vh;
-            background: var(--color-card);
-            box-shadow: 2px 0 12px rgba(28,176,246,0.07);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            z-index: 100;
-            transition: background 0.3s;
-            border-top-right-radius: 36px;
-            border-bottom-right-radius: 36px;
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
-        .sidebar-home-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            background: rgba(60, 65, 70, 0.7);
-            color: #fff;
-            font-size: 2rem;
-            margin-top: 18px;
-            margin-left: 18px;
-            margin-bottom: 0;
-            box-shadow: 0 2px 8px rgba(28,176,246,0.10);
-            transition: background 0.2s, box-shadow 0.2s;
-            text-decoration: none;
+
+        /* Animación shake removida */
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(99, 102, 241, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.8), 0 0 30px rgba(99, 102, 241, 0.6); }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Clases de animación */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Clase shake removida */
+
+        .rotate {
+            animation: rotate 2s linear infinite;
+        }
+
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        .zoom-in {
+            animation: zoomIn 0.6s ease-out;
+        }
+
+        /* Efectos de hover mejorados */
+        .module-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            overflow: hidden;
         }
-        .sidebar-home-btn:hover {
-            background: rgba(60, 65, 70, 0.9);
-            color: #fff;
-        }
-        .sidebar-home-icon {
-            font-size: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .sidebar-logo {
-            margin-top: 10px;
-        }
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
-            align-items: flex-start;
-            margin-top: 38px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
         }
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            font-size: 1.35rem;
-            color: var(--color-text);
-            text-decoration: none;
-            font-weight: 700;
-            padding: 18px 32px 18px 32px;
-            width: 100%;
-            border-radius: 0;
-            margin-left: 0;
-            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-            gap: 22px;
-            box-sizing: border-box;
+
+        .module-card:hover::before {
+            left: 100%;
         }
-        .sidebar-link.active, .sidebar-link:hover {
-            background: rgba(60, 65, 70, 0.7) !important;
-            color: #fff !important;
-            box-shadow: 0 4px 18px 0 rgba(44, 190, 255, 0.10);
-            border-top-right-radius: 32px;
-            border-bottom-right-radius: 32px;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            font-weight: 800;
-            filter: brightness(1.05);
-            outline: none;
-            width: 100%;
-            margin-left: 0;
-            padding-left: 32px;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+
+        .module-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
-        .sidebar-link.active .sidebar-icon, .sidebar-link.active .sidebar-text {
-            color: #fff !important;
-            text-shadow: 0 2px 8px rgba(44, 190, 255, 0.10);
+
+        .module-icon {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .sidebar-icon {
-            font-size: 2.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        .module-card:hover .module-icon {
+            transform: scale(1.2) rotate(5deg);
+            animation: glow 1s ease-in-out infinite;
         }
-        .sidebar-text {
-            font-size: 1.25rem;
-            font-family: 'Montserrat', Arial, sans-serif;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+
+        /* Efectos de partículas */
+        .particle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: particleFloat 3s ease-out forwards;
         }
-        /* Ajuste del contenido principal */
-        .main-content {
-            margin-left: 300px;
-            transition: margin 0.3s;
+
+        @keyframes particleFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0);
         }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px 10px 40px 10px;
         }
-        .header {
-            margin-top: 10px;
+
+        /* Efectos especiales para elementos */
+        .trivia-hero h1 {
+            animation: fadeInUp 1s ease-out 0.2s both;
         }
-        @media (max-width: 900px) {
-            .main-content { margin-left: 0; }
-            .sidebar { width: 100vw; height: 70px; flex-direction: row; border-radius: 0; box-shadow: 0 2px 12px rgba(28,176,246,0.07); }
-            .sidebar-logo { margin: 0 18px 0 10px; font-size: 2rem; }
-            .sidebar-nav { flex-direction: row; gap: 0; width: auto; align-items: center; }
-            .sidebar-link { font-size: 1.1rem; padding: 10px 16px; width: auto; border-radius: 10px; margin-left: 0; gap: 10px; }
-            .sidebar-icon { font-size: 1.5rem; }
-            .sidebar-text { display: none; }
-            .container { padding: 10px 2px 30px 2px; }
+
+        .trivia-hero .lead {
+            animation: fadeInUp 1s ease-out 0.4s both;
         }
-        @media (max-width: 700px) {
-            .main-content { margin-left: 0; margin-top: 80px; }
-            .sidebar { height: 60px; }
+
+        .xp-progress-container {
+            animation: slideInLeft 1s ease-out 0.6s both;
+        }
+
+        .modules-grid {
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        /* Efectos de progreso animados */
+        .xp-fill {
+            animation: slideInRight 1s ease-out 1s both;
+        }
+
+        .module-progress-fill {
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Efectos de celebración */
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            z-index: 10000;
+            pointer-events: none;
+            animation: zoomIn 0.5s ease-out, float 2s ease-in-out 0.5s infinite;
         }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <a href="../dashboard.html" class="sidebar-home-btn" title="Inicio">
-            <i class="bi bi-house-door-fill sidebar-home-icon"></i>
-        </a>
-        <nav class="sidebar-nav">
-            <a href="trivia.html" class="sidebar-link active">
-                <span class="sidebar-icon">📚</span>
-                <span class="sidebar-text">Lecciones</span>
-            </a>
-            <a href="logros.html" class="sidebar-link">
-                <span class="sidebar-icon">🏆</span>
-                <span class="sidebar-text">Logros</span>
-            </a>
-        </nav>
+    <!-- Navbar -->
+    <nav class="navbar trivia-navbar">
+        <div class="container-fluid">
+            <div class="row align-items-center w-100">
+                <div class="col-md-6">
+                    <a class="navbar-brand trivia-navbar-brand" href="../index.html">
+                        <i class="bi bi-currency-exchange me-2"></i>
+                        Finx
+                    </a>
     </div>
-    <div class="container main-content">
-        <!-- Header -->
-        <div class="header">
-            <div class="logo">💸 FinanzasJóvenes</div>
-            <div class="user-profile">
-                <div class="avatar-big">U</div>
-                <button class="dark-toggle-btn" id="toggle-dark" title="Modo oscuro/claro">
-                    <i class="bi bi-moon-fill" id="icon-dark"></i>
+                <div class="col-md-6 text-end">
+                    <button class="trivia-theme-toggle" id="themeToggle" title="Cambiar tema">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
                 </button>
-            </div>
-        </div>
-        <!-- Sección de aprendizaje -->
-        <div class="learning-path">
-            <h1 class="path-title">¡Aprende Finanzas Jugando!</h1>
-            <div class="subtitle">Completa lecciones, gana puntos y domina tu dinero.</div>
-            <!-- Barra de progreso -->
-            <div class="xp-bar">
-                <span class="xp-label">Nivel 2</span>
-                <div class="xp-progress">
-                    <div class="xp-filled"></div>
                 </div>
-                <span>60%</span>
-                <span class="xp-star">⭐</span>
             </div>
-            <!-- Módulos temáticos -->
-            <div class="modules-grid">
-                <!-- Módulo 1 -->
-                <a href="camino_ahorro.html" class="module-card" style="text-decoration:none;">
-                    <div class="module-icon">💵</div>
-                    <div class="module-title">Ahorro Inteligente</div>
-                    <p>Aprende a guardar dinero para tus metas.</p>
-                    <div class="module-progress">
-                        <div class="progress-bar" style="width: 30%;"></div>
-                    </div>
-                    <small>3/10 lecciones</small>
-                </a>
-                <!-- Módulo 2 -->
-                <a href="leccion.html" class="module-card" style="text-decoration:none;">
-                    <div class="module-icon">📈</div>
-                    <div class="module-title">Inversión Básica</div>
-                    <p>Descubre cómo hacer crecer tu dinero.</p>
-                    <div class="module-progress">
-                        <div class="progress-bar" style="width: 0%;"></div>
-                    </div>
-                    <small>0/8 lecciones</small>
-                </a>
-                <!-- Módulo 3 -->
-                <a href="leccion.html" class="module-card" style="text-decoration:none;">
-                    <div class="module-icon">💳</div>
-                    <div class="module-title">Créditos sin Miedo</div>
-                    <p>Entiende tarjetas y préstamos.</p>
-                    <div class="module-progress">
-                        <div class="progress-bar" style="width: 0%;"></div>
-                    </div>
-                    <small>0/5 lecciones</small>
-                </a>
-            </div>
-            <!-- Botones principales -->
-            <!-- (Eliminados los botones de Comenzar y Ver demo) -->
         </div>
-    </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <nav class="trivia-sidebar">
+        <div class="container-fluid">
+            <div class="text-center mb-4">
+                <div class="avatar-big">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <h5 class="mb-0">Usuario</h5>
+                <small class="text-muted">Nivel 2</small>
+            </div>
+            
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="bi bi-house-door-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="trivia.html" class="active">
+                        <i class="bi bi-book-fill"></i>
+                        <span>Lecciones</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="logros.html">
+                        <i class="bi bi-trophy-fill"></i>
+                        <span>Logros</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../goals.html">
+                        <i class="bi bi-flag-fill"></i>
+                        <span>Metas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../Help_center.html">
+                        <i class="bi bi-question-circle-fill"></i>
+                        <span>Ayuda</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <div class="container-fluid">
+            <!-- Hero Section -->
+            <section class="trivia-hero fade-in-up">
+                <div class="text-center">
+                    <h1>🎮 ¡Aprende Finanzas Jugando! 🎮</h1>
+                    <p class="lead">🚀 Completa lecciones, gana puntos y domina tu dinero de manera divertida ⭐</p>
+                </div>
+            </section>
+
+            <!-- Barra de progreso -->
+            <section class="xp-progress-container fade-in-up">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h3 class="mb-2">🏆 Nivel 2</h3>
+                        <p class="text-muted mb-0">⚡ ¡Sigue avanzando en tu camino de aprendizaje! 🚀</p>
+                    </div>
+                    <div class="col-md-6">
+                <div class="xp-progress">
+                            <div class="xp-fill"></div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">📊 60% completado</span>
+                            <span class="text-primary fw-bold">💎 240 XP</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Módulos de aprendizaje -->
+            <section class="modules-grid fade-in-up">
+                <!-- Módulo 1: Ahorro Inteligente -->
+                <a href="camino_ahorro.html" class="module-card">
+                    <div class="module-icon">
+                        <i class="bi bi-piggy-bank-fill"></i>
+            </div>
+                    <h3 class="module-title">💰 Ahorro Inteligente</h3>
+                    <p class="module-description">
+                        🎯 Aprende estrategias efectivas para guardar dinero y alcanzar tus metas financieras de manera inteligente.
+                    </p>
+                    <div class="module-progress">
+                        <div class="module-progress-fill" style="width: 30%;"></div>
+                    </div>
+                    <div class="module-stats">
+                        <span>📚 3 de 10 lecciones</span>
+                        <span class="text-success">✅ 30%</span>
+                    </div>
+                </a>
+
+                <!-- Módulo 2: Inversión Básica -->
+                <a href="leccion.html" class="module-card">
+                    <div class="module-icon">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                    <h3 class="module-title">📈 Inversión Básica</h3>
+                    <p class="module-description">
+                        🚀 Descubre los fundamentos de la inversión y cómo hacer crecer tu dinero de manera segura.
+                    </p>
+                    <div class="module-progress">
+                        <div class="module-progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <div class="module-stats">
+                        <span>📚 0 de 8 lecciones</span>
+                        <span class="text-muted">🔒 0%</span>
+                    </div>
+                </a>
+
+                <!-- Módulo 3: Créditos sin Miedo -->
+                <a href="leccion.html" class="module-card">
+                    <div class="module-icon">
+                        <i class="bi bi-credit-card-fill"></i>
+                    </div>
+                    <h3 class="module-title">💳 Créditos sin Miedo</h3>
+                    <p class="module-description">
+                        🛡️ Entiende cómo funcionan las tarjetas de crédito y préstamos para usarlos responsablemente.
+                    </p>
+                    <div class="module-progress">
+                        <div class="module-progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <div class="module-stats">
+                        <span>📚 0 de 5 lecciones</span>
+                        <span class="text-muted">🔒 0%</span>
+                    </div>
+                </a>
+            </section>
+
+
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        // Mantener modo oscuro entre páginas
-        function setDarkMode(active) {
-            if(active) {
-                document.body.classList.add('dark-mode');
-                document.body.classList.add('dark-bg');
-                document.body.classList.remove('light-bg');
+        // Función para cambiar tema
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const currentTheme = html.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-bs-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            if (newTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
             } else {
-                document.body.classList.remove('dark-mode');
-                document.body.classList.remove('dark-bg');
-                document.body.classList.add('light-bg');
+                icon.className = 'bi bi-moon-fill';
             }
         }
-        // Inicializar según localStorage
-        const btn = document.getElementById('toggle-dark');
-        const icon = document.getElementById('icon-dark');
-        const darkPref = localStorage.getItem('modo-oscuro') === 'true';
-        setDarkMode(darkPref);
-        icon.className = darkPref ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
-        btn.classList.toggle('light', darkPref);
-        btn.addEventListener('click', function() {
-            const isDark = !document.body.classList.contains('dark-mode');
-            setDarkMode(isDark);
-            localStorage.setItem('modo-oscuro', isDark);
-            icon.className = isDark ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
-            btn.classList.toggle('light', isDark);
+
+        // Inicializar tema
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            
+            const icon = document.getElementById('themeIcon');
+            if (savedTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
+            }
+            
+            // Event listener para el botón de tema
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+
         });
-        // Ejemplo de interacción en el quiz
-        document.querySelectorAll('.option').forEach(option => {
-            option.addEventListener('click', function() {
-                this.classList.add('correct'); // Simula respuesta correcta
+
+        // Efectos de partículas
+        function createParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            particle.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 3000);
+        }
+
+        // Efecto de celebración
+        function createCelebration() {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            celebration.textContent = '🎉';
+            document.body.appendChild(celebration);
+            
+            setTimeout(() => {
+                celebration.remove();
+            }, 3000);
+        }
+
+        // Efectos interactivos para las tarjetas de módulos
+        document.querySelectorAll('.module-card').forEach((card, index) => {
+            // Animación de entrada escalonada
+            card.style.animationDelay = `${index * 0.2}s`;
+            
+            card.addEventListener('mouseenter', function() {
+                // Crear partículas al hacer hover
+                const rect = this.getBoundingClientRect();
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        createParticle(
+                            rect.left + Math.random() * rect.width,
+                            rect.top + Math.random() * rect.height
+                        );
+                    }, i * 100);
+                }
+            });
+            
+            card.addEventListener('click', function(e) {
+                // Efecto de celebración al hacer clic
+                createCelebration();
+                
+                // Crear más partículas al hacer clic
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        createParticle(
+                            e.clientX + (Math.random() - 0.5) * 100,
+                            e.clientY + (Math.random() - 0.5) * 100
+                        );
+                    }, i * 50);
+                }
             });
         });
+
+        // Animación de progreso
+        document.querySelectorAll('.module-progress-fill').forEach((progress, index) => {
+            setTimeout(() => {
+                const width = progress.style.width;
+                progress.style.width = '0%';
+                setTimeout(() => {
+                    progress.style.width = width;
+                }, 500);
+            }, index * 300);
+        });
+
+        // Efecto de partículas de bienvenida
+        setTimeout(() => {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createParticle(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight
+                    );
+                }, i * 200);
+            }
+        }, 2000);
+
+        // Efectos especiales para elementos
+        document.querySelectorAll('.module-icon').forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                this.style.animation = 'bounce 0.6s ease-in-out';
+            });
+            
+            icon.addEventListener('animationend', function() {
+                this.style.animation = '';
+            });
+        });
+
+        // Efecto de shake removido para mejor experiencia
     </script>
 </body>
 </html>
