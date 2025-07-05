@@ -1890,4 +1890,14 @@ body.modal-open {
 .form-modern .form-select,
 .form-modern .btn {
   cursor: pointer;
+}
+
+/* Animación para botones modernos (excepto header) */
+@keyframes heroBtnBounce {
+    0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+    60% { opacity: 1; transform: translateY(-8px) scale(1.08); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.btn-animated {
+    animation: heroBtnBounce 1.2s both;
 } 
