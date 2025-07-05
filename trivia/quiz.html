@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finx - Quiz de Ahorro Inteligente</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../styles.css">
+    <!-- Shared Sidebar CSS -->
+    <link rel="stylesheet" href="shared-sidebar.css">
+    <style>
+        /* Variables de colores */
+        :root {
+            --fun-primary: #6366f1;
+            --fun-secondary: #8b5cf6;
+            --fun-accent: #06b6d4;
+            --fun-success: #10b981;
+            --fun-warning: #f59e0b;
+            --fun-danger: #ef4444;
+        }
+
+        /* Estilos específicos para el quiz */
+        .quiz-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2.2rem;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            padding: 3.5rem 2.5rem;
+            margin-bottom: 3rem;
+            color: white;
+            text-align: center;
+        }
+
+        [data-bs-theme="dark"] .quiz-hero {
+            background: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 100%);
+        }
+
+        .quiz-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+        }
+
+        .quiz-hero .lead {
+            font-size: 1.4rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+        }
+
+        /* Contenedor del quiz */
+        .quiz-container {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 2px solid transparent;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-radius: 2rem;
+            padding: 3rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--fun-primary), var(--fun-secondary), var(--fun-accent), var(--fun-success));
+        }
+
+        [data-bs-theme="dark"] .quiz-container {
+            background: linear-gradient(145deg, #1f2937, #111827);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        /* Barra de progreso del quiz */
+        .quiz-progress-container {
+            background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        [data-bs-theme="dark"] .quiz-progress-container {
+            background: linear-gradient(145deg, #374151, #1f2937);
+        }
+
+        .quiz-progress {
+            background: rgba(255,255,255,0.3);
+            border-radius: 1rem;
+            height: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        [data-bs-theme="dark"] .quiz-progress {
+            background: rgba(0,0,0,0.3);
+        }
+
+        .quiz-progress-fill {
+            background: linear-gradient(90deg, var(--fun-success), var(--fun-accent), var(--fun-primary));
+            height: 100%;
+            border-radius: 1rem;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* Pregunta */
+        .question-container {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 1.5rem;
+            border: 2px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .question-number {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--fun-primary);
+            margin-bottom: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        /* Opciones de respuesta */
+        .options-container {
+            display: grid;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .option {
+            background: #fff;
+            border: 2px solid #e5e7eb;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-bs-theme="dark"] .option {
+            background: #1f2937;
+            border-color: #374151;
+        }
+
+        .option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-color: var(--fun-primary);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
+            color: white;
+            border-color: var(--fun-primary);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, var(--fun-success), #059669);
+            color: white;
+            border-color: var(--fun-success);
+            animation: correctAnswer 0.5s ease-in-out;
+        }
+
+        .option.incorrect {
+            background: linear-gradient(135deg, var(--fun-danger), #dc2626);
+            color: white;
+            border-color: var(--fun-danger);
+            animation: incorrectAnswer 0.5s ease-in-out;
+        }
+
+        @keyframes correctAnswer {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes incorrectAnswer {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Botones de navegación */
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 3px solid #e5e7eb;
+        }
+
+        [data-bs-theme="dark"] .quiz-navigation {
+            border-top-color: #374151;
+        }
+
+        .btn-quiz {
+            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
+            color: #fff;
+            border-radius: 2rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 1rem 2.5rem;
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-quiz:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(99, 102, 241, 0.4);
+            color: #fff;
+        }
+
+        .btn-quiz:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Resultados */
+        .results-container {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .score-display {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 2rem 0;
+        }
+
+        .badge-earned {
+            background: linear-gradient(135deg, var(--fun-success), #059669);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 2rem 0;
+            display: inline-block;
+            animation: badgeEarned 1s ease-in-out;
+        }
+
+        @keyframes badgeEarned {
+            0% { transform: scale(0) rotate(-180deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        /* Efectos de partículas */
+        .particle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: particleFloat 3s ease-out forwards;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0);
+            }
+        }
+
+        /* Efectos de celebración */
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            z-index: 10000;
+            pointer-events: none;
+            animation: zoomIn 0.5s ease-out, float 2s ease-in-out 0.5s infinite;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.3);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+            50% { transform: translate(-50%, -50%) translateY(-10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .quiz-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .question-text {
+                font-size: 1.2rem;
+            }
+
+            .quiz-navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn-quiz {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Forzar estilos del botón de modo oscuro */
+        .trivia-theme-toggle {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
+            cursor: pointer;
+        }
+        .trivia-theme-toggle:hover {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+        }
+        .trivia-theme-toggle i {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar trivia-navbar">
+        <div class="container-fluid">
+            <div class="row align-items-center w-100">
+                <div class="col-md-6">
+                    <a class="navbar-brand trivia-navbar-brand" href="../index.html">
+                        <i class="bi bi-currency-exchange me-2"></i>
+                        Finx
+                    </a>
+                </div>
+                <div class="col-md-6 text-end">
+                    <button class="trivia-theme-toggle" id="themeToggle" title="Cambiar tema">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <nav class="trivia-sidebar">
+        <div class="container-fluid">
+            <div class="text-center mb-4">
+                <div class="avatar-big">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <h5 class="mb-0">Usuario</h5>
+                <small class="text-muted">Nivel 2</small>
+            </div>
+            
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="bi bi-house-door-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="trivia.html">
+                        <i class="bi bi-book-fill"></i>
+                        <span>Lecciones</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="logros.html">
+                        <i class="bi bi-trophy-fill"></i>
+                        <span>Logros</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../goals.html">
+                        <i class="bi bi-flag-fill"></i>
+                        <span>Metas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../Help_center.html">
+                        <i class="bi bi-question-circle-fill"></i>
+                        <span>Ayuda</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <div class="container-fluid">
+            <!-- Hero Section -->
+            <section class="quiz-hero">
+                <div class="text-center">
+                    <h1>🧠 Quiz de Ahorro Inteligente</h1>
+                    <p class="lead">🎯 Pon a prueba tus conocimientos y gana recompensas</p>
+                </div>
+            </section>
+
+            <!-- Contenedor del Quiz -->
+            <div class="quiz-container" id="quizContainer">
+                <!-- Barra de progreso -->
+                <div class="quiz-progress-container">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted">Progreso del Quiz</span>
+                        <span class="text-primary fw-bold" id="progressText">0/5</span>
+                    </div>
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <!-- Contenedor de pregunta -->
+                <div class="question-container" id="questionContainer">
+                    <div class="question-number" id="questionNumber">Pregunta 1 de 5</div>
+                    <div class="question-text" id="questionText">¿Qué es un fondo de emergencia?</div>
+                    
+                    <div class="options-container" id="optionsContainer">
+                        <!-- Las opciones se generarán dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Navegación -->
+                <div class="quiz-navigation">
+                    <button class="btn-quiz" id="prevBtn" disabled>
+                        <i class="bi bi-arrow-left"></i>
+                        Anterior
+                    </button>
+                    <button class="btn-quiz" id="nextBtn">
+                        Siguiente
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contenedor de resultados (oculto inicialmente) -->
+            <div class="quiz-container" id="resultsContainer" style="display: none;">
+                <div class="results-container">
+                    <h2>🎉 ¡Quiz Completado!</h2>
+                    <div class="score-display" id="scoreDisplay">8/10</div>
+                    <div class="badge-earned" id="badgeEarned">🏆 Badge de Ahorro Inteligente</div>
+                    <p class="lead">¡Excelente trabajo! Has demostrado un buen conocimiento sobre ahorro inteligente.</p>
+                    
+                    <div class="quiz-navigation">
+                        <a href="camino_ahorro.html" class="btn-quiz">
+                            <i class="bi bi-arrow-left"></i>
+                            Volver al Camino
+                        </a>
+                        <a href="trivia.html" class="btn-quiz">
+                            Continuar
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Base de datos de preguntas
+        const quizQuestions = [
+            {
+                question: "¿Qué es un fondo de emergencia?",
+                options: [
+                    "Dinero que guardas para gastos inesperados",
+                    "Una cuenta de inversión de alto riesgo",
+                    "Un préstamo bancario",
+                    "Una tarjeta de crédito"
+                ],
+                correct: 0,
+                explanation: "Un fondo de emergencia es dinero reservado específicamente para cubrir gastos imprevistos."
+            },
+            {
+                question: "¿Cuántos meses de gastos se recomienda tener en un fondo de emergencia?",
+                options: [
+                    "1-2 meses",
+                    "3-6 meses",
+                    "6-12 meses",
+                    "Más de 12 meses"
+                ],
+                correct: 1,
+                explanation: "Se recomienda tener entre 3 y 6 meses de gastos mensuales en tu fondo de emergencia."
+            },
+            {
+                question: "¿Cuál es la característica principal de un fondo de emergencia?",
+                options: [
+                    "Alto rendimiento",
+                    "Liquidez inmediata",
+                    "Riesgo alto",
+                    "Plazo fijo"
+                ],
+                correct: 1,
+                explanation: "La liquidez inmediata es fundamental para acceder al dinero cuando lo necesites."
+            },
+            {
+                question: "¿Dónde es mejor mantener un fondo de emergencia?",
+                options: [
+                    "En una cuenta de inversión",
+                    "En una cuenta de ahorro separada",
+                    "En efectivo en casa",
+                    "En criptomonedas"
+                ],
+                correct: 1,
+                explanation: "Una cuenta de ahorro separada ofrece seguridad y accesibilidad."
+            },
+            {
+                question: "¿Qué NO debe considerarse un fondo de emergencia?",
+                options: [
+                    "Dinero en cuenta de ahorro",
+                    "Dinero para vacaciones",
+                    "Dinero para gastos médicos",
+                    "Dinero para reparaciones del hogar"
+                ],
+                correct: 1,
+                explanation: "El dinero para vacaciones no es un fondo de emergencia, es un ahorro para metas específicas."
+            }
+        ];
+
+        // Variables del estado del quiz
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+        let quizCompleted = false;
+
+        // Elementos del DOM
+        const questionContainer = document.getElementById('questionContainer');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const quizContainer = document.getElementById('quizContainer');
+        const questionNumber = document.getElementById('questionNumber');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const progressText = document.getElementById('progressText');
+        const progressFill = document.getElementById('progressFill');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const badgeEarned = document.getElementById('badgeEarned');
+
+        // Función para cambiar tema
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const currentTheme = html.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-bs-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            if (newTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
+            }
+        }
+
+        // Función para crear partículas
+        function createParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            particle.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 3000);
+        }
+
+        // Función para crear celebración
+        function createCelebration() {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            celebration.textContent = '🎉';
+            document.body.appendChild(celebration);
+            
+            setTimeout(() => {
+                celebration.remove();
+            }, 3000);
+        }
+
+        // Función para mostrar pregunta
+        function showQuestion() {
+            const question = quizQuestions[currentQuestion];
+            
+            questionNumber.textContent = `Pregunta ${currentQuestion + 1} de ${quizQuestions.length}`;
+            questionText.textContent = question.question;
+            
+            // Generar opciones
+            optionsContainer.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.textContent = option;
+                optionDiv.dataset.index = index;
+                
+                // Marcar si ya fue respondida
+                if (userAnswers[currentQuestion] !== undefined) {
+                    if (index === question.correct) {
+                        optionDiv.classList.add('correct');
+                    } else if (index === userAnswers[currentQuestion] && index !== question.correct) {
+                        optionDiv.classList.add('incorrect');
+                    }
+                }
+                
+                optionDiv.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Actualizar botones
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.textContent = currentQuestion === quizQuestions.length - 1 ? 'Finalizar' : 'Siguiente';
+            
+            // Actualizar progreso
+            updateProgress();
+        }
+
+        // Función para seleccionar opción
+        function selectOption(index) {
+            if (userAnswers[currentQuestion] !== undefined) return; // Ya respondida
+            
+            userAnswers[currentQuestion] = index;
+            
+            // Marcar opción seleccionada
+            const options = optionsContainer.querySelectorAll('.option');
+            options.forEach((option, optionIndex) => {
+                option.classList.remove('selected');
+                if (optionIndex === index) {
+                    option.classList.add('selected');
+                }
+            });
+            
+            // Mostrar respuesta correcta después de un delay
+            setTimeout(() => {
+                const question = quizQuestions[currentQuestion];
+                options.forEach((option, optionIndex) => {
+                    if (optionIndex === question.correct) {
+                        option.classList.add('correct');
+                    } else if (optionIndex === index && index !== question.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+            }, 500);
+            
+            // Crear partículas
+            const rect = optionsContainer.getBoundingClientRect();
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    createParticle(
+                        rect.left + Math.random() * rect.width,
+                        rect.top + Math.random() * rect.height
+                    );
+                }, i * 100);
+            }
+        }
+
+        // Función para actualizar progreso
+        function updateProgress() {
+            const answered = userAnswers.filter(answer => answer !== undefined).length;
+            const progress = (answered / quizQuestions.length) * 100;
+            
+            progressText.textContent = `${answered}/${quizQuestions.length}`;
+            progressFill.style.width = `${progress}%`;
+        }
+
+        // Función para calcular puntuación
+        function calculateScore() {
+            let correct = 0;
+            userAnswers.forEach((answer, index) => {
+                if (answer === quizQuestions[index].correct) {
+                    correct++;
+                }
+            });
+            return correct;
+        }
+
+        // Función para mostrar resultados
+        function showResults() {
+            score = calculateScore();
+            const percentage = (score / quizQuestions.length) * 100;
+            
+            scoreDisplay.textContent = `${score}/${quizQuestions.length}`;
+            
+            // Determinar badge basado en puntuación
+            let badgeText = '';
+            if (percentage >= 90) {
+                badgeText = '🏆 Maestro del Ahorro';
+            } else if (percentage >= 80) {
+                badgeText = '🥇 Experto en Finanzas';
+            } else if (percentage >= 70) {
+                badgeText = '🥈 Ahorrador Avanzado';
+            } else if (percentage >= 60) {
+                badgeText = '🥉 Ahorrador Intermedio';
+            } else {
+                badgeText = '📚 Aprendiz en Progreso';
+            }
+            
+            badgeEarned.textContent = badgeText;
+            
+            // Guardar progreso en localStorage
+            saveProgress(score, percentage);
+            
+            // Ocultar quiz y mostrar resultados
+            quizContainer.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            // Efecto de celebración
+            createCelebration();
+            
+            // Crear partículas de celebración
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createParticle(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight
+                    );
+                }, i * 100);
+            }
+        }
+
+        // Función para guardar progreso
+        function saveProgress(score, percentage) {
+            const quizProgress = {
+                module: 'ahorro_inteligente',
+                score: score,
+                percentage: percentage,
+                completed: true,
+                date: new Date().toISOString(),
+                xpEarned: Math.floor(percentage * 10) // 10 XP por cada 10% de puntuación
+            };
+            
+            // Guardar en localStorage
+            localStorage.setItem('quiz_ahorro_inteligente', JSON.stringify(quizProgress));
+            
+            // Actualizar progreso general
+            updateGeneralProgress(quizProgress.xpEarned);
+        }
+
+        // Función para actualizar progreso general
+        function updateGeneralProgress(xpEarned) {
+            let generalProgress = JSON.parse(localStorage.getItem('user_progress') || '{}');
+            
+            if (!generalProgress.xp) generalProgress.xp = 0;
+            if (!generalProgress.completedQuizzes) generalProgress.completedQuizzes = [];
+            
+            generalProgress.xp += xpEarned;
+            generalProgress.completedQuizzes.push('ahorro_inteligente');
+            
+            localStorage.setItem('user_progress', JSON.stringify(generalProgress));
+        }
+
+        // Event listeners
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (userAnswers[currentQuestion] === undefined) {
+                alert('Por favor selecciona una respuesta antes de continuar.');
+                return;
+            }
+            
+            if (currentQuestion < quizQuestions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar tema
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            
+            const icon = document.getElementById('themeIcon');
+            if (savedTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
+            }
+            
+            // Event listener para el botón de tema
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+            // Mostrar primera pregunta
+            showQuestion();
+        });
+    </script>
+</body>
+</html> 
