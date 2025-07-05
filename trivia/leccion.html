@@ -19,390 +19,127 @@
     <!-- Shared Sidebar CSS -->
     <link rel="stylesheet" href="shared-sidebar.css">
     <style>
-        /* Variables de colores vibrantes */
-        :root {
-            --fun-primary: #6366f1;
-            --fun-secondary: #8b5cf6;
-            --fun-accent: #06b6d4;
-            --fun-success: #10b981;
-            --fun-warning: #f59e0b;
-            --fun-danger: #ef4444;
-            --fun-pink: #ec4899;
-            --fun-purple: #a855f7;
-            --fun-orange: #f97316;
-            --fun-yellow: #eab308;
+        body {
+            background: #E6E5E5;
         }
-
-        /* Estilos específicos para la lección divertida */
-        .leccion-hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 2.2rem;
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
-            padding: 3.5rem 2.5rem;
-            margin-bottom: 3rem;
-            transition: all 0.4s ease;
-            color: white;
-            position: relative;
-            overflow: hidden;
+        .dashboard-section {
+            padding: 4rem 0 2rem 0;
+            background: linear-gradient(135deg, var(--light-background) 0%, var(--background-color) 100%);
+            min-height: 100vh;
         }
-
-        /* Fondo animado simplificado - removido para mejor rendimiento */
-
-        [data-bs-theme="dark"] .leccion-hero {
-            background: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 100%);
-        }
-
-        .leccion-hero:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.4);
-        }
-
-        .leccion-hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: white;
-            letter-spacing: -1px;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .leccion-hero .lead {
-            font-size: 1.4rem;
-            color: rgba(255,255,255,0.9);
-            font-weight: 500;
-        }
-
-        /* Tarjeta de lección estilo moderno y divertido */
-        .leccion-card {
-            background: linear-gradient(145deg, #ffffff, #f8fafc);
-            border: 2px solid transparent;
-            background-clip: padding-box;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            border-radius: 2rem;
-            padding: 3rem;
-            margin: 2rem auto;
-            max-width: 900px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .leccion-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--fun-primary), var(--fun-secondary), var(--fun-accent), var(--fun-success));
-        }
-
-        .leccion-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-            border-color: var(--fun-primary);
-        }
-
-        [data-bs-theme="dark"] .leccion-card {
-            background: linear-gradient(145deg, #1f2937, #111827);
-            border: 2px solid rgba(255,255,255,0.1);
-        }
-
-        .leccion-header-content {
-            display: flex;
-            align-items: center;
-            margin-bottom: 2.5rem;
-            padding-bottom: 2rem;
-            border-bottom: 3px solid #e5e7eb;
-            position: relative;
-        }
-
-        .leccion-header-content::after {
-            content: '✨';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 2rem;
-        }
-
-        [data-bs-theme="dark"] .leccion-header-content {
-            border-bottom-color: #374151;
-        }
-
-        .leccion-icon {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: white;
-            margin-right: 2rem;
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .leccion-icon::after {
-            content: '💰';
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            font-size: 1.5rem;
-        }
-
-        .leccion-icon:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 12px 35px rgba(99, 102, 241, 0.6);
-        }
-
-        .leccion-title {
+        .dashboard-title {
             font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 0;
-        }
-
-        .leccion-subtitle {
-            color: #6b7280;
-            font-size: 1.2rem;
-            margin: 0.5rem 0 0 0;
-            font-weight: 500;
-        }
-
-        [data-bs-theme="dark"] .leccion-subtitle {
-            color: #d1d5db;
-        }
-
-        /* Progreso gamificado */
-        .progress-container {
-            background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        [data-bs-theme="dark"] .progress-container {
-            background: linear-gradient(145deg, #374151, #1f2937);
-        }
-
-        .progress-container::before {
-            content: '🎯';
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.5rem;
-            z-index: 2;
-        }
-
-        .leccion-progress {
-            background: rgba(255,255,255,0.3);
-            border-radius: 1rem;
-            height: 12px;
-            overflow: hidden;
-            margin: 1rem 0;
-            position: relative;
-        }
-
-        [data-bs-theme="dark"] .leccion-progress {
-            background: rgba(0,0,0,0.3);
-        }
-
-        .leccion-progress-fill {
-            background: linear-gradient(90deg, var(--fun-success), var(--fun-accent), var(--fun-primary));
-            height: 100%;
-            border-radius: 1rem;
-            transition: width 1s ease;
-            width: 75%;
-            position: relative;
-        }
-
-        /* Contenido con emojis y elementos divertidos */
-        .leccion-content {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: var(--text-color);
+            background: none;
+            -webkit-text-fill-color: unset;
             margin-bottom: 2rem;
+            color: #002366;
         }
-
-        .leccion-content h3 {
-            color: var(--fun-primary);
-            font-size: 1.6rem;
-            margin: 2.5rem 0 1.5rem 0;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .leccion-content h3::before {
-            font-size: 1.8rem;
-        }
-
-        .leccion-content p {
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-left: 1rem;
-        }
-
-        .leccion-content p::before {
-            content: '💡';
-            position: absolute;
-            left: -1.5rem;
-            top: 0;
-            font-size: 1rem;
-            opacity: 0.7;
-        }
-
-        .leccion-content ul {
-            margin: 1.5rem 0;
-            padding-left: 1.5rem;
-        }
-
-        .leccion-content li {
+        .summary-card i {
+            font-size: 2.5rem;
             margin-bottom: 1rem;
-            position: relative;
-            padding-left: 1rem;
-            transition: all 0.3s ease;
+            color: #004AAD;
         }
-
-        .leccion-content li:hover {
-            transform: translateX(5px);
-            color: var(--fun-primary);
-        }
-
-        .leccion-content li::before {
-            content: '✅';
-            position: absolute;
-            left: -1.5rem;
-            color: var(--fun-success);
-            font-weight: bold;
-        }
-
-        /* Cajas destacadas mejoradas */
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-            border: 2px solid var(--fun-primary);
+        .summary-card {
+            background: #FFFFFF;
             border-radius: 1.5rem;
-            padding: 2rem;
-            margin: 2.5rem 0;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 2px 8px #00236622;
+            padding: 2rem 1.5rem;
+            text-align: center;
             transition: all 0.3s ease;
+            border: 2px solid #004AAD;
         }
-
-        .highlight-box::before {
-            content: '🌟';
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
         }
-
-        .highlight-box:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2);
+        .summary-card h3 {
+            color: #004AAD;
         }
-
-        .highlight-box h4 {
-            color: var(--fun-primary);
-            margin-bottom: 1rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .summary-card .stat-number {
+            color: #EEE95B;
+            background: none;
+            -webkit-text-fill-color: unset;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            word-break: break-all;
         }
-
-        /* Sistema de puntos flotantes removido */
-
-        /* Botones de navegación mejorados */
-        .leccion-navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 3px solid #e5e7eb;
-            position: relative;
+        @media (max-width: 991.98px) {
+            .stat-number {
+                font-size: 2rem;
+            }
         }
-
-        .leccion-navigation::before {
-            content: '🚀';
-            position: absolute;
-            top: -1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2rem;
+        @media (max-width: 767.98px) {
+            .stat-number {
+                font-size: 1.5rem;
+            }
         }
-
-        [data-bs-theme="dark"] .leccion-navigation {
-            border-top-color: #374151;
-        }
-
-        .btn-leccion-primary {
-            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
+        .table thead th {
+            background: #004AAD;
             color: #fff;
-            border-radius: 2rem;
-            font-size: 1.2rem;
-            font-weight: 700;
-            padding: 1rem 2.5rem;
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
             border: none;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
         }
-
-        /* Efecto de brillo removido para mejor rendimiento */
-
-        .btn-leccion-primary:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 12px 35px rgba(99, 102, 241, 0.4);
+        .table tbody tr {
+            background: var(--light-background);
+        }
+        .table tbody tr:hover {
+            background: var(--background-color);
+        }
+        .table-responsive-scroll {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .btn-primary {
+            background: #004AAD;
+            border-color: #004AAD;
+        }
+        .btn-primary:hover {
+            background: #002366;
+            border-color: #002366;
+        }
+        .btn-danger {
+            background: #EEE95B;
+            color: #002366;
+            border: none;
+        }
+        .btn-danger:hover {
+            background: #004AAD;
             color: #fff;
         }
-
-        .btn-leccion-outline {
-            border: 3px solid var(--fun-primary);
-            color: var(--fun-primary);
-            background: #fff;
-            border-radius: 2rem;
-            font-size: 1.2rem;
-            font-weight: 700;
-            padding: 1rem 2.5rem;
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.1);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+        .card {
+            background: #FFFFFF;
+            border: 1.5px solid #004AAD;
         }
-
-        [data-bs-theme="dark"] .btn-leccion-outline {
-            background: #1f2937;
-            color: var(--fun-primary);
+        .table {
+            background: #FFFFFF;
         }
-
-        .btn-leccion-outline:hover {
-            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
-            color: #fff;
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 12px 35px rgba(99, 102, 241, 0.4);
+        .table tbody tr:nth-child(even) {
+            background: #E6E5E5;
         }
-
-        /* Header y navegación */
+        #typeSelector {
+            border: 2px solid #004AAD;
+            color: #002366;
+        }
+        .animated-fadein {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+        }
+        .animated-fadein.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.7) translateY(40px); opacity: 0; }
+            80% { transform: scale(1.05) translateY(-10px); opacity: 1; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        #welcomeOverlay.hide {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.7s cubic-bezier(.4,2,.6,1);
+        }
         .leccion-navbar {
             background: linear-gradient(135deg, var(--background-color), rgba(99, 102, 241, 0.05)) !important;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -410,7 +147,6 @@
             min-height: 80px;
             transition: all 0.3s ease;
         }
-
         .leccion-navbar-brand {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
@@ -420,7 +156,6 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         .leccion-theme-toggle {
             background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
             border: none;
@@ -435,212 +170,63 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
-
         .leccion-theme-toggle:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
         }
-
-        /* Sidebar */
-        .leccion-sidebar {
-            background: var(--background-color);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            border-radius: 0 1.5rem 1.5rem 0;
-            padding: 2rem 0;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 280px;
-            z-index: 999;
-        }
-
-        .sidebar-nav {
-            list-style: none;
-            padding: 0;
-            margin: 2rem 0 0 0;
-        }
-
-        .sidebar-nav li {
-            margin-bottom: 0.5rem;
-        }
-
-        .sidebar-nav a {
-            display: flex;
-            align-items: center;
-            padding: 1rem 2rem;
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border-radius: 0 1.5rem 1.5rem 0;
-            margin-right: 1rem;
-        }
-
-        .sidebar-nav a:hover,
-        .sidebar-nav a.active {
-            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
+        
+        /* Forzar estilos del botón de modo oscuro */
+        .trivia-theme-toggle {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
             color: white;
-            transform: translateX(10px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
-        }
-
-        .sidebar-nav i {
-            margin-right: 1rem;
-            font-size: 1.2rem;
-        }
-
-        /* Contenido principal */
-        .main-content {
-            margin-left: 280px;
-            padding: 2rem;
-            min-height: 100vh;
-        }
-
-        /* Avatar */
-        .avatar-big {
-            width: 70px;
-            height: 70px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
-            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin: 0 auto 1rem;
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            font-size: 1.5rem;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
+            cursor: pointer;
         }
-
-        .avatar-big:hover {
-            transform: scale(1.05);
+        .trivia-theme-toggle:hover {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
         }
-
-        /* Responsive */
-        @media (max-width: 991.98px) {
-            .leccion-sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                border-radius: 0;
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-
-            .leccion-card {
-                padding: 2rem;
-            }
-
-            .leccion-hero h1 {
-                font-size: 2.5rem;
-            }
+        .trivia-theme-toggle i {
+            font-size: 1.5rem;
         }
-
-        @media (max-width: 768px) {
-            .leccion-navbar {
-                padding: 0.5rem 0;
-        }
-
-            .leccion-navbar-brand {
-                font-size: 1.5rem;
-            }
-
-            .leccion-card {
-                padding: 1.5rem;
-            }
-
-            .leccion-title {
-                font-size: 1.8rem;
-            }
-
-            .leccion-header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .leccion-icon {
-                margin-right: 0;
-                margin-bottom: 1rem;
-            }
-
-            .leccion-navigation {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .btn-leccion-primary,
-            .btn-leccion-outline {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .leccion-hero {
-                padding: 2rem 1.5rem;
-            }
-
-            .leccion-hero h1 {
-                font-size: 2rem;
-            }
-        }
-
-        /* Animaciones de entrada */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in-up {
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        /* Efectos de partículas simplificados */
-        .particle {
-            position: fixed;
-            width: 4px;
-            height: 4px;
-            background: var(--fun-success);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            animation: particleFloat 2s ease-out forwards;
-        }
-
-        @keyframes particleFloat {
-            0% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
+        
+        :root {
+            --fun-primary: #6366f1;
+            --fun-secondary: #8b5cf6;
+            --fun-accent: #06b6d4;
+            --fun-success: #10b981;
+            --fun-warning: #f59e0b;
+            --fun-danger: #ef4444;
+            --fun-pink: #ec4899;
+            --fun-purple: #a855f7;
+            --fun-orange: #f97316;
+            --fun-yellow: #eab308;
         }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar leccion-navbar">
+    <nav class="navbar trivia-navbar">
         <div class="container-fluid">
             <div class="row align-items-center w-100">
                 <div class="col-md-6">
-                    <span class="navbar-brand leccion-navbar-brand" style="cursor:default;">
+                    <a class="navbar-brand trivia-navbar-brand" href="../index.html">
                         <i class="bi bi-currency-exchange me-2"></i>
-                        Lessons
-                    </span>
+                        Finx
+                    </a>
                 </div>
                 <div class="col-md-6 text-end">
-                    <button class="leccion-theme-toggle" id="themeToggle" title="Cambiar tema">
+                    <button class="trivia-theme-toggle" id="themeToggle" title="Cambiar tema">
                         <i class="bi bi-moon-fill" id="themeIcon"></i>
                     </button>
                 </div>
@@ -649,7 +235,7 @@
     </nav>
 
     <!-- Sidebar -->
-    <nav class="leccion-sidebar">
+    <nav class="trivia-sidebar">
         <div class="container-fluid">
             <div class="text-center mb-4">
                 <div class="avatar-big">
@@ -663,31 +249,31 @@
                 <li>
                     <a href="../dashboard.html">
                         <i class="bi bi-house-door-fill"></i>
-                        <span>Gestión</span>
+                        <span>Management</span>
                     </a>
                 </li>
                 <li>
-                    <a href="trivia.html" class="active">
+                    <a href="trivia/trivia.html" class="active">
                         <i class="bi bi-book-fill"></i>
-                        <span>Lecciones</span>
+                        <span>Lessons</span>
                     </a>
                 </li>
                 <li>
                     <a href="logros.html">
                         <i class="bi bi-trophy-fill"></i>
-                        <span>Logros</span>
+                        <span>Achievements</span>
                     </a>
                 </li>
                 <li>
                     <a href="../goals.html">
                         <i class="bi bi-flag-fill"></i>
-                        <span>Metas</span>
+                        <span>Goals</span>
                     </a>
                 </li>
                 <li>
                     <a href="../helpcenter2.html">
                         <i class="bi bi-question-circle-fill"></i>
-                        <span>Ayuda</span>
+                        <span>Help</span>
                     </a>
                 </li>
             </ul>
@@ -696,78 +282,106 @@
 
     <!-- Contenido principal -->
     <main class="main-content">
-        <div class="leccion-card fade-in-up">
-            <div class="leccion-header-content">
-                <div class="leccion-icon">
-                    <i class="bi bi-piggy-bank-fill"></i>
+        <section class="dashboard-section">
+            <div class="container">
+                <!-- Dashboard Hero Section -->
+                <section class="dashboard-hero achievements-hero mb-4">
+                    <h1 class="dashboard-title">💰 Ahorro Inteligente</h1>
+                    <p class="lead">¡Aprende a manejar tu dinero como un pro! 🚀</p>
+                </section>
+                
+                <!-- Tarjetas resumen -->
+                <div class="user-stats">
+                    <div class="row g-4 mb-4 justify-content-center animated-fadein" id="cardsRow">
+                        <div class="col-md-4">
+                            <div class="summary-card" id="progressCard">
+                                <i class="fas fa-chart-line"></i>
+                                <h3 class="h5 mt-2">Progreso</h3>
+                                <div class="stat-number">75%</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="summary-card" id="xpCard">
+                                <i class="fas fa-star"></i>
+                                <h3 class="h5 mt-2">XP Ganados</h3>
+                                <div class="stat-number">50</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="summary-card">
+                                <i class="fas fa-book"></i>
+                                <h3 class="h5 mt-2">Lecciones</h3>
+                                <div class="stat-number">1/3</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="leccion-title">💰 Ahorro Inteligente</h1>
-                    <p class="leccion-subtitle">¡Aprende a manejar tu dinero como un pro! 🚀</p>
+
+                <!-- Contenido de la lección -->
+                <div class="row animated-fadein" id="lessonRow">
+                    <div class="col-12">
+                        <div class="card p-4 shadow-sm animated-fadein" id="lessonCard">
+                            <h3 class="h4 mb-4">🛡️ ¿Qué es un Fondo de Emergencia?</h3>
+                            <p class="mb-4">
+                                Un <strong>fondo de emergencia</strong> es como tu súper escudo financiero 🛡️ - una cantidad de dinero que guardas especialmente para cuando la vida te lance una sorpresa. ¡Es tu salvavidas económico! 🆘
+                            </p>
+
+                            <div class="card mb-4" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); border: 2px solid #004AAD;">
+                                <div class="card-body">
+                                    <h4 class="h5 mb-3"><i class="bi bi-lightbulb-fill me-2"></i>💡 ¿Por qué es súper importante?</h4>
+                                    <p class="mb-0">Imagina que tu fondo de emergencia es como tener un paracaídas financiero 🪂. Te protege de caer en deudas costosas cuando aparecen gastos inesperados como emergencias médicas 🏥, reparaciones del hogar 🔧 o si pierdes tu trabajo 😰.</p>
+                                </div>
+                            </div>
+
+                            <h4 class="h5 mb-3">🎯 Características Principales</h4>
+                            <ul class="mb-4">
+                                <li><strong>🚪 Accesibilidad:</strong> Debe estar disponible cuando lo necesites, pero no tan fácil como para gastarlo en caprichos.</li>
+                                <li><strong>💧 Liquidez:</strong> Idealmente en una cuenta de ahorro o cuenta corriente separada.</li>
+                                <li><strong>📊 Cantidad adecuada:</strong> Se recomienda ahorrar entre 3 y 6 meses de tus gastos mensuales.</li>
+                                <li><strong>🔒 Separación:</strong> Mantén este dinero separado de tus ahorros para metas específicas.</li>
+                            </ul>
+
+                            <h4 class="h5 mb-3">🧮 ¿Cómo Calcular tu Fondo de Emergencia?</h4>
+                            <p class="mb-3">¡Vamos a hacer matemáticas divertidas! 🎉 Para calcular cuánto necesitas en tu fondo de emergencia:</p>
+                            <ol class="mb-4">
+                                <li>Suma todos tus gastos mensuales fijos (renta, servicios, comida, transporte) 📝</li>
+                                <li>Multiplica por 3-6 meses según tu situación ⚡</li>
+                                <li>Considera factores como estabilidad laboral y responsabilidades familiares 👨‍👩‍👧‍👦</li>
+                            </ol>
+
+                            <div class="card mb-4" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); border: 2px solid #004AAD;">
+                                <div class="card-body">
+                                    <h4 class="h5 mb-3"><i class="bi bi-check-circle-fill me-2"></i>🎯 Consejo Práctico</h4>
+                                    <p class="mb-0">¡No te abrumes! Comienza con un objetivo pequeño: ahorra $1,000 primero, luego aumenta gradualmente hasta alcanzar tu meta completa. ¡Cada paso cuenta! 🐾</p>
+                                </div>
+                            </div>
+
+                            <h4 class="h5 mb-3">🎁 Beneficios del Fondo de Emergencia</h4>
+                            <ul class="mb-4">
+                                <li>Te ayuda a evitar deudas en situaciones inesperadas 🚫💳</li>
+                                <li>Reduce el estrés financiero 😌</li>
+                                <li>Te permite tomar mejores decisiones financieras 🧠</li>
+                                <li>Protege tu plan de ahorro a largo plazo 🛡️</li>
+                            </ul>
+
+                            <p class="mb-4"><strong>🎉 ¡Recuerda!</strong> El ahorro es el primer paso para unas finanzas sanas. Un fondo de emergencia bien establecido te dará la paz mental y la seguridad financiera que necesitas para alcanzar tus metas. ¡Tú puedes! 💪</p>
+
+                            <!-- Botones de navegación -->
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <a href="camino_ahorro.html" class="btn btn-outline-primary">
+                                    <i class="bi bi-arrow-left"></i>
+                                    🔙 Volver al Camino
+                                </a>
+                                <button id="btnContinuarLeccion" class="btn btn-primary">
+                                    🚀 Continuar
+                                    <i class="bi bi-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="progress-container">
-                <div class="leccion-progress">
-                    <div class="leccion-progress-fill"></div>
-                </div>
-                <small class="text-muted">75% completado - ¡Sigue así! 🎉</small>
-            </div>
-
-            <div class="leccion-content">
-                <h3>🛡️ ¿Qué es un Fondo de Emergencia?</h3>
-                <p>
-                    Un <strong>fondo de emergencia</strong> es como tu súper escudo financiero 🛡️ - una cantidad de dinero que guardas especialmente para cuando la vida te lance una sorpresa. ¡Es tu salvavidas económico! 🆘
-                </p>
-
-                <div class="highlight-box">
-                    <h4><i class="bi bi-lightbulb-fill me-2"></i>💡 ¿Por qué es súper importante?</h4>
-                    <p>Imagina que tu fondo de emergencia es como tener un paracaídas financiero 🪂. Te protege de caer en deudas costosas cuando aparecen gastos inesperados como emergencias médicas 🏥, reparaciones del hogar 🔧 o si pierdes tu trabajo 😰.</p>
-                </div>
-
-                <h3>🎯 Características Principales</h3>
-                    <ul>
-                    <li><strong>🚪 Accesibilidad:</strong> Debe estar disponible cuando lo necesites, pero no tan fácil como para gastarlo en caprichos.</li>
-                    <li><strong>💧 Liquidez:</strong> Idealmente en una cuenta de ahorro o cuenta corriente separada.</li>
-                    <li><strong>📊 Cantidad adecuada:</strong> Se recomienda ahorrar entre 3 y 6 meses de tus gastos mensuales.</li>
-                    <li><strong>🔒 Separación:</strong> Mantén este dinero separado de tus ahorros para metas específicas.</li>
-                    </ul>
-
-                <h3>🧮 ¿Cómo Calcular tu Fondo de Emergencia?</h3>
-                <p>¡Vamos a hacer matemáticas divertidas! 🎉 Para calcular cuánto necesitas en tu fondo de emergencia:</p>
-                <ol>
-                    <li>Suma todos tus gastos mensuales fijos (renta, servicios, comida, transporte) 📝</li>
-                    <li>Multiplica por 3-6 meses según tu situación ⚡</li>
-                    <li>Considera factores como estabilidad laboral y responsabilidades familiares 👨‍👩‍👧‍👦</li>
-                </ol>
-
-                <div class="highlight-box">
-                    <h4><i class="bi bi-check-circle-fill me-2"></i>🎯 Consejo Práctico</h4>
-                    <p>¡No te abrumes! Comienza con un objetivo pequeño: ahorra $1,000 primero, luego aumenta gradualmente hasta alcanzar tu meta completa. ¡Cada paso cuenta! 🐾</p>
-                </div>
-
-                <h3>🎁 Beneficios del Fondo de Emergencia</h3>
-                <ul>
-                    <li>Te ayuda a evitar deudas en situaciones inesperadas 🚫💳</li>
-                    <li>Reduce el estrés financiero 😌</li>
-                    <li>Te permite tomar mejores decisiones financieras 🧠</li>
-                    <li>Protege tu plan de ahorro a largo plazo 🛡️</li>
-                </ul>
-
-                <p><strong>🎉 ¡Recuerda!</strong> El ahorro es el primer paso para unas finanzas sanas. Un fondo de emergencia bien establecido te dará la paz mental y la seguridad financiera que necesitas para alcanzar tus metas. ¡Tú puedes! 💪</p>
-            </div>
-
-            <div class="leccion-navigation">
-                <a href="camino_ahorro.html" class="btn-leccion-outline">
-                    <i class="bi bi-arrow-left"></i>
-                    🔙 Volver al Camino
-                </a>
-                <button id="btnContinuarLeccion" class="btn-leccion-primary">
-                    🚀 Continuar
-                    <i class="bi bi-arrow-right"></i>
-                </button>
-            </div>
-        </div>
+        </section>
     </main>
 
     <!-- Bootstrap JS -->
@@ -789,22 +403,6 @@
             } else {
                 icon.className = 'bi bi-moon-fill';
             }
-        }
-
-        // Sistema de puntos flotantes removido
-
-        // Efectos de partículas
-        function createParticle(x, y) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = x + 'px';
-            particle.style.top = y + 'px';
-            particle.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
-            document.body.appendChild(particle);
-            
-            setTimeout(() => {
-                particle.remove();
-            }, 3000);
         }
 
         // Función para guardar progreso de la lección
@@ -836,21 +434,13 @@
         // Función para mostrar notificación de progreso
         function showProgressNotification() {
             const notification = document.createElement('div');
-            notification.className = 'progress-notification';
+            notification.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-4 shadow';
+            notification.style.zIndex = '2000';
+            notification.style.minWidth = '300px';
             notification.innerHTML = `
-                <div class="notification-content">
-                    <h3>🎉 ¡Lección Completada!</h3>
-                    <p>Has ganado <strong>50 XP</strong> por completar esta lección.</p>
-                    <p>¡Ahora puedes tomar el quiz para poner a prueba tus conocimientos!</p>
-                    <div class="notification-actions">
-                        <button class="btn-notification" onclick="window.location.href='camino_ahorro.html'">
-                            Ver Progreso
-                        </button>
-                        <button class="btn-notification" onclick="window.location.href='quiz.html'">
-                            Tomar Quiz
-                        </button>
-                    </div>
-                </div>
+                <h5>🎉 ¡Lección Completada!</h5>
+                <p>Has ganado <strong>50 XP</strong> por completar esta lección.</p>
+                <p>¡Ahora puedes tomar el quiz para poner a prueba tus conocimientos!</p>
             `;
             
             document.body.appendChild(notification);
@@ -863,6 +453,7 @@
 
         // Inicializar tema y efectos
         document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar tema
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-bs-theme', savedTheme);
             
@@ -876,51 +467,18 @@
             // Event listener para el botón de tema
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
             
-            // Efectos interactivos simplificados (sin sistema de puntos)
-            const contentElements = document.querySelectorAll('.leccion-content p, .leccion-content li, .highlight-box');
-            
-            contentElements.forEach((element, index) => {
-                element.addEventListener('click', function(e) {
-                    // Crear partículas (reducidas)
-                    for (let i = 0; i < 2; i++) {
-                        setTimeout(() => {
-                            createParticle(e.clientX + (Math.random() - 0.5) * 30, e.clientY + (Math.random() - 0.5) * 30);
-                        }, i * 150);
-                    }
-                    
-                    // Efecto de resaltado simple
-                    this.style.transform = 'scale(1.01)';
-                    this.style.transition = 'transform 0.2s ease';
-                    setTimeout(() => {
-                        this.style.transform = 'scale(1)';
-                    }, 200);
-                });
-            });
-
-            // Efecto de progreso animado
-            const progressFill = document.querySelector('.leccion-progress-fill');
-            if (progressFill) {
-                setTimeout(() => {
-                    progressFill.style.width = '75%';
-                }, 500);
-            }
-
-            // Efecto de celebración reducido al cargar la página
-            setTimeout(() => {
-                for (let i = 0; i < 10; i++) {
-                    setTimeout(() => {
-                        createParticle(
-                            Math.random() * window.innerWidth,
-                            Math.random() * window.innerHeight
-                        );
-                    }, i * 200);
-                }
-            }, 1000);
+            // Animaciones de fade-in como en dashboard
+            setTimeout(function() {
+                document.querySelectorAll('.animated-fadein').forEach(el => el.classList.add('visible'));
+            }, 200);
 
             // Reemplazar el evento del botón continuar
             document.getElementById('btnContinuarLeccion').addEventListener('click', function() {
                 saveLessonProgress();
-                window.location.href = 'quiz.html';
+                showProgressNotification();
+                setTimeout(() => {
+                    window.location.href = 'quiz.html';
+                }, 2000);
             });
         });
     </script>

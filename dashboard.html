@@ -139,9 +139,145 @@
             pointer-events: none;
             transition: opacity 0.7s cubic-bezier(.4,2,.6,1);
         }
+        .leccion-navbar {
+            background: linear-gradient(135deg, var(--background-color), rgba(99, 102, 241, 0.05)) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 0.15rem 0;
+            min-height: 80px;
+            transition: all 0.3s ease;
+        }
+        .leccion-navbar-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .leccion-theme-toggle {
+            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+        .leccion-theme-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+        
+        /* Forzar estilos del botón de modo oscuro */
+        .trivia-theme-toggle {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
+            cursor: pointer;
+        }
+        .trivia-theme-toggle:hover {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+        }
+        .trivia-theme-toggle i {
+            font-size: 1.5rem;
+        }
+        
+        :root {
+            --fun-primary: #6366f1;
+            --fun-secondary: #8b5cf6;
+            --fun-accent: #06b6d4;
+            --fun-success: #10b981;
+            --fun-warning: #f59e0b;
+            --fun-danger: #ef4444;
+            --fun-pink: #ec4899;
+            --fun-purple: #a855f7;
+            --fun-orange: #f97316;
+            --fun-yellow: #eab308;
+        }
     </style>
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar trivia-navbar">
+        <div class="container-fluid">
+            <div class="row align-items-center w-100">
+                <div class="col-md-6">
+                    <a class="navbar-brand trivia-navbar-brand" href="index.html">
+                        <i class="bi bi-currency-exchange me-2"></i>
+                        Finx
+                    </a>
+                </div>
+                <div class="col-md-6 text-end">
+                    <button class="trivia-theme-toggle" id="themeToggle" title="Cambiar tema">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <nav class="trivia-sidebar">
+        <div class="container-fluid">
+            <div class="text-center mb-4">
+                <div class="avatar-big">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <h5 class="mb-0">Usuario</h5>
+                <small class="text-muted">Nivel 2</small>
+            </div>
+            
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="dashboard.html" class="active">
+                        <i class="bi bi-house-door-fill"></i>
+                        <span>Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="trivia/trivia.html">
+                        <i class="bi bi-book-fill"></i>
+                        <span>Lessons</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="trivia/logros.html">
+                        <i class="bi bi-trophy-fill"></i>
+                        <span>Achievements</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="goals.html">
+                        <i class="bi bi-flag-fill"></i>
+                        <span>Goals</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="helpcenter2.html">
+                        <i class="bi bi-question-circle-fill"></i>
+                        <span>Help</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <!-- Welcome Overlay -->
     <div id="welcomeOverlay" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(17,37,75,0.97);display:flex;align-items:center;justify-content:center;transition:opacity 0.7s cubic-bezier(.4,2,.6,1);opacity:1;">
       <div style="text-align:center;">
@@ -153,57 +289,15 @@
       </div>
     </div>
 
-    <!-- Sidebar -->
-    <nav class="leccion-sidebar">
-        <div class="container-fluid">
-            <div class="text-center mb-4">
-                <div class="avatar-big">
-                    <i class="bi bi-person-fill"></i>
-                </div>
-                <h5 class="mb-0">Usuario</h5>
-                <small class="text-muted">Nivel 2</small>
-            </div>
-            <ul class="sidebar-nav">
-                <li>
-                    <a href="dashboard.html" class="active">
-                        <i class="bi bi-house-door-fill"></i>
-                        <span>Gestión</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="trivia/leccion.html">
-                        <i class="bi bi-book-fill"></i>
-                        <span>Lecciones</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="trivia/logros.html">
-                        <i class="bi bi-trophy-fill"></i>
-                        <span>Logros</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="goals.html">
-                        <i class="bi bi-flag-fill"></i>
-                        <span>Metas</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="helpcenter2.html">
-                        <i class="bi bi-question-circle-fill"></i>
-                        <span>Ayuda</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
     <!-- Contenido principal -->
     <main class="main-content">
         <section class="dashboard-section">
             <div class="container">
                 <!-- Dashboard Hero Section -->
                 <section class="dashboard-hero achievements-hero mb-4">
-                    <p class="lead">Visualiza y controla tus finanzas de forma moderna y divertida.</p>
+                    <p class="dashboard-lead text-center fw-bold" style="font-size:2rem; color:#111;">
+                        Visualiza y controla tus finanzas de forma moderna y divertida.
+                    </p>
                 </section>
                 <!-- Tarjetas resumen -->
                 <div class="user-stats">
@@ -220,13 +314,6 @@
                                 <i class="fas fa-arrow-down"></i>
                                 <h3 class="h5 mt-2">Expenses</h3>
                                 <div class="stat-number" id="expenseTotal">$0.00</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="summary-card">
-                                <i class="fas fa-piggy-bank"></i>
-                                <h3 class="h5 mt-2">Savings</h3>
-                                <div class="stat-number" data-count="500">$500.00</div>
                             </div>
                         </div>
                     </div>
@@ -512,14 +599,12 @@
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-bs-theme', savedTheme);
             const icon = document.getElementById('themeIcon');
-            if (icon) {
-                if (savedTheme === 'dark') {
-                    icon.className = 'bi bi-sun-fill';
-                } else {
-                    icon.className = 'bi bi-moon-fill';
-                }
-                document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            if (savedTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
             }
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
         });
     </script>
 </body>
