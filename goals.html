@@ -13,53 +13,90 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         body {
-            background: #E6E5E5;
+            background: #F5F6FA !important;
             padding-top: 0;
             padding-bottom: 0;
         }
         .goal-title {
             font-weight: 800;
-            color: #EEE95B;
+            color: #004AAD !important;
             letter-spacing: 1px;
             text-align: center;
             font-size: 2.2rem;
             margin-bottom: 2.5rem;
         }
         .goal-card {
-            background: #002366;
-            border-radius: 1.2rem;
-            box-shadow: 0 2px 8px #00236622;
-            padding: 1.5rem 1.2rem;
-            margin-bottom: 1.5rem;
-            border: 2px solid #004AAD;
-            color: #fff;
+            background: #fff !important;
+            color: #002366 !important;
+            border: 2px solid #004AAD !important;
+            border-radius: 1.2rem !important;
+            box-shadow: 0 2px 8px #00236622 !important;
+            padding: 1.3rem 1.5rem 1.2rem 1.5rem !important;
+            margin-bottom: 2rem !important;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        .goal-card .badge {
-            font-size: 1em;
-        }
-        .progress-bar {
-            background: #E6E5E5;
-            border-radius: 1rem;
-            height: 1.2rem;
+        .goal-card .goal-title {
+            color: #004AAD !important;
+            font-size: 1.3rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
-        .progress {
+        .goal-card .badge {
+            font-size: 0.95em;
+            border-radius: 0.7em;
+            padding: 0.3em 0.8em;
+        }
+        .goal-card .progress-bar {
+            background: #E6E5E5;
+            border-radius: 1rem;
+            height: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .goal-card .progress {
             background: #EEE95B;
             height: 100%;
             border-radius: 1rem;
             transition: width 0.5s;
         }
-        .goal-actions button {
-            margin-right: 0.5rem;
+        .goal-card .goal-progress-text {
+            color: #002366 !important;
+            font-weight: 600;
+            font-size: 1em;
+            margin-bottom: 0.5rem;
         }
-        .card.form-modern {
-            background: #002366;
-            border-radius: 18px !important;
-            box-shadow: 0 8px 32px rgba(0,74,173,0.10) !important;
-            border: 2px solid #004AAD !important;
-            padding: 2.5rem 2rem;
-            max-width: 520px;
-            margin: 0 auto 2rem auto;
+        .goal-actions {
+            display: flex;
+            gap: 0.7rem;
+            margin-top: 0.7rem;
+        }
+        .goal-actions .btn {
+            font-size: 1rem;
+            border-radius: 0.7rem;
+            padding: 0.5rem 1.3rem;
+            font-weight: 700;
+            box-shadow: 0 1px 4px #00236611;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        }
+        .goal-actions .btn-outline-success {
+            background: #EEE95B !important;
+            color: #004AAD !important;
+            border: none;
+        }
+        .goal-actions .btn-outline-success:hover {
+            background: #004AAD !important;
+            color: #EEE95B !important;
+        }
+        .goal-actions .btn-outline-danger {
+            background: #fff !important;
+            color: #004AAD !important;
+            border: 2px solid #004AAD;
+        }
+        .goal-actions .btn-outline-danger:hover {
+            background: #004AAD !important;
+            color: #fff !important;
         }
         .form-modern h5 {
             text-align: center;
@@ -118,12 +155,6 @@
             color: #002366 !important;
         }
         /* Modal diseño institucional */
-        .modal-content {
-            background: #002366;
-            border: 2px solid #004AAD;
-            border-radius: 1.2rem;
-            color: #fff;
-        }
         .modal-header {
             border-bottom: 2px solid #EEE95B;
         }
@@ -201,9 +232,80 @@
             color: #fff !important;
             font-weight: 600;
         }
+        .leccion-navbar {
+            background: linear-gradient(135deg, var(--background-color), rgba(99, 102, 241, 0.05)) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 0.15rem 0;
+            min-height: 80px;
+            transition: all 0.3s ease;
+        }
+        .leccion-navbar-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .leccion-theme-toggle {
+            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+        .leccion-theme-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+        :root {
+            --fun-primary: #6366f1;
+            --fun-secondary: #8b5cf6;
+            --fun-accent: #06b6d4;
+            --fun-success: #10b981;
+            --fun-warning: #f59e0b;
+            --fun-danger: #ef4444;
+            --fun-pink: #ec4899;
+            --fun-purple: #a855f7;
+            --fun-orange: #f97316;
+            --fun-yellow: #eab308;
+        }
+        [data-bs-theme="dark"] .goal-card {
+            background: #fff !important;
+            color: #002366 !important;
+        }
+        @media (prefers-color-scheme: dark) {
+            .goal-card {
+                background: #fff !important;
+                color: #002366 !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar leccion-navbar">
+        <div class="container-fluid">
+            <div class="row align-items-center w-100">
+                <div class="col-12 position-relative">
+                    <span class="navbar-brand leccion-navbar-brand d-block text-center mx-auto" style="color:#004AAD;font-size:2.2rem;z-index:1;position:relative;">
+                        Goals
+                    </span>
+                    <button class="leccion-theme-toggle position-absolute top-50 end-0 translate-middle-y me-3" id="themeToggle" title="Change theme" style="right:0;">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
     <!-- Sidebar -->
     <nav class="leccion-sidebar">
         <div class="container-fluid">
@@ -218,31 +320,31 @@
                 <li>
                     <a href="dashboard.html">
                         <i class="bi bi-house-door-fill"></i>
-                        <span>Gestión</span>
+                        <span>Management</span>
                     </a>
                 </li>
                 <li>
-                    <a href="trivia/leccion.html">
+                    <a href="trivia/trivia.html">
                         <i class="bi bi-book-fill"></i>
-                        <span>Lecciones</span>
+                        <span>Lessons</span>
                     </a>
                 </li>
                 <li>
                     <a href="trivia/logros.html">
                         <i class="bi bi-trophy-fill"></i>
-                        <span>Logros</span>
+                        <span>Achievements</span>
                     </a>
                 </li>
                 <li>
                     <a href="goals.html" class="active">
                         <i class="bi bi-flag-fill"></i>
-                        <span>Metas</span>
+                        <span>Goals</span>
                     </a>
                 </li>
                 <li>
                     <a href="helpcenter2.html">
                         <i class="bi bi-question-circle-fill"></i>
-                        <span>Ayuda</span>
+                        <span>Help</span>
                     </a>
                 </li>
             </ul>
@@ -325,7 +427,7 @@
                 let achievedCard = '';
                 let actions = '';
                 if ((goal.saved || 0) >= goal.target) {
-                    achievedCard = `<div class="goal-achieved-card"><span class="goal-emoji">🏆</span>¡Logro alcanzado! Puedes ir por tu <b>${goal.name}</b></div>`;
+                    achievedCard = `<div class="goal-achieved-card"><span class="goal-emoji">🏆</span>¡Achievement reached! You can go for your <b>${goal.name}</b></div>`;
                     actions = `<button class="btn btn-sm btn-outline-danger" onclick="deleteGoal(${idx})">Delete</button>`;
                 } else {
                     actions = `<button class="btn btn-sm btn-outline-success" onclick="addToGoal(${idx})">Add Saving</button>\n<button class="btn btn-sm btn-outline-danger" onclick="deleteGoal(${idx})">Delete</button>`;
@@ -414,14 +516,12 @@
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-bs-theme', savedTheme);
             const icon = document.getElementById('themeIcon');
-            if (icon) {
-                if (savedTheme === 'dark') {
-                    icon.className = 'bi bi-sun-fill';
-                } else {
-                    icon.className = 'bi bi-moon-fill';
-                }
-                document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            if (savedTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
             }
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
         });
     </script>
 </body>

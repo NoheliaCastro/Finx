@@ -19,7 +19,7 @@
     <style>
         /* Estilos consistentes con el homepage */
         .hero-section {
-            background-color: #f8f9fa;
+            background-color: #fff;
             position: relative;
             color: #333;
             padding: 100px 0;
@@ -51,12 +51,33 @@
             position: relative;
             overflow: hidden;
         }
-
+        /* Solo botones del contenido principal, no del header */
+        .hero-section .btn,
+        .stats-section .btn,
+        .unique-features .btn,
+        .cta-section .btn {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
         .btn:hover {
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-
+        /* Solo botones del contenido principal, no del header */
+        .hero-section .btn:hover,
+        .stats-section .btn:hover,
+        .unique-features .btn:hover,
+        .cta-section .btn:hover {
+            animation: bounce 0.6s ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 20%, 60%, 100% { transform: translateY(-3px) scale(1.05); }
+            40% { transform: translateY(-8px) scale(1.05); }
+            80% { transform: translateY(-4px) scale(1.05); }
+        }
         .btn:active {
             transform: translateY(1px);
         }
@@ -392,15 +413,6 @@
         .icon-teal { color: #009688; }
         .icon-purple { color: #7C4DFF; }
         .icon-lime { color: #C6FF00; }
-        .section-shadow {
-            box-shadow: 0 8px 32px 0 rgba(30, 42, 73, 0.10);
-            border-radius: 2rem;
-            background: rgba(255,255,255,0.85);
-            margin-bottom: 2.5rem;
-        }
-        [data-bs-theme="dark"] .section-shadow {
-            background: rgba(35,39,47,0.85);
-        }
     </style>
 </head>
 <body>
@@ -416,8 +428,8 @@
                     <p class="lead mb-4">Feeling overwhelmed by your finances? If you're like most people, managing your money — from tracking income and expenses to trying to save — can feel like a never-ending job.</p>
                     <a href="register.html" class="btn btn-primary btn-lg btn-animated">Get Started Now</a>
                 </div>
-                <div class="col-lg-6" data-aos="fade-left">
-                    <img src="images/mi-imagen.png" alt="Finx App" class="img-fluid rounded-3 shadow">
+                <div class="col-lg-6 d-flex justify-content-center align-items-center" data-aos="fade-left">
+                    <img src="images/telefono.png" alt="Finx App" class="about-phone-img" style="max-width: 440px; width: 100%; height: auto; animation: floating 3.5s ease-in-out infinite; background: transparent; transition: transform 0.3s; box-shadow: none; border: none;">
                 </div>
             </div>
         </div>
