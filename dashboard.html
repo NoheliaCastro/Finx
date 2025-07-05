@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    <!-- Shared Sidebar CSS -->
+    <link rel="stylesheet" href="trivia/shared-sidebar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         body {
             background: #E6E5E5;
@@ -150,70 +153,116 @@
       </div>
     </div>
 
-    <!-- Header -->
-    <div id="header" data-dashboard></div>
-
-    <section class="dashboard-section">
-        <div class="container">
-            <h1 class="dashboard-title mb-4">Dashboard</h1>
-            <!-- Tarjetas resumen -->
-            <div class="row g-4 mb-4 justify-content-center animated-fadein" id="cardsRow">
-                <div class="col-md-4">
-                    <div class="summary-card" id="incomeCard" style="cursor:pointer;">
-                        <i class="fas fa-arrow-up"></i>
-                        <h3 class="h5 mt-2">Income</h3>
-                        <div class="stat-number" id="incomeTotal">$0.00</div>
-                    </div>
+    <!-- Sidebar -->
+    <nav class="leccion-sidebar">
+        <div class="container-fluid">
+            <div class="text-center mb-4">
+                <div class="avatar-big">
+                    <i class="bi bi-person-fill"></i>
                 </div>
-                <div class="col-md-4">
-                    <div class="summary-card" id="expenseCard" style="cursor:pointer;">
-                        <i class="fas fa-arrow-down"></i>
-                        <h3 class="h5 mt-2">Expenses</h3>
-                        <div class="stat-number" id="expenseTotal">$0.00</div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="summary-card">
-                        <i class="fas fa-piggy-bank"></i>
-                        <h3 class="h5 mt-2">Savings</h3>
-                        <div class="stat-number" data-count="500">$500.00</div>
-                    </div>
-                </div>
+                <h5 class="mb-0">Usuario</h5>
+                <small class="text-muted">Nivel 2</small>
             </div>
-
-            <!-- Selector de tipo y tabla de movimientos recientes -->
-            <div class="row animated-fadein" id="movementsRow">
-                <div class="col-12">
-                    <div class="d-flex flex-wrap gap-2 justify-content-end align-items-center mb-2">
-                        <select id="typeSelector" class="form-select w-auto">
-                            <option value="all" selected>All</option>
-                            <option value="income">Income</option>
-                            <option value="expense">Expense</option>
-                        </select>
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="dashboard.html" class="active">
+                        <i class="bi bi-house-door-fill"></i>
+                        <span>Gestión</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="trivia/leccion.html">
+                        <i class="bi bi-book-fill"></i>
+                        <span>Lecciones</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="trivia/logros.html">
+                        <i class="bi bi-trophy-fill"></i>
+                        <span>Logros</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="goals.html">
+                        <i class="bi bi-flag-fill"></i>
+                        <span>Metas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="helpcenter2.html">
+                        <i class="bi bi-question-circle-fill"></i>
+                        <span>Ayuda</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <section class="dashboard-section">
+            <div class="container">
+                <!-- Dashboard Hero Section -->
+                <section class="dashboard-hero achievements-hero mb-4">
+                    <p class="lead">Visualiza y controla tus finanzas de forma moderna y divertida.</p>
+                </section>
+                <!-- Tarjetas resumen -->
+                <div class="user-stats">
+                    <div class="row g-4 mb-4 justify-content-center animated-fadein" id="cardsRow">
+                        <div class="col-md-4">
+                            <div class="summary-card" id="incomeCard" style="cursor:pointer;">
+                                <i class="fas fa-arrow-up"></i>
+                                <h3 class="h5 mt-2">Income</h3>
+                                <div class="stat-number" id="incomeTotal">$0.00</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="summary-card" id="expenseCard" style="cursor:pointer;">
+                                <i class="fas fa-arrow-down"></i>
+                                <h3 class="h5 mt-2">Expenses</h3>
+                                <div class="stat-number" id="expenseTotal">$0.00</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="summary-card">
+                                <i class="fas fa-piggy-bank"></i>
+                                <h3 class="h5 mt-2">Savings</h3>
+                                <div class="stat-number" data-count="500">$500.00</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card p-3 shadow-sm animated-fadein" id="movementsCard">
-                        <h3 class="h5 mb-3">Recent Movements</h3>
-                        <div class="table-responsive table-responsive-scroll">
-                            <table class="table table-hover align-middle mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Category</th>
-                                        <th>Amount</th>
-                                        <th>Type</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="movementsTableBody"></tbody>
-                            </table>
+                </div>
+
+                <!-- Selector de tipo y tabla de movimientos recientes -->
+                <div class="row animated-fadein" id="movementsRow">
+                    <div class="col-12">
+                        <div class="d-flex flex-wrap gap-2 justify-content-end align-items-center mb-2">
+                            <select id="typeSelector" class="form-select w-auto">
+                                <option value="all" selected>All</option>
+                                <option value="income">Income</option>
+                                <option value="expense">Expense</option>
+                            </select>
+                        </div>
+                        <div class="card p-3 shadow-sm animated-fadein" id="movementsCard">
+                            <h3 class="h5 mb-3">Recent Movements</h3>
+                            <div class="table-responsive table-responsive-scroll">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Category</th>
+                                            <th>Amount</th>
+                                            <th>Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="movementsTableBody"></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <div id="footer"></div>
+        </section>
+    </main>
 
     <!-- Income Modal -->
     <div class="modal fade" id="incomeModal" tabindex="-1" aria-labelledby="incomeModalLabel" aria-hidden="true">
@@ -443,6 +492,34 @@
             bootstrap.Modal.getInstance(document.getElementById('expenseModal')).hide();
             showSuccessAlert('Expense added successfully!');
             this.reset();
+        });
+
+        // Función para cambiar tema
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const currentTheme = html.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-bs-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            if (newTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            const icon = document.getElementById('themeIcon');
+            if (icon) {
+                if (savedTheme === 'dark') {
+                    icon.className = 'bi bi-sun-fill';
+                } else {
+                    icon.className = 'bi bi-moon-fill';
+                }
+                document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            }
         });
     </script>
 </body>
