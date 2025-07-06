@@ -134,6 +134,10 @@
             80% { transform: scale(1.05) translateY(-10px); opacity: 1; }
             100% { transform: scale(1) translateY(0); opacity: 1; }
         }
+        @keyframes bounceLogo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px) scale(1.08); }
+        }
         #welcomeOverlay.hide {
             opacity: 0;
             pointer-events: none;
@@ -211,6 +215,83 @@
             --fun-orange: #f97316;
             --fun-yellow: #eab308;
         }
+        .logo-shadow-container {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          max-width: 1100px;
+          max-height: 420px;
+          min-width: 180px;
+          min-height: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex: 1;
+        }
+        .logo-shadow-img,
+        .logo-main-img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+        .logo-shadow-img {
+          z-index: 1;
+        }
+        .logo-main-img {
+          z-index: 2;
+          left: -4px;
+          top: 0;
+        }
+        .logo-fadein {
+          opacity: 0;
+          animation: logoFadeIn 1.2s ease-in forwards;
+        }
+        .logo-main-img.logo-fadein {
+          animation-delay: 0.3s;
+        }
+        @keyframes logoFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        /* Animaciones de slide */
+        .welcome-slideup {
+          opacity: 0;
+          transform: translateY(60px);
+          transition: opacity 0.7s, transform 0.7s cubic-bezier(.4,0,.2,1);
+        }
+        .welcome-slideup.visible {
+          opacity: 1 !important;
+          transform: translateY(0);
+        }
+        @media (max-width: 900px) {
+          .logo-shadow-container {
+            max-width: 98vw;
+            max-height: 28vw;
+            min-width: 120px;
+            min-height: 40px;
+          }
+        }
+        .welcome-fadein {
+          opacity: 0;
+          transition: opacity 0.7s, transform 0.7s cubic-bezier(.4,0,.2,1);
+        }
+        .welcome-fadein.visible {
+          opacity: 1 !important;
+          transform: none;
+        }
+        .welcome-pop {
+          opacity: 0;
+          transform: scale(0.7) translateY(40px);
+          transition: opacity 0.7s, transform 0.7s cubic-bezier(.4,0,.2,1);
+        }
+        .welcome-pop.visible {
+          opacity: 1 !important;
+          transform: scale(1) translateY(0);
+          animation: popIn 1s cubic-bezier(.4,2,.6,1);
+        }
     </style>
 </head>
 <body>
@@ -279,13 +360,18 @@
         </div>
     </nav>
     <!-- Welcome Overlay -->
-    <div id="welcomeOverlay" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(17,37,75,0.97);display:flex;align-items:center;justify-content:center;transition:opacity 0.7s cubic-bezier(.4,2,.6,1);opacity:1;">
-      <div style="text-align:center;">
-        <div style="font-size:4rem;font-weight:900;color:#EEE95B;text-shadow:0 4px 32px #00236699,0 1px 0 #fff;letter-spacing:2px;animation:popIn 1s cubic-bezier(.4,2,.6,1);">
-          <i class="fas fa-star fa-spin" style="color:#fff;font-size:2.5rem;margin-bottom:1.5rem;"></i><br/>
-          Welcome to <span style="color:#fff;">Finx</span>
+    <div id="welcomeOverlay" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:#11254b;display:flex;align-items:center;justify-content:center;transition:opacity 0.7s cubic-bezier(.4,2,.6,1);opacity:1;">
+      <div id="welcomeBlock" style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100vw;height:100vh;">
+        <div id="welcomeTitle" class="welcome-pop" style="font-size:4.2rem;font-weight:900;color:#fff;text-shadow:0 4px 32px #00236699,0 1px 0 #fff;letter-spacing:2px;margin-bottom:0.5rem;margin-top:0;opacity:0;z-index:2;display:none;">
+          Welcome to
         </div>
-        <div style="margin-top:2rem;font-size:1.5rem;color:#fff;opacity:0.8;letter-spacing:1px;">Your smart financial journey starts here</div>
+        <div class="logo-shadow-container" id="welcomeLogo" style="opacity:0;flex:1;max-height:420px;width:100%;margin-bottom:0.5rem;display:none;">
+          <img src="images/modo-oscuro.png" alt="Logo sombra" class="logo-shadow-img logo-fadein" />
+          <img src="images/modo-claro.png" alt="Logo principal" class="logo-main-img logo-fadein" />
+        </div>
+        <div id="welcomeSubtitle" class="welcome-pop" style="font-size:2.6rem;color:#fff;opacity:0.92;letter-spacing:1px;opacity:0;transition:opacity 0.7s;position:relative;top:0;margin-bottom:0;z-index:2;margin-top:2.5rem;display:none;">
+          Track, Manage, and Save with Ease!
+        </div>
       </div>
     </div>
 
@@ -499,11 +585,38 @@
             updateDashboardTotals();
             fillMovementsTableByType();
             const overlay = document.getElementById('welcomeOverlay');
+            const welcomeBlock = document.getElementById('welcomeBlock');
+            const welcomeTitle = document.getElementById('welcomeTitle');
+            const welcomeLogo = document.getElementById('welcomeLogo');
+            const welcomeSubtitle = document.getElementById('welcomeSubtitle');
+            // Solo mostrar el overlay si viene del login
             if (localStorage.getItem('showWelcomeOverlay') === 'true') {
+                overlay.style.display = 'flex';
+                // Paso 1: Welcome to (fade in)
+                welcomeTitle.style.display = 'block';
+                setTimeout(() => { welcomeTitle.classList.add('visible'); }, 100);
+                setTimeout(() => {
+                    welcomeTitle.classList.remove('visible');
+                    setTimeout(() => { welcomeTitle.style.display = 'none'; }, 500);
+                }, 1800);
+                // Paso 2: Logo (fade in, más tiempo)
+                setTimeout(() => {
+                    welcomeLogo.style.display = 'flex';
+                    setTimeout(() => { welcomeLogo.style.opacity = 1; }, 100);
+                }, 2500);
+                setTimeout(() => {
+                    welcomeLogo.style.opacity = 0;
+                    setTimeout(() => { welcomeLogo.style.display = 'none'; }, 500);
+                }, 5000);
+                // Paso 3: Subtítulo (pop)
+                setTimeout(() => {
+                    welcomeSubtitle.style.display = 'block';
+                    setTimeout(() => { welcomeSubtitle.classList.add('visible'); }, 100);
+                }, 5700);
                 setTimeout(() => {
                     overlay.classList.add('hide');
                     setTimeout(() => overlay.style.display = 'none', 800);
-                }, 1500);
+                }, 7500);
                 localStorage.removeItem('showWelcomeOverlay');
             } else {
                 overlay.style.display = 'none';
