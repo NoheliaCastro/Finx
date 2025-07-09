@@ -1901,3 +1901,27 @@ body.modal-open {
 .btn-animated {
     animation: heroBtnBounce 1.2s both;
 } 
+
+[data-bs-theme="dark"] .features-beautiful-section {
+    background: #232A36 !important;
+    color: #fff !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+}
+[data-bs-theme="dark"] .features-beautiful-section .btn-primary {
+    background: #EEE95B !important;
+    color: #232A36 !important;
+}
+[data-bs-theme="dark"] .features-beautiful-section .btn-primary:hover {
+    background: #232A36 !important;
+    color: #EEE95B !important;
+} 
+
+[data-bs-theme="dark"] .benefits-hero {
+    color: #fff !important;
+}
+[data-bs-theme="dark"] .benefits-hero .benefits-hero-title {
+    color: #fff !important;
+}
+[data-bs-theme="dark"] .benefits-hero .benefits-hero-subtitle {
+    color: #fff !important;
+} 

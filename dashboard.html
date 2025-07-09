@@ -21,10 +21,21 @@
         body {
             background: #E6E5E5;
         }
+        [data-bs-theme="dark"] body {
+            background: #181C24;
+        }
         .dashboard-section {
             padding: 4rem 0 2rem 0;
             background: linear-gradient(135deg, var(--light-background) 0%, var(--background-color) 100%);
             min-height: 100vh;
+        }
+        [data-bs-theme="dark"] .dashboard-section {
+            background: linear-gradient(135deg, #232A36 0%, #181C24 100%);
+        }
+        /* Ajustar el fondo del sidebar en modo oscuro si es necesario */
+        [data-bs-theme="dark"] .trivia-sidebar {
+            background: #181C24 !important;
+            border-right: 1.5px solid #232A36;
         }
         .dashboard-title {
             font-size: 2.5rem;
@@ -119,6 +130,15 @@
         #typeSelector {
             border: 2px solid #004AAD;
             color: #002366;
+        }
+        [data-bs-theme="dark"] #typeSelector {
+            background: #232A36;
+            color: #EEE95B;
+            border: 2px solid #EEE95B;
+        }
+        [data-bs-theme="dark"] #typeSelector option {
+            background: #232A36;
+            color: #EEE95B;
         }
         .animated-fadein {
             opacity: 0;

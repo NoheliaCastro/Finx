@@ -10,7 +10,23 @@
     <link rel="stylesheet" href="trivia/shared-sidebar.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
-        body { background: #fff; }
+        body {
+            background: #E6E5E5;
+        }
+        [data-bs-theme="dark"] body {
+            background: #181C24;
+        }
+        .main-section, .help-section {
+            background: linear-gradient(135deg, var(--light-background, #fff) 0%, var(--background-color, #E6E5E5) 100%);
+            min-height: 100vh;
+        }
+        [data-bs-theme="dark"] .main-section, [data-bs-theme="dark"] .help-section {
+            background: linear-gradient(135deg, #232A36 0%, #181C24 100%);
+        }
+        [data-bs-theme="dark"] .trivia-sidebar {
+            background: #181C24 !important;
+            border-right: 1.5px solid #232A36;
+        }
         .leccion-navbar {
             background: linear-gradient(135deg, var(--background-color), rgba(99, 102, 241, 0.05)) !important;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);

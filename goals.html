@@ -13,9 +13,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         body {
-            background: #F5F6FA !important;
-            padding-top: 0;
-            padding-bottom: 0;
+            background: #E6E5E5;
+        }
+        [data-bs-theme="dark"] body {
+            background: #181C24;
+        }
+        .main-section, .goals-section {
+            background: linear-gradient(135deg, var(--light-background, #fff) 0%, var(--background-color, #E6E5E5) 100%);
+            min-height: 100vh;
+        }
+        [data-bs-theme="dark"] .main-section, [data-bs-theme="dark"] .goals-section {
+            background: linear-gradient(135deg, #232A36 0%, #181C24 100%);
+        }
+        [data-bs-theme="dark"] .trivia-sidebar {
+            background: #181C24 !important;
+            border-right: 1.5px solid #232A36;
         }
         .goal-title {
             font-weight: 800;
