@@ -1,56 +1,92 @@
 <!-- Footer -->
-    <footer class="footer py-5 bg-light mt-5">
-      <div class="container">
-        <div class="row g-4">
-
-
-          <div class="col-lg-3">
-            <h3 class="h5 mb-4">Sobre Finx</h3>
-            <p class="text-muted">Tu plataforma de educación financiera para estudiantes. Aprende, juega y crece con nosotros.</p>
-          </div>
-          <div class="col-lg-3">
-            <h3 class="h5 mb-4">Enlaces Rápidos</h3>
-            <ul class="list-unstyled">
-              <li><a href="index.html" class="text-muted">Home</a></li>
-              <li><a href="about_us.html" class="text-muted">About us</a></li>
-              <li><a href="Help_center.html" class="text-muted">Help center </a></li>
-            </ul>
-          </div>
-          <div class="col-lg-3">
-            <h3 class="h5 mb-4">Contacto</h3>
-            <p class="text-muted mb-1"><i class="fas fa-envelope me-2"></i>info@finx.com</p>
-            <p class="text-muted"><i class="fas fa-phone me-2"></i>+34 123 456 789</p>
-          </div>
-          <div class="col-lg-3">
-            <h3 class="h5 mb-4">Síguenos</h3>
-            <a href="#" class="text-primary me-3"><i class="fab fa-facebook fa-lg"></i></a>
-            <a href="#" class="text-primary me-3"><i class="fab fa-twitter fa-lg"></i></a>
-            <a href="#" class="text-primary"><i class="fab fa-instagram fa-lg"></i></a>
-          </div>
-        </div>
-        <div class="text-center mt-4">
-          <span class="text-muted">&copy; 2025 Finx. Todos los derechos reservados.</span>
+<footer class="footer py-5 bg-light mt-5">
+  <div class="container">
+    <div class="row g-4 align-items-center justify-content-center text-center text-lg-start">
+      <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-start mb-4 mb-lg-0 pt-lg-4">
+        <picture class="mb-3">
+          <source srcset="images/modo-oscuro.png" media="(prefers-color-scheme: dark)">
+          <img src="images/modo-claro.png" alt="Finx Logo" style="height:110px;width:auto;">
+        </picture>
+        <span class="footer-desc fw-bold" style="font-size:1.5rem;">Your financial education platform.<br>Learn, play, and grow with us.</span>
+      </div>
+      <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-start justify-content-center pt-lg-4">
+        <h3 class="h6 mb-3 text-uppercase" style="letter-spacing:1px;">Quick Links</h3>
+        <ul class="list-unstyled mb-0">
+          <li><a href="index.html" class="text-muted">Home</a></li>
+          <li><a href="about_us.html" class="text-muted">About Us</a></li>
+          <li><a href="Help_center.html" class="text-muted">Help Center</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-start justify-content-center pt-lg-4">
+        <h3 class="h6 mb-3 text-uppercase" style="letter-spacing:1px;">Contact</h3>
+        <ul class="list-unstyled mb-0">
+          <li class="mb-1"><i class="fas fa-envelope me-2"></i>example@finx.com</li>
+          <li class="mb-1"><i class="fas fa-phone me-2"></i>+1 234 567 8900</li>
+          <li><i class="fas fa-map-marker-alt me-2"></i>123 Main St, City, Country</li>
+        </ul>
+      </div>
+      <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-start justify-content-center pt-lg-4">
+        <h3 class="h6 mb-3 text-uppercase" style="letter-spacing:1px;">Follow Us</h3>
+        <div class="d-flex gap-3 justify-content-center justify-content-lg-start">
+          <a href="#" class="text-primary"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#" class="text-primary"><i class="fab fa-twitter fa-lg"></i></a>
+          <a href="#" class="text-primary"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#" class="text-primary"><i class="fab fa-linkedin fa-lg"></i></a>
         </div>
       </div>
-    </footer>
+    </div>
+    <hr class="my-4" style="border-color:#004AAD;">
+    <div class="text-center">
+      <span class="text-muted">&copy; 2025 Finx. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
 
 <style>
-    [data-bs-theme="dark"] .footer {
-        background-color: #1a1a1a !important;
-    }
-
-    [data-bs-theme="dark"] .footer h3,
-    [data-bs-theme="dark"] .footer p,
-    [data-bs-theme="dark"] .footer a,
-    [data-bs-theme="dark"] .footer span {
-        color: #fff !important;
-    }
-
-    [data-bs-theme="dark"] .footer .text-muted {
-        color: rgba(255, 255, 255, 0.7) !important;
-    }
-
-    [data-bs-theme="dark"] .footer .text-primary {
-        color: #0d6efd !important;
-    }
+[data-bs-theme="dark"] .footer {
+    background-color: #181C24 !important;
+}
+[data-bs-theme="dark"] .footer h3,
+[data-bs-theme="dark"] .footer p,
+[data-bs-theme="dark"] .footer a,
+[data-bs-theme="dark"] .footer span {
+    color: #fff !important;
+}
+[data-bs-theme="dark"] .footer .text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+[data-bs-theme="dark"] .footer .text-primary {
+    color: #EEE95B !important;
+}
+.footer {
+    font-family: 'Montserrat', 'Rubik', sans-serif;
+    background: linear-gradient(135deg, #fff 0%, #E6E5E5 100%);
+    border-top: 2.5px solid #004AAD;
+    box-shadow: 0 -2px 16px #004AAD11;
+}
+.footer a.text-primary:hover {
+    color: #004AAD !important;
+    text-decoration: underline;
+}
+.footer h3 {
+    color: #004AAD;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.footer hr {
+    border-top: 2px solid #004AAD;
+    opacity: 1;
+}
+.footer-desc {
+    color: #23272b;
+    text-align: left;
+}
+[data-bs-theme="dark"] .footer-desc {
+    color: #fff;
+}
+@media (max-width: 991.98px) {
+  .footer .row > div {
+    margin-bottom: 2rem;
+  }
+}
 </style>
