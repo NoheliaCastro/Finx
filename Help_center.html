@@ -936,37 +936,36 @@
         }
     </style>
 </head>
-<body>
+<body style="background: #e6f7f6;">
     <!-- Header reutilizable -->
     <div id="header"></div>
 
     <!-- Mensaje de bienvenida y jerarquía visual -->
-    <section class="welcome-section section-shadow" style="padding: 48px 0 24px 0;">
-        <div class="container text-center" data-aos="fade-down">
-            <div style="font-size:3.5rem; color:#11254b; margin-bottom: 0.5rem;">
+    <section class="welcome-section section-shadow" style="padding: 96px 0 48px 0; background:#e6f7f6; width:100vw; max-width:100vw; margin-left:calc(-50vw + 50%); margin-right:calc(-50vw + 50%); border-radius:0;">
+        <div class="container text-center" style="max-width:100vw;width:100%;background:#e6f7f6;padding-top:3rem;padding-bottom:2.5rem;">
+            <div style="font-size:4.2rem; color:#11254b; margin-bottom: 0.5rem;">
                 <i class="fas fa-hands-helping"></i>
             </div>
-            <h1 class="display-4 fw-bold mb-3">Help Center</h1>
-            <p class="lead mb-2" style="font-size:1.7rem;">Welcome to the Finx Help Center! Here you'll find answers, resources, and support.</p>
-            <p class="text-muted mb-0" style="font-size:1.3rem;">How can we help you?</p>
+            <h1 class="display-3 fw-bold mb-3 fade-in" style="font-size:3.2rem;">Welcome to the Finx Help Center!</h1>
+            <div class="lead mb-0 fade-in" style="font-size:1.7rem; color:#222;">Here you can find answers, resources, and support.</div>
         </div>
     </section>
 
     <main style="margin-bottom: 80px;">
         
-        <div class="main-cards-and-image-container">
+        <div class="main-cards-and-image-container" style="margin-top: 3.5rem;">
             <div class="categories" data-aos="fade-up">
-                <div class="category-card" id="who" onclick="scrollToSection('who-section')">
+                <div class="category-card card-animate" id="who" onclick="scrollToSection('who-section')">
                     <div class="category-icon info"><i class="fas fa-info-circle"></i></div>
                     <div class="category-title">Who we are?</div>
                     <div class="category-desc">Sumary about who we are and what is our finality.</div>
                 </div>
-                <div class="category-card" id="subs" onclick="scrollToSection('subscription-section')">
+                <div class="category-card card-animate" id="subs" onclick="scrollToSection('subscription-section')">
                     <div class="category-icon money"><i class="fas fa-money-check-alt"></i></div>
                     <div class="category-title">Suscriptions</div>
                     <div class="category-desc">Every related to the Premium Membership.</div>
                 </div>
-                <div class="category-card" id="contact" onclick="scrollToSection('contact-section')">
+                <div class="category-card card-animate" id="contact" onclick="scrollToSection('contact-section')">
                     <div class="category-icon mail"><i class="fas fa-envelope"></i></div>
                     <div class="category-title">Contacts us</div>
                     <div class="category-desc">If you need more information or need help be sure to contacts us.</div>
@@ -974,30 +973,26 @@
             </div>
         </div>
 
-        <section id="who-section" class="content-section" style="padding-top: 48px; padding-bottom: 48px;">
-            <div class="container">
+        <section id="who-section" class="content-section fade-in" style="padding-top: 48px; padding-bottom: 48px; background: #e6f7f6; width:100vw; max-width:100vw; margin-left:calc(-50vw + 50%); margin-right:calc(-50vw + 50%); border-radius:0;">
+            <div class="container-fluid py-5">
                 <div class="row align-items-center justify-content-center flex-lg-row flex-column-reverse">
-                    <div class="col-lg-6" data-aos="fade-right">
-                        <div class="who-text-content" style="max-width: 500px; margin: 0 auto;">
-                            <h2 class="fw-bold mb-3">Who we are?</h2>
-                            <p>
-                                FINX is your personal financial assistant. We help you understand, manage, and improve your finances with simple and accessible digital tools.
-                            </p>
-                            <p>
-                                Our goal is to be the leading financial app for young people in Latin America, offering education and personalized support.
-                            </p>
-                        </div>
+                    <div class="col-lg-6 mb-4 mb-lg-0 d-flex justify-content-center">
+                        <img src="images/group.jpeg" alt="Who We Are Image" style="max-width: 100%; width: 100%; height: auto; border-radius: 2rem; box-shadow: 0 8px 32px rgba(0,184,217,0.18), 0 2px 16px rgba(0,0,0,0.10); background: #fff; object-fit:cover;" class="img-fluid">
                     </div>
-                    <div class="col-lg-6 mb-4 mb-lg-0 text-center" data-aos="fade-left">
-                        <div class="custom-image-area-who mx-auto" style="max-width: 400px;">
-                            <img src="images/Img2.jpg" alt="Who We Are Image" class="section-img img-fluid rounded-3 shadow">
-                        </div>
+                    <div class="col-lg-6 d-flex flex-column justify-content-center align-items-center text-center">
+                        <h2 class="fw-bold mb-4 fade-in" style="color:#00b8d9;">Who we are?</h2>
+                        <p class="mb-3 fade-in" style="font-size:1.25rem; max-width: 500px;">
+                            FINX is your personal financial assistant. We help you understand, manage, and improve your finances with simple and accessible digital tools.
+                        </p>
+                        <p class="fade-in" style="font-size:1.25rem; max-width: 500px;">
+                            Our goal is to be the leading financial app for young people in Latin America, offering education and personalized support.
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="subs-section" class="content-section">
+        <section id="subs-section" class="content-section fade-in" style="background: #e6f7f6; width:100vw; max-width:100vw; margin-left:calc(-50vw + 50%); margin-right:calc(-50vw + 50%); border-radius:0;">
             <h2 class="text-center" style="text-align: center !important; max-width:600px; margin:0 auto;">Suscriptions</h2>
             <p class="text-center" style="text-align: center !important; max-width:600px; margin:0 auto;">
                 Choose the FINX plan that best fits your financial journey. Upgrade anytime to unlock more powerful features!
@@ -1109,7 +1104,7 @@
     </div>
         </section>
 
-        <section id="contact-section" class="content-section section-shadow" style="padding-top: 32px; padding-bottom: 32px;">
+        <section id="contact-section" class="content-section section-shadow fade-in" style="padding-top: 32px; padding-bottom: 32px; background: #e6f7f6; width:100vw; max-width:100vw; margin-left:calc(-50vw + 50%); margin-right:calc(-50vw + 50%); border-radius:0;">
             <div class="container">
                 <div class="text-center mb-5">
                     <div style="font-size:2.2rem; color:#1976D2; margin-bottom: 0.5rem;"><i class="fas fa-envelope-open-text"></i></div>
@@ -1265,5 +1260,47 @@
     <script src="js/components.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: none;
+}
+.card-animate {
+  transition: box-shadow 0.3s, transform 0.3s;
+  will-change: transform, box-shadow;
+  min-height: 220px !important;
+  max-height: 260px !important;
+  height: 220px !important;
+  padding-top: 2.2rem !important;
+  padding-bottom: 3.5rem !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.card-animate:hover {
+  box-shadow: 0 12px 36px 0 rgba(0,184,217,0.22), 0 2px 16px rgba(0,0,0,0.10);
+  transform: translateY(-10px) scale(1.04);
+  z-index: 2;
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  function revealOnScroll() {
+    document.querySelectorAll('.fade-in').forEach(function(el) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 60) {
+        el.classList.add('visible');
+      }
+    });
+  }
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll();
+});
+</script>
 </body>
 </html> 
