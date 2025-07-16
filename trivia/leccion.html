@@ -20,11 +20,11 @@
     <link rel="stylesheet" href="shared-sidebar.css">
     <style>
         body {
-            background: #E6E5E5;
+            background: var(--background-color);
         }
         .dashboard-section {
             padding: 4rem 0 2rem 0;
-            background: linear-gradient(135deg, var(--light-background) 0%, var(--background-color) 100%);
+            background: linear-gradient(135deg, var(--light-background, var(--background-color)) 0%, var(--background-color) 100%);
             min-height: 100vh;
         }
         .dashboard-title {
@@ -33,28 +33,28 @@
             background: none;
             -webkit-text-fill-color: unset;
             margin-bottom: 2rem;
-            color: #002366;
+            color: var(--text-color);
         }
         .summary-card i {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: #004AAD;
+            color: var(--card-border);
         }
         .summary-card {
-            background: #FFFFFF;
+            background: var(--card-bg);
             border-radius: 1.5rem;
-            box-shadow: 0 2px 8px #00236622;
+            box-shadow: var(--card-shadow);
             padding: 2rem 1.5rem;
             text-align: center;
             transition: all 0.3s ease;
-            border: 2px solid #004AAD;
+            border: 2px solid var(--card-border);
         }
         .summary-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--hover-shadow);
         }
         .summary-card h3 {
-            color: #004AAD;
+            color: var(--card-border);
         }
         .summary-card .stat-number {
             color: #EEE95B;
@@ -76,12 +76,12 @@
             }
         }
         .table thead th {
-            background: #004AAD;
+            background: var(--card-border);
             color: #fff;
             border: none;
         }
         .table tbody tr {
-            background: var(--light-background);
+            background: var(--light-background, var(--background-color));
         }
         .table tbody tr:hover {
             background: var(--background-color);
@@ -108,18 +108,18 @@
             color: #fff;
         }
         .card {
-            background: #FFFFFF;
-            border: 1.5px solid #004AAD;
+            background: var(--card-bg);
+            border: 1.5px solid var(--card-border);
         }
         .table {
-            background: #FFFFFF;
+            background: var(--card-bg);
         }
         .table tbody tr:nth-child(even) {
             background: #E6E5E5;
         }
         #typeSelector {
-            border: 2px solid #004AAD;
-            color: #002366;
+            border: 2px solid var(--card-border);
+            color: var(--text-color);
         }
         .animated-fadein {
             opacity: 0;
@@ -141,11 +141,12 @@
             transition: opacity 0.7s cubic-bezier(.4,2,.6,1);
         }
         .leccion-navbar {
-            background: linear-gradient(135deg, var(--background-color), rgba(99, 102, 241, 0.05)) !important;
+            background: var(--navbar-bg) !important;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             padding: 0.15rem 0;
             min-height: 80px;
             transition: all 0.3s ease;
+            border-bottom: 2px solid var(--sidebar-border);
         }
         .leccion-navbar-brand {
             font-family: 'Montserrat', sans-serif;
@@ -211,6 +212,27 @@
             --fun-purple: #a855f7;
             --fun-orange: #f97316;
             --fun-yellow: #eab308;
+            /* Custom theme variables */
+            --background-color: #F4F6FB;
+            --sidebar-bg: #181C2A;
+            --sidebar-border: #22263A;
+            --card-bg: #FFFFFF;
+            --card-border: #004AAD;
+            --navbar-bg: #002366;
+            --text-color: #002366;
+            --card-shadow: 0 2px 8px #00236622;
+            --hover-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+        [data-bs-theme="dark"] {
+            --background-color: #181C2A;
+            --sidebar-bg: #131624;
+            --sidebar-border: #23263A;
+            --card-bg: #23263A;
+            --card-border: #6366f1;
+            --navbar-bg: #23263A;
+            --text-color: #EEE95B;
+            --card-shadow: 0 2px 8px #6366f122;
+            --hover-shadow: 0 8px 25px #6366f144;
         }
     </style>
 </head>
@@ -253,7 +275,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="trivia/trivia.html" class="active">
+                    <a href="trivia.html">
                         <i class="bi bi-book-fill"></i>
                         <span>Lessons</span>
                     </a>
@@ -377,6 +399,39 @@
                                     <i class="bi bi-arrow-right"></i>
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nueva Lección: Fundamentos del Dinero -->
+                <div class="row animated-fadein" id="lessonRowFundamentos">
+                    <div class="col-12">
+                        <div class="card p-4 shadow-sm animated-fadein" id="lessonCardFundamentos">
+                            <h3 class="h4 mb-4">💸 Fundamentos del Dinero</h3>
+
+                            <!-- Sección 1: ¿Qué es el dinero y cómo funciona? -->
+                            <h4 class="h5 mb-3">¿Qué es el dinero y cómo funciona?</h4>
+                            <p class="mb-4">
+                                El dinero es un medio de intercambio aceptado por la sociedad para adquirir bienes y servicios. Funciona como una herramienta que facilita el comercio, permite asignar valor a las cosas y nos ayuda a ahorrar para el futuro. Entender cómo funciona el dinero es el primer paso para tomar decisiones financieras inteligentes.
+                            </p>
+
+                            <!-- Sección 2: La diferencia entre necesidad y deseo -->
+                            <h4 class="h5 mb-3">La diferencia entre necesidad y deseo</h4>
+                            <p class="mb-4">
+                                Una <strong>necesidad</strong> es algo esencial para vivir, como la comida, la vivienda o la salud. Un <strong>deseo</strong> es algo que te gustaría tener, pero no es indispensable, como un celular nuevo, ropa de marca o salir a cenar. Aprender a distinguir entre necesidades y deseos te ayuda a priorizar tus gastos y evitar compras impulsivas.
+                            </p>
+
+                            <!-- Sección 3: Cómo evitar caer en trampas de consumo -->
+                            <h4 class="h5 mb-3">Cómo evitar caer en trampas de consumo</h4>
+                            <ul class="mb-4">
+                                <li><strong>Piensa antes de comprar:</strong> Pregúntate si realmente lo necesitas o solo lo quieres.</li>
+                                <li><strong>Haz un presupuesto:</strong> Planifica tus gastos y respétalo.</li>
+                                <li><strong>Evita las compras por impulso:</strong> Espera 24 horas antes de comprar algo que no tenías planeado.</li>
+                                <li><strong>No te dejes llevar por la publicidad:</strong> Recuerda que su objetivo es hacerte gastar más.</li>
+                                <li><strong>Valora lo que tienes:</strong> Muchas veces ya tienes lo suficiente para ser feliz.</li>
+                            </ul>
+
+                            <p class="mb-4"><strong>¡Recuerda!</strong> Entender el dinero y tus hábitos de consumo es clave para lograr estabilidad financiera y alcanzar tus metas. ¡Tú tienes el control!</p>
                         </div>
                     </div>
                 </div>
