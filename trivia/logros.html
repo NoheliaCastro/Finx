@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" data-bs-theme="light">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finx - Logros y Progreso</title>
+    <title>Finx - Achievements and Progress</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -430,7 +430,7 @@
                     </a>
                 </div>
                 <div class="col-md-6 text-end">
-                    <button class="trivia-theme-toggle" id="themeToggle" title="Cambiar tema">
+                    <button class="trivia-theme-toggle" id="themeToggle" title="Change theme">
                         <i class="bi bi-moon-fill" id="themeIcon"></i>
                     </button>
                 </div>
@@ -445,8 +445,8 @@
                 <div class="avatar-big">
                     <i class="bi bi-person-fill"></i>
                 </div>
-                <h5 class="mb-0">Usuario</h5>
-                <small class="text-muted">Nivel 2</small>
+                <h5 class="mb-0">User</h5>
+                <small class="text-muted">Level 2</small>
             </div>
             
             <ul class="sidebar-nav">
@@ -484,25 +484,25 @@
         </div>
     </nav>
 
-    <!-- Contenido principal -->
+    <!-- Main Content -->
     <main class="main-content">
         <div class="container-fluid">
             <!-- Hero Section -->
             <section class="achievements-hero fade-in-up">
                 <div class="text-center">
-                    <h1>🏆 Logros y Progreso</h1>
-                    <p class="lead">🎯 Celebra tus éxitos y sigue avanzando en tu camino financiero</p>
+                    <h1>🏆 Achievements and Progress</h1>
+                    <p class="lead">🎯 Celebrate your successes and keep moving forward on your financial journey</p>
                 </div>
             </section>
 
-            <!-- Estadísticas del usuario -->
+            <!-- User Stats -->
             <section class="user-stats fade-in-up">
                 <div class="stat-card slide-in-left">
                     <div class="stat-icon">
                         <i class="bi bi-star-fill"></i>
                     </div>
                     <div class="stat-value" id="totalXP">0</div>
-                    <div class="stat-label">XP Total</div>
+                    <div class="stat-label">Total XP</div>
                 </div>
 
                 <div class="stat-card slide-in-left">
@@ -510,7 +510,7 @@
                         <i class="bi bi-trophy-fill"></i>
                     </div>
                     <div class="stat-value" id="totalAchievements">0</div>
-                    <div class="stat-label">Logros Desbloqueados</div>
+                    <div class="stat-label">Unlocked Achievements</div>
                 </div>
 
                 <div class="stat-card slide-in-left">
@@ -518,7 +518,7 @@
                         <i class="bi bi-check-circle-fill"></i>
                     </div>
                     <div class="stat-value" id="completedQuizzes">0</div>
-                    <div class="stat-label">Quizzes Completados</div>
+                    <div class="stat-label">Completed Quizzes</div>
                 </div>
 
                 <div class="stat-card slide-in-left">
@@ -526,20 +526,20 @@
                         <i class="bi bi-book-fill"></i>
                     </div>
                     <div class="stat-value" id="completedLessons">0</div>
-                    <div class="stat-label">Lecciones Completadas</div>
+                    <div class="stat-label">Completed Lessons</div>
                 </div>
             </section>
 
-            <!-- Barra de nivel -->
+            <!-- Level Bar -->
             <section class="level-progress fade-in-up">
                 <div class="level-info">
                     <div>
-                        <div class="level-number" id="currentLevel">Nivel 2</div>
-                        <div class="text-muted">¡Sigue así!</div>
+                        <div class="level-number" id="currentLevel">Level 2</div>
+                        <div class="text-muted">Keep it up!</div>
                     </div>
                     <div class="text-end">
-                        <div class="text-muted">Siguiente nivel</div>
-                        <div class="level-number">Nivel 3</div>
+                        <div class="text-muted">Next level</div>
+                        <div class="level-number">Level 3</div>
                     </div>
                 </div>
                 <div class="level-bar">
@@ -551,19 +551,19 @@
                 </div>
             </section>
 
-            <!-- Logros -->
+            <!-- Achievements -->
             <section class="fade-in-up">
-                <h2 class="mb-4">🎖️ Logros Disponibles</h2>
+                <h2 class="mb-4">🎖️ Available Achievements</h2>
                 <div class="achievements-grid" id="achievementsGrid">
-                    <!-- Los logros se generarán dinámicamente -->
+                    <!-- Achievements will be generated dynamically -->
                 </div>
             </section>
 
-            <!-- Badges recientes -->
+            <!-- Recent Badges -->
             <section class="recent-badges fade-in-up">
-                <h3 class="mb-4">🏅 Badges Recientes</h3>
+                <h3 class="mb-4">🏅 Recent Badges</h3>
                 <div id="recentBadges">
-                    <!-- Los badges se generarán dinámicamente -->
+                    <!-- Badges will be generated dynamically -->
                 </div>
             </section>
         </div>
@@ -577,8 +577,8 @@
         const achievements = [
             {
                 id: 'first_lesson',
-                title: '📚 Primer Paso',
-                description: 'Completa tu primera lección',
+                title: '📚 First Step',
+                description: 'Complete your first lesson',
                 icon: 'bi-book-fill',
                 requirement: 1,
                 type: 'lessons',
@@ -587,7 +587,7 @@
             {
                 id: 'first_quiz',
                 title: '🧠 Quiz Master',
-                description: 'Completa tu primer quiz',
+                description: 'Complete your first quiz',
                 icon: 'bi-question-circle-fill',
                 requirement: 1,
                 type: 'quizzes',
@@ -595,8 +595,8 @@
             },
             {
                 id: 'perfect_score',
-                title: '🎯 Puntuación Perfecta',
-                description: 'Obtén 100% en cualquier quiz',
+                title: '🎯 Perfect Score',
+                description: 'Get 100% on any quiz',
                 icon: 'bi-star-fill',
                 requirement: 100,
                 type: 'quiz_percentage',
@@ -604,8 +604,8 @@
             },
             {
                 id: 'savings_expert',
-                title: '💰 Experto en Ahorro',
-                description: 'Completa el módulo de ahorro inteligente',
+                title: '💰 Savings Expert',
+                description: 'Complete the smart saving module',
                 icon: 'bi-piggy-bank-fill',
                 requirement: 1,
                 type: 'module_completion',
@@ -614,8 +614,8 @@
             },
             {
                 id: 'streak_3',
-                title: '🔥 Racha de 3',
-                description: 'Completa 3 días consecutivos de aprendizaje',
+                title: '🔥 3-Day Streak',
+                description: 'Complete 3 consecutive days of learning',
                 icon: 'bi-fire',
                 requirement: 3,
                 type: 'streak',
@@ -623,8 +623,8 @@
             },
             {
                 id: 'streak_7',
-                title: '⚡ Racha de 7',
-                description: 'Completa 7 días consecutivos de aprendizaje',
+                title: '⚡ 7-Day Streak',
+                description: 'Complete 7 consecutive days of learning',
                 icon: 'bi-lightning-fill',
                 requirement: 7,
                 type: 'streak',
@@ -632,8 +632,8 @@
             },
             {
                 id: 'xp_1000',
-                title: '💎 Maestro Financiero',
-                description: 'Alcanza 1000 XP totales',
+                title: '💎 Financial Master',
+                description: 'Reach 1000 total XP',
                 icon: 'bi-gem',
                 requirement: 1000,
                 type: 'total_xp',
@@ -641,8 +641,8 @@
             },
             {
                 id: 'all_modules',
-                title: '🏆 Completista',
-                description: 'Completa todos los módulos disponibles',
+                title: '🏆 Completionist',
+                description: 'Complete all available modules',
                 icon: 'bi-award-fill',
                 requirement: 3,
                 type: 'total_modules',
@@ -750,7 +750,7 @@
             
             // Actualizar nivel
             const levelInfo = calculateLevel(userStats.xp);
-            document.getElementById('currentLevel').textContent = `Nivel ${levelInfo.level}`;
+            document.getElementById('currentLevel').textContent = `Level ${levelInfo.level}`;
             document.getElementById('currentXP').textContent = `${userStats.xp} XP`;
             document.getElementById('nextLevelXP').textContent = `${levelInfo.xpForNextLevel} XP`;
             document.getElementById('levelProgress').style.width = `${levelInfo.progress}%`;
@@ -768,13 +768,13 @@
                 card.className = `achievement-card ${isUnlocked ? 'unlocked' : 'locked'}`;
                 
                 let progress = 0;
-                let status = 'Bloqueado';
+                let status = 'Locked';
                 
                 // Calcular progreso
                 switch(achievement.type) {
                     case 'lessons':
                         progress = Math.min(100, (userStats.completedLessons.length / achievement.requirement) * 100);
-                        status = `${userStats.completedLessons.length}/${achievement.requirement} lecciones`;
+                        status = `${userStats.completedLessons.length}/${achievement.requirement} lessons`;
                         break;
                     case 'quizzes':
                         progress = Math.min(100, (userStats.completedQuizzes.length / achievement.requirement) * 100);
@@ -783,15 +783,15 @@
                     case 'quiz_percentage':
                         const quizProgress = JSON.parse(localStorage.getItem('quiz_ahorro_inteligente') || '{}');
                         progress = Math.min(100, (quizProgress.percentage || 0));
-                        status = `${Math.round(progress)}% mejor puntuación`;
+                        status = `${Math.round(progress)}% best score`;
                         break;
                     case 'module_completion':
                         progress = userStats.completedQuizzes.includes(achievement.module) ? 100 : 0;
-                        status = userStats.completedQuizzes.includes(achievement.module) ? 'Completado' : 'Pendiente';
+                        status = userStats.completedQuizzes.includes(achievement.module) ? 'Completed' : 'Pending';
                         break;
                     case 'streak':
                         progress = Math.min(100, (userStats.streak / achievement.requirement) * 100);
-                        status = `${userStats.streak}/${achievement.requirement} días`;
+                        status = `${userStats.streak}/${achievement.requirement} days`;
                         break;
                     case 'total_xp':
                         progress = Math.min(100, (userStats.xp / achievement.requirement) * 100);
@@ -799,7 +799,7 @@
                         break;
                     case 'total_modules':
                         progress = Math.min(100, (userStats.completedQuizzes.length / achievement.requirement) * 100);
-                        status = `${userStats.completedQuizzes.length}/${achievement.requirement} módulos`;
+                        status = `${userStats.completedQuizzes.length}/${achievement.requirement} modules`;
                         break;
                 }
                 
@@ -813,7 +813,7 @@
                         <div class="achievement-progress-fill" style="width: ${progress}%"></div>
                     </div>
                     <div class="achievement-status ${isUnlocked ? 'unlocked' : 'locked'}">
-                        ${isUnlocked ? '✅ Desbloqueado' : status}
+                        ${isUnlocked ? '✅ Unlocked' : status}
                     </div>
                 `;
                 
@@ -832,7 +832,7 @@
                 container.innerHTML = `
                     <div class="text-center text-muted">
                         <i class="bi bi-trophy" style="font-size: 3rem;"></i>
-                        <p class="mt-3">Aún no has desbloqueado ningún logro. ¡Comienza a aprender!</p>
+                        <p class="mt-3">You haven't unlocked any achievements yet. Start learning!</p>
                     </div>
                 `;
                 return;
