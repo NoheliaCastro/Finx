@@ -711,160 +711,9 @@
             margin-bottom: 0;
         }
 
-        .subscription-plans-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .plan-card {
-            background: #fff;
-            border: none;
-            border-radius: 18px;
-            padding: 0;
-            text-align: center;
-            width: 320px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .plan-card:hover {
-            transform: translateY(-10px) scale(1.04);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
-            z-index: 2;
-        }
-
-        .plan-header {
-            padding: 24px 0 12px 0;
-            border-radius: 18px 18px 0 0;
-            color: #222;
-            font-weight: 700;
-            font-size: 2rem;
-            letter-spacing: 0.5px;
-        }
-
-        .plan-header.basic-header {
-            background: #FFE066;
-            color: #222;
-        }
-        .plan-header.standard-header {
-            background: #4A90E2;
-            color: #fff;
-        }
-        .plan-header.premium-header {
-            background: #FFD600;
-            color: #222;
-        }
-
-        .plan-desc {
-            font-size: 1rem;
-            color: #6c757d;
-            margin-bottom: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .plan-body {
-            padding: 30px 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .plan-icon-container {
-            margin: 24px 0 16px 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        .plan-icon-basic { color: #FFE066; font-size: 3rem; }
-        .plan-icon-standard { color: #1976D2; font-size: 3rem; }
-        .plan-icon-premium { color: #FFD600; font-size: 3rem; }
-
-        .plan-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 16px 0;
-            text-align: center;
-        }
-
-        .plan-card ul li {
-            margin-bottom: 8px;
-            color: #222;
-            font-size: 1.08rem;
-            font-weight: 400;
-        }
-
-        .plan-footer {
-            padding: 20px 0;
-            border-radius: 0 0 18px 18px;
-            font-size: 2em;
-            font-weight: bold;
-            margin-top: auto;
-        }
-
-        .plan-footer.basic-footer {
-            background: #FFE066;
-            color: #222;
-        }
-        .plan-footer.standard-footer {
-            background: #4A90E2;
-            color: #fff;
-        }
-        .plan-footer.premium-footer {
-            background: #FFD600;
-            color: #222;
-        }
-
-        .plan-btn {
-            margin: 12px 0 0 0;
-            width: 90%;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border-radius: 30px;
-            padding: 10px 0;
-            border: none;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .plan-btn.basic { background: #FFE066; color: #222; }
-        .plan-btn.basic:hover { background: #fff; color: #222; border: 2px solid #FFE066; }
-        .plan-btn.standard { background: #4A90E2; color: #fff; }
-        .plan-btn.standard:hover { background: #fff; color: #4A90E2; border: 2px solid #4A90E2; }
-        .plan-btn.premium { background: #FFD600; color: #222; }
-        .plan-btn.premium:hover { background: #fff; color: #FFD600; border: 2px solid #FFD600; }
-
-        .badge-popular {
-            position: absolute;
-            top: 18px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #4A90E2;
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 6px 18px;
-            border-radius: 30px;
-            z-index: 3;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 8px rgba(74,144,226,0.08);
-        }
-
         /* Responsive Design */
         @media (max-width: 900px) {
             .categories { flex-direction: column; align-items: center; gap: 24px; }
-        }
-
-        @media (max-width: 1100px) {
-            .plan-card { width: 95vw; min-width: unset; max-width: 100%; }
         }
 
         /* Fuerza color de texto negro en modo claro y blanco en modo oscuro para todos los textos principales */
@@ -960,7 +809,7 @@
                     <div class="category-title">Who we are?</div>
                     <div class="category-desc">Sumary about who we are and what is our finality.</div>
                 </div>
-                <div class="category-card card-animate" id="subs" onclick="scrollToSection('subscription-section')">
+                <div class="category-card card-animate" id="subs" onclick="window.location.href='index.html#subscription'">
                     <div class="category-icon money"><i class="fas fa-money-check-alt"></i></div>
                     <div class="category-title">Suscriptions</div>
                     <div class="category-desc">Every related to the Premium Membership.</div>
@@ -992,117 +841,7 @@
             </div>
         </section>
 
-        <section id="subs-section" class="content-section fade-in" style="background: #e6f7f6; width:100vw; max-width:100vw; margin-left:calc(-50vw + 50%); margin-right:calc(-50vw + 50%); border-radius:0;">
-            <h2 class="text-center" style="text-align: center !important; max-width:600px; margin:0 auto;">Suscriptions</h2>
-            <p class="text-center" style="text-align: center !important; max-width:600px; margin:0 auto;">
-                Choose the FINX plan that best fits your financial journey. Upgrade anytime to unlock more powerful features!
-            </p>
-            <div class="subscription-plans-container">
-                <div class="plan-card" id="basicPlanCard" style="cursor:pointer;">
-                    <div class="plan-header basic-header">
-                        <div class="plan-desc">Perfect for beginners</div>
-                        Basic Plan
-                    </div>
-                    <div class="plan-body d-flex flex-column align-items-center justify-content-center">
-                        <div class="plan-icon-container"><i class="fas fa-clipboard-list plan-icon-basic"></i></div>
-                        <button class="plan-btn basic mt-3">Choose Plan</button>
-                    </div>
-                    <div class="plan-footer basic-footer">$5</div>
-                </div>
-                        <div class="plan-card" id="standardPlanCard" style="z-index:2; cursor:pointer;">
-            <span class="badge-popular">Most Popular</span>
-            <div class="plan-header standard-header">
-                <div class="plan-desc">Best value</div>
-                Standard Plan
-            </div>
-            <div class="plan-body d-flex flex-column align-items-center justify-content-center">
-                <div class="plan-icon-container"><i class="fas fa-file-alt plan-icon-standard"></i></div>
-                <button class="plan-btn standard mt-3">Choose Plan</button>
-            </div>
-            <div class="plan-footer standard-footer">$10/month</div>
-        </div>
-        <div class="plan-card" id="premiumPlanCard" style="cursor:pointer;">
-            <div class="plan-header premium-header">
-                <div class="plan-desc">For power users</div>
-                Premium Plan
-            </div>
-            <div class="plan-body d-flex flex-column align-items-center justify-content-center">
-                <div class="plan-icon-container"><i class="fas fa-gem plan-icon-premium"></i></div>
-                <button class="plan-btn premium mt-3">Choose Plan</button>
-            </div>
-            <div class="plan-footer premium-footer">$20/month</div>
-        </div>
-            </div>
-                <!-- Modal para Basic Plan -->
-    <div class="modal fade" id="basicPlanModal" tabindex="-1" aria-labelledby="basicPlanModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header" style="background:#FFE066;">
-            <h5 class="modal-title fw-bold" id="basicPlanModalLabel"><i class="fas fa-clipboard-list plan-icon-basic me-2"></i> Basic Plan Benefits</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <ul class="list-unstyled mb-0 text-start">
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Track Income & Expenses</li>
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Basic Budgeting Tools</li>
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Manual Data Entry</li>
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Limited Transaction History</li>
-            </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal para Standard Plan -->
-    <div class="modal fade" id="standardPlanModal" tabindex="-1" aria-labelledby="standardPlanModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header" style="background:#4A90E2;">
-            <h5 class="modal-title fw-bold text-white" id="standardPlanModalLabel"><i class="fas fa-file-alt plan-icon-standard me-2"></i> Standard Plan Benefits</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <ul class="list-unstyled mb-0 text-start">
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> All Basic features</li>
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Visual T-Accounts</li>
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Extended Transaction History</li>
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Basic AI Assistant (Limited Queries)</li>
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Customizable Categories</li>
-            </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal para Premium Plan -->
-    <div class="modal fade" id="premiumPlanModal" tabindex="-1" aria-labelledby="premiumPlanModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header" style="background:#FFD700;">
-            <h5 class="modal-title fw-bold" id="premiumPlanModalLabel"><i class="fas fa-gem plan-icon-premium me-2"></i> Premium Plan Benefits</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <ul class="list-unstyled mb-0 text-start">
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> All Standard features</li>
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Advanced AI Assistant (Unlimited Queries)</li>
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Real-time Bank Syncing (Future Feature)</li>
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Priority Customer Support</li>
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Advanced Analytics & Reports</li>
-              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Shared Savings Goals</li>
-            </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-        </section>
+
 
         <section id="contact-section" class="content-section section-shadow fade-in" style="padding-top: 32px; padding-bottom: 32px; background: #e6f7f6; width:100vw; max-width:100vw; margin-left:calc(-50vw + 50%); margin-right:calc(-50vw + 50%); border-radius:0;">
             <div class="container">
@@ -1145,7 +884,92 @@
             </div>
         </section>
     </main>
+<<<<<<< HEAD
     <!-- Scripts y estilos -->
+=======
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Function to scroll to sections
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Form validation and submission
+        const helpContactForm = document.getElementById('helpContactForm');
+        if (helpContactForm) {
+            helpContactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const reason = document.getElementById('reason').value;
+                const message = document.getElementById('message').value.trim();
+                const formSuccess = document.getElementById('formSuccess');
+                const formError = document.getElementById('formError');
+                // Validación básica
+                if (!name || !email || !reason || !message) {
+                    formError.classList.remove('d-none');
+                    formSuccess.classList.add('d-none');
+                    return;
+                }
+                // Validación de email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    formError.classList.remove('d-none');
+                    formSuccess.classList.add('d-none');
+                    return;
+                }
+                // Simular envío exitoso
+                formError.classList.add('d-none');
+                formSuccess.classList.remove('d-none');
+                helpContactForm.reset();
+                setTimeout(() => {
+                    formSuccess.classList.add('d-none');
+                }, 4000);
+            });
+        }
+
+        // Card hover effects
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+                this.style.boxShadow = '0 10px 20px rgba(0, 35, 102, 0.2)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.05)';
+            });
+        });
+
+        // Load components
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load header and footer if elements exist
+            const headerElement = document.getElementById('header');
+            const footerElement = document.getElementById('footer');
+
+            if (headerElement) {
+                loadComponent('header', 'components/header.html');
+            }
+            if (footerElement) {
+                loadComponent('footer', 'components/footer.html');
+            }
+        });
+
+
+    </script>
+    <!-- Components Script -->
+>>>>>>> 0337479e3daa125fde55c99016a75054c7ff8542
     <script src="js/components.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
