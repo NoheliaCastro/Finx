@@ -77,6 +77,69 @@
     min-height: 100vh;
 }
 
+.sidebar-logout-container {
+    position: absolute;
+    left: 0;
+    bottom: 2rem;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    /* Nuevo margen para mover el botón a la derecha */
+    margin-left: 32px;
+}
+.sidebar-logout-container .btn {
+    background: #004AAD !important;
+    color: #fff !important;
+    border-radius: 50%;
+    border: none;
+    font-weight: 700;
+    font-size: 1.3rem;
+    box-shadow: 0 2px 8px #004AAD22;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.sidebar-logout-container .btn i {
+    margin: 0;
+}
+.sidebar-logout-container .btn:hover {
+    background: #002366 !important;
+    color: #fff !important;
+    box-shadow: 0 4px 16px #00236633;
+}
+
+.btn-logout-icon {
+    background: linear-gradient(135deg, #6366f1 60%, #818cf8 100%) !important;
+    color: #fff !important;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.7rem;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(99,102,241,0.18);
+    padding: 0;
+    transition: background 0.25s, color 0.2s, box-shadow 0.25s, transform 0.18s;
+}
+.btn-logout-icon:hover {
+    background: linear-gradient(135deg, #818cf8 60%, #6366f1 100%) !important;
+    color: #fff !important;
+    box-shadow: 0 8px 32px rgba(99,102,241,0.28);
+    transform: translateY(-4px) scale(1.08);
+}
+
 /* Responsive */
 @media (max-width: 991.98px) {
     .trivia-sidebar,
