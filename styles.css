@@ -1926,7 +1926,96 @@ body.modal-open {
     color: #fff !important;
 } 
 
-.dashboard-section .summary-card .stat-number,
-.dashboard-section .card .stat-number {
-    color: #004AAD !important;
-} 
+/* --- Chatbot Widget Styles --- */
+#chatbot-widget {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+}
+#chatbot-widget #chatbot-toggle {
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+#chatbot-widget #chatbot-toggle:hover {
+    box-shadow: 0 8px 32px #004AAD99;
+    transform: scale(1.08);
+}
+#chatbot-window {
+    display: none;
+    flex-direction: column;
+    width: 350px;
+    max-width: 95vw;
+    height: 480px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(17,37,75,0.18);
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    overflow: hidden;
+    /* Animación slide-in */
+    transform: translateX(120%);
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(.4,2,.6,1), opacity 0.25s;
+}
+#chatbot-window.open {
+    display: flex !important;
+    transform: translateX(0);
+    opacity: 1;
+}
+@keyframes chatbot-fadein {
+    from { opacity: 0; transform: translateY(40px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+#chatbot-messages {
+    scrollbar-width: thin;
+    scrollbar-color: #004AAD #f8fafc;
+}
+#chatbot-messages::-webkit-scrollbar {
+    width: 6px;
+}
+#chatbot-messages::-webkit-scrollbar-thumb {
+    background: #004AAD;
+    border-radius: 6px;
+}
+#chatbot-messages::-webkit-scrollbar-track {
+    background: #f8fafc;
+}
+.chatbot-message {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: flex-end;
+}
+.chatbot-message.user {
+    justify-content: flex-end;
+}
+.chatbot-message.bot {
+    justify-content: flex-start;
+}
+.chatbot-bubble {
+    max-width: 75%;
+    padding: 0.7rem 1.1rem;
+    border-radius: 1.2rem;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px #004AAD22;
+    margin: 0 0.3rem;
+    word-break: break-word;
+}
+.chatbot-message.user .chatbot-bubble {
+    background: #004AAD;
+    color: #fff;
+    border-bottom-right-radius: 0.3rem;
+}
+.chatbot-message.bot .chatbot-bubble {
+    background: #f1f5f9;
+    color: #23272b;
+    border-bottom-left-radius: 0.3rem;
+}
+@media (max-width: 600px) {
+    #chatbot-window {
+        width: 98vw !important;
+        right: -10vw !important;
+        height: 70vh !important;
+    }
+}
+/* --- Fin Chatbot Widget Styles --- */ 
