@@ -912,20 +912,25 @@
     <!-- Footer Component -->
     <div id="footer"></div>
 
+    <!-- Fondo difuminado para el chatbot -->
+    <div id="chatbot-backdrop"></div>
     <!-- Chatbot Widget -->
-    <div id="chatbot-widget" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999;">
-        <button id="chatbot-toggle" style="background: #004AAD; color: #fff; border: none; border-radius: 50%; width: 64px; height: 64px; box-shadow: 0 4px 16px #004AAD55; font-size: 2rem; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+    <div id="chatbot-widget">
+        <button id="chatbot-toggle">
             <i class="fas fa-comments"></i>
         </button>
-        <div id="chatbot-window" style="display: none; flex-direction: column; width: 350px; max-width: 95vw; height: 480px; background: #fff; border-radius: 18px; box-shadow: 0 8px 32px rgba(17,37,75,0.18); position: absolute; bottom: 80px; right: 0; overflow: hidden;">
-            <div style="background: #004AAD; color: #fff; padding: 1rem; font-weight: bold; display: flex; align-items: center; justify-content: space-between;">
-                <span>Finx Chatbot</span>
-                <button id="chatbot-close" style="background: transparent; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;">&times;</button>
+        <div id="chatbot-window">
+            <div id="chatbot-header">
+                <span class="chatbot-header-title">
+                    Finx Chatbot
+                </span>
+                <button id="chatbot-close">&times;</button>
             </div>
-            <div id="chatbot-messages" style="flex: 1; padding: 1rem; overflow-y: auto; background: #f8fafc;"></div>
-            <form id="chatbot-form" style="display: flex; border-top: 1px solid #eee; background: #fff;">
-                <input id="chatbot-input" type="text" placeholder="Type your message..." autocomplete="off" style="flex: 1; border: none; padding: 0.75rem; font-size: 1rem; outline: none; background: transparent;" />
-                <button type="submit" style="background: #004AAD; color: #fff; border: none; padding: 0 1.5rem; font-size: 1.2rem; cursor: pointer;">Send</button>
+            <div id="chatbot-messages"></div>
+            <div id="chatbot-quick-questions"></div>
+            <form id="chatbot-form">
+                <input id="chatbot-input" type="text" placeholder="Type your message..." autocomplete="off" />
+                <button type="submit">Send</button>
             </form>
         </div>
     </div>
