@@ -78,93 +78,189 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('chatbot-form');
     const input = document.getElementById('chatbot-input');
     const messages = document.getElementById('chatbot-messages');
+    const quickQuestions = document.getElementById('chatbot-quick-questions');
+    const backdrop = document.getElementById('chatbot-backdrop');
+
+    let userIsAtBottom = true;
+
+    // Scroll helper
+    function scrollToBottom(force = false) {
+        if (force || userIsAtBottom) {
+            messages.scrollTop = messages.scrollHeight;
+        }
+    }
+    // Detect if user is at bottom
+    messages.addEventListener('scroll', function() {
+        const threshold = 30; // px
+        userIsAtBottom = messages.scrollHeight - messages.scrollTop - messages.clientHeight < threshold;
+    });
+
+    // Mensajes y preguntas rápidas en inglés
+    const quickFlows = {
+        start: [
+            {q: 'What is Finx?', next: 'finx'},
+            {q: 'What is it for?', next: 'service'},
+            {q: 'Is it safe?', next: 'security'}
+        ],
+        finx: [
+            {q: 'How do I sign up?', next: 'register'},
+            {q: 'What features does it have?', next: 'features'},
+            {q: 'What is the mission?', next: 'mission'}
+        ],
+        service: [
+            {q: 'How do I sign up?', next: 'register'},
+            {q: 'What features does it have?', next: 'features'},
+            {q: 'Is Finx free?', next: 'free'}
+        ],
+        security: [
+            {q: 'How is my data protected?', next: 'protection'},
+            {q: 'Can I trust Finx?', next: 'trust'},
+            {q: 'How do I sign up?', next: 'register'}
+        ],
+        register: [
+            {q: 'Go to sign up', next: 'link', link: 'register.html'},
+            {q: 'What info do I need?', next: 'info'},
+            {q: 'Is sign up free?', next: 'free'}
+        ],
+        features: [
+            {q: 'Can I set savings goals?', next: 'goals'},
+            {q: 'Does it have financial education?', next: 'education'},
+            {q: 'How does tracking work?', next: 'tracking'}
+        ],
+        mission: [
+            {q: 'What is the vision?', next: 'vision'},
+            {q: 'How do you help young people?', next: 'help_youth'},
+            {q: 'Who created Finx?', next: 'creator'}
+        ],
+        link: [],
+        fallback: []
+    };
+    let currentFlow = 'start';
+
+    function renderQuickQuestions(flow = 'start') {
+        quickQuestions.innerHTML = '';
+        (quickFlows[flow] || quickFlows['fallback']).forEach(btn => {
+            const b = document.createElement('button');
+            b.className = 'chatbot-quick-btn';
+            b.textContent = btn.q;
+            if (btn.link) {
+                b.onclick = () => window.location.href = btn.link;
+            } else {
+                b.onclick = () => {
+                    input.value = btn.q;
+                    form.dispatchEvent(new Event('submit'));
+                    currentFlow = btn.next;
+                };
+            }
+            quickQuestions.appendChild(b);
+        });
+    }
 
     function appendMessage(text, sender = 'bot') {
         const msgDiv = document.createElement('div');
         msgDiv.className = 'chatbot-message ' + sender;
+        // Crear avatar
+        const avatar = document.createElement('div');
+        avatar.className = 'chatbot-avatar';
+        if (sender === 'user') {
+            avatar.innerHTML = '<i class="fas fa-user"></i>';
+        } else {
+            avatar.innerHTML = '<i class="fas fa-robot"></i>';
+        }
+        // Crear burbuja
         const bubble = document.createElement('div');
         bubble.className = 'chatbot-bubble';
         bubble.textContent = text;
-        msgDiv.appendChild(bubble);
+        // Crear hora
+        const time = document.createElement('span');
+        time.className = 'chatbot-time';
+        const now = new Date();
+        time.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+        // Estructura: avatar + burbuja + hora
+        if (sender === 'user') {
+            msgDiv.appendChild(time);
+            msgDiv.appendChild(bubble);
+            msgDiv.appendChild(avatar);
+        } else {
+            msgDiv.appendChild(avatar);
+            msgDiv.appendChild(bubble);
+            msgDiv.appendChild(time);
+        }
         messages.appendChild(msgDiv);
-        messages.scrollTop = messages.scrollHeight;
+        scrollToBottom(sender === 'user');
     }
 
-    // FAQ respuestas automáticas mejoradas
+    // Animación de escribiendo...
+    function showTyping() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'chatbot-message bot chatbot-typing-msg';
+        const bubble = document.createElement('div');
+        bubble.className = 'chatbot-bubble chatbot-typing';
+        bubble.textContent = 'Finx is typing...';
+        typingDiv.appendChild(bubble);
+        messages.appendChild(typingDiv);
+        scrollToBottom();
+    }
+    function removeTyping() {
+        const typing = messages.querySelector('.chatbot-typing-msg');
+        if (typing) typing.remove();
+    }
+
     function getBotResponse(userMsg) {
         const msg = userMsg.toLowerCase();
-        // Variantes y errores comunes para "Finx"
-        const finxVariants = ["finx", "fix", "finks", "fink", "fincs", "fincs", "finnx"];
-        // Variantes para "qué es" y "para qué sirve"
-        if ((finxVariants.some(v => msg.includes(v)) && (msg.includes("que es") || msg.includes("qué es") || msg.includes("para que sirve") || msg.includes("para qué sirve") || msg.includes("funciona") || msg.includes("sirve"))) || msg.match(/que es fix|qué es fix|para que sirve fix|para qué sirve fix/)) {
-            return 'FINX es tu guía financiera personal. Te ayuda a rastrear, gestionar y ahorrar tu dinero de manera sencilla, visual y práctica. Nuestra misión es empoderar a las personas, especialmente jóvenes, para que tomen el control de sus finanzas.';
+        if (msg.includes('is finx good') || msg.includes('do you recommend finx') || msg.includes('worth') || (msg.includes('finx') && msg.includes('good'))) {
+            return 'Absolutely! Finx is designed to help you improve your finances easily and securely. Many users find it very useful to organize their money and learn.';
         }
-        // Misión y visión (incluye errores comunes)
-        if (msg.includes('mision') || msg.includes('misión') || msg.includes('vision') || msg.includes('visión') || msg.includes('kisoon') || msg.includes('micion')) {
-            return 'Nuestra misión es ayudar a las personas, especialmente jóvenes, a entender y gestionar su dinero con herramientas fáciles, visuales y prácticas. Nuestra visión es ser el sitio financiero líder para jóvenes en Latinoamérica.';
+        if (msg.includes('bad') || msg.includes('problem') || msg.includes('not working') || msg.includes('don\'t trust')) {
+            return 'Sorry to hear that! If you have any problem with Finx, let me know and I will help you.';
         }
-        // Registro y uso
-        if (msg.includes('registr') || msg.includes('crear cuenta') || msg.includes('sign up') || msg.includes('como me registro') || msg.includes('cómo me registro')) {
-            return 'Para registrarte en FINX, haz clic en el botón "Login" arriba a la derecha y luego en "Sign Up". Ingresa tu nombre, correo y contraseña para crear tu cuenta.';
-        }
-        // Seguridad
-        if (msg.includes('seguro') || msg.includes('protege') || msg.includes('privacidad') || msg.includes('es confiable') || msg.includes('es seguro')) {
-            return '¡Sí! Tu información y tu dinero están protegidos en FINX. Nos tomamos la seguridad muy en serio para que puedas usar la plataforma con confianza.';
-        }
-        // Diferencias y ventajas
-        if (msg.includes('diferente') || msg.includes('qué lo hace único') || msg.includes('por qué finx') || msg.includes('ventaja') || msg.includes('por que elegir')) {
-            return 'FINX no solo muestra tus gastos, sino que te enseña a gestionar tu dinero, te guía hacia tus metas y te apoya incluso si nunca has aprendido sobre finanzas personales. Además, incluye aprendizaje interactivo y un chatbot inteligente.';
-        }
-        // Herramientas y funcionalidades
-        if (msg.includes('herramienta') || msg.includes('qué puedo hacer') || msg.includes('qué ofrece') || msg.includes('funcionalidad') || msg.includes('para que sirve finx')) {
-            return 'Con FINX puedes registrar ingresos, gastos, establecer metas y hacer seguimiento de tu progreso financiero. Todo desde una interfaz intuitiva y amigable para móviles.';
-        }
-        // Educación financiera
-        if (msg.includes('educación') || msg.includes('aprender') || msg.includes('enseña') || msg.includes('aprender finanzas')) {
-            return 'FINX utiliza quizzes, retos y cursos cortos para que aprender sobre finanzas sea divertido y práctico. Queremos que realmente comprendas los conceptos financieros.';
-        }
-        // Chatbot y ayuda
-        if (msg.includes('chatbot') || msg.includes('asistente') || msg.includes('ayuda') || msg.includes('soporte')) {
-            return '¡Sí! FINX incluye un chatbot inteligente que responde tus preguntas, te guía y personaliza tu aprendizaje financiero. Siempre disponible para ayudarte.';
-        }
-        // Comparación con otras apps
-        if (msg.includes('app') || msg.includes('aplicación') || msg.includes('comparar') || msg.includes('diferencia con otras')) {
-            return 'A diferencia de otras apps, FINX te enseña a gestionar tu dinero, te guía hacia tus metas y te apoya incluso si nunca has aprendido sobre finanzas personales.';
-        }
-        // Cómo empezar
-        if (msg.includes('empezar') || msg.includes('cómo inicio') || msg.includes('como inicio') || msg.includes('cómo usar') || msg.includes('como usar')) {
-            return 'Para empezar, regístrate en FINX, ingresa tus ingresos y gastos, y comienza a explorar nuestras herramientas y recursos educativos.';
-        }
-        // Ejemplo de uso
-        if (msg.includes('ejemplo') || msg.includes('como lo uso') || msg.includes('cómo lo uso')) {
-            return 'Por ejemplo, si quieres ahorrar para un celular, puedes registrar tus ingresos, gastos y metas en FINX. Así verás tu progreso y recibirás sugerencias para mejorar tu planificación.';
-        }
-        // Agradecimientos
-        if (msg.includes('gracias') || msg.includes('ok') || msg.includes('listo') || msg.includes('perfecto') || msg.includes('super')) {
-            return '¡De nada! Si tienes más preguntas sobre FINX, aquí estoy para ayudarte.';
-        }
-        // Saludo
-        if (msg.includes('hola') || msg.includes('buenas') || msg.includes('saludos')) {
-            return '¡Hola! Soy el asistente de Finx. ¿En qué puedo ayudarte hoy?';
-        }
-        return '¡Gracias por tu interés en FINX! Pregúntame cualquier cosa sobre la plataforma, su misión, herramientas o cómo empezar.';
+        if (msg.includes('what is finx')) return 'Finx is an app to help you control and understand your money.';
+        if (msg.includes('what is it for')) return 'It helps you track expenses, save, and learn about finances.';
+        if (msg.includes('is it safe')) return 'Yes, your information is protected and private.';
+        if (msg.includes('how do i sign up')) return 'Easy! You can sign up with your email and a secure password.';
+        if (msg.includes('go to sign up')) return 'Click the button to go to the sign up form.';
+        if (msg.includes('what features')) return 'You can track expenses, income, savings goals, and access financial education.';
+        if (msg.includes('what is the mission')) return 'Our mission is to help young people achieve financial success in a simple way.';
+        if (msg.includes('what is the vision')) return 'To be the leading platform for financial education and management for young people.';
+        if (msg.includes('how is my data protected')) return 'We use encryption and best practices to protect your data.';
+        if (msg.includes('can i trust finx')) return 'Absolutely! Finx prioritizes your security and privacy.';
+        if (msg.includes('what info do i need')) return 'You only need your name, email, and a secure password.';
+        if (msg.includes('is sign up free')) return 'Yes, you can start for free and then choose a premium plan if you want.';
+        if (msg.includes('savings goals')) return 'Yes, you can create and track your savings goals easily.';
+        if (msg.includes('financial education')) return 'Finx includes resources and quizzes to help you learn about finances.';
+        if (msg.includes('how does tracking work')) return 'You can see your progress in real time and get suggestions.';
+        if (msg.includes('how do you help young people')) return 'We offer tools and education designed for young people.';
+        if (msg.includes('who created finx')) return 'Finx was created by a team passionate about financial education.';
+        if (msg.includes('is finx free')) return 'You can use Finx for free and then choose a premium plan if you want.';
+        if (msg.includes('finx')) return 'Finx is a platform designed to help you improve your financial life. Want to know how it works or how to start?';
+        return 'I am here to help you with anything related to Finx! Ask me about sign up, security, features, or how to start.';
     }
 
-    // Mensaje de bienvenida
-    appendMessage('¡Hola! Soy el asistente de Finx. ¿En qué puedo ayudarte hoy?', 'bot');
+    // Welcome message in English with typing animation
+    setTimeout(() => {
+        showTyping();
+        setTimeout(() => {
+            removeTyping();
+            appendMessage('Hi! I am the Finx assistant. How can I help you today? If you are not sure what to ask, you can choose one of the quick questions below.', 'bot');
+        }, 900);
+    }, 200);
+    renderQuickQuestions('start');
 
     toggleBtn.addEventListener('click', () => {
         if (chatWindow.classList.contains('open')) {
             chatWindow.classList.remove('open');
-            setTimeout(() => { chatWindow.style.display = 'none'; }, 350);
+            backdrop.classList.remove('open');
+            setTimeout(() => { chatWindow.style.display = 'none'; backdrop.style.display = 'none'; }, 350);
         } else {
             chatWindow.style.display = 'flex';
-            setTimeout(() => { chatWindow.classList.add('open'); }, 10);
+            backdrop.style.display = 'block';
+            setTimeout(() => { chatWindow.classList.add('open'); backdrop.classList.add('open'); }, 10);
         }
     });
     closeBtn.addEventListener('click', () => {
         chatWindow.classList.remove('open');
-        setTimeout(() => { chatWindow.style.display = 'none'; }, 350);
+        backdrop.classList.remove('open');
+        setTimeout(() => { chatWindow.style.display = 'none'; backdrop.style.display = 'none'; }, 350);
     });
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -172,9 +268,19 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!userMsg) return;
         appendMessage(userMsg, 'user');
         input.value = '';
+        removeTyping();
+        showTyping();
         setTimeout(() => {
+            removeTyping();
             appendMessage(getBotResponse(userMsg), 'bot');
-        }, 700);
+            // Cambiar preguntas rápidas según flujo
+            if (quickFlows[currentFlow] && quickFlows[currentFlow].length > 0) {
+                renderQuickQuestions(currentFlow);
+            } else {
+                renderQuickQuestions('start');
+                currentFlow = 'start';
+            }
+        }, 900);
     });
     // --- Fin Chatbot Widget Logic ---
 }); 
