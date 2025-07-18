@@ -304,13 +304,18 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar leccion-navbar" style="background: #002366 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.08); min-height: 70px; border-bottom: none !important;">
+    <nav class="navbar leccion-navbar" style="background: #fff !important; box-shadow: 0 4px 20px rgba(0,0,0,0.08); min-height: 70px; border-bottom: none !important;">
         <div class="container-fluid d-flex justify-content-center align-items-center" style="position:relative; min-height:70px;">
             <button class="leccion-theme-toggle d-block mx-auto" id="themeToggle" title="Change theme" style="position:relative; left:0; right:0; margin:auto; background: #818cf8; color: #fff;">
                 <i class="bi bi-moon-fill" id="themeIcon" style="color: #fff;"></i>
             </button>
         </div>
     </nav>
+    <style>
+    [data-bs-theme="dark"] .leccion-navbar {
+        background: #002366 !important;
+    }
+    </style>
     <!-- Sidebar -->
     <nav class="leccion-sidebar">
         <div class="container-fluid">
