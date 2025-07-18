@@ -1925,3 +1925,8 @@ body.modal-open {
 [data-bs-theme="dark"] .benefits-hero .benefits-hero-subtitle {
     color: #fff !important;
 } 
+
+.dashboard-section .summary-card .stat-number,
+.dashboard-section .card .stat-number {
+    color: #004AAD !important;
+} 
