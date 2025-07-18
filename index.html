@@ -640,7 +640,6 @@
                             <span class="bubble bubble4"></span>
                             <span class="bubble bubble5"></span>
                         </div>
-                        <div class="particles-container"></div>
                         <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
@@ -913,6 +912,25 @@
     <!-- Footer Component -->
     <div id="footer"></div>
 
+    <!-- Chatbot Widget -->
+    <div id="chatbot-widget" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999;">
+        <button id="chatbot-toggle" style="background: #004AAD; color: #fff; border: none; border-radius: 50%; width: 64px; height: 64px; box-shadow: 0 4px 16px #004AAD55; font-size: 2rem; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div id="chatbot-window" style="display: none; flex-direction: column; width: 350px; max-width: 95vw; height: 480px; background: #fff; border-radius: 18px; box-shadow: 0 8px 32px rgba(17,37,75,0.18); position: absolute; bottom: 80px; right: 0; overflow: hidden;">
+            <div style="background: #004AAD; color: #fff; padding: 1rem; font-weight: bold; display: flex; align-items: center; justify-content: space-between;">
+                <span>Finx Chatbot</span>
+                <button id="chatbot-close" style="background: transparent; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;">&times;</button>
+            </div>
+            <div id="chatbot-messages" style="flex: 1; padding: 1rem; overflow-y: auto; background: #f8fafc;"></div>
+            <form id="chatbot-form" style="display: flex; border-top: 1px solid #eee; background: #fff;">
+                <input id="chatbot-input" type="text" placeholder="Type your message..." autocomplete="off" style="flex: 1; border: none; padding: 0.75rem; font-size: 1rem; outline: none; background: transparent;" />
+                <button type="submit" style="background: #004AAD; color: #fff; border: none; padding: 0 1.5rem; font-size: 1.2rem; cursor: pointer;">Send</button>
+            </form>
+        </div>
+    </div>
+    <!-- Fin Chatbot Widget -->
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- AOS Animation -->
@@ -920,8 +938,9 @@
     <!-- CountUp.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script>
     <!-- Components JS -->
-    <script src="/js/components.js"></script>
-    <!-- Custom JS -->
+    <script src="js/components.js"></script>
+    <!-- Custom JS principal (chatbot y más) -->
+    <script src="js/main.js"></script>
     <script>
         // Initialize AOS
         AOS.init({
@@ -953,56 +972,6 @@
 
         document.querySelectorAll('.stat-number').forEach(stat => {
             observer.observe(stat);
-        });
-
-        // Partículas animadas sobre el carrusel
-        document.addEventListener('DOMContentLoaded', function() {
-            const particleImages = [
-                'images/1.jpg',
-                'images/2.jpg',
-                'images/3.jpg'
-            ];
-            const NUM_PARTICLES = 3;
-            const container = document.querySelector('.particles-container');
-            if (!container) return;
-            function randomPosition() {
-                const width = container.offsetWidth - 32;
-                const height = container.offsetHeight - 32;
-                const overflow = 24; // Ahora se alejan menos del carrusel
-                const edge = Math.floor(Math.random() * 4); // 0: arriba, 1: abajo, 2: izquierda, 3: derecha
-                let x, y;
-                switch (edge) {
-                    case 0: // completamente arriba
-                        x = -overflow + Math.random() * (width + 2 * overflow);
-                        y = -overflow - 32; // completamente fuera arriba
-                        break;
-                    case 1: // completamente abajo
-                        x = -overflow + Math.random() * (width + 2 * overflow);
-                        y = height + overflow; // completamente fuera abajo
-                        break;
-                    case 2: // completamente izquierda
-                        x = -overflow - 32; // completamente fuera izquierda
-                        y = -overflow + Math.random() * (height + 2 * overflow);
-                        break;
-                    case 3: // completamente derecha
-                        x = width + overflow; // completamente fuera derecha
-                        y = -overflow + Math.random() * (height + 2 * overflow);
-                        break;
-                }
-                return { x, y };
-            }
-            function animateParticle(particle) {
-                const {x, y} = randomPosition();
-                particle.style.transform = `translate(${x}px, ${y}px)`;
-                setTimeout(() => animateParticle(particle), 2000 + Math.random() * 2000);
-            }
-            for (let i = 0; i < NUM_PARTICLES; i++) {
-                const img = document.createElement('img');
-                img.src = particleImages[i % particleImages.length];
-                img.className = 'particle-img';
-                container.appendChild(img);
-                animateParticle(img);
-            }
         });
 
         document.addEventListener('DOMContentLoaded', function() {

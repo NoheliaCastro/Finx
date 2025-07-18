@@ -304,20 +304,18 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar leccion-navbar">
-        <div class="container-fluid">
-            <div class="row align-items-center w-100">
-                <div class="col-12 position-relative">
-                    <span class="navbar-brand leccion-navbar-brand d-block text-center mx-auto" style="color:#004AAD;font-size:2.2rem;z-index:1;position:relative;">
-                        Goals
-                    </span>
-                    <button class="leccion-theme-toggle position-absolute top-50 end-0 translate-middle-y me-3" id="themeToggle" title="Change theme" style="right:0;">
-                        <i class="bi bi-moon-fill" id="themeIcon"></i>
-                    </button>
-                </div>
-            </div>
+    <nav class="navbar leccion-navbar" style="background: #fff !important; box-shadow: 0 4px 20px rgba(0,0,0,0.08); min-height: 70px; border-bottom: none !important;">
+        <div class="container-fluid d-flex justify-content-center align-items-center" style="position:relative; min-height:70px;">
+            <button class="leccion-theme-toggle d-block mx-auto" id="themeToggle" title="Change theme" style="position:relative; left:0; right:0; margin:auto; background: #818cf8; color: #fff;">
+                <i class="bi bi-moon-fill" id="themeIcon" style="color: #fff;"></i>
+            </button>
         </div>
     </nav>
+    <style>
+    [data-bs-theme="dark"] .leccion-navbar {
+        background: #002366 !important;
+    }
+    </style>
     <!-- Sidebar -->
     <nav class="leccion-sidebar">
         <div class="container-fluid">
@@ -360,6 +358,11 @@
                     </a>
                 </li>
             </ul>
+            <div class="sidebar-logout-container">
+                <button class="btn btn-logout-icon" id="logoutBtnSidebar" title="Cerrar sesión">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </div>
         </div>
     </nav>
     <!-- Contenido principal -->
@@ -534,6 +537,14 @@
                 icon.className = 'bi bi-moon-fill';
             }
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            var logoutBtn = document.getElementById('logoutBtnSidebar');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    window.location.href = 'index.html';
+                });
+            }
         });
     </script>
 </body>

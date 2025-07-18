@@ -694,6 +694,11 @@
                     </a>
                 </li>
             </ul>
+            <div class="sidebar-logout-container">
+                <button class="btn btn-logout-icon" id="logoutBtnSidebar" title="Cerrar sesión">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -923,5 +928,15 @@
 
         // Efecto de shake removido para mejor experiencia
     </script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var logoutBtn = document.getElementById('logoutBtnSidebar');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+            window.location.href = '../index.html';
+        });
+    }
+});
+</script>
 </body>
 </html>
