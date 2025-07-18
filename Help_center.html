@@ -884,6 +884,9 @@
             </div>
         </section>
     </main>
+<<<<<<< HEAD
+    <!-- Scripts y estilos -->
+=======
     <script>
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -966,50 +969,28 @@
 
     </script>
     <!-- Components Script -->
+>>>>>>> 0337479e3daa125fde55c99016a75054c7ff8542
     <script src="js/components.js"></script>
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-.fade-in {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
-}
-.fade-in.visible {
-  opacity: 1;
-  transform: none;
-}
-.card-animate {
-  transition: box-shadow 0.3s, transform 0.3s;
-  will-change: transform, box-shadow;
-  min-height: 220px !important;
-  max-height: 260px !important;
-  height: 220px !important;
-  padding-top: 2.2rem !important;
-  padding-bottom: 3.5rem !important;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-.card-animate:hover {
-  box-shadow: 0 12px 36px 0 rgba(0,184,217,0.22), 0 2px 16px rgba(0,0,0,0.10);
-  transform: translateY(-10px) scale(1.04);
-  z-index: 2;
-}
-</style>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  function revealOnScroll() {
-    document.querySelectorAll('.fade-in').forEach(function(el) {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 60) {
-        el.classList.add('visible');
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1); }
+    .fade-in.visible { opacity: 1; transform: none; }
+    .card-animate { transition: box-shadow 0.3s, transform 0.3s; will-change: transform, box-shadow; min-height: 220px !important; max-height: 260px !important; height: 220px !important; padding-top: 2.2rem !important; padding-bottom: 3.5rem !important; display: flex; flex-direction: column; justify-content: flex-start; }
+    .card-animate:hover { box-shadow: 0 12px 36px 0 rgba(0,184,217,0.22), 0 2px 16px rgba(0,0,0,0.10); transform: translateY(-10px) scale(1.04); z-index: 2; }
+    </style>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function revealOnScroll() {
+        document.querySelectorAll('.fade-in').forEach(function(el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 60) {
+            el.classList.add('visible');
+          }
+        });
       }
+      window.addEventListener('scroll', revealOnScroll);
+      revealOnScroll();
     });
-  }
-  window.addEventListener('scroll', revealOnScroll);
-  revealOnScroll();
-});
-</script>
+    </script>
 </body>
 </html> 
