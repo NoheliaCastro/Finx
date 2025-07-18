@@ -1,126 +1,84 @@
 <!-- Footer -->
 <footer class="footer py-5 bg-light mt-5">
   <div class="container">
-    <div class="row g-4 align-items-center justify-content-center text-center text-lg-start">
-      <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-start mb-4 mb-lg-0 pt-lg-4">
-        <div class="mb-3">
-          <picture class="mb-3 w-100 d-flex justify-content-center">
-            <source srcset="images/modo-oscuro.png" media="(prefers-color-scheme: dark)">
-            <img src="images/modo-claro.png" alt="Finx Logo" style="width:100%; max-width:350px; height:auto; display:block;">
-          </picture>
-          <img src="images/modo-oscuro.png" alt="Finx Logo oscuro" style="height:110px;width:auto;display:none;" id="footerLogoDark">
-        </div>
-        <span class="footer-desc fw-bold" style="font-size:1.1rem;">Your financial education platform.<br>Learn, play, and grow with us.</span>
+    <div class="row g-4 align-items-center justify-content-center text-center text-lg-start position-relative">
+      <!-- Línea divisoria vertical -->
+      <div class="d-none d-lg-block" style="position:absolute;left:25%;top:0;height:calc(100% - 40px);width:1px;background:linear-gradient(to bottom,#004AAD22 0%,#004AAD66 100%);z-index:1;"></div>
+      <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-end mb-4 mb-lg-0 pt-lg-2 justify-content-center" style="z-index:2;">
+        <picture class="mb-2 w-100 d-flex justify-content-center align-items-center">
+          <source srcset="images/modo-oscuro.png" media="(prefers-color-scheme: dark)">
+          <img src="images/modo-claro2.png" alt="Finx Logo" style="width:100%; max-width:170px; height:auto; display:block;">
+        </picture>
+        <span class="footer-desc fw-bold text-center mt-2" style="font-size:1.3rem;">Your financial education platform.<br>Learn, play, and grow with us.</span>
       </div>
-      <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-start justify-content-center pt-lg-4">
-        <h3 class="h6 mb-3 text-uppercase" style="letter-spacing:1px;">Quick Links</h3>
+      <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-start justify-content-center pt-lg-4 ps-lg-5" style="z-index:2;">
+        <h3 class="h5 mb-3 text-uppercase" style="letter-spacing:2.5px; margin-top:0; font-size:1.25rem;">Quick Links</h3>
         <ul class="list-unstyled mb-0">
-          <li><a href="index.html" class="text-muted">Home</a></li>
-          <li><a href="about_us.html" class="text-muted">About Us</a></li>
-          <li><a href="Help_center.html" class="text-muted">Help Center</a></li>
+          <li><a href="index.html" class="footer-link">Home</a></li>
+          <li><a href="about_us.html" class="footer-link">About Us</a></li>
+          <li><a href="Help_center.html" class="footer-link">Help Center</a></li>
         </ul>
       </div>
-      <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-start justify-content-center pt-lg-4">
-        <h3 class="h6 mb-3 text-uppercase" style="letter-spacing:1px;">Contact</h3>
+      <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-start justify-content-center pt-lg-4 ps-lg-5" style="z-index:2;">
+        <h3 class="h5 mb-3 text-uppercase" style="letter-spacing:2.5px; margin-top:0; font-size:1.25rem;">Contact</h3>
         <ul class="list-unstyled mb-0">
-          <li class="mb-1"><i class="fas fa-envelope me-2"></i>example@finx.com</li>
-          <li class="mb-1"><i class="fas fa-phone me-2"></i>+1 234 567 8900</li>
-          <li><i class="fas fa-map-marker-alt me-2"></i>123 Main St, City, Country</li>
+          <li class="mb-1"><i class="fas fa-envelope me-2"></i><span class="footer-link">example@finx.com</span></li>
+          <li class="mb-1"><i class="fas fa-phone me-2"></i><span class="footer-link">+1 234 567 8900</span></li>
+          <li><i class="fas fa-map-marker-alt me-2"></i><span class="footer-link">123 Main St, City, Country</span></li>
         </ul>
       </div>
-      <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-start justify-content-center pt-lg-4">
-        <h3 class="h6 mb-3 text-uppercase" style="letter-spacing:1px;">Follow Us</h3>
+      <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-start justify-content-center pt-lg-4 ps-lg-5" style="z-index:2;">
+        <h3 class="h5 mb-3 text-uppercase" style="letter-spacing:2.5px; margin-top:0; font-size:1.25rem;">Follow Us</h3>
         <div class="d-flex gap-3 justify-content-center justify-content-lg-start">
-          <a href="#" class="text-primary"><i class="fab fa-facebook fa-lg"></i></a>
-          <a href="#" class="text-primary"><i class="fab fa-twitter fa-lg"></i></a>
-          <a href="#" class="text-primary"><i class="fab fa-instagram fa-lg"></i></a>
-          <a href="#" class="text-primary"><i class="fab fa-linkedin fa-lg"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-twitter fa-lg"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-linkedin fa-lg"></i></a>
         </div>
       </div>
     </div>
-    <hr class="my-4" style="border-color:#004AAD;">
-    <div class="text-center">
-      <span class="text-muted">&copy; 2025 Finx. All rights reserved.</span>
+    <hr class="my-2" style="border-color:#004AAD;">
+    <div class="text-center py-2">
+      <span class="text-muted" style="display:inline-block; margin-top:10px;">&copy; 2025 Finx. All rights reserved.</span>
     </div>
   </div>
 </footer>
-
 <style>
-[data-bs-theme="dark"] .footer,
-[data-bs-theme="dark"] .footer.bg-light {
-    background: #181C24 !important;
-    background-color: #181C24 !important;
+.footer .footer-link {
+  color: #23272b;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: color 0.2s, text-decoration 0.2s;
 }
-[data-bs-theme="dark"] .footer h3,
-[data-bs-theme="dark"] .footer p,
-[data-bs-theme="dark"] .footer a,
-[data-bs-theme="dark"] .footer span {
-    color: #fff !important;
+.footer .footer-link:hover {
+  color: #004AAD;
+  text-decoration: underline;
 }
-[data-bs-theme="dark"] .footer .text-muted {
-    color: rgba(255, 255, 255, 0.7) !important;
+.footer .footer-section h3 {
+  font-size: 1.25rem;
+  letter-spacing: 2.5px;
 }
-[data-bs-theme="dark"] .footer .text-primary {
-    color: #EEE95B !important;
+.footer .footer-desc {
+  font-size: 1.3rem;
 }
-.footer {
-    font-family: 'Montserrat', 'Rubik', sans-serif;
-    background: linear-gradient(135deg, #fff 0%, #E6E5E5 100%);
-    border-top: 2.5px solid #004AAD;
-    box-shadow: 0 -2px 16px #004AAD11;
+.footer .footer-social {
+  color: #1976D2;
+  font-size: 1.5rem;
+  transition: color 0.2s, transform 0.2s;
 }
-.footer a.text-primary:hover {
-    color: #004AAD !important;
-    text-decoration: underline;
-}
-.footer h3 {
-    color: #004AAD;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-.footer hr {
-    border-top: 2px solid #004AAD;
-    opacity: 1;
-}
-.footer-desc {
-    color: #23272b;
-    text-align: left;
-}
-[data-bs-theme="dark"] .footer-desc {
-    color: #fff;
+.footer .footer-social:hover {
+  color: #004AAD;
+  transform: translateY(-3px) scale(1.15);
 }
 @media (max-width: 991.98px) {
   .footer .row > div {
     margin-bottom: 2rem;
   }
+  .footer .footer-desc {
+    font-size: 1.1rem;
+  }
+  .footer .footer-link {
+    font-size: 1rem;
+  }
 }
 </style>
-
-<script>
-// Cambia el logo del footer según el modo
-function updateFooterLogo(theme) {
-    const logoLight = document.getElementById('footerLogoLight');
-    const logoDark = document.getElementById('footerLogoDark');
-    if (!logoLight || !logoDark) return;
-    if (theme === 'dark') {
-        logoLight.style.display = 'none';
-        logoDark.style.display = 'inline-block';
-    } else {
-        logoLight.style.display = 'inline-block';
-        logoDark.style.display = 'none';
-    }
-}
-// Detectar cambios de tema
-(function() {
-    const html = document.documentElement;
-    function applyFooterLogo() {
-        const theme = html.getAttribute('data-bs-theme') || 'light';
-        updateFooterLogo(theme);
-    }
-    // Inicial
-    applyFooterLogo();
-    // Escuchar cambios de atributo
-    const observer = new MutationObserver(applyFooterLogo);
-    observer.observe(html, { attributes: true, attributeFilter: ['data-bs-theme'] });
-})();
-</script>
