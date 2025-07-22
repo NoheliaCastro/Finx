@@ -439,6 +439,9 @@
                                 <option value="income">Income</option>
                                 <option value="expense">Expense</option>
                             </select>
+                            <button id="clearHistoryBtn" class="btn btn-danger ms-2" type="button">
+                                <i class="fas fa-trash-alt me-1"></i> Limpiar historial
+                            </button>
                         </div>
                         <div class="card p-3 shadow-sm animated-fadein" id="movementsCard">
                             <h3 class="h5 mb-3">Recent Movements</h3>
@@ -463,7 +466,7 @@
     </main>
 
     <!-- Income Modal -->
-    <div class="modal fade" id="incomeModal" tabindex="-1" aria-labelledby="incomeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="incomeModal" tabindex="-1" aria-labelledby="incomeModalLabel" aria-hidden="true" style="z-index:1055;">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -503,7 +506,7 @@
       </div>
     </div>
     <!-- Expense Modal -->
-    <div class="modal fade" id="expenseModal" tabindex="-1" aria-labelledby="expenseModalLabel" aria-hidden="true">
+    <div class="modal fade" id="expenseModal" tabindex="-1" aria-labelledby="expenseModalLabel" aria-hidden="true" style="z-index:1055;">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -656,6 +659,9 @@
                 var today = new Date().toISOString().split('T')[0];
                 document.getElementById('incomeDate').value = today;
                 modal.show();
+                setTimeout(function() {
+                    document.getElementById('incomeAmount').focus();
+                }, 400);
             };
             document.getElementById('expenseCard').onclick = function() {
                 const modal = new bootstrap.Modal(document.getElementById('expenseModal'));
@@ -663,12 +669,24 @@
                 var today = new Date().toISOString().split('T')[0];
                 document.getElementById('expenseDate').value = today;
                 modal.show();
+                setTimeout(function() {
+                    document.getElementById('expenseAmount').focus();
+                }, 400);
             };
             document.getElementById('incomeModal').addEventListener('shown.bs.modal', function () {
                 document.getElementById('incomeAmount').focus();
             });
             document.getElementById('expenseModal').addEventListener('shown.bs.modal', function () {
                 document.getElementById('expenseAmount').focus();
+            });
+            // Evento para limpiar historial
+            document.getElementById('clearHistoryBtn').addEventListener('click', function() {
+                if (confirm('¿Estás seguro de que deseas limpiar todo el historial de gastos e ingresos? Esta acción no se puede deshacer.')) {
+                    localStorage.removeItem('finx_movements');
+                    updateDashboardTotals();
+                    fillMovementsTableByType();
+                    showSuccessAlert('¡Historial limpiado exitosamente!');
+                }
             });
         });
 
