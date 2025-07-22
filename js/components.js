@@ -91,16 +91,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cargar header y footer si existen los elementos
     const headerElement = document.getElementById('header');
     const footerElement = document.getElementById('footer');
-
+    const headerDashboardElement = document.getElementById('header_dashboard');
+    const chatbotContainer = document.getElementById('chatbot-container');
+    
     if (headerElement) {
-        // Si el header tiene el atributo data-dashboard, carga el header especial
-        if (headerElement.hasAttribute('data-dashboard')) {
-            loadComponent('header', 'components/header_dashboard.html');
-        } else {
-            loadComponent('header', 'components/header.html');
-        }
+        loadComponent('header', 'components/header.html');
     }
+    
     if (footerElement) {
         loadComponent('footer', 'components/footer.html');
+    }
+    
+    if (headerDashboardElement) {
+        loadComponent('header_dashboard', 'components/header_dashboard.html');
+    }
+    
+    if (chatbotContainer) {
+        loadComponent('chatbot-container', 'components/chatbot.html');
     }
 }); 
