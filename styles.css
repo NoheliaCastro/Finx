@@ -1599,13 +1599,6 @@ p, .lead, .text-muted {
     transition: box-shadow 0.3s, transform 0.3s;
 }
 [data-bs-theme="dark"] .dashboard-section .summary-card h3,
-[data-bs-theme="dark"] .dashboard-section .summary-card .stat-number,
-[data-bs-theme="dark"] .dashboard-section .card h3,
-[data-bs-theme="dark"] .dashboard-section .card .stat-number {
-    color: #fff !important;
-}
-[data-bs-theme="dark"] .dashboard-section .summary-card:hover,
-[data-bs-theme="dark"] .dashboard-section .card:hover {
     box-shadow: 0 8px 32px 0 rgba(0,0,0,0.35);
     transform: translateY(-8px) scale(1.03);
 }

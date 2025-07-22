@@ -1,0 +1,33 @@
+<!-- Chatbot Financiero -->
+<div id="finx-chatbot">
+    <div class="chatbot-header">
+        <div class="chatbot-title">
+            <i class="fas fa-robot"></i>
+            <span>Asistente Financiero</span>
+        </div>
+        <button id="close-chatbot">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="chatbot-messages" id="chat-messages">
+        <div class="message bot-message">
+            <div class="message-content">
+                ¡Hola! Soy tu asistente financiero de Finx. ¿En qué puedo ayudarte hoy? Puedes preguntarme sobre:
+                <div class="quick-options">
+                    <button class="quick-option">¿Cómo ahorrar dinero?</button>
+                    <button class="quick-option">Consejos de inversión</button>
+                    <button class="quick-option">Presupuesto mensual</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chatbot-input">
+        <input type="text" id="user-input" placeholder="Escribe tu pregunta financiera..." autocomplete="off">
+        <button id="send-message">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
+</div>
+<button id="chatbot-toggle" class="chatbot-toggle">
+    <i class="fas fa-comment-dots"></i>
+</button>
