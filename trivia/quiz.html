@@ -387,16 +387,21 @@
     <!-- Navbar -->
     <nav class="navbar trivia-navbar">
         <div class="container-fluid">
-            <div class="row align-items-center w-100">
-                <div class="col-md-6">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div style="flex:1; display:flex; align-items:center;">
                     <a class="navbar-brand trivia-navbar-brand" href="../index.html">
                         <i class="bi bi-currency-exchange me-2"></i>
                         Finx
                     </a>
                 </div>
-                <div class="col-md-6 text-end">
+                <div style="flex:1; display:flex; justify-content:center; align-items:center;">
                     <button class="trivia-theme-toggle" id="themeToggle" title="Cambiar tema">
                         <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </button>
+                </div>
+                <div style="flex:1; display:flex; justify-content:end; align-items:center;">
+                    <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
+                        <i class="bi bi-translate"></i>
                     </button>
                 </div>
             </div>
@@ -537,59 +542,89 @@
         // Base de datos de preguntas
         const quizQuestions = [
             {
-                question: "¿Qué es un fondo de emergencia?",
+                question: {
+                    es: "¿Qué es un fondo de emergencia?",
+                    en: "What is an emergency fund?"
+                },
                 options: [
-                    "Dinero que guardas para gastos inesperados",
-                    "Una cuenta de inversión de alto riesgo",
-                    "Un préstamo bancario",
-                    "Una tarjeta de crédito"
+                    { es: "Dinero que guardas para gastos inesperados", en: "Money you save for unexpected expenses" },
+                    { es: "Una cuenta de inversión de alto riesgo", en: "A high-risk investment account" },
+                    { es: "Un préstamo bancario", en: "A bank loan" },
+                    { es: "Una tarjeta de crédito", en: "A credit card" }
                 ],
                 correct: 0,
-                explanation: "Un fondo de emergencia es dinero reservado específicamente para cubrir gastos imprevistos."
+                explanation: {
+                    es: "Un fondo de emergencia es dinero reservado específicamente para cubrir gastos imprevistos.",
+                    en: "An emergency fund is money set aside specifically to cover unexpected expenses."
+                }
             },
             {
-                question: "¿Cuántos meses de gastos se recomienda tener en un fondo de emergencia?",
+                question: {
+                    es: "¿Cuántos meses de gastos se recomienda tener en un fondo de emergencia?",
+                    en: "How many months of expenses are recommended to have in an emergency fund?"
+                },
                 options: [
-                    "1-2 meses",
-                    "3-6 meses",
-                    "6-12 meses",
-                    "Más de 12 meses"
+                    { es: "1-2 meses", en: "1-2 months" },
+                    { es: "3-6 meses", en: "3-6 months" },
+                    { es: "6-12 meses", en: "6-12 months" },
+                    { es: "Más de 12 meses", en: "More than 12 months" }
                 ],
                 correct: 1,
-                explanation: "Se recomienda tener entre 3 y 6 meses de gastos mensuales en tu fondo de emergencia."
+                explanation: {
+                    es: "Se recomienda tener entre 3 y 6 meses de gastos mensuales en tu fondo de emergencia.",
+                    en: "It is recommended to have between 3 and 6 months of monthly expenses in your emergency fund."
+                }
             },
             {
-                question: "¿Cuál es la característica principal de un fondo de emergencia?",
+                question: {
+                    es: "¿Cuál es la característica principal de un fondo de emergencia?",
+                    en: "What is the main characteristic of an emergency fund?"
+                },
                 options: [
-                    "Alto rendimiento",
-                    "Liquidez inmediata",
-                    "Riesgo alto",
-                    "Plazo fijo"
+                    { es: "Alto rendimiento", en: "High return" },
+                    { es: "Liquidez inmediata", en: "Immediate liquidity" },
+                    { es: "Riesgo alto", en: "High risk" },
+                    { es: "Plazo fijo", en: "Fixed term" }
                 ],
                 correct: 1,
-                explanation: "La liquidez inmediata es fundamental para acceder al dinero cuando lo necesites."
+                explanation: {
+                    es: "La liquidez inmediata es fundamental para acceder al dinero cuando lo necesites.",
+                    en: "Immediate liquidity is essential to access the money when you need it."
+                }
             },
             {
-                question: "¿Dónde es mejor mantener un fondo de emergencia?",
+                question: {
+                    es: "¿Dónde es mejor mantener un fondo de emergencia?",
+                    en: "Where is it best to keep an emergency fund?"
+                },
                 options: [
-                    "En una cuenta de inversión",
-                    "En una cuenta de ahorro separada",
-                    "En efectivo en casa",
-                    "En criptomonedas"
+                    { es: "En una cuenta de inversión", en: "In an investment account" },
+                    { es: "En una cuenta de ahorro separada", en: "In a separate savings account" },
+                    { es: "En efectivo en casa", en: "In cash at home" },
+                    { es: "En criptomonedas", en: "In cryptocurrencies" }
                 ],
                 correct: 1,
-                explanation: "Una cuenta de ahorro separada ofrece seguridad y accesibilidad."
+                explanation: {
+                    es: "Una cuenta de ahorro separada ofrece seguridad y accesibilidad.",
+                    en: "A separate savings account offers security and accessibility."
+                }
             },
             {
-                question: "¿Qué NO debe considerarse un fondo de emergencia?",
+                question: {
+                    es: "¿Qué NO debe considerarse un fondo de emergencia?",
+                    en: "What should NOT be considered an emergency fund?"
+                },
                 options: [
-                    "Dinero en cuenta de ahorro",
-                    "Dinero para vacaciones",
-                    "Dinero para gastos médicos",
-                    "Dinero para reparaciones del hogar"
+                    { es: "Dinero en cuenta de ahorro", en: "Money in a savings account" },
+                    { es: "Dinero para vacaciones", en: "Money for vacations" },
+                    { es: "Dinero para gastos médicos", en: "Money for medical expenses" },
+                    { es: "Dinero para reparaciones del hogar", en: "Money for home repairs" }
                 ],
                 correct: 1,
-                explanation: "El dinero para vacaciones no es un fondo de emergencia, es un ahorro para metas específicas."
+                explanation: {
+                    es: "El dinero para vacaciones no es un fondo de emergencia, es un ahorro para metas específicas.",
+                    en: "Money for vacations is not an emergency fund, it is savings for specific goals."
+                }
             }
         ];
 
@@ -658,19 +693,19 @@
 
         // Función para mostrar pregunta
         function showQuestion() {
+            const lang = localStorage.getItem('finx_lang') || 'es';
             const question = quizQuestions[currentQuestion];
-            
-            questionNumber.textContent = `Pregunta ${currentQuestion + 1} de ${quizQuestions.length}`;
-            questionText.textContent = question.question;
-            
+            // Número de pregunta
+            questionNumber.textContent = `${translations[lang]['question-of']} ${currentQuestion + 1} ${translations[lang]['of']} ${quizQuestions.length}`;
+            // Texto de pregunta
+            questionText.textContent = question.question[lang];
             // Generar opciones
             optionsContainer.innerHTML = '';
             question.options.forEach((option, index) => {
                 const optionDiv = document.createElement('div');
                 optionDiv.className = 'option';
-                optionDiv.textContent = option;
+                optionDiv.textContent = option[lang];
                 optionDiv.dataset.index = index;
-                
                 // Marcar si ya fue respondida
                 if (userAnswers[currentQuestion] !== undefined) {
                     if (index === question.correct) {
@@ -679,15 +714,12 @@
                         optionDiv.classList.add('incorrect');
                     }
                 }
-                
                 optionDiv.addEventListener('click', () => selectOption(index));
                 optionsContainer.appendChild(optionDiv);
             });
-            
             // Actualizar botones
             prevBtn.disabled = currentQuestion === 0;
-            nextBtn.textContent = currentQuestion === quizQuestions.length - 1 ? 'Finalizar' : 'Siguiente';
-            
+            nextBtn.textContent = currentQuestion === quizQuestions.length - 1 ? translations[lang]['finish'] : translations[lang]['next'];
             // Actualizar progreso
             updateProgress();
         }
@@ -835,11 +867,11 @@
         });
 
         nextBtn.addEventListener('click', () => {
+            const lang = localStorage.getItem('finx_lang') || 'es';
             if (userAnswers[currentQuestion] === undefined) {
-                alert('Por favor selecciona una respuesta antes de continuar.');
+                alert(translations[lang]['select-answer']);
                 return;
             }
-            
             if (currentQuestion < quizQuestions.length - 1) {
                 currentQuestion++;
                 showQuestion();
@@ -877,5 +909,93 @@
             }
         });
     </script>
+<script>
+// Traducción de la página
+const translations = {
+    es: {
+        'dashboard': 'Panel',
+        'lessons': 'Lecciones',
+        'achievements': 'Logros',
+        'goals': 'Metas',
+        'help': 'Ayuda',
+        'logout': 'Cerrar sesión',
+        'user': 'Usuario',
+        'level': 'Nivel 2',
+        'quiz-hero-title': '🧠 Quiz de Ahorro Inteligente',
+        'quiz-hero-lead': '🎯 Pon a prueba tus conocimientos y gana recompensas',
+        'quiz-progress': 'Progreso del Quiz',
+        'question-of': 'Pregunta',
+        'of': 'de',
+        'previous': 'Anterior',
+        'next': 'Siguiente',
+        'finish': 'Finalizar',
+        'quiz-completed': '🎉 ¡Quiz Completado!',
+        'badge-earned': '🏆 Badge de Ahorro Inteligente',
+        'excellent': '¡Excelente trabajo! Has demostrado un buen conocimiento sobre ahorro inteligente.',
+        'back-to-path': 'Volver al Camino',
+        'continue': 'Continuar',
+        'select-answer': 'Por favor selecciona una respuesta antes de continuar.',
+    },
+    en: {
+        'dashboard': 'Dashboard',
+        'lessons': 'Lessons',
+        'achievements': 'Achievements',
+        'goals': 'Goals',
+        'help': 'Help',
+        'logout': 'Logout',
+        'user': 'User',
+        'level': 'Level 2',
+        'quiz-hero-title': '🧠 Smart Saving Quiz',
+        'quiz-hero-lead': '🎯 Test your knowledge and earn rewards',
+        'quiz-progress': 'Quiz Progress',
+        'question-of': 'Question',
+        'of': 'of',
+        'previous': 'Previous',
+        'next': 'Next',
+        'finish': 'Finish',
+        'quiz-completed': '🎉 Quiz Completed!',
+        'badge-earned': '🏆 Smart Saving Badge',
+        'excellent': 'Great job! You have shown good knowledge about smart saving.',
+        'back-to-path': 'Back to Path',
+        'continue': 'Continue',
+        'select-answer': 'Please select an answer before continuing.',
+    }
+};
+function setLanguage(lang) {
+    localStorage.setItem('finx_lang', lang);
+    // Sidebar
+    document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['dashboard'];
+    document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
+    document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
+    document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
+    document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
+    document.getElementById('logoutBtnSidebar').title = translations[lang]['logout'];
+    document.querySelector('.avatar-big + h5').textContent = translations[lang]['user'];
+    document.querySelector('.avatar-big + h5 + small').textContent = translations[lang]['level'];
+    // Hero
+    document.querySelector('.quiz-hero h1').textContent = translations[lang]['quiz-hero-title'];
+    document.querySelector('.quiz-hero .lead').textContent = translations[lang]['quiz-hero-lead'];
+    // Progreso
+    document.querySelector('.quiz-progress-container .d-flex span.text-muted').textContent = translations[lang]['quiz-progress'];
+    // Navegación
+    document.getElementById('prevBtn').innerHTML = `<i class='bi bi-arrow-left'></i> ${translations[lang]['previous']}`;
+    document.getElementById('nextBtn').innerHTML = `${translations[lang]['next']} <i class='bi bi-arrow-right'></i>`;
+    // Resultados
+    document.querySelector('#resultsContainer h2').textContent = translations[lang]['quiz-completed'];
+    document.getElementById('badgeEarned').textContent = translations[lang]['badge-earned'];
+    document.querySelector('#resultsContainer .lead').textContent = translations[lang]['excellent'];
+    document.querySelectorAll('#resultsContainer .quiz-navigation a')[0].innerHTML = `<i class='bi bi-arrow-left'></i> ${translations[lang]['back-to-path']}`;
+    document.querySelectorAll('#resultsContainer .quiz-navigation a')[1].innerHTML = `${translations[lang]['continue']} <i class='bi bi-arrow-right'></i>`;
+}
+document.getElementById('langToggle').addEventListener('click', function() {
+    const current = localStorage.getItem('finx_lang') || 'es';
+    const next = current === 'es' ? 'en' : 'es';
+    setLanguage(next);
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const lang = localStorage.getItem('finx_lang') || 'es';
+    setLanguage(lang);
+});
+</script>
 </body>
 </html> 
