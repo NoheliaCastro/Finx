@@ -400,6 +400,12 @@
                         <span>Help</span>
                     </a>
                 </li>
+                <li>
+                    <a href="chatbot.html">
+                        <i class="bi bi-robot"></i>
+                        <span>Financial Assistant</span>
+                    </a>
+                </li>
             </ul>
             <div class="sidebar-logout-container">
                 <button class="btn btn-logout-icon" id="logoutBtnSidebar" title="Cerrar sesión">
@@ -844,7 +850,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'help': 'Ayuda',
                 'logout': 'Cerrar sesión',
                 'welcome-to': 'Bienvenido a',
-                'track-manage': '¡Registra, gestiona y ahorra fácilmente!'
+                'track-manage': '¡Registra, gestiona y ahorra fácilmente!',
+                'financial-assistant': 'Asistente Financiero'
             },
             en: {
                 'dashboard-lead': 'Visualize and control your finances in a modern and fun way.',
@@ -890,7 +897,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'help': 'Help',
                 'logout': 'Logout',
                 'welcome-to': 'Welcome to',
-                'track-manage': 'Track, Manage, and Save with Ease!'
+                'track-manage': 'Track, Manage, and Save with Ease!',
+                'financial-assistant': 'Financial Assistant'
             }
         };
         function setLanguage(lang) {
@@ -901,6 +909,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
             document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
             document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
+            document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['financial-assistant'];
             document.getElementById('logoutBtnSidebar').title = translations[lang]['logout'];
             // Hero
             document.querySelector('.dashboard-lead').textContent = translations[lang]['dashboard-lead'];

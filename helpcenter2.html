@@ -168,6 +168,12 @@
                         <span>Help</span>
                     </a>
                 </li>
+                <li>
+                    <a href="chatbot.html">
+                        <i class="bi bi-robot"></i>
+                        <span>Financial Assistant</span>
+                    </a>
+                </li>
             </ul>
             <div class="sidebar-logout-container">
                 <button class="btn btn-logout-icon" id="logoutBtnSidebar" title="Cerrar sesión">
@@ -346,6 +352,7 @@ const translations = {
         'subject': 'Asunto',
         'message': 'Mensaje',
         'send-message': 'Enviar Mensaje',
+        'financial-assistant': 'Asistente Financiero'
     },
     en: {
         'management': 'Management',
@@ -367,19 +374,21 @@ const translations = {
         'subject': 'Subject',
         'message': 'Message',
         'send-message': 'Send Message',
+        'financial-assistant': 'Financial Assistant'
     }
 };
 function setLanguage(lang) {
     localStorage.setItem('finx_lang', lang);
     // Sidebar
-    document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['management'];
+    document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['management'] || 'Management';
     document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
     document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
     document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
     document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
+    document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['financial-assistant'];
     document.getElementById('logoutBtnSidebar').title = translations[lang]['logout'];
-    document.querySelector('.avatar-big + h5').textContent = translations[lang]['user'];
-    document.querySelector('.avatar-big + h5 + small').textContent = translations[lang]['level'];
+    document.querySelector('.avatar-big + h5').textContent = translations[lang]['user'] || 'User';
+    document.querySelector('.avatar-big + h5 + small').textContent = translations[lang]['level'] || 'Level 2';
     // Contact info
     document.querySelector('.contact-info-header h3').textContent = translations[lang]['contact-info'];
     document.querySelectorAll('.info-content h4')[0].textContent = translations[lang]['email'];
