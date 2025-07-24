@@ -1,7 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize chat elements if they exist on the page
     const chatbotMessages = document.getElementById('chatbotMessages');
     const chatbotInput = document.getElementById('chatbotInput');
     const chatbotSendBtn = document.getElementById('chatbotSendBtn');
+    
+    // If we're not on the chatbot page, don't proceed with chat initialization
+    if (!chatbotMessages || !chatbotInput || !chatbotSendBtn) {
+        return;
+    }
 
     // Respuestas del chatbot
     const responses = {
