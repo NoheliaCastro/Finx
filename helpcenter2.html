@@ -105,16 +105,21 @@
     <!-- Navbar -->
     <nav class="navbar trivia-navbar">
         <div class="container-fluid">
-            <div class="row align-items-center w-100">
-                <div class="col-md-6">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div style="flex:1; display:flex; align-items:center;">
                     <a class="navbar-brand trivia-navbar-brand" href="index.html">
                         <i class="bi bi-currency-exchange me-2"></i>
                         Finx
                     </a>
                 </div>
-                <div class="col-md-6 text-end">
+                <div style="flex:1; display:flex; justify-content:center; align-items:center;">
                     <button class="trivia-theme-toggle" id="themeToggle" title="Cambiar tema">
                         <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </button>
+                </div>
+                <div style="flex:1; display:flex; justify-content:end; align-items:center;">
+                    <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
+                        <i class="bi bi-translate"></i>
                     </button>
                 </div>
             </div>
@@ -318,5 +323,87 @@
             }
         });
     </script>
+    <script>
+// Traducción de la página
+const translations = {
+    es: {
+        'management': 'Gestión',
+        'lessons': 'Lecciones',
+        'achievements': 'Logros',
+        'goals': 'Metas',
+        'help': 'Ayuda',
+        'logout': 'Cerrar sesión',
+        'user': 'Usuario',
+        'level': 'Nivel 2',
+        'contact-info': 'Información de Contacto',
+        'email': 'Correo electrónico',
+        'phone': 'Teléfono',
+        'address': 'Dirección',
+        'hours': 'Horario',
+        'send-us-message': 'Envíanos un Mensaje',
+        'fill-form': 'Completa el formulario y te responderemos pronto.',
+        'name': 'Nombre',
+        'subject': 'Asunto',
+        'message': 'Mensaje',
+        'send-message': 'Enviar Mensaje',
+    },
+    en: {
+        'management': 'Management',
+        'lessons': 'Lessons',
+        'achievements': 'Achievements',
+        'goals': 'Goals',
+        'help': 'Help',
+        'logout': 'Logout',
+        'user': 'User',
+        'level': 'Level 2',
+        'contact-info': 'Contact Information',
+        'email': 'Email',
+        'phone': 'Phone',
+        'address': 'Address',
+        'hours': 'Hours',
+        'send-us-message': 'Send us a Message',
+        'fill-form': "Fill out the form below and we'll get back to you soon.",
+        'name': 'Name',
+        'subject': 'Subject',
+        'message': 'Message',
+        'send-message': 'Send Message',
+    }
+};
+function setLanguage(lang) {
+    localStorage.setItem('finx_lang', lang);
+    // Sidebar
+    document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['management'];
+    document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
+    document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
+    document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
+    document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
+    document.getElementById('logoutBtnSidebar').title = translations[lang]['logout'];
+    document.querySelector('.avatar-big + h5').textContent = translations[lang]['user'];
+    document.querySelector('.avatar-big + h5 + small').textContent = translations[lang]['level'];
+    // Contact info
+    document.querySelector('.contact-info-header h3').textContent = translations[lang]['contact-info'];
+    document.querySelectorAll('.info-content h4')[0].textContent = translations[lang]['email'];
+    document.querySelectorAll('.info-content h4')[1].textContent = translations[lang]['phone'];
+    document.querySelectorAll('.info-content h4')[2].textContent = translations[lang]['address'];
+    document.querySelectorAll('.info-content h4')[3].textContent = translations[lang]['hours'];
+    // Formulario
+    document.querySelector('.contact-form-header h3').textContent = translations[lang]['send-us-message'];
+    document.querySelector('.contact-form-header p').textContent = translations[lang]['fill-form'];
+    document.querySelector('label[for="contactName"]').textContent = translations[lang]['name'];
+    document.querySelector('label[for="contactEmail"]').textContent = translations[lang]['email'];
+    document.querySelector('label[for="contactSubject"]').textContent = translations[lang]['subject'];
+    document.querySelector('label[for="contactMessage"]').textContent = translations[lang]['message'];
+    document.querySelector('.contact-form button[type="submit"]').innerHTML = `<i class='fas fa-paper-plane me-2'></i>${translations[lang]['send-message']}`;
+}
+document.getElementById('langToggle').addEventListener('click', function() {
+    const current = localStorage.getItem('finx_lang') || 'es';
+    const next = current === 'es' ? 'en' : 'es';
+    setLanguage(next);
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const lang = localStorage.getItem('finx_lang') || 'es';
+    setLanguage(lang);
+});
+</script>
 </body>
 </html> 

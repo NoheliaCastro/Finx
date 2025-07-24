@@ -636,17 +636,22 @@
     <!-- Navbar -->
     <nav class="navbar trivia-navbar">
         <div class="container-fluid">
-            <div class="row align-items-center w-100">
-                <div class="col-md-6">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div style="flex:1; display:flex; align-items:center;">
                     <a class="navbar-brand trivia-navbar-brand" href="../index.html">
                         <i class="bi bi-currency-exchange me-2"></i>
                         Finx
                     </a>
-    </div>
-                <div class="col-md-6 text-end">
+                </div>
+                <div style="flex:1; display:flex; justify-content:center; align-items:center;">
                     <button class="trivia-theme-toggle" id="themeToggle" title="Change theme">
                         <i class="bi bi-moon-fill" id="themeIcon"></i>
-                </button>
+                    </button>
+                </div>
+                <div style="flex:1; display:flex; justify-content:end; align-items:center;">
+                    <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
+                        <i class="bi bi-translate"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -928,6 +933,107 @@
 
         // Efecto de shake removido para mejor experiencia
     </script>
+    <script>
+// Traducción de la página
+const translations = {
+    es: {
+        'dashboard': 'Panel',
+        'lessons': 'Lecciones',
+        'achievements': 'Logros',
+        'goals': 'Metas',
+        'help': 'Ayuda',
+        'logout': 'Cerrar sesión',
+        'user': 'Usuario',
+        'level': 'Nivel 2',
+        'hero-title': '¡Aprende finanzas jugando! 🎮',
+        'hero-lead': '🚀 Completa lecciones, gana puntos y domina tu dinero de forma divertida ⭐',
+        'level-label': '🏆 Nivel 2',
+        'keep-moving': '⚡ ¡Sigue avanzando en tu camino de aprendizaje! 🚀',
+        'completed': '📊 60% completado',
+        'xp': '💎 240 XP',
+        'smart-saving': '💰 Ahorro Inteligente',
+        'smart-saving-desc': '🎯 Aprende estrategias efectivas para ahorrar dinero y alcanzar tus metas financieras de forma inteligente.',
+        'basic-investment': '📈 Inversión Básica',
+        'basic-investment-desc': '🚀 Descubre los fundamentos de la inversión y cómo hacer crecer tu dinero de forma segura.',
+        'credit-without-fear': '💳 Crédito sin miedo',
+        'credit-without-fear-desc': '🛡️ Entiende cómo funcionan las tarjetas de crédito y préstamos para usarlos responsablemente.',
+        'lessons-label-1': '📚 3 de 10 lecciones',
+        'lessons-label-2': '📚 0 de 8 lecciones',
+        'lessons-label-3': '📚 0 de 5 lecciones',
+        'percent-30': '✅ 30%',
+        'percent-0': '🔒 0%',
+    },
+    en: {
+        'dashboard': 'Dashboard',
+        'lessons': 'Lessons',
+        'achievements': 'Achievements',
+        'goals': 'Goals',
+        'help': 'Help',
+        'logout': 'Logout',
+        'user': 'User',
+        'level': 'Level 2',
+        'hero-title': '🎮 Learn Finance by Playing! 🎮',
+        'hero-lead': '🚀 Complete lessons, earn points, and master your money in a fun way ⭐',
+        'level-label': '🏆 Level 2',
+        'keep-moving': '⚡ Keep moving forward on your learning path! 🚀',
+        'completed': '📊 60% completed',
+        'xp': '💎 240 XP',
+        'smart-saving': '💰 Smart Saving',
+        'smart-saving-desc': '🎯 Learn effective strategies to save money and reach your financial goals intelligently.',
+        'basic-investment': '📈 Basic Investment',
+        'basic-investment-desc': '🚀 Discover the fundamentals of investing and how to grow your money safely.',
+        'credit-without-fear': '💳 Credit Without Fear',
+        'credit-without-fear-desc': '🛡️ Understand how credit cards and loans work to use them responsibly.',
+        'lessons-label-1': '📚 3 of 10 lessons',
+        'lessons-label-2': '📚 0 of 8 lessons',
+        'lessons-label-3': '📚 0 of 5 lessons',
+        'percent-30': '✅ 30%',
+        'percent-0': '🔒 0%',
+    }
+};
+function setLanguage(lang) {
+    localStorage.setItem('finx_lang', lang);
+    // Sidebar
+    document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['dashboard'];
+    document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
+    document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
+    document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
+    document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
+    document.getElementById('logoutBtnSidebar').title = translations[lang]['logout'];
+    document.querySelector('.avatar-big + h5').textContent = translations[lang]['user'];
+    document.querySelector('.avatar-big + h5 + small').textContent = translations[lang]['level'];
+    // Hero
+    document.querySelector('.trivia-hero h1').textContent = translations[lang]['hero-title'];
+    document.querySelector('.trivia-hero .lead').textContent = translations[lang]['hero-lead'];
+    // Progreso
+    document.querySelector('.xp-progress-container h3').textContent = translations[lang]['level-label'];
+    document.querySelector('.xp-progress-container p').textContent = translations[lang]['keep-moving'];
+    document.querySelector('.xp-progress-container .d-flex span.text-muted').textContent = translations[lang]['completed'];
+    document.querySelector('.xp-progress-container .d-flex span.text-primary').textContent = translations[lang]['xp'];
+    // Módulos
+    document.querySelectorAll('.module-title')[0].textContent = translations[lang]['smart-saving'];
+    document.querySelectorAll('.module-title')[1].textContent = translations[lang]['basic-investment'];
+    document.querySelectorAll('.module-title')[2].textContent = translations[lang]['credit-without-fear'];
+    document.querySelectorAll('.module-description')[0].textContent = translations[lang]['smart-saving-desc'];
+    document.querySelectorAll('.module-description')[1].textContent = translations[lang]['basic-investment-desc'];
+    document.querySelectorAll('.module-description')[2].textContent = translations[lang]['credit-without-fear-desc'];
+    document.querySelectorAll('.module-stats span:first-child')[0].textContent = translations[lang]['lessons-label-1'];
+    document.querySelectorAll('.module-stats span:first-child')[1].textContent = translations[lang]['lessons-label-2'];
+    document.querySelectorAll('.module-stats span:first-child')[2].textContent = translations[lang]['lessons-label-3'];
+    document.querySelectorAll('.module-stats span:last-child')[0].textContent = translations[lang]['percent-30'];
+    document.querySelectorAll('.module-stats span:last-child')[1].textContent = translations[lang]['percent-0'];
+    document.querySelectorAll('.module-stats span:last-child')[2].textContent = translations[lang]['percent-0'];
+}
+document.getElementById('langToggle').addEventListener('click', function() {
+    const current = localStorage.getItem('finx_lang') || 'es';
+    const next = current === 'es' ? 'en' : 'es';
+    setLanguage(next);
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const lang = localStorage.getItem('finx_lang') || 'es';
+    setLanguage(lang);
+});
+</script>
     <script>
 document.addEventListener('DOMContentLoaded', function() {
     var logoutBtn = document.getElementById('logoutBtnSidebar');

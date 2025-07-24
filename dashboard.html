@@ -312,22 +312,46 @@
           transform: scale(1) translateY(0);
           animation: popIn 1s cubic-bezier(.4,2,.6,1);
         }
+        #langToggle {
+            color: #004AAD;
+            text-decoration: none;
+            border: none;
+            background: none;
+            box-shadow: none;
+            transition: color 0.2s;
+        }
+        #langToggle:hover {
+            color: #002366;
+            background: none;
+            text-decoration: underline;
+        }
+        [data-bs-theme="dark"] #langToggle {
+            color: #EEE95B;
+        }
+        [data-bs-theme="dark"] #langToggle:hover {
+            color: #fff;
+        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar trivia-navbar">
         <div class="container-fluid">
-            <div class="row align-items-center w-100">
-                <div class="col-md-6">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div style="flex:1; display:flex; align-items:center;">
                     <a class="navbar-brand trivia-navbar-brand" href="index.html">
                         <i class="bi bi-currency-exchange me-2"></i>
                         Finx
                     </a>
                 </div>
-                <div class="col-md-6 text-end">
+                <div style="flex:1; display:flex; justify-content:center; align-items:center;">
                     <button class="trivia-theme-toggle" id="themeToggle" title="Change theme">
                         <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </button>
+                </div>
+                <div style="flex:1; display:flex; justify-content:end; align-items:center;">
+                    <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
+                        <i class="bi bi-translate"></i>
                     </button>
                 </div>
             </div>
@@ -773,5 +797,211 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+    <script>
+        // Traducción de la página
+        const translations = {
+            es: {
+                'dashboard-lead': 'Visualiza y controla tus finanzas de forma moderna y divertida.',
+                'income': 'Ingresos',
+                'expenses': 'Gastos',
+                'recent-movements': 'Movimientos Recientes',
+                'all': 'Todos',
+                'income-option': 'Ingresos',
+                'expense-option': 'Gastos',
+                'clear-history': 'Limpiar historial',
+                'date': 'Fecha',
+                'category': 'Categoría',
+                'amount': 'Monto',
+                'type': 'Tipo',
+                'no-movements': 'Aún no hay movimientos',
+                'no-movements-filter': 'No hay movimientos en este filtro',
+                'add-income': 'Agregar ingreso',
+                'add-expense': 'Agregar gasto',
+                'cancel': 'Cancelar',
+                'salary': 'Salario',
+                'business': 'Negocio',
+                'gift': 'Regalo',
+                'freelance': 'Freelance',
+                'investments': 'Inversiones',
+                'scholarship': 'Beca',
+                'refund': 'Reembolso',
+                'other': 'Otro',
+                'food': 'Comida',
+                'housing': 'Vivienda',
+                'transportation': 'Transporte',
+                'entertainment': 'Entretenimiento',
+                'health': 'Salud',
+                'education': 'Educación',
+                'shopping': 'Compras',
+                'utilities': 'Servicios',
+                'travel': 'Viajes',
+                'insurance': 'Seguro',
+                'pets': 'Mascotas',
+                'management': 'Gestión',
+                'lessons': 'Lecciones',
+                'achievements': 'Logros',
+                'goals': 'Metas',
+                'help': 'Ayuda',
+                'logout': 'Cerrar sesión',
+                'welcome-to': 'Bienvenido a',
+                'track-manage': '¡Registra, gestiona y ahorra fácilmente!'
+            },
+            en: {
+                'dashboard-lead': 'Visualize and control your finances in a modern and fun way.',
+                'income': 'Income',
+                'expenses': 'Expenses',
+                'recent-movements': 'Recent Movements',
+                'all': 'All',
+                'income-option': 'Income',
+                'expense-option': 'Expense',
+                'clear-history': 'Clear history',
+                'date': 'Date',
+                'category': 'Category',
+                'amount': 'Amount',
+                'type': 'Type',
+                'no-movements': 'No movements yet',
+                'no-movements-filter': 'No movements in this filter',
+                'add-income': 'Add Income',
+                'add-expense': 'Add Expense',
+                'cancel': 'Cancel',
+                'salary': 'Salary',
+                'business': 'Business',
+                'gift': 'Gift',
+                'freelance': 'Freelance',
+                'investments': 'Investments',
+                'scholarship': 'Scholarship',
+                'refund': 'Refund',
+                'other': 'Other',
+                'food': 'Food',
+                'housing': 'Housing',
+                'transportation': 'Transportation',
+                'entertainment': 'Entertainment',
+                'health': 'Health',
+                'education': 'Education',
+                'shopping': 'Shopping',
+                'utilities': 'Utilities',
+                'travel': 'Travel',
+                'insurance': 'Insurance',
+                'pets': 'Pets',
+                'management': 'Management',
+                'lessons': 'Lessons',
+                'achievements': 'Achievements',
+                'goals': 'Goals',
+                'help': 'Help',
+                'logout': 'Logout',
+                'welcome-to': 'Welcome to',
+                'track-manage': 'Track, Manage, and Save with Ease!'
+            }
+        };
+        function setLanguage(lang) {
+            localStorage.setItem('finx_lang', lang);
+            // Navbar y sidebar
+            document.querySelector('.sidebar-nav a.active span').textContent = translations[lang]['management'];
+            document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
+            document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
+            document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
+            document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
+            document.getElementById('logoutBtnSidebar').title = translations[lang]['logout'];
+            // Hero
+            document.querySelector('.dashboard-lead').textContent = translations[lang]['dashboard-lead'];
+            // Tarjetas
+            document.querySelector('#incomeCard h3').textContent = translations[lang]['income'];
+            document.querySelector('#expenseCard h3').textContent = translations[lang]['expenses'];
+            // Selector de tipo
+            document.getElementById('typeSelector').options[0].text = translations[lang]['all'];
+            document.getElementById('typeSelector').options[1].text = translations[lang]['income-option'];
+            document.getElementById('typeSelector').options[2].text = translations[lang]['expense-option'];
+            // Botón limpiar historial
+            document.getElementById('clearHistoryBtn').innerHTML = `<i class=\"fas fa-trash-alt me-1\"></i> ${translations[lang]['clear-history']}`;
+            // Tabla
+            const ths = document.querySelectorAll('.table thead th');
+            ths[0].textContent = translations[lang]['date'];
+            ths[1].textContent = translations[lang]['category'];
+            ths[2].textContent = translations[lang]['amount'];
+            ths[3].textContent = translations[lang]['type'];
+            // Títulos de tarjetas
+            document.querySelector('#movementsCard h3').textContent = translations[lang]['recent-movements'];
+            // Modales
+            document.getElementById('incomeModalLabel').textContent = translations[lang]['add-income'];
+            document.getElementById('expenseModalLabel').textContent = translations[lang]['add-expense'];
+            document.querySelector('#incomeForm button[type="button"]').textContent = translations[lang]['cancel'];
+            document.querySelector('#incomeForm button[type="submit"]').textContent = translations[lang]['add-income'];
+            document.querySelector('#expenseForm button[type="button"]').textContent = translations[lang]['cancel'];
+            document.querySelector('#expenseForm button[type="submit"]').textContent = translations[lang]['add-expense'];
+            // Categorías ingresos
+            const incomeCats = document.querySelectorAll('#incomeCategory option');
+            incomeCats[0].textContent = translations[lang]['salary'];
+            incomeCats[1].textContent = translations[lang]['business'];
+            incomeCats[2].textContent = translations[lang]['gift'];
+            incomeCats[3].textContent = translations[lang]['freelance'];
+            incomeCats[4].textContent = translations[lang]['investments'];
+            incomeCats[5].textContent = translations[lang]['scholarship'];
+            incomeCats[6].textContent = translations[lang]['refund'];
+            incomeCats[7].textContent = translations[lang]['other'];
+            // Categorías gastos
+            const expenseCats = document.querySelectorAll('#expenseCategory option');
+            expenseCats[0].textContent = translations[lang]['food'];
+            expenseCats[1].textContent = translations[lang]['housing'];
+            expenseCats[2].textContent = translations[lang]['transportation'];
+            expenseCats[3].textContent = translations[lang]['entertainment'];
+            expenseCats[4].textContent = translations[lang]['health'];
+            expenseCats[5].textContent = translations[lang]['education'];
+            expenseCats[6].textContent = translations[lang]['shopping'];
+            expenseCats[7].textContent = translations[lang]['utilities'];
+            expenseCats[8].textContent = translations[lang]['travel'];
+            expenseCats[9].textContent = translations[lang]['insurance'];
+            expenseCats[10].textContent = translations[lang]['pets'];
+            expenseCats[11].textContent = translations[lang]['other'];
+            // Overlay bienvenida
+            if(document.getElementById('welcomeTitle'))
+                document.getElementById('welcomeTitle').textContent = translations[lang]['welcome-to'];
+            if(document.getElementById('welcomeSubtitle'))
+                document.getElementById('welcomeSubtitle').textContent = translations[lang]['track-manage'];
+            // Actualizar tabla de movimientos
+            fillMovementsTableByType();
+        }
+        // Modificar fillMovementsTableByType para traducir mensajes vacíos
+        const originalFillMovements = fillMovementsTableByType;
+        fillMovementsTableByType = function() {
+            const lang = localStorage.getItem('finx_lang') || 'es';
+            const movements = JSON.parse(localStorage.getItem('finx_movements') || '[]');
+            const tbody = document.getElementById('movementsTableBody');
+            const type = document.getElementById('typeSelector').value;
+            tbody.innerHTML = '';
+            if (movements.length === 0) {
+                tbody.innerHTML = `<tr><td colspan=\"4\" class=\"text-center\">${translations[lang]['no-movements']}</td></tr>`;
+                return;
+            }
+            let filtered = movements;
+            if (type !== 'all') {
+                filtered = movements.filter(mov => mov.type === type);
+            }
+            filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+            filtered.forEach(mov => {
+                const sign = mov.type === 'income' ? '+' : '-';
+                const color = mov.type === 'income' ? 'text-success' : 'text-danger';
+                const badge = mov.type === 'income' ? 'bg-success' : 'bg-danger';
+                tbody.innerHTML += `
+                <tr>
+                    <td>${mov.date}</td>
+                    <td>${mov.category}</td>
+                    <td class=\"${color}\">${sign}$${Number(mov.amount).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
+                    <td><span class=\"badge ${badge}\">${mov.type.charAt(0).toUpperCase() + mov.type.slice(1)}</span></td>
+                </tr>`;
+            });
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan=\"4\" class=\"text-center\">${translations[lang]['no-movements-filter']}</td></tr>`;
+            }
+        }
+        document.getElementById('langToggle').addEventListener('click', function() {
+            const current = localStorage.getItem('finx_lang') || 'es';
+            const next = current === 'es' ? 'en' : 'es';
+            setLanguage(next);
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const lang = localStorage.getItem('finx_lang') || 'es';
+            setLanguage(lang);
+        });
+    </script>
 </body>
 </html>

@@ -306,10 +306,18 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar leccion-navbar" style="background: #fff !important; box-shadow: 0 4px 20px rgba(0,0,0,0.08); min-height: 70px; border-bottom: none !important;">
-        <div class="container-fluid d-flex justify-content-center align-items-center" style="position:relative; min-height:70px;">
-            <button class="leccion-theme-toggle d-block mx-auto" id="themeToggle" title="Change theme" style="position:relative; left:0; right:0; margin:auto; background: #818cf8; color: #fff;">
-                <i class="bi bi-moon-fill" id="themeIcon" style="color: #fff;"></i>
-            </button>
+        <div class="container-fluid d-flex align-items-center justify-content-between" style="position:relative; min-height:70px;">
+            <div style="flex:1;"></div>
+            <div style="flex:1; display:flex; justify-content:center; align-items:center;">
+                <button class="leccion-theme-toggle d-block mx-auto" id="themeToggle" title="Change theme" style="background: #818cf8; color: #fff;">
+                    <i class="bi bi-moon-fill" id="themeIcon" style="color: #fff;"></i>
+                </button>
+            </div>
+            <div style="flex:1; display:flex; justify-content:end; align-items:center;">
+                <button class="leccion-theme-toggle" id="langToggle" title="Traducir página">
+                    <i class="bi bi-translate"></i>
+                </button>
+            </div>
         </div>
     </nav>
     <style>
@@ -556,5 +564,115 @@
             }
         });
     </script>
+<script>
+// Traducción de la página
+const translations = {
+    es: {
+        'management': 'Gestión',
+        'lessons': 'Lecciones',
+        'achievements': 'Logros',
+        'goals': 'Metas',
+        'help': 'Ayuda',
+        'logout': 'Cerrar sesión',
+        'assistant': 'Asistente Financiero',
+        'user': 'Usuario',
+        'level': 'Nivel 2',
+        'goal-title': 'Mis Metas Financieras',
+        'add-new-goal': 'Agregar Nueva Meta',
+        'goal-name': 'Nombre de la Meta',
+        'target-amount': 'Cantidad Objetivo',
+        'deadline': 'Fecha Límite (opcional)',
+        'clear': 'Limpiar',
+        'add-goal': 'Agregar Meta',
+        'no-goals': 'Aún no tienes metas. ¡Agrega tu primera meta!',
+        'add-saving': 'Agregar Ahorro',
+        'delete': 'Eliminar',
+        'achievement-reached': '¡Meta alcanzada! Puedes ir por tu',
+        'deadline-label': 'Fecha límite:',
+        'add-saving-modal': 'Agregar Ahorro a la Meta',
+        'how-much': '¿Cuánto deseas agregar?',
+        'cancel': 'Cancelar',
+        'add': 'Agregar',
+        'are-you-sure': '¿Estás seguro de que deseas eliminar esta meta?',
+    },
+    en: {
+        'management': 'Management',
+        'lessons': 'Lessons',
+        'achievements': 'Achievements',
+        'goals': 'Goals',
+        'help': 'Help',
+        'logout': 'Logout',
+        'assistant': 'Financial Assistant',
+        'user': 'User',
+        'level': 'Level 2',
+        'goal-title': 'My Financial Goals',
+        'add-new-goal': 'Add New Goal',
+        'goal-name': 'Goal Name',
+        'target-amount': 'Target Amount',
+        'deadline': 'Deadline (optional)',
+        'clear': 'Clear',
+        'add-goal': 'Add Goal',
+        'no-goals': 'No goals yet. Add your first goal!',
+        'add-saving': 'Add Saving',
+        'delete': 'Delete',
+        'achievement-reached': 'Achievement reached! You can go for your',
+        'deadline-label': 'Deadline:',
+        'add-saving-modal': 'Add Saving to Goal',
+        'how-much': 'How much do you want to add?',
+        'cancel': 'Cancel',
+        'add': 'Add',
+        'are-you-sure': 'Are you sure you want to delete this goal?',
+    }
+};
+function setLanguage(lang) {
+    localStorage.setItem('finx_lang', lang);
+    // Sidebar
+    document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['management'];
+    document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
+    document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
+    document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
+    document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
+    document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['assistant'];
+    document.getElementById('logoutBtnSidebar').title = translations[lang]['logout'];
+    document.querySelector('.avatar-big + h5').textContent = translations[lang]['user'];
+    document.querySelector('.avatar-big + h5 + small').textContent = translations[lang]['level'];
+    // Título principal
+    document.querySelector('.goal-title').textContent = translations[lang]['goal-title'];
+    // Formulario
+    document.querySelector('.card h5').textContent = translations[lang]['add-new-goal'];
+    document.querySelector('label[for="goalName"]').textContent = translations[lang]['goal-name'];
+    document.querySelector('label[for="goalTarget"]').textContent = translations[lang]['target-amount'];
+    document.querySelector('label[for="goalDeadline"]').textContent = translations[lang]['deadline'];
+    document.querySelector('#goalForm button[type="reset"]').textContent = translations[lang]['clear'];
+    document.querySelector('#goalForm button[type="submit"]').textContent = translations[lang]['add-goal'];
+    // Lista de metas vacía
+    const noGoals = document.querySelector('#goalsList .text-center.text-muted');
+    if(noGoals) noGoals.textContent = translations[lang]['no-goals'];
+    // Modal ahorro
+    document.getElementById('addSavingModalLabel').textContent = translations[lang]['add-saving-modal'];
+    document.querySelector('label[for="savingAmount"]').textContent = translations[lang]['how-much'];
+    document.querySelector('#addSavingForm button[type="button"]').textContent = translations[lang]['cancel'];
+    document.querySelector('#addSavingForm button[type="submit"]').textContent = translations[lang]['add'];
+    // Botones y textos dinámicos de metas
+    document.querySelectorAll('.goal-card').forEach(card => {
+        const achieved = card.querySelector('.goal-achieved-card');
+        if(achieved) achieved.innerHTML = `<span class='goal-emoji'>🏆</span>${translations[lang]['achievement-reached']} <b>${card.querySelector('.goal-title').textContent}</b>`;
+        card.querySelectorAll('.goal-actions .btn-outline-success').forEach(btn => btn.textContent = translations[lang]['add-saving']);
+        card.querySelectorAll('.goal-actions .btn-outline-danger').forEach(btn => btn.textContent = translations[lang]['delete']);
+        // Deadline label
+        const deadlineDiv = Array.from(card.childNodes).find(n => n.textContent && n.textContent.includes('Deadline:'));
+        if(deadlineDiv) deadlineDiv.innerHTML = translations[lang]['deadline-label'] + deadlineDiv.innerHTML.split(':')[1];
+    });
+}
+document.getElementById('langToggle').addEventListener('click', function() {
+    const current = localStorage.getItem('finx_lang') || 'es';
+    const next = current === 'es' ? 'en' : 'es';
+    setLanguage(next);
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const lang = localStorage.getItem('finx_lang') || 'es';
+    setLanguage(lang);
+});
+</script>
 </body>
 </html> 

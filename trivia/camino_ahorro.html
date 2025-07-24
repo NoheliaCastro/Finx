@@ -698,17 +698,22 @@
     <!-- Navbar -->
     <nav class="navbar camino-navbar">
         <div class="container-fluid">
-            <div class="row align-items-center w-100">
-                <div class="col-md-6">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div style="flex:1; display:flex; align-items:center;">
                     <a class="navbar-brand camino-navbar-brand" href="../index.html">
                         <i class="bi bi-currency-exchange me-2"></i>
                         Finx
                     </a>
                 </div>
-                <div class="col-md-6 text-end">
+                <div style="flex:1; display:flex; justify-content:center; align-items:center;">
                     <button class="camino-theme-toggle" id="themeToggle" title="Cambiar tema">
                         <i class="bi bi-moon-fill" id="themeIcon"></i>
-    </button>
+                    </button>
+                </div>
+                <div style="flex:1; display:flex; justify-content:end; align-items:center;">
+                    <button class="camino-theme-toggle" id="langToggle" title="Traducir página">
+                        <i class="bi bi-translate"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -968,5 +973,87 @@
             }
         });
     </script>
+<script>
+// Traducción de la página
+const translations = {
+    es: {
+        'dashboard': 'Panel',
+        'lessons': 'Lecciones',
+        'achievements': 'Logros',
+        'goals': 'Metas',
+        'help': 'Ayuda',
+        'logout': 'Cerrar sesión',
+        'user': 'Usuario',
+        'level': 'Nivel 2',
+        'hero-title': 'Camino de Ahorro Inteligente',
+        'hero-lead': 'Recorre tu camino de aprendizaje paso a paso',
+        'study': 'Estudiar',
+        'quiz': 'Quiz',
+        'reward': 'Recompensa',
+        'study-tooltip': 'Aprende los fundamentos del ahorro inteligente',
+        'quiz-tooltip': 'Pon a prueba tus conocimientos con preguntas',
+        'reward-tooltip': '¡Obtén tu recompensa por completar el módulo!',
+        'go-to-study': 'Ir al Material de Estudio',
+        'take-quiz': 'Tomar Quiz',
+        'see-reward': 'Ver Recompensa',
+    },
+    en: {
+        'dashboard': 'Dashboard',
+        'lessons': 'Lessons',
+        'achievements': 'Achievements',
+        'goals': 'Goals',
+        'help': 'Help',
+        'logout': 'Logout',
+        'user': 'User',
+        'level': 'Level 2',
+        'hero-title': 'Smart Saving Path',
+        'hero-lead': 'Travel your learning path step by step',
+        'study': 'Study',
+        'quiz': 'Quiz',
+        'reward': 'Reward',
+        'study-tooltip': 'Learn the fundamentals of smart saving',
+        'quiz-tooltip': 'Test your knowledge with questions',
+        'reward-tooltip': 'Get your reward for completing the module!',
+        'go-to-study': 'Go to Study Material',
+        'take-quiz': 'Take Quiz',
+        'see-reward': 'See Reward',
+    }
+};
+function setLanguage(lang) {
+    localStorage.setItem('finx_lang', lang);
+    // Sidebar
+    document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['dashboard'];
+    document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
+    document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
+    document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
+    document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
+    document.getElementById('logoutBtnSidebar').title = translations[lang]['logout'];
+    document.querySelector('.avatar-big + h5').textContent = translations[lang]['user'];
+    document.querySelector('.avatar-big + h5 + small').textContent = translations[lang]['level'];
+    // Hero
+    document.querySelector('.camino-hero h1').textContent = translations[lang]['hero-title'];
+    document.querySelector('.camino-hero .lead').textContent = translations[lang]['hero-lead'];
+    // Nodos
+    document.querySelectorAll('.camino-nodo .nodo-label')[0].textContent = translations[lang]['study'];
+    document.querySelectorAll('.camino-nodo .nodo-label')[1].textContent = translations[lang]['quiz'];
+    document.querySelectorAll('.camino-nodo .nodo-label')[2].textContent = translations[lang]['reward'];
+    document.querySelectorAll('.camino-nodo .tooltip')[0].textContent = translations[lang]['study-tooltip'];
+    document.querySelectorAll('.camino-nodo .tooltip')[1].textContent = translations[lang]['quiz-tooltip'];
+    document.querySelectorAll('.camino-nodo .tooltip')[2].textContent = translations[lang]['reward-tooltip'];
+    // Botones
+    document.querySelector('.btn-camino-primary').childNodes[2].textContent = ' ' + translations[lang]['go-to-study'];
+    document.getElementById('quizBtn').childNodes[2].textContent = ' ' + translations[lang]['take-quiz'];
+    document.getElementById('rewardBtn').childNodes[2].textContent = ' ' + translations[lang]['see-reward'];
+}
+document.getElementById('langToggle').addEventListener('click', function() {
+    const current = localStorage.getItem('finx_lang') || 'es';
+    const next = current === 'es' ? 'en' : 'es';
+    setLanguage(next);
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const lang = localStorage.getItem('finx_lang') || 'es';
+    setLanguage(lang);
+});
+</script>
 </body>
 </html> 
