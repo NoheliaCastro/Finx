@@ -13,15 +13,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/chatbot-sidebar.css">
     <style>
-        body {
-            background: #E6E5E5;
-        }
-        [data-bs-theme="dark"] body {
-            background: #181C24;
+        html, body {
+            background: #fff;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            min-height: 100vh;
         }
         .main-section, .goals-section {
-            background: linear-gradient(135deg, var(--light-background, #fff) 0%, var(--background-color, #E6E5E5) 100%);
+            background: #fff;
             min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        [data-bs-theme="dark"] html, [data-bs-theme="dark"] body {
+            background: #181C24;
         }
         [data-bs-theme="dark"] .main-section, [data-bs-theme="dark"] .goals-section {
             background: linear-gradient(135deg, #232A36 0%, #181C24 100%);
@@ -291,21 +297,13 @@
             --fun-orange: #f97316;
             --fun-yellow: #eab308;
         }
-        [data-bs-theme="dark"] .goal-card {
-            background: #fff !important;
-            color: #002366 !important;
-        }
-        @media (prefers-color-scheme: dark) {
-            .goal-card {
-                background: #fff !important;
-                color: #002366 !important;
-            }
-        }
+        /* Eliminar la regla que forzaba fondo blanco en modo oscuro */
+        /* [data-bs-theme="dark"] .goal-card { background: #fff !important; color: #002366 !important; } */
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar leccion-navbar" style="background: #fff !important; box-shadow: 0 4px 20px rgba(0,0,0,0.08); min-height: 70px; border-bottom: none !important;">
+    <nav class="navbar leccion-navbar">
         <div class="container-fluid d-flex align-items-center justify-content-between" style="position:relative; min-height:70px;">
             <div style="flex:1;"></div>
             <div style="flex:1; display:flex; justify-content:center; align-items:center;">
@@ -321,8 +319,30 @@
         </div>
     </nav>
     <style>
+    .leccion-navbar {
+        background: #fff !important;
+    }
     [data-bs-theme="dark"] .leccion-navbar {
         background: #002366 !important;
+    }
+    /* Corregir fondo de las tarjetas de metas en modo oscuro */
+    [data-bs-theme="dark"] .goal-card {
+        background: #232A36 !important;
+        color: #EEE95B !important;
+        border-color: #EEE95B !important;
+    }
+    /* Fondo y color en modo claro */
+    .goal-card {
+        background: #fff !important;
+        color: #002366 !important;
+        border-color: #004AAD !important;
+    }
+    .main-content {
+        width: 100vw;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        background: transparent;
     }
     </style>
     <!-- Sidebar -->
@@ -383,7 +403,7 @@
     </nav>
     <!-- Contenido principal -->
     <main class="main-content">
-        <section class="container py-5">
+        <section class="goals-section w-100 py-5">
             <h1 class="mb-4 goal-title">My Financial Goals</h1>
             <!-- Formulario para agregar meta -->
             <div class="card p-4 mb-4" style="max-width:500px;margin:auto;">
