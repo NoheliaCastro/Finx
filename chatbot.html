@@ -120,15 +120,51 @@
             border-color: #2d303e;
             color: #f8f9fa;
         }
+        .trivia-theme-toggle {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
+            cursor: pointer;
+        }
+        .trivia-theme-toggle:hover {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+        }
+        .trivia-theme-toggle i {
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar leccion-navbar" style="background: #fff !important; box-shadow: 0 4px 20px rgba(0,0,0,0.08); min-height: 70px; border-bottom: none !important;">
-        <div class="container-fluid d-flex justify-content-center align-items-center" style="position:relative; min-height:70px;">
-            <button class="leccion-theme-toggle d-block mx-auto" id="themeToggle" title="Change theme" style="position:relative; left:0; right:0; margin:auto; background: #818cf8; color: #fff;">
-                <i class="bi bi-moon-fill" id="themeIcon" style="color: #fff;"></i>
-            </button>
+    <nav class="navbar trivia-navbar">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div style="flex:1; display:flex; align-items:center;">
+                    <a class="navbar-brand trivia-navbar-brand" href="index.html">
+                        <i class="bi bi-currency-exchange me-2"></i>
+                        Finx
+                    </a>
+                </div>
+                <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
+                    <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
+                        <i class="bi bi-translate"></i>
+                    </button>
+                    <button class="trivia-theme-toggle" id="themeToggle" title="Change theme">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
 
