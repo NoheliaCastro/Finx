@@ -382,16 +382,15 @@
     </nav>
 
     <!-- Sidebar -->
-    <nav class="trivia-sidebar">
+    <nav class="leccion-sidebar">
         <div class="container-fluid">
             <div class="text-center mb-4">
                 <div class="avatar-big">
                     <i class="bi bi-person-fill"></i>
                 </div>
-                <h5 class="mb-0">User</h5>
-                <small class="text-muted">Level 2</small>
+                <h5 class="mb-0">Usuario</h5>
+                <small class="text-muted">Nivel 2</small>
             </div>
-            
             <ul class="sidebar-nav">
                 <li>
                     <a href="dashboard.html" class="active">
@@ -415,12 +414,6 @@
                     <a href="goals.html">
                         <i class="bi bi-flag-fill"></i>
                         <span>Goals</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="chatbot.html">
-                        <i class="bi bi-robot"></i>
-                        <span>Financial Assistant</span>
                     </a>
                 </li>
                 <li>
@@ -451,10 +444,6 @@
         </div>
         <div class="logo-shadow-container" id="welcomeLogo" style="opacity:0;flex:1;max-height:420px;width:100%;margin-bottom:0.5rem;display:none;">
           <img src="images/modo-oscuro.png" alt="Logo shadow" class="logo-shadow-img logo-fadein" />
-          <img src="images/modo-claro.png" alt="Main logo" class="logo-main-img logo-fadein" />
-        </div>
-        <div id="welcomeSubtitle" class="welcome-pop" style="font-size:2.6rem;color:#fff;opacity:0.92;letter-spacing:1px;opacity:0;transition:opacity 0.7s;position:relative;top:0;margin-bottom:0;z-index:2;margin-top:2.5rem;display:none;">
-          Track, Manage, and Save with Ease!
         </div>
       </div>
     </div>
@@ -685,7 +674,6 @@
             const welcomeBlock = document.getElementById('welcomeBlock');
             const welcomeTitle = document.getElementById('welcomeTitle');
             const welcomeLogo = document.getElementById('welcomeLogo');
-            const welcomeSubtitle = document.getElementById('welcomeSubtitle');
             // Solo mostrar el overlay si viene del login
             if (localStorage.getItem('showWelcomeOverlay') === 'true') {
                 overlay.style.display = 'flex';
@@ -695,25 +683,20 @@
                 setTimeout(() => {
                     welcomeTitle.classList.remove('visible');
                     setTimeout(() => { welcomeTitle.style.display = 'none'; }, 500);
-                }, 1800);
+                }, 1200); // Welcome dura ~1.2s
                 // Paso 2: Logo (fade in, más tiempo)
                 setTimeout(() => {
                     welcomeLogo.style.display = 'flex';
                     setTimeout(() => { welcomeLogo.style.opacity = 1; }, 100);
-                }, 2500);
+                }, 1700); // Logo aparece después de Welcome
                 setTimeout(() => {
                     welcomeLogo.style.opacity = 0;
-                    setTimeout(() => { welcomeLogo.style.display = 'none'; }, 500);
-                }, 5000);
-                // Paso 3: Subtítulo (pop)
-                setTimeout(() => {
-                    welcomeSubtitle.style.display = 'block';
-                    setTimeout(() => { welcomeSubtitle.classList.add('visible'); }, 100);
-                }, 5700);
-                setTimeout(() => {
-                    overlay.classList.add('hide');
-                    setTimeout(() => overlay.style.display = 'none', 800);
-                }, 7500);
+                    setTimeout(() => { welcomeLogo.style.display = 'none'; }, 400); // Espera a que termine la transición de opacidad
+                    setTimeout(() => {
+                        overlay.classList.add('hide');
+                        setTimeout(() => overlay.style.display = 'none', 600);
+                    }, 400); // Oculta el overlay después de ocultar la imagen
+                }, 3200); // Logo visible el tiempo necesario para 4.5s total
                 localStorage.removeItem('showWelcomeOverlay');
             } else {
                 overlay.style.display = 'none';
@@ -1009,8 +992,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Overlay bienvenida
             if(document.getElementById('welcomeTitle'))
                 document.getElementById('welcomeTitle').textContent = translations[lang]['welcome-to'];
-            if(document.getElementById('welcomeSubtitle'))
-                document.getElementById('welcomeSubtitle').textContent = translations[lang]['track-manage'];
+            if(document.getElementById('welcomeLogo'))
+                document.getElementById('welcomeLogo').style.display = 'none'; // Ocultar el texto de bienvenida
             // Actualizar tabla de movimientos
             fillMovementsTableByType();
         }
