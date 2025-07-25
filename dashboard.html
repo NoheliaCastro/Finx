@@ -312,7 +312,48 @@
           transform: scale(1) translateY(0);
           animation: popIn 1s cubic-bezier(.4,2,.6,1);
         }
-        /* Eliminar los estilos específicos de #langToggle para que solo se apliquen los de .trivia-theme-toggle */
+        #langToggle {
+            color: #004AAD;
+            text-decoration: none;
+            border: none;
+            background: none;
+            box-shadow: none;
+            transition: color 0.2s;
+        }
+        #langToggle:hover {
+            color: #002366;
+            background: none;
+            text-decoration: underline;
+        }
+        [data-bs-theme="dark"] #langToggle {
+            color: #EEE95B;
+        }
+        [data-bs-theme="dark"] #langToggle:hover {
+            color: #fff;
+        }
+        #movementsChartContainer {
+            background: #f8f9fa;
+            border-radius:1rem;
+            border:1px dashed #004AAD;
+            padding: 0;
+            overflow: hidden;
+        }
+        #movementsChartContainer canvas {
+            border-radius: 1rem;
+            background: transparent !important;
+            display: block;
+        }
+        [data-bs-theme="dark"] #movementsChartContainer {
+            background: #11254b;
+            border:1px dashed #181C24;
+            padding: 0;
+            overflow: hidden;
+        }
+        [data-bs-theme="dark"] #movementsChartContainer canvas {
+            border-radius: 1rem;
+            background: transparent !important;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -372,6 +413,12 @@
                     <a href="goals.html">
                         <i class="bi bi-flag-fill"></i>
                         <span>Goals</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="chatbot.html">
+                        <i class="bi bi-robot"></i>
+                        <span>Financial Assistant</span>
                     </a>
                 </li>
                 <li>
@@ -455,6 +502,10 @@
                         </div>
                         <div class="card p-3 shadow-sm animated-fadein" id="movementsCard">
                             <h3 class="h5 mb-3">Recent Movements</h3>
+                            <!-- Espacio para la gráfica -->
+                            <div id="movementsChartContainer" style="width:100%; min-height:320px; height:340px; margin-bottom:1.5rem; display:flex; align-items:center; justify-content:center; background:#f8f9fa; border-radius:1rem; border:1px dashed #004AAD;">
+                                <!-- Aquí irá la gráfica -->
+                            </div>
                             <div class="table-responsive table-responsive-scroll">
                                 <table class="table table-hover align-middle mb-0">
                                     <thead>
@@ -491,7 +542,10 @@
               </div>
               <div class="mb-3">
                 <label for="incomeDate" class="form-label">Date</label>
-                <input type="date" class="form-control" id="incomeDate" name="date" required autocomplete="off">
+                <input type="date" class="form-control mb-2" id="incomeDate" name="date" required autocomplete="off">
+                <button type="button" class="btn btn-primary w-100 d-flex align-items-center justify-content-center" id="incomeTodayBtn" tabindex="-1" style="font-weight:600;font-size:1.1rem;">
+                  <i class="bi bi-calendar2-date me-2"></i> Hoy
+                </button>
               </div>
               <div class="mb-3">
                 <label for="incomeCategory" class="form-label">Category</label>
@@ -531,7 +585,10 @@
               </div>
               <div class="mb-3">
                 <label for="expenseDate" class="form-label">Date</label>
-                <input type="date" class="form-control" id="expenseDate" name="date" required autocomplete="off">
+                <input type="date" class="form-control mb-2" id="expenseDate" name="date" required autocomplete="off">
+                <button type="button" class="btn btn-primary w-100 d-flex align-items-center justify-content-center" id="expenseTodayBtn" tabindex="-1" style="font-weight:600;font-size:1.1rem;">
+                  <i class="bi bi-calendar2-date me-2"></i> Hoy
+                </button>
               </div>
               <div class="mb-3">
                 <label for="expenseCategory" class="form-label">Category</label>
@@ -670,7 +727,9 @@
                 document.getElementById('incomeDate').value = today;
                 modal.show();
                 setTimeout(function() {
-                    document.getElementById('incomeAmount').focus();
+                    const dateInput = document.getElementById('incomeDate');
+                    dateInput.focus();
+                    dateInput.select && dateInput.select();
                 }, 400);
             };
             document.getElementById('expenseCard').onclick = function() {
@@ -680,7 +739,9 @@
                 document.getElementById('expenseDate').value = today;
                 modal.show();
                 setTimeout(function() {
-                    document.getElementById('expenseAmount').focus();
+                    const dateInput = document.getElementById('expenseDate');
+                    dateInput.focus();
+                    dateInput.select && dateInput.select();
                 }, 400);
             };
             document.getElementById('incomeModal').addEventListener('shown.bs.modal', function () {
@@ -725,6 +786,7 @@
             localStorage.setItem('finx_movements', JSON.stringify(movements));
             updateDashboardTotals();
             fillMovementsTableByType();
+            if (window.renderMovementsChart) window.renderMovementsChart();
             bootstrap.Modal.getInstance(document.getElementById('incomeModal')).hide();
             showSuccessAlert('Income added successfully!');
             this.reset();
@@ -742,6 +804,7 @@
             localStorage.setItem('finx_movements', JSON.stringify(movements));
             updateDashboardTotals();
             fillMovementsTableByType();
+            if (window.renderMovementsChart) window.renderMovementsChart();
             bootstrap.Modal.getInstance(document.getElementById('expenseModal')).hide();
             showSuccessAlert('Expense added successfully!');
             this.reset();
@@ -992,5 +1055,6 @@ document.addEventListener('DOMContentLoaded', function() {
             setLanguage(lang);
         });
     </script>
+    <script src="js/dashboard-chart.js"></script>
 </body>
 </html>

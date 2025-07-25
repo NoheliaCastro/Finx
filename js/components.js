@@ -86,10 +86,49 @@ function assignDashboardLogout() {
     }
 }
 
+// Función para agregar el botón del chatbot a las barras laterales como un elemento de menú
+function addChatbotButtonToSidebars() {
+    // Buscar todas las barras laterales por sus clases comunes
+    const sidebars = [
+        ...document.querySelectorAll('.trivia-sidebar, .leccion-sidebar, .camino-sidebar')
+    ];
+
+    // Crear el HTML del elemento de menú del chatbot
+    const chatbotMenuItemHTML = `
+        <li>
+            <a href="chatbot.html">
+                <i class="bi bi-robot"></i>
+                <span>Financial Assistant</span>
+            </a>
+        </li>
+    `;
+
+    // Agregar el elemento de menú a cada barra lateral
+    sidebars.forEach(sidebar => {
+        // Buscar el menú de navegación
+        const navMenu = sidebar.querySelector('.sidebar-nav');
+        
+        // Solo agregar el elemento si el menú existe y el elemento del chatbot no existe ya
+        if (navMenu && !sidebar.querySelector('a[href="chatbot.html"]')) {
+            // Insertar el elemento antes del contenedor de cierre de sesión si existe
+            const logoutContainer = sidebar.querySelector('.sidebar-logout-container');
+            if (logoutContainer) {
+                logoutContainer.insertAdjacentHTML('beforebegin', chatbotMenuItemHTML);
+            } else {
+                // Si no hay contenedor de cierre de sesión, agregar al final del menú
+                navMenu.insertAdjacentHTML('beforeend', chatbotMenuItemHTML);
+            }
+        }
+    });
+}
+
 // Cargar componentes cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     // Cargar header y footer si existen los elementos
     const headerElement = document.getElementById('header');
+    
+    // Añadir botón del chatbot a las barras laterales
+    addChatbotButtonToSidebars();
     const footerElement = document.getElementById('footer');
     const headerDashboardElement = document.getElementById('header_dashboard');
     const chatbotContainer = document.getElementById('chatbot-container');
