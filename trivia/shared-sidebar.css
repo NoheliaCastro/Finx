@@ -1,5 +1,4 @@
 /* Estilos compartidos para el sidebar de trivia */
-.trivia-sidebar,
 .leccion-sidebar,
 .camino-sidebar {
     background: var(--background-color);
@@ -176,7 +175,6 @@
 
 /* Responsive */
 @media (max-width: 991.98px) {
-    .trivia-sidebar,
     .leccion-sidebar,
     .camino-sidebar {
         width: 100%;
