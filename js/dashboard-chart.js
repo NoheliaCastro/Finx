@@ -2,6 +2,7 @@
 // Renderiza una gráfica de líneas con los movimientos de ingresos y gastos
 
 let movementsChartInstance = null;
+let chartUpdateInterval = null;
 
 function renderMovementsChart() {
     const ctxContainer = document.getElementById('movementsChartContainer');
@@ -34,20 +35,29 @@ function renderMovementsChart() {
     // Obtener movimientos de localStorage
     const movements = JSON.parse(localStorage.getItem('finx_movements') || '[]');
 
-    // Obtener el mes y año actual
+    // Obtener la semana actual (7 días desde el lunes)
     const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth(); // 0-indexed
-    // Calcular el número de días del mes actual
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    // Generar todas las fechas del mes actual en formato YYYY-MM-DD y solo el día para labels
-    const allDates = [];
+    const currentDay = now.getDay(); // 0 = domingo, 1 = lunes, etc.
+    
+    // Calcular el lunes de la semana actual
+    const monday = new Date(now);
+    const daysToMonday = currentDay === 0 ? 6 : currentDay - 1; // Si es domingo, retroceder 6 días
+    monday.setDate(now.getDate() - daysToMonday);
+    
+    // Generar los 7 días de la semana actual
+    const weekDays = [];
     const dayLabels = [];
-    for (let d = 1; d <= daysInMonth; d++) {
-        const day = d.toString().padStart(2, '0');
-        const monthStr = (month + 1).toString().padStart(2, '0');
-        allDates.push(`${year}-${monthStr}-${day}`);
-        dayLabels.push(d.toString());
+    
+    for (let i = 0; i < 7; i++) {
+        const currentDate = new Date(monday);
+        currentDate.setDate(monday.getDate() + i);
+        
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const day = currentDate.getDate().toString().padStart(2, '0');
+        
+        weekDays.push(`${year}-${month}-${day}`);
+        dayLabels.push(currentDate.getDate().toString()); // Solo el número del día
     }
 
     // Agrupar por fecha y sumar ingresos/gastos
@@ -60,10 +70,9 @@ function renderMovementsChart() {
         if (mov.type === 'expense') dataByDate[mov.date].expense += Number(mov.amount);
     });
 
-    // Preparar los datos para todos los días del mes actual
-    const labels = allDates;
+    // Preparar los datos para los días de la semana
+    const labels = weekDays;
     const incomeData = labels.map(date => (dataByDate[date] ? dataByDate[date].income : 0));
-    // Los gastos también serán positivos para facilitar la comparación visual
     const expenseData = labels.map(date => (dataByDate[date] ? dataByDate[date].expense : 0));
 
     // Calcular el máximo valor para ajustar el eje Y dinámicamente
@@ -74,7 +83,7 @@ function renderMovementsChart() {
         yMax = Math.ceil(Math.max(maxIncome, maxExpense) / 100) * 100;
     }
 
-    // Si no hay movimientos en todo el mes, mostrar mensaje
+    // Si no hay movimientos en toda la semana, mostrar mensaje
     if (incomeData.every(v => v === 0) && expenseData.every(v => v === 0)) {
         ctxContainer.innerHTML = '<span style="color:#888;">No data to display</span>';
         return;
@@ -118,14 +127,14 @@ function renderMovementsChart() {
                     data: incomeData,
                     backgroundColor: incomeGradient,
                     borderColor: incomeGradient,
-                    borderWidth: 3,
+                    borderWidth: window.innerWidth <= 768 ? 2 : 3,
                     fill: false,
                     pointBackgroundColor: '#00ba63',
                     pointBorderColor: '#fff',
-                    pointRadius: 6,
-                    pointHoverRadius: 9,
+                    pointRadius: window.innerWidth <= 576 ? 4 : window.innerWidth <= 768 ? 5 : 6,
+                    pointHoverRadius: window.innerWidth <= 576 ? 6 : window.innerWidth <= 768 ? 7 : 9,
                     pointStyle: 'circle',
-                    pointBorderWidth: 2,
+                    pointBorderWidth: window.innerWidth <= 576 ? 1 : 2,
                     tension: 0.4,
                     pointShadowOffsetX: 0,
                     pointShadowOffsetY: 2,
@@ -137,14 +146,14 @@ function renderMovementsChart() {
                     data: expenseData,
                     backgroundColor: expenseGradient,
                     borderColor: expenseGradient,
-                    borderWidth: 3,
+                    borderWidth: window.innerWidth <= 768 ? 2 : 3,
                     fill: false,
                     pointBackgroundColor: '#ef4444',
                     pointBorderColor: '#fff',
-                    pointRadius: 6,
-                    pointHoverRadius: 9,
+                    pointRadius: window.innerWidth <= 576 ? 4 : window.innerWidth <= 768 ? 5 : 6,
+                    pointHoverRadius: window.innerWidth <= 576 ? 6 : window.innerWidth <= 768 ? 7 : 9,
                     pointStyle: 'circle',
-                    pointBorderWidth: 2,
+                    pointBorderWidth: window.innerWidth <= 576 ? 1 : 2,
                     tension: 0.4,
                     pointShadowOffsetX: 0,
                     pointShadowOffsetY: 2,
@@ -155,25 +164,39 @@ function renderMovementsChart() {
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             animation: {
-                duration: 1200,
+                duration: window.innerWidth <= 768 ? 800 : 1200,
                 easing: 'easeOutQuart'
             },
             plugins: {
                 legend: {
                     display: true,
+                    position: window.innerWidth <= 576 ? 'bottom' : 'top',
                     labels: {
                         color: fontColor,
-                        font: { weight: 'bold', size: 15 },
-                        padding: 20
+                        font: { 
+                            weight: 'bold', 
+                            size: window.innerWidth <= 576 ? 12 : window.innerWidth <= 768 ? 13 : 15 
+                        },
+                        padding: window.innerWidth <= 576 ? 10 : 20,
+                        usePointStyle: window.innerWidth <= 576 ? true : false,
+                        pointStyle: 'circle'
                     }
                 },
                 title: {
                     display: true,
-                    text: `${ctxContainer.dataset.chartTitle || new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' })}`,
-                    font: { size: 22, weight: 'bold', family: 'Montserrat, Rubik, sans-serif' },
+                    text: `${ctxContainer.dataset.chartTitle || 'This Week'}`,
+                    font: { 
+                        size: window.innerWidth <= 576 ? 16 : window.innerWidth <= 768 ? 18 : 22, 
+                        weight: 'bold', 
+                        family: 'Montserrat, Rubik, sans-serif' 
+                    },
                     color: isDark ? '#EEE95B' : '#004AAD',
-                    padding: { top: 18, bottom: 10 }
+                    padding: { 
+                        top: window.innerWidth <= 576 ? 10 : 18, 
+                        bottom: window.innerWidth <= 576 ? 5 : 10 
+                    }
                 },
                 tooltip: {
                     backgroundColor: isDark ? '#232A36' : '#fff',
@@ -181,11 +204,16 @@ function renderMovementsChart() {
                     bodyColor: fontColor,
                     borderColor: isDark ? '#EEE95B' : '#004AAD',
                     borderWidth: 1.5,
-                    padding: 12,
-                    caretSize: 8,
+                    padding: window.innerWidth <= 576 ? 8 : 12,
+                    caretSize: window.innerWidth <= 576 ? 6 : 8,
                     cornerRadius: 8,
-                    titleFont: { weight: 'bold', size: 15 },
-                    bodyFont: { size: 14 },
+                    titleFont: { 
+                        weight: 'bold', 
+                        size: window.innerWidth <= 576 ? 12 : 15 
+                    },
+                    bodyFont: { 
+                        size: window.innerWidth <= 576 ? 12 : 14 
+                    },
                     displayColors: false
                 },
                 background: {
@@ -195,12 +223,18 @@ function renderMovementsChart() {
             scales: {
                 x: {
                     grid: {
-                        color: gridColor,
-                        borderColor: borderColor
+                        color: 'transparent',
+                        borderColor: borderColor,
+                        display: false
                     },
                     ticks: {
                         color: fontColor,
-                        font: { size: 13, weight: 'bold' }
+                        font: { 
+                            size: window.innerWidth <= 576 ? 10 : window.innerWidth <= 768 ? 11 : 13, 
+                            weight: 'bold' 
+                        },
+                        maxRotation: window.innerWidth <= 576 ? 0 : 0,
+                        minRotation: window.innerWidth <= 576 ? 0 : 0
                     }
                 },
                 y: {
@@ -208,17 +242,29 @@ function renderMovementsChart() {
                     min: 0,
                     max: yMax,
                     ticks: {
-                        stepSize: 100,
+                        stepSize: window.innerWidth <= 576 ? 200 : 100,
                         callback: function(value) {
                             return '$' + value;
                         },
                         color: fontColor,
-                        font: { size: 13, weight: 'bold' }
+                        font: { 
+                            size: window.innerWidth <= 576 ? 10 : window.innerWidth <= 768 ? 11 : 13, 
+                            weight: 'bold' 
+                        }
                     },
                     grid: {
                         color: gridColor,
-                        borderColor: borderColor
+                        borderColor: borderColor,
+                        display: true
                     }
+                }
+            },
+            layout: {
+                padding: {
+                    top: window.innerWidth <= 576 ? 10 : 20,
+                    right: window.innerWidth <= 576 ? 10 : 20,
+                    bottom: window.innerWidth <= 576 ? 10 : 20,
+                    left: window.innerWidth <= 576 ? 10 : 20
                 }
             }
         },
@@ -236,12 +282,84 @@ function renderMovementsChart() {
     });
 }
 
+// Función para verificar si ha cambiado la semana y actualizar la gráfica
+function checkWeekChange() {
+    const now = new Date();
+    const currentDay = now.getDay();
+    const monday = new Date(now);
+    const daysToMonday = currentDay === 0 ? 6 : currentDay - 1;
+    monday.setDate(now.getDate() - daysToMonday);
+    
+    // Obtener la semana actual como string para comparar
+    const currentWeekStart = monday.toISOString().split('T')[0];
+    
+    // Si no tenemos la semana guardada o ha cambiado, actualizar la gráfica
+    if (!window.lastWeekStart || window.lastWeekStart !== currentWeekStart) {
+        window.lastWeekStart = currentWeekStart;
+        if (window.renderMovementsChart) {
+            window.renderMovementsChart();
+        }
+    }
+}
+
+// Función para iniciar la actualización automática
+function startAutoUpdate() {
+    // Limpiar intervalo anterior si existe
+    if (chartUpdateInterval) {
+        clearInterval(chartUpdateInterval);
+    }
+    
+    // Verificar cambios cada minuto
+    chartUpdateInterval = setInterval(checkWeekChange, 60000); // 60000ms = 1 minuto
+    
+    // También verificar cuando la página se vuelve visible
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            checkWeekChange();
+        }
+    });
+}
+
+// Función para detener la actualización automática
+function stopAutoUpdate() {
+    if (chartUpdateInterval) {
+        clearInterval(chartUpdateInterval);
+        chartUpdateInterval = null;
+    }
+}
+
+// Función para manejar el redimensionamiento de la ventana
+function handleResize() {
+    // Debounce para evitar demasiadas actualizaciones
+    clearTimeout(window.resizeTimeout);
+    window.resizeTimeout = setTimeout(() => {
+        if (window.renderMovementsChart) {
+            window.renderMovementsChart();
+        }
+    }, 250); // Esperar 250ms después del último resize
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     renderMovementsChart();
+    startAutoUpdate();
+    
+    // Agregar listener para redimensionamiento
+    window.addEventListener('resize', handleResize);
+    
+    // Agregar listener para cambio de orientación en móviles
+    window.addEventListener('orientationchange', function() {
+        setTimeout(() => {
+            if (window.renderMovementsChart) {
+                window.renderMovementsChart();
+            }
+        }, 500);
+    });
 });
 
-// Exponer la función para que otros scripts puedan llamarla
+// Exponer las funciones para que otros scripts puedan llamarlas
 window.renderMovementsChart = renderMovementsChart;
+window.startAutoUpdate = startAutoUpdate;
+window.stopAutoUpdate = stopAutoUpdate;
 
 // Escuchar cambios de tema y actualizar la gráfica
 if (window.matchMedia('(prefers-color-scheme: dark)').addEventListener) {
@@ -249,4 +367,9 @@ if (window.matchMedia('(prefers-color-scheme: dark)').addEventListener) {
         if (window.renderMovementsChart) window.renderMovementsChart();
     });
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-bs-theme'] });
-} 
+}
+
+// Limpiar el intervalo cuando se cierre la página
+window.addEventListener('beforeunload', function() {
+    stopAutoUpdate();
+}); 
