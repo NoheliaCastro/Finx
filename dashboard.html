@@ -337,11 +337,15 @@
             border:1px dashed #004AAD;
             padding: 0;
             overflow: hidden;
+            min-height: 320px;
+            height: 340px;
         }
         #movementsChartContainer canvas {
             border-radius: 1rem;
             background: transparent !important;
             display: block;
+            max-width: 100%;
+            height: auto !important;
         }
         [data-bs-theme="dark"] #movementsChartContainer {
             background: #11254b;
@@ -353,6 +357,82 @@
             border-radius: 1rem;
             background: transparent !important;
             display: block;
+        }
+        
+        /* Responsive styles para la gráfica */
+        @media (max-width: 768px) {
+            #movementsChartContainer {
+                min-height: 280px;
+                height: 300px;
+                margin-bottom: 1rem;
+            }
+            
+            .card.p-3 {
+                padding: 1rem !important;
+            }
+            
+            .table-responsive-scroll {
+                max-height: 250px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            #movementsChartContainer {
+                min-height: 250px;
+                height: 270px;
+                margin-bottom: 0.75rem;
+            }
+            
+            .card.p-3 {
+                padding: 0.75rem !important;
+            }
+            
+            .table-responsive-scroll {
+                max-height: 200px;
+            }
+            
+            .summary-card {
+                padding: 1.5rem 1rem;
+            }
+            
+            .summary-card i {
+                font-size: 2rem;
+            }
+            
+            .summary-card .stat-number {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #movementsChartContainer {
+                min-height: 220px;
+                height: 240px;
+            }
+            
+            .summary-card {
+                padding: 1.25rem 0.75rem;
+            }
+            
+            .summary-card i {
+                font-size: 1.75rem;
+            }
+            
+            .summary-card .stat-number {
+                font-size: 1.75rem;
+            }
+        }
+        
+        /* Ajustes para tablets */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            #movementsChartContainer {
+                min-height: 300px;
+                height: 320px;
+            }
+            
+            .summary-card {
+                padding: 1.75rem 1.25rem;
+            }
         }
     </style>
 </head>
