@@ -201,6 +201,21 @@
             font-size: 1.5rem;
         }
         
+        /* Aplicar fuentes a todo el body */
+        body {
+            font-family: 'Rubik', sans-serif;
+        }
+        
+        /* Aplicar Montserrat a títulos y elementos específicos */
+        h1, h2, h3, h4, h5, h6,
+        .navbar-brand,
+        .trivia-navbar-brand,
+        .sidebar-nav a,
+        .user-name,
+        .dropdown-user-name {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
         :root {
             --fun-primary: #6366f1;
             --fun-secondary: #8b5cf6;
@@ -1153,5 +1168,69 @@
             }
         });
     </script>
+    <script>
+// Traducción de la página
+const translations = {
+    es: {
+        'management': 'Gestión',
+        'lessons': 'Lecciones',
+        'achievements': 'Logros',
+        'goals': 'Metas',
+        'help': 'Ayuda',
+        'logout': 'Cerrar sesión',
+        'user': 'Usuario',
+        'level': 'Nivel 2',
+        'financial-assistant': 'Asistente'
+    },
+    en: {
+        'management': 'Management',
+        'lessons': 'Lessons',
+        'achievements': 'Achievements',
+        'goals': 'Goals',
+        'help': 'Help',
+        'logout': 'Logout',
+        'user': 'User',
+        'level': 'Level 2',
+        'financial-assistant': 'Assistant'
+    }
+};
+function setLanguage(lang) {
+    localStorage.setItem('finx_lang', lang);
+    // Sidebar
+    document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['management'] || 'Management';
+    document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
+    document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
+    document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
+    document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
+    document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['financial-assistant'];
+    // Botón de logout del sidebar
+    if (document.getElementById('sidebarLogoutBtn')) {
+        document.getElementById('sidebarLogoutBtn').title = translations[lang]['logout'];
+    }
+    // Perfil de usuario en navbar
+    if (document.querySelector('.user-name')) {
+        document.querySelector('.user-name').textContent = translations[lang]['user'] || 'User';
+    }
+    if (document.querySelector('.user-level')) {
+        document.querySelector('.user-level').textContent = translations[lang]['level'] || 'Level 2';
+    }
+    // Menú desplegable
+    if (document.querySelector('.dropdown-user-name')) {
+        document.querySelector('.dropdown-user-name').textContent = translations[lang]['user'] || 'User';
+    }
+    if (document.querySelector('.dropdown-user-level')) {
+        document.querySelector('.dropdown-user-level').textContent = translations[lang]['level'] || 'Level 2';
+    }
+}
+document.getElementById('langToggle').addEventListener('click', function() {
+    const current = localStorage.getItem('finx_lang') || 'es';
+    const next = current === 'es' ? 'en' : 'es';
+    setLanguage(next);
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const lang = localStorage.getItem('finx_lang') || 'es';
+    setLanguage(lang);
+});
+</script>
 </body>
 </html> 
