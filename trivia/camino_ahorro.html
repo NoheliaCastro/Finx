@@ -459,7 +459,7 @@
         }
 
         .camino-theme-toggle {
-            background: var(--primary-color);
+            background: var(--fun-primary);
             border: none;
             color: white;
             width: 45px;
@@ -470,13 +470,14 @@
             justify-content: center;
             font-size: 1.2rem;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.10);
         }
 
         .camino-theme-toggle:hover {
-            background: var(--accent-color);
+            background: var(--fun-secondary);
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.18);
+            color: white;
         }
 
         /* Sidebar estilo dashboard */
@@ -506,7 +507,7 @@
         .sidebar-nav a {
             display: flex;
             align-items: center;
-            padding: 1rem 2rem;
+            padding: 0.75rem 1rem;
             color: var(--text-color);
             text-decoration: none;
             font-weight: 500;
@@ -517,10 +518,10 @@
 
         .sidebar-nav a:hover,
         .sidebar-nav a.active {
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
             color: white;
             transform: translateX(10px);
-            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
         }
 
         .sidebar-nav i {
@@ -705,13 +706,22 @@
                         Finx
                     </a>
                 </div>
-                <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 0.5rem;">
+                <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
                     <button class="camino-theme-toggle" id="langToggle" title="Traducir página">
                         <i class="bi bi-translate"></i>
                     </button>
                     <button class="camino-theme-toggle" id="themeToggle" title="Cambiar tema">
                         <i class="bi bi-moon-fill" id="themeIcon"></i>
                     </button>
+                    <div class="user-profile-navbar" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
+                        <div class="avatar-small">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        <div class="user-info-small">
+                            <span class="user-name">Usuario</span>
+                            <small class="user-level">Nivel 2</small>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -720,12 +730,9 @@
     <!-- Sidebar -->
     <nav class="camino-sidebar">
         <div class="container-fluid">
-            <div class="text-center mb-4">
-                <div class="avatar-big">
-                    <i class="bi bi-person-fill"></i>
-                </div>
-                <h5 class="mb-0">Usuario</h5>
-                <small class="text-muted">Nivel 2</small>
+            <div class="sidebar-logo-container text-center mb-3">
+                <img src="../images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
+                <img src="../images/modo-oscuro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-dark">
             </div>
             
             <ul class="sidebar-nav">
@@ -735,8 +742,8 @@
                         <span>Management</span>
                     </a>
                 </li>
-                <li class="active">
-                    <a href="trivia.html">
+                <li>
+                    <a href="trivia.html" class="active">
                         <i class="bi bi-book-fill"></i>
                         <span>Lessons</span>
                     </a>
@@ -754,15 +761,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../chatbot.html">
-                        <i class="bi bi-robot" style="color: #25D366;"></i>
-                        <span>Financial Assistant</span>
-                    </a>
-                </li>
-                <li>
                     <a href="../helpcenter2.html">
                         <i class="bi bi-question-circle-fill"></i>
                         <span>Help</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../chatbot.html">
+                        <i class="bi bi-robot"></i>
+                        <span>Assistant</span>
                     </a>
                 </li>
             </ul>
@@ -981,14 +988,18 @@
 // Traducción de la página
 const translations = {
     es: {
-        'dashboard': 'Panel',
+        'dashboard': 'Gestión',
         'lessons': 'Lecciones',
         'achievements': 'Logros',
         'goals': 'Metas',
         'help': 'Ayuda',
+        'assistant': 'Asistente',
         'logout': 'Cerrar sesión',
         'user': 'Usuario',
         'level': 'Nivel 2',
+        'profile': 'Mi Perfil',
+        'settings': 'Configuración',
+        'privacy': 'Privacidad',
         'hero-title': 'Camino de Ahorro Inteligente',
         'hero-lead': 'Recorre tu camino de aprendizaje paso a paso',
         'study': 'Estudiar',
@@ -1002,14 +1013,18 @@ const translations = {
         'see-reward': 'Ver Recompensa',
     },
     en: {
-        'dashboard': 'Dashboard',
+        'dashboard': 'Management',
         'lessons': 'Lessons',
         'achievements': 'Achievements',
         'goals': 'Goals',
         'help': 'Help',
+        'assistant': 'Assistant',
         'logout': 'Logout',
         'user': 'User',
         'level': 'Level 2',
+        'profile': 'My Profile',
+        'settings': 'Settings',
+        'privacy': 'Privacy',
         'hero-title': 'Smart Saving Path',
         'hero-lead': 'Travel your learning path step by step',
         'study': 'Study',
@@ -1025,18 +1040,37 @@ const translations = {
 };
 function setLanguage(lang) {
     localStorage.setItem('finx_lang', lang);
+    
     // Sidebar
     document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['dashboard'];
     document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
     document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
     document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
     document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
-    document.getElementById('logoutBtnSidebar').title = translations[lang]['logout'];
-    document.querySelector('.avatar-big + h5').textContent = translations[lang]['user'];
-    document.querySelector('.avatar-big + h5 + small').textContent = translations[lang]['level'];
+    document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['assistant'];
+    
+    // Sidebar user info
+    if (document.getElementById('logoutBtnSidebar')) {
+        document.getElementById('logoutBtnSidebar').title = translations[lang]['logout'];
+    }
+    if (document.querySelector('.avatar-big + h5')) {
+        document.querySelector('.avatar-big + h5').textContent = translations[lang]['user'];
+    }
+    if (document.querySelector('.avatar-big + h5 + small')) {
+        document.querySelector('.avatar-big + h5 + small').textContent = translations[lang]['level'];
+    }
+    
+    // Navbar user profile
+    var userName = document.querySelector('.user-name');
+    var userLevel = document.querySelector('.user-level');
+    
+    if (userName) userName.textContent = translations[lang]['user'];
+    if (userLevel) userLevel.textContent = translations[lang]['level'];
+    
     // Hero
     document.querySelector('.camino-hero h1').textContent = translations[lang]['hero-title'];
     document.querySelector('.camino-hero .lead').textContent = translations[lang]['hero-lead'];
+    
     // Nodos
     document.querySelectorAll('.camino-nodo .nodo-label')[0].textContent = translations[lang]['study'];
     document.querySelectorAll('.camino-nodo .nodo-label')[1].textContent = translations[lang]['quiz'];
@@ -1044,6 +1078,7 @@ function setLanguage(lang) {
     document.querySelectorAll('.camino-nodo .tooltip')[0].textContent = translations[lang]['study-tooltip'];
     document.querySelectorAll('.camino-nodo .tooltip')[1].textContent = translations[lang]['quiz-tooltip'];
     document.querySelectorAll('.camino-nodo .tooltip')[2].textContent = translations[lang]['reward-tooltip'];
+    
     // Botones
     document.querySelector('.btn-camino-primary').childNodes[2].textContent = ' ' + translations[lang]['go-to-study'];
     document.getElementById('quizBtn').childNodes[2].textContent = ' ' + translations[lang]['take-quiz'];

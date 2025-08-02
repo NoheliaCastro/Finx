@@ -798,17 +798,11 @@
     </nav>
 
     <!-- Sidebar -->
-    <nav class="leccion-sidebar">
+    <nav class="quiz-sidebar">
         <div class="container-fluid">
             <div class="sidebar-logo-container text-center mb-3">
                 <img src="../images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
                 <img src="../images/modo-oscuro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-dark">
-            </div>
-            <!-- Botón de logout debajo del logo -->
-            <div class="sidebar-logout-btn-container mb-2">
-                <a href="../index.html" id="sidebarLogoutBtn" class="sidebar-logout-btn" title="Cerrar sesión">
-                    <i class="bi bi-box-arrow-right"></i>
-                </a>
             </div>
             <ul class="sidebar-nav">
                 <li>
@@ -818,7 +812,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="trivia.html">
+                    <a href="trivia.html" class="active">
                         <i class="bi bi-book-fill"></i>
                         <span>Lessons</span>
                     </a>
@@ -848,6 +842,13 @@
                     </a>
                 </li>
             </ul>
+            <div class="sidebar-logout-container">
+                <button class="btn btn-logout-icon" id="logoutBtnSidebar" title="Cerrar sesión">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
         </div>
     </nav>
 

@@ -637,25 +637,6 @@
           transform: scale(1) translateY(0);
           animation: popIn 1s cubic-bezier(.4,2,.6,1);
         }
-        #langToggle {
-            color: #004AAD;
-            text-decoration: none;
-            border: none;
-            background: none;
-            box-shadow: none;
-            transition: color 0.2s;
-        }
-        #langToggle:hover {
-            color: #002366;
-            background: none;
-            text-decoration: underline;
-        }
-        [data-bs-theme="dark"] #langToggle {
-            color: #EEE95B;
-        }
-        [data-bs-theme="dark"] #langToggle:hover {
-            color: #fff;
-        }
         #movementsChartContainer {
             background: #f8f9fa;
             border-radius:1rem;
@@ -1463,6 +1444,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 'goals': 'Metas',
                 'help': 'Ayuda',
                 'logout': 'Cerrar sesión',
+                'user': 'Usuario',
+                'level': 'Nivel 2',
+                'profile': 'Mi Perfil',
+                'settings': 'Configuración',
+                'privacy': 'Privacidad',
                 'welcome-to': 'Bienvenido a',
                 'track-manage': '¡Registra, gestiona y ahorra fácilmente!',
                 'financial-assistant': 'Asistente Financiero'
@@ -1510,6 +1496,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 'goals': 'Goals',
                 'help': 'Help',
                 'logout': 'Logout',
+                'user': 'User',
+                'level': 'Level 2',
+                'profile': 'My Profile',
+                'settings': 'Settings',
+                'privacy': 'Privacy',
                 'welcome-to': 'Welcome to',
                 'track-manage': 'Track, Manage, and Save with Ease!',
                 'financial-assistant': 'Assistant'
@@ -1528,6 +1519,27 @@ document.addEventListener('DOMContentLoaded', function() {
             if (document.querySelector('.sidebar-logout-btn span')) {
                 document.querySelector('.sidebar-logout-btn span').textContent = translations[lang]['logout'];
             }
+            
+            // User Profile in Navbar
+            var userName = document.querySelector('.user-name');
+            var userLevel = document.querySelector('.user-level');
+            var dropdownUserName = document.querySelector('.dropdown-user-name');
+            var dropdownUserLevel = document.querySelector('.dropdown-user-level');
+            
+            if (userName) userName.textContent = translations[lang]['user'];
+            if (userLevel) userLevel.textContent = translations[lang]['level'];
+            if (dropdownUserName) dropdownUserName.textContent = translations[lang]['user'];
+            if (dropdownUserLevel) dropdownUserLevel.textContent = translations[lang]['level'];
+            
+            // Dropdown Menu Items
+            var dropdownItems = document.querySelectorAll('.dropdown-item span');
+            if (dropdownItems.length >= 4) {
+                dropdownItems[0].textContent = translations[lang]['profile'];
+                dropdownItems[1].textContent = translations[lang]['settings'];
+                dropdownItems[2].textContent = translations[lang]['privacy'];
+                dropdownItems[3].textContent = translations[lang]['logout'];
+            }
+            
             // Hero
             document.querySelector('.dashboard-lead').textContent = translations[lang]['dashboard-lead'];
             // Tarjetas
