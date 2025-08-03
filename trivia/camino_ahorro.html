@@ -693,6 +693,11 @@
             box-shadow: 0 12px 35px rgba(245, 158, 11, 0.4);
             color: #fff;
         }
+        
+        /* Ocultar botones de acción en la parte inferior */
+        .camino-actions {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -773,11 +778,6 @@
                     </a>
                 </li>
             </ul>
-            <div class="sidebar-logout-container">
-                <button class="btn btn-logout-icon" id="logoutBtnSidebar" title="Cerrar sesión">
-                    <i class="bi bi-box-arrow-right"></i>
-                </button>
-            </div>
         </div>
         </nav>
 
@@ -975,14 +975,6 @@
             }
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var logoutBtn = document.getElementById('logoutBtnSidebar');
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', function() {
-                    window.location.href = '../index.html';
-                });
-            }
-        });
     </script>
 <script>
 // Traducción de la página
@@ -1050,9 +1042,6 @@ function setLanguage(lang) {
     document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['assistant'];
     
     // Sidebar user info
-    if (document.getElementById('logoutBtnSidebar')) {
-        document.getElementById('logoutBtnSidebar').title = translations[lang]['logout'];
-    }
     if (document.querySelector('.avatar-big + h5')) {
         document.querySelector('.avatar-big + h5').textContent = translations[lang]['user'];
     }
