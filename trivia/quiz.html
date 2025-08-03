@@ -623,12 +623,22 @@
         }
         
         .dropdown-item-danger {
-            color: #dc3545;
+            color: #dc3545 !important;
         }
         
         .dropdown-item-danger:hover {
-            background: #dc3545;
-            color: white;
+            background: rgba(220, 53, 69, 0.05);
+            color: #dc3545 !important;
+        }
+        
+        /* Estilos para modo oscuro del dropdown */
+        [data-bs-theme="dark"] .dropdown-item-danger {
+            color: #ff6b6b !important;
+        }
+        
+        [data-bs-theme="dark"] .dropdown-item-danger:hover {
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b !important;
         }
         
         /* Estilos específicos del sidebar copiados de dashboard.html */
@@ -641,9 +651,10 @@
             margin-bottom: 0.1rem;
             margin-top: 0;
             padding: 0.2rem 0 0 0;
+            min-height: 170px;
         }
         .sidebar-logo {
-            max-width: 85px;
+            max-width: 170px;
             height: auto;
             display: none;
             transition: filter 0.3s;
@@ -661,52 +672,22 @@
             display: block;
         }
         @media (max-width: 768px) {
+            .sidebar-logo-container {
+                min-height: 110px;
+            }
             .sidebar-logo {
-                max-width: 65px;
+                max-width: 110px;
             }
         }
         @media (max-width: 480px) {
+            .sidebar-logo-container {
+                min-height: 80px;
+            }
             .sidebar-logo {
-                max-width: 50px;
+                max-width: 75px;
             }
         }
         
-        /* Estilos para el botón de logout en el sidebar debajo del logo */
-        .sidebar-logout-btn-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 0.05rem;
-            margin-top: 0;
-        }
-        .sidebar-logout-btn {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: #fff !important;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.7rem;
-            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
-            transition: all 0.3s;
-            text-decoration: none;
-            padding: 0;
-        }
-        .sidebar-logout-btn:hover {
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
-            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
-            transform: translateY(-2px);
-        }
-        [data-bs-theme="dark"] .sidebar-logout-btn {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: #fff !important;
-        }
-        [data-bs-theme="dark"] .sidebar-logout-btn:hover {
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
-        }
         .leccion-sidebar .container-fluid {
             padding-top: 0.2rem;
         }
@@ -724,6 +705,7 @@
             font-size: 1.13rem;
             padding: 0.85rem 1.3rem;
             font-weight: 500;
+            color: #ffffff !important;
         }
     </style>
 </head>
@@ -842,11 +824,6 @@
                     </a>
                 </li>
             </ul>
-            <div class="sidebar-logout-container">
-                <button class="btn btn-logout-icon" id="logoutBtnSidebar" title="Cerrar sesión">
-                    <i class="bi bi-box-arrow-right"></i>
-                </button>
-            </div>
         </div>
     </nav>
         </div>
@@ -1288,13 +1265,6 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            var logoutBtn = document.getElementById('logoutBtnSidebar');
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', function() {
-                    window.location.href = '../index.html';
-                });
-            }
-
             // Menú de usuario con click
             var userProfile = document.querySelector('.user-profile-navbar');
             var userMenu = document.querySelector('.user-dropdown-menu');
@@ -1319,15 +1289,6 @@
             var logoutBtnNavbar = document.getElementById('logoutBtnNavbar');
             if (logoutBtnNavbar) {
                 logoutBtnNavbar.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    window.location.href = '../index.html';
-                });
-            }
-            
-            // Agregar funcionalidad al botón de cerrar sesión del sidebar
-            var sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
-            if (sidebarLogoutBtn) {
-                sidebarLogoutBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     window.location.href = '../index.html';
                 });
@@ -1397,10 +1358,6 @@ function setLanguage(lang) {
     document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
     document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
     document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['financial-assistant'];
-    // Botón de logout del sidebar
-    if (document.getElementById('sidebarLogoutBtn')) {
-        document.getElementById('sidebarLogoutBtn').title = translations[lang]['logout'];
-    }
     // Perfil de usuario en navbar
     if (document.querySelector('.user-name')) {
         document.querySelector('.user-name').textContent = translations[lang]['user'] || 'User';
