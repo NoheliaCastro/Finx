@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finx - Smart Saving Lesson</title>
+    <title>Finx - The Basics Lesson</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -314,6 +314,10 @@
             font-size: 1.13rem;
             padding: 0.85rem 1.3rem;
             font-weight: 500;
+            color: var(--text-color) !important;
+        }
+        
+        [data-bs-theme="dark"] .sidebar-nav a {
             color: #ffffff !important;
         }
         
@@ -713,6 +717,32 @@
                 font-size: 0.85rem;
             }
         }
+        
+        /* Estilos para el video */
+        .video-container {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 2px solid var(--card-border);
+            margin-bottom: 1.5rem;
+        }
+        
+        .video-container h4 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        
+        .video-container video {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-bs-theme="dark"] .video-container {
+            background: var(--card-bg);
+            border-color: var(--card-border);
+        }
     </style>
 </head>
 <body>
@@ -839,8 +869,8 @@
             <div class="container">
                 <!-- Dashboard Hero Section -->
                 <section class="dashboard-hero achievements-hero mb-4">
-                    <h1 class="dashboard-title">💰 Smart Saving</h1>
-                    <p class="lead">Learn to manage your money like a pro! 🚀</p>
+                    <h1 class="dashboard-title">💰 The Basics</h1>
+                    <p class="lead">Learn the fundamental concepts of personal finance! 🚀</p>
                 </section>
                 
                 <!-- Summary Cards -->
@@ -952,6 +982,24 @@
             }, 5000);
         }
 
+        // Función para marcar la lección como completada
+        function markLessonComplete() {
+            saveLessonProgress();
+            showProgressNotification();
+            
+            // Actualizar el botón para indicar que se completó
+            const btn = event.target;
+            btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Completed!';
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-success');
+            btn.disabled = true;
+            
+            // Actualizar las estadísticas en la página
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        }
+
         // Inicializar tema y efectos
         document.addEventListener('DOMContentLoaded', function() {
             // Inicializar tema
@@ -1001,7 +1049,42 @@
                     window.location.href = '../index.html';
                 });
             }
+            
+            // Actualizar el contenido de la lección con el video
+            updateLessonContent();
         });
+        
+        // Función para actualizar el contenido de la lección
+        function updateLessonContent() {
+            const lessonCard = document.getElementById('lessonCard');
+            if (lessonCard) {
+                lessonCard.innerHTML = `
+                    <h3 class="h4 mb-4">📖 Study Material</h3>
+                    
+                    <!-- Video Section -->
+                    <div class="video-container mb-4">
+                        <h4 class="h5 mb-3">🎥 Basic Concepts of Personal Finances</h4>
+                        <div class="ratio ratio-16x9 mb-3">
+                            <video controls class="rounded">
+                                <source src="../videos/Basic Concepts of Personal Finances_1080p.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <p class="text-muted small">
+                            Watch this comprehensive video to learn the fundamental concepts of personal finance. 
+                            This lesson covers budgeting, saving strategies, and basic financial planning principles.
+                        </p>
+                    </div>
+
+                    <!-- Progress Button -->
+                    <div class="text-center">
+                        <button class="btn btn-primary btn-lg" onclick="markLessonComplete()">
+                            <i class="bi bi-check-circle"></i> Mark as Complete
+                        </button>
+                    </div>
+                `;
+            }
+        }
     </script>
     <script>
 // Traducción de la página
