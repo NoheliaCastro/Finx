@@ -109,103 +109,291 @@
             width: 60%;
         }
 
-        /* Módulos estilo feature cards del sitio principal */
+        /* Módulos estilo videojuego épico */
         .modules-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            max-width: 1200px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 2rem 0;
         }
 
         .module-card {
-            padding: 2.5rem;
-            background-color: var(--light-background);
-            border-radius: 1.5rem;
+            padding: 3rem;
+            background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(248,250,252,0.9));
+            border-radius: 2rem;
             text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid transparent;
+            background-clip: padding-box;
             text-decoration: none;
             color: var(--text-color);
             position: relative;
             overflow: hidden;
+            box-shadow: 
+                0 15px 35px rgba(0,0,0,0.1),
+                0 5px 15px rgba(0,0,0,0.08),
+                inset 0 1px 0 rgba(255,255,255,0.8);
         }
 
+        /* Estilos para modo oscuro en module-card */
+        [data-bs-theme="dark"] .module-card {
+            background: linear-gradient(145deg, rgba(35, 42, 54, 0.95), rgba(29, 35, 47, 0.9));
+            box-shadow: 
+                0 15px 35px rgba(0,0,0,0.3),
+                0 5px 15px rgba(0,0,0,0.2),
+                inset 0 1px 0 rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        /* Borde animado de neón gaming */
         .module-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6, #ec4899, #f59e0b, #10b981, #6366f1);
+            background-size: 300% 300%;
+            border-radius: 2rem;
+            z-index: -1;
+            animation: gradientShift 4s ease-in-out infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Efecto de resplandor mágico */
+        .module-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(99,102,241,0.4) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
+            z-index: -1;
         }
 
         .module-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--hover-shadow);
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 
+                0 25px 50px rgba(0,0,0,0.25),
+                0 10px 25px rgba(99,102,241,0.3);
             border-color: var(--primary-color);
             color: var(--text-color);
         }
 
+        /* Hover para modo oscuro */
+        [data-bs-theme="dark"] .module-card:hover {
+            box-shadow: 
+                0 25px 50px rgba(0,0,0,0.4),
+                0 10px 25px rgba(99,102,241,0.4);
+            color: #fff;
+        }
+
+        .module-card:hover::before {
+            opacity: 1;
+        }
+
+        .module-card:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Estados especiales para módulos */
+        .module-card.unlocked:hover {
+            animation: epicHover 0.6s ease-in-out;
+        }
+
+        .module-card.locked {
+            background: linear-gradient(145deg, rgba(100,100,100,0.3), rgba(150,150,150,0.2));
+            filter: grayscale(0.7) brightness(0.8);
+            cursor: not-allowed;
+        }
+
+        /* Modo oscuro para módulos bloqueados */
+        [data-bs-theme="dark"] .module-card.locked {
+            background: linear-gradient(145deg, rgba(60,60,60,0.4), rgba(80,80,80,0.3));
+            filter: grayscale(0.8) brightness(0.6);
+            color: rgba(255,255,255,0.6);
+        }
+
+        .module-card.locked::before {
+            background: linear-gradient(45deg, #6b7280, #9ca3af);
+            animation: none;
+        }
+
+        .module-card.locked:hover {
+            transform: translateY(-5px) scale(1.02);
+            animation: lockedShake 0.5s ease-in-out;
+        }
+
         .module-icon {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: white;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 4px 16px rgba(129, 140, 248, 0.3);
-            transition: all 0.3s ease;
+            margin: 0 auto 2rem;
+            box-shadow: 
+                0 8px 20px rgba(129, 140, 248, 0.4),
+                0 0 0 4px rgba(255,255,255,0.8),
+                0 0 0 8px rgba(99,102,241,0.2);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
         }
 
         .module-card:hover .module-icon {
-            transform: scale(1.1);
-            box-shadow: 0 8px 24px rgba(129, 140, 248, 0.4);
+            transform: scale(1.2) rotate(10deg);
+            box-shadow: 
+                0 12px 30px rgba(129, 140, 248, 0.6),
+                0 0 0 6px rgba(255,255,255,1),
+                0 0 0 12px rgba(99,102,241,0.4),
+                0 0 30px rgba(99,102,241,0.5);
+            animation: iconPulse 1s ease-in-out infinite;
+        }
+
+        .module-card:hover .module-icon::before {
+            opacity: 1;
+            transform: translateX(100%) rotate(45deg);
         }
 
         .module-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
             color: var(--text-color);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Título en modo oscuro */
+        [data-bs-theme="dark"] .module-title {
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .module-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            border-radius: 2px;
+            transition: width 0.4s ease;
+        }
+
+        .module-card:hover .module-title::after {
+            width: 80%;
         }
 
         .module-description {
             color: var(--light-text);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            font-size: 1rem;
+            opacity: 0.9;
         }
 
+        /* Descripción en modo oscuro */
+        [data-bs-theme="dark"] .module-description {
+            color: rgba(255, 255, 255, 0.8);
+            opacity: 0.9;
+        }
+
+        /* Barra de progreso gaming */
         .module-progress {
-            background: #e5e7eb;
-            border-radius: 0.5rem;
-            height: 8px;
+            background: linear-gradient(90deg, #e5e7eb, #f3f4f6);
+            border-radius: 1rem;
+            height: 12px;
             overflow: hidden;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
 
         [data-bs-theme="dark"] .module-progress {
-            background: #374151;
+            background: linear-gradient(90deg, #374151, #4b5563);
         }
 
         .module-progress-fill {
-            background: linear-gradient(90deg, #818cf8, #6366f1);
+            background: linear-gradient(90deg, #818cf8, #6366f1, #8b5cf6);
             height: 100%;
-            border-radius: 0.5rem;
-            transition: width 0.5s ease;
+            border-radius: 1rem;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-progress-fill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: progressShine 2s ease-in-out infinite;
         }
 
         .module-stats {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: 600;
             color: var(--light-text);
+            margin-top: 1rem;
+        }
+
+        /* Stats en modo oscuro */
+        [data-bs-theme="dark"] .module-stats {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .module-stats .progress-badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .module-stats .locked-badge {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
         }
 
 
@@ -892,45 +1080,86 @@
             }
         }
 
-        /* Animaciones mejoradas y divertidas */
-        @keyframes fadeInUp {
-            from {
+        /* Animaciones gaming épicas */
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1.2) rotate(10deg); }
+            50% { transform: scale(1.3) rotate(15deg); }
+        }
+
+        @keyframes epicHover {
+            0% { transform: translateY(-15px) scale(1.05); }
+            50% { transform: translateY(-20px) scale(1.08); }
+            100% { transform: translateY(-15px) scale(1.05); }
+        }
+
+        @keyframes lockedShake {
+            0%, 100% { transform: translateY(-5px) scale(1.02) rotate(0deg); }
+            25% { transform: translateY(-5px) scale(1.02) rotate(-2deg); }
+            75% { transform: translateY(-5px) scale(1.02) rotate(2deg); }
+        }
+
+        @keyframes progressShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes levelUpGlow {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(99,102,241,0.5);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 40px rgba(99,102,241,0.8), 0 0 60px rgba(139,92,246,0.6);
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes coinFlip {
+            0% { transform: rotateY(0deg) scale(1); }
+            50% { transform: rotateY(180deg) scale(1.2); }
+            100% { transform: rotateY(360deg) scale(1); }
+        }
+
+        @keyframes questComplete {
+            0% { 
+                transform: scale(0.8) rotate(-10deg);
                 opacity: 0;
-                transform: translateY(30px);
             }
-            to {
+            50% { 
+                transform: scale(1.1) rotate(5deg);
                 opacity: 1;
-                transform: translateY(0);
+            }
+            100% { 
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
             }
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+        @keyframes magicSparkle {
+            0%, 100% { 
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1) rotate(180deg);
+            }
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        /* Animación shake removida */
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 5px rgba(99, 102, 241, 0.5); }
-            50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.8), 0 0 30px rgba(99, 102, 241, 0.6); }
+        @keyframes floatingNumbers {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px) scale(1.5);
+            }
         }
 
         @keyframes slideInLeft {
@@ -966,7 +1195,45 @@
             }
         }
 
-        /* Clases de animación */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(99, 102, 241, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.8), 0 0 30px rgba(99, 102, 241, 0.6); }
+        }
+
+        /* Clases de animación gaming */
         .fade-in-up {
             animation: fadeInUp 0.8s ease-out;
         }
@@ -978,8 +1245,6 @@
         .pulse {
             animation: pulse 2s infinite;
         }
-
-        /* Clase shake removida */
 
         .rotate {
             animation: rotate 2s linear infinite;
@@ -1005,101 +1270,261 @@
             animation: zoomIn 0.6s ease-out;
         }
 
-        /* Efectos de hover mejorados */
-        .module-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
+        .level-up-glow {
+            animation: levelUpGlow 1.5s ease-in-out infinite;
         }
 
-        .module-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
+        .coin-flip {
+            animation: coinFlip 0.8s ease-in-out;
         }
 
-        .module-card:hover::before {
-            left: 100%;
+        .quest-complete {
+            animation: questComplete 0.6s ease-out;
         }
 
-        .module-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        .magic-sparkle {
+            animation: magicSparkle 1s ease-in-out infinite;
         }
 
-        .module-icon {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .module-card:hover .module-icon {
-            transform: scale(1.2) rotate(5deg);
-            animation: glow 1s ease-in-out infinite;
-        }
-
-        /* Efectos de partículas */
-        .particle {
-            position: fixed;
-            width: 6px;
-            height: 6px;
-            background: linear-gradient(45deg, #6366f1, #8b5cf6);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            animation: particleFloat 3s ease-out forwards;
-        }
-
-        @keyframes particleFloat {
-            0% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-100px) scale(0);
-        }
-        }
-
-        /* Efectos especiales para elementos */
+        /* Efectos especiales para elementos gaming */
         .trivia-hero h1 {
             animation: fadeInUp 1s ease-out 0.2s both;
+            text-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
         }
 
         .trivia-hero .lead {
             animation: fadeInUp 1s ease-out 0.4s both;
         }
 
+        .hero-stats .badge {
+            animation: fadeInUp 1s ease-out 0.6s both;
+            transition: all 0.3s ease;
+        }
+
+        .hero-stats .badge:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
         .xp-progress-container {
-            animation: slideInLeft 1s ease-out 0.6s both;
+            animation: slideInLeft 1s ease-out 0.8s both;
         }
 
         .modules-grid {
-            animation: fadeInUp 1s ease-out 0.8s both;
+            animation: fadeInUp 1s ease-out 1s both;
         }
 
-        /* Efectos de progreso animados */
+        /* Efectos de progreso animados gaming */
         .xp-fill {
-            animation: slideInRight 1s ease-out 1s both;
+            animation: slideInRight 1.5s ease-out 1.2s both;
         }
 
         .module-progress-fill {
-            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Efectos de celebración */
+        /* Animación de fadeOut para elementos dinámicos */
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+        }
+
+        /* Efectos de hover mejorados gaming */
+        .module-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            transition: opacity 0.4s ease;
+        }
+
+        .module-card::after {
+            transition: all 0.6s ease;
+        }
+
+        .module-icon {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .module-icon::before {
+            transition: all 0.6s ease;
+        }
+
+        /* Estilos para los nuevos elementos gaming */
+        .world-rewards {
+            padding: 0.5rem;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 0.5rem;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        [data-bs-theme="dark"] .world-rewards {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        /* Estilos adicionales para asegurar compatibilidad con modo oscuro */
+        [data-bs-theme="dark"] .module-card .text-success {
+            color: #4ade80 !important;
+        }
+
+        [data-bs-theme="dark"] .module-card .text-muted {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        [data-bs-theme="dark"] .module-card small {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Efectos de partículas gaming épicos */
+        .particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: particleFloat 2s ease-out forwards;
+        }
+
+        .particle.gold {
+            background: linear-gradient(45deg, #f59e0b, #fbbf24);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+        }
+
+        .particle.magic {
+            background: linear-gradient(45deg, #ec4899, #f472b6);
+            box-shadow: 0 0 10px rgba(236, 72, 153, 0.6);
+            animation: magicParticle 2.5s ease-out forwards;
+        }
+
+        .particle.star {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            border-radius: 0;
+            width: 12px;
+            height: 12px;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120px) scale(0) rotate(360deg);
+            }
+        }
+
+        @keyframes magicParticle {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-60px) scale(1.5) rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120px) scale(0) rotate(360deg);
+            }
+        }
+
+        /* Efectos de explosión de XP */
+        .xp-explosion {
+            position: fixed;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+            pointer-events: none;
+            z-index: 10000;
+            animation: floatingNumbers 2s ease-out forwards;
+        }
+
+        /* Efectos de power-up */
+        .power-up-effect {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.8), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: powerUpPulse 1s ease-out infinite;
+        }
+
+        @keyframes powerUpPulse {
+            0% {
+                transform: scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* Efectos de celebración mejorados */
         .celebration {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 4rem;
+            font-size: 5rem;
             z-index: 10000;
             pointer-events: none;
-            animation: zoomIn 0.5s ease-out, float 2s ease-in-out 0.5s infinite;
+            animation: celebrationBounce 1s ease-out, float 2s ease-in-out 1s infinite;
+            text-shadow: 0 0 20px rgba(255,255,255,0.8);
+        }
+
+        @keyframes celebrationBounce {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.3) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(360deg);
+                opacity: 1;
+            }
+        }
+
+        /* Efectos de sonido visual */
+        .sound-wave {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(99, 102, 241, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: soundWave 0.8s ease-out forwards;
+        }
+
+        @keyframes soundWave {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(20);
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -1282,24 +1707,30 @@
             <section class="trivia-hero fade-in-up">
                 <div class="text-center">
                     <h1>🎮 Learn Finance by Playing! 🎮</h1>
-                    <p class="lead">🚀 Complete lessons, earn points, and master your money in a fun way ⭐</p>
+                    <p class="lead">🚀 Complete quests, unlock achievements, and become a financial legend! ⭐</p>
+                    <div class="hero-stats mt-4">
+                        <span class="badge bg-primary me-3 p-2">🏆 Level 2 Warrior</span>
+                        <span class="badge bg-success me-3 p-2">⚡ 3 Quests Completed</span>
+                        <span class="badge bg-warning me-3 p-2">🔥 5 Day Streak</span>
+                    </div>
                 </div>
             </section>
 
             <!-- Progress Bar -->
-            <section class="xp-progress-container fade-in-up">
+            <section class="xp-progress-container fade-in-up level-up-glow">
                 <div class="row align-items-center">
                     <div class="col-md-6">
-                        <h3 class="mb-2">🏆 Level 2</h3>
-                        <p class="text-muted mb-0">⚡ Keep moving forward on your learning path! 🚀</p>
+                        <h3 class="mb-2">🏆 Level 2 - Financial Apprentice</h3>
+                        <p class="text-muted mb-0">⚡ Keep conquering worlds to unlock epic rewards! 🚀</p>
+                        <small class="text-primary">💎 Next Level: 160 XP to go!</small>
                     </div>
                     <div class="col-md-6">
-                <div class="xp-progress">
+                        <div class="xp-progress">
                             <div class="xp-fill"></div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted">📊 60% completed</span>
-                            <span class="text-primary fw-bold">💎 240 XP</span>
+                            <span class="text-muted">📊 60% to Level 3</span>
+                            <span class="text-primary fw-bold coin-flip">💎 240 XP</span>
                         </div>
                     </div>
                 </div>
@@ -1307,14 +1738,14 @@
 
             <!-- Learning Modules -->
             <section class="modules-grid fade-in-up">
-                <!-- Module 1: Smart Saving -->
-                <a href="camino_ahorro.html" class="module-card">
+                <!-- Module 1: Money Foundations -->
+                <a href="leccion.html" class="module-card">
                     <div class="module-icon">
-                        <i class="bi bi-piggy-bank-fill"></i>
+                        <i class="bi bi-house-fill"></i>
             </div>
-                    <h3 class="module-title">💰 Smart Saving</h3>
+                    <h3 class="module-title">� The Basics</h3>
                     <p class="module-description">
-                        🎯 Learn effective strategies to save money and reach your financial goals intelligently.
+                        Start your financial journey by learning the basics of budgeting, saving, and smart money management.
                     </p>
                     <div class="module-progress">
                         <div class="module-progress-fill" style="width: 30%;"></div>
@@ -1325,39 +1756,39 @@
                     </div>
                 </a>
 
-                <!-- Module 2: Basic Investment -->
-                <a href="leccion.html" class="module-card">
+                <!-- World 2: Investment Kingdom -->
+                <a href="#" class="module-card" onclick="showLockedMessage(event)">
                     <div class="module-icon">
-                        <i class="bi bi-graph-up-arrow"></i>
+                        <i class="bi bi-graph-up"></i>
                     </div>
-                    <h3 class="module-title">📈 Basic Investment</h3>
+                    <h3 class="module-title">� Savings Ninja</h3>
                     <p class="module-description">
-                        🚀 Discover the fundamentals of investing and how to grow your money safely.
+                        Discover the secrets of investing, from stocks to bonds, and learn how to grow your wealth over time.
                     </p>
                     <div class="module-progress">
                         <div class="module-progress-fill" style="width: 0%;"></div>
                     </div>
                     <div class="module-stats">
                         <span>📚 0 of 8 lessons</span>
-                        <span class="text-muted">🔒 0%</span>
+                        <span class="text-muted">🔒 Complete World 1 first</span>
                     </div>
                 </a>
 
-                <!-- Module 3: Credit Without Fear -->
-                <a href="leccion.html" class="module-card">
+                <!-- World 3: Credit Castle -->
+                <a href="#" class="module-card" onclick="showLockedMessage(event)">
                     <div class="module-icon">
-                        <i class="bi bi-credit-card-fill"></i>
+                        <i class="bi bi-credit-card"></i>
                     </div>
-                    <h3 class="module-title">💳 Credit Without Fear</h3>
+                    <h3 class="module-title">🧙‍♂️ Wealth Wizard</h3>
                     <p class="module-description">
-                        🛡️ Understand how credit cards and loans work to use them responsibly.
+                        Master credit cards, loans, and build a strong credit score that will open doors to financial success.
                     </p>
                     <div class="module-progress">
                         <div class="module-progress-fill" style="width: 0%;"></div>
                     </div>
                     <div class="module-stats">
                         <span>📚 0 of 5 lessons</span>
-                        <span class="text-muted">🔒 0%</span>
+                        <span class="text-muted">🔒 Complete World 2 first</span>
                     </div>
                 </a>
             </section>
@@ -1405,64 +1836,173 @@
 
         });
 
-        // Efectos de partículas
-        function createParticle(x, y) {
+        // Efectos gaming épicos mejorados
+        function createParticle(x, y, type = 'normal') {
             const particle = document.createElement('div');
-            particle.className = 'particle';
+            particle.className = `particle ${type}`;
             particle.style.left = x + 'px';
             particle.style.top = y + 'px';
-            particle.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            
+            // Colores según el tipo
+            if (type === 'gold') {
+                particle.style.background = `linear-gradient(45deg, #f59e0b, #fbbf24)`;
+                particle.style.boxShadow = '0 0 10px rgba(245, 158, 11, 0.6)';
+            } else if (type === 'magic') {
+                particle.style.background = `linear-gradient(45deg, #ec4899, #f472b6)`;
+                particle.style.boxShadow = '0 0 10px rgba(236, 72, 153, 0.6)';
+            } else if (type === 'star') {
+                particle.style.background = `linear-gradient(45deg, #fbbf24, #f59e0b)`;
+                particle.style.clipPath = 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)';
+                particle.style.borderRadius = '0';
+                particle.style.width = '12px';
+                particle.style.height = '12px';
+            } else {
+                particle.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            }
+            
             document.body.appendChild(particle);
             
+            // Remover partículas más rápido para mejor rendimiento
             setTimeout(() => {
                 particle.remove();
-            }, 3000);
+            }, 1500);
         }
 
-        // Efecto de celebración
-        function createCelebration() {
+        // Efecto de explosión de XP
+        function createXPExplosion(x, y, amount) {
+            const xpElement = document.createElement('div');
+            xpElement.className = 'xp-explosion';
+            xpElement.textContent = `+${amount} XP`;
+            xpElement.style.left = x + 'px';
+            xpElement.style.top = y + 'px';
+            document.body.appendChild(xpElement);
+            
+            // Remover más rápido para mejor rendimiento
+            setTimeout(() => {
+                xpElement.remove();
+            }, 1200);
+        }
+
+        // Efecto de power-up
+        function createPowerUpEffect(x, y) {
+            const powerUp = document.createElement('div');
+            powerUp.className = 'power-up-effect';
+            powerUp.style.left = x + 'px';
+            powerUp.style.top = y + 'px';
+            document.body.appendChild(powerUp);
+            
+            // Remover más rápido para mejor rendimiento
+            setTimeout(() => {
+                powerUp.remove();
+            }, 600);
+        }
+
+        // Efecto de sonido visual
+        function createSoundWave(x, y) {
+            const soundWave = document.createElement('div');
+            soundWave.className = 'sound-wave';
+            soundWave.style.left = x + 'px';
+            soundWave.style.top = y + 'px';
+            document.body.appendChild(soundWave);
+            
+            // Remover más rápido para mejor rendimiento
+            setTimeout(() => {
+                soundWave.remove();
+            }, 500);
+        }
+
+        // Función para crear overlay de fondo desvanecido (mantenida para compatibilidad)
+        function createGamingOverlay() {
+            // Función simplificada - no crea overlay
+            return null;
+        }
+
+        // Función para remover overlay
+        function removeGamingOverlay() {
+            // Función simplificada - no hace nada
+        }
+
+        // Efectos de celebración gaming épicos
+        function createEpicCelebration() {
+            const celebrations = ['🎉', '🏆', '⭐', '💎', '🔥', '⚡'];
             const celebration = document.createElement('div');
             celebration.className = 'celebration';
-            celebration.textContent = '🎉';
+            celebration.textContent = celebrations[Math.floor(Math.random() * celebrations.length)];
             document.body.appendChild(celebration);
             
+            // Remover más rápido para mejor rendimiento
             setTimeout(() => {
                 celebration.remove();
-            }, 3000);
+            }, 1500);
         }
 
-        // Efectos interactivos para las tarjetas de módulos
+        // Efectos interactivos gaming épicos para las tarjetas de módulos
         document.querySelectorAll('.module-card').forEach((card, index) => {
             // Animación de entrada escalonada
-            card.style.animationDelay = `${index * 0.2}s`;
+            card.style.animationDelay = `${index * 0.3}s`;
             
-            card.addEventListener('mouseenter', function() {
-                // Crear partículas al hacer hover
-                const rect = this.getBoundingClientRect();
-                for (let i = 0; i < 5; i++) {
-                    setTimeout(() => {
-                        createParticle(
-                            rect.left + Math.random() * rect.width,
-                            rect.top + Math.random() * rect.height
-                        );
-                    }, i * 100);
-                }
-            });
+            // Agregar clases para efectos especiales
+            if (!card.hasAttribute('onclick')) {
+                card.classList.add('unlocked');
+            } else {
+                card.classList.add('locked');
+            }
             
-            card.addEventListener('click', function(e) {
-                // Efecto de celebración al hacer clic
-                createCelebration();
+            // Solo agregar efectos épicos a módulos desbloqueados
+            if (!card.hasAttribute('onclick')) {
+                card.addEventListener('mouseenter', function(e) {
+                    // Efecto de sonido visual
+                    createSoundWave(e.clientX, e.clientY);
+                    
+                    // Crear partículas mágicas al hacer hover (reducidas para mejor rendimiento)
+                    const rect = this.getBoundingClientRect();
+                    for (let i = 0; i < 4; i++) {
+                        setTimeout(() => {
+                            const types = ['magic', 'star', 'gold'];
+                            const type = types[Math.floor(Math.random() * types.length)];
+                            createParticle(
+                                rect.left + Math.random() * rect.width,
+                                rect.top + Math.random() * rect.height,
+                                type
+                            );
+                        }, i * 50);
+                    }
+                });
                 
-                // Crear más partículas al hacer clic
-                for (let i = 0; i < 10; i++) {
+                card.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Explosión de XP
+                    createXPExplosion(e.clientX - 30, e.clientY - 20, 50);
+                    
+                    // Power-up effect
+                    createPowerUpEffect(e.clientX - 20, e.clientY - 20);
+                    
+                    // Crear algunas partículas épicas
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(() => {
+                            const types = ['gold', 'magic', 'star'];
+                            const type = types[Math.floor(Math.random() * types.length)];
+                            createParticle(
+                                e.clientX + (Math.random() - 0.5) * 80,
+                                e.clientY + (Math.random() - 0.5) * 80,
+                                type
+                            );
+                        }, i * 30);
+                    }
+                    
+                    // Navegación inmediata
                     setTimeout(() => {
-                        createParticle(
-                            e.clientX + (Math.random() - 0.5) * 100,
-                            e.clientY + (Math.random() - 0.5) * 100
-                        );
-                    }, i * 50);
-                }
-            });
+                        window.location.href = this.href;
+                    }, 400);
+                });
+            } else {
+                // Efectos para módulos bloqueados
+                card.addEventListener('mouseenter', function(e) {
+                    // Efecto de sonido sutil para módulos bloqueados
+                    createSoundWave(e.clientX, e.clientY);
+                });
+            }
         });
 
         // Animación de progreso
@@ -1476,18 +2016,6 @@
             }, index * 300);
         });
 
-        // Efecto de partículas de bienvenida
-        setTimeout(() => {
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => {
-                    createParticle(
-                        Math.random() * window.innerWidth,
-                        Math.random() * window.innerHeight
-                    );
-                }, i * 200);
-            }
-        }, 2000);
-
         // Efectos especiales para elementos
         document.querySelectorAll('.module-icon').forEach(icon => {
             icon.addEventListener('mouseenter', function() {
@@ -1500,6 +2028,74 @@
         });
 
         // Efecto de shake removido para mejor experiencia
+        
+        // Función gaming para mostrar mensaje de mundo bloqueado
+        function showLockedMessage(event) {
+            event.preventDefault();
+            
+            // Detectar modo oscuro
+            const isDarkMode = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+            
+            // Crear notificación gaming épica
+            const notification = document.createElement('div');
+            notification.className = 'alert alert-warning position-fixed top-0 start-50 translate-middle-x mt-4 shadow-lg';
+            notification.style.zIndex = '2000';
+            notification.style.minWidth = '350px';
+            notification.style.borderRadius = '1rem';
+            
+            // Estilos según el modo
+            if (isDarkMode) {
+                notification.style.border = '2px solid #f59e0b';
+                notification.style.background = 'linear-gradient(145deg, #374151, #1f2937)';
+                notification.style.color = '#fff';
+                notification.innerHTML = `
+                    <div class="text-center">
+                        <h5 style="color: #fbbf24; font-weight: bold;">🔒 Quest Locked! 🔒</h5>
+                        <p class="mb-2" style="color: #e5e7eb;"><strong>💪 Complete the previous world to unlock this epic adventure!</strong></p>
+                        <p class="mb-1" style="color: #d1d5db;">🎮 Keep playing and level up your financial skills!</p>
+                        <small style="color: #9ca3af;">🏆 You're on your way to becoming a Financial Legend!</small>
+                    </div>
+                `;
+            } else {
+                notification.style.border = '2px solid #f59e0b';
+                notification.style.background = 'linear-gradient(145deg, #fef3c7, #fcd34d)';
+                notification.innerHTML = `
+                    <div class="text-center">
+                        <h5 class="text-warning">🔒 Quest Locked! 🔒</h5>
+                        <p class="mb-2"><strong>💪 Complete the previous world to unlock this epic adventure!</strong></p>
+                        <p class="mb-1">🎮 Keep playing and level up your financial skills!</p>
+                        <small class="text-muted">🏆 You're on your way to becoming a Financial Legend!</small>
+                    </div>
+                `;
+            }
+            
+            document.body.appendChild(notification);
+            
+            // Efecto de shake en la notificación
+            notification.style.animation = 'lockedShake 0.5s ease-in-out';
+            
+            // Remover notificación más rápido para mejor rendimiento
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.5s ease-out forwards';
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 3000);
+            
+            // Efectos de partículas de advertencia épicas (reducidas para mejor rendimiento)
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => {
+                    createParticle(
+                        event.clientX + (Math.random() - 0.5) * 80,
+                        event.clientY + (Math.random() - 0.5) * 80,
+                        'gold'
+                    );
+                }, i * 80);
+            }
+            
+            // Efecto de sonido visual
+            createSoundWave(event.clientX, event.clientY);
+        }
     </script>
     <script>
 // Traducción de la página
@@ -1522,17 +2118,18 @@ const translations = {
         'keep-moving': '⚡ ¡Sigue avanzando en tu camino de aprendizaje! 🚀',
         'completed': '📊 60% completado',
         'xp': '💎 240 XP',
-        'smart-saving': '💰 Ahorro Inteligente',
-        'smart-saving-desc': '🎯 Aprende estrategias efectivas para ahorrar dinero y alcanzar tus metas financieras de forma inteligente.',
-        'basic-investment': '📈 Inversión Básica',
-        'basic-investment-desc': '🚀 Descubre los fundamentos de la inversión y cómo hacer crecer tu dinero de forma segura.',
-        'credit-without-fear': '💳 Crédito sin miedo',
-        'credit-without-fear-desc': '🛡️ Entiende cómo funcionan las tarjetas de crédito y préstamos para usarlos responsablemente.',
+        'smart-saving': '� The Basics',
+        'smart-saving-desc': 'Comienza tu viaje financiero aprendiendo los conceptos básicos de presupuesto, ahorro y gestión inteligente del dinero.',
+        'basic-investment': '📈 Mundo 2: Reino de Inversiones',
+        'basic-investment-desc': '� Domina técnicas sigilosas de ahorro y estrategias secretas para hacer crecer tu riqueza silenciosamente.',
+        'credit-without-fear': '🏰 Mundo 3: Castillo del Crédito',
+        'credit-without-fear-desc': 'Domina las tarjetas de crédito, préstamos y construye un puntaje crediticio sólido que abrirá puertas al éxito financiero.',
         'lessons-label-1': '📚 3 de 10 lecciones',
         'lessons-label-2': '📚 0 de 8 lecciones',
         'lessons-label-3': '📚 0 de 5 lecciones',
         'percent-30': '✅ 30%',
-        'percent-0': '🔒 0%',
+        'percent-0': '🔒 Completa Mundo 1 primero',
+        'percent-0-2': '🔒 Completa Mundo 2 primero',
         'financial-assistant': 'Asistente'
     },
     en: {
@@ -1553,17 +2150,18 @@ const translations = {
         'keep-moving': '⚡ Keep moving forward on your learning path! 🚀',
         'completed': '📊 60% completed',
         'xp': '💎 240 XP',
-        'smart-saving': '💰 Smart Saving',
-        'smart-saving-desc': '🎯 Learn effective strategies to save money and reach your financial goals intelligently.',
-        'basic-investment': '📈 Basic Investment',
-        'basic-investment-desc': '🚀 Discover the fundamentals of investing and how to grow your money safely.',
-        'credit-without-fear': '💳 Credit Without Fear',
-        'credit-without-fear-desc': '🛡️ Understand how credit cards and loans work to use them responsibly.',
+        'smart-saving': '� The Basics',
+        'smart-saving-desc': 'Start your financial journey by learning the basics of budgeting, saving, and smart money management.',
+        'basic-investment': '📈 World 2: Investment Kingdom',
+        'basic-investment-desc': '� Master stealthy saving techniques and secret strategies to grow your wealth silently.',
+        'credit-without-fear': '🏰 World 3: Credit Castle',
+        'credit-without-fear-desc': 'Master credit cards, loans, and build a strong credit score that will open doors to financial success.',
         'lessons-label-1': '📚 3 of 10 lessons',
         'lessons-label-2': '📚 0 of 8 lessons',
         'lessons-label-3': '📚 0 of 5 lessons',
         'percent-30': '✅ 30%',
-        'percent-0': '🔒 0%',
+        'percent-0': '🔒 Complete World 1 first',
+        'percent-0-2': '🔒 Complete World 2 first',
         'financial-assistant': 'Assistant'
     }
 };

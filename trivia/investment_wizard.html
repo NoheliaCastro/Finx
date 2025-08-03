@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finx - Wealth Wizard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../styles.css">
+    <!-- Shared Sidebar CSS -->
+    <link rel="stylesheet" href="shared-sidebar.css">
+    <style>
+        body {
+            background: var(--background-color);
+        }
+        .dashboard-section {
+            padding: 4rem 0 2rem 0;
+            background: linear-gradient(135deg, var(--light-background, var(--background-color)) 0%, var(--background-color) 100%);
+            min-height: 100vh;
+        }
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: none;
+            -webkit-text-fill-color: unset;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+        }
+        .summary-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--card-border);
+        }
+        .summary-card {
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            box-shadow: var(--card-shadow);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid var(--card-border);
+        }
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+        .summary-card h3 {
+            color: var(--card-border);
+        }
+        .summary-card .stat-number {
+            color: #EEE95B;
+            background: none;
+            -webkit-text-fill-color: unset;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            word-break: break-all;
+        }
+        .lesson-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 2px solid var(--card-border);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--fun-primary), var(--fun-secondary));
+        }
+        .lesson-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
+        }
+        .lesson-card h4 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        .lesson-card .lesson-description {
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+        .lesson-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .lesson-status .badge {
+            font-size: 0.9rem;
+        }
+        .animated-fadein {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+        }
+        .animated-fadein.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Wizard themed gradients */
+        .wizard-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        /* Estilos del sidebar y navbar copiados de leccion.html */
+        .trivia-theme-toggle {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
+            cursor: pointer;
+        }
+        .trivia-theme-toggle:hover {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+        }
+        
+        :root {
+            --fun-primary: #6366f1;
+            --fun-secondary: #8b5cf6;
+            --fun-accent: #06b6d4;
+            --fun-success: #10b981;
+            --fun-warning: #f59e0b;
+            --fun-danger: #ef4444;
+            --background-color: #F4F6FB;
+            --sidebar-bg: #181C2A;
+            --sidebar-border: #22263A;
+            --card-bg: #FFFFFF;
+            --card-border: #004AAD;
+            --navbar-bg: #002366;
+            --text-color: #002366;
+            --card-shadow: 0 2px 8px #00236622;
+            --hover-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+        [data-bs-theme="dark"] {
+            --background-color: #181C2A;
+            --sidebar-bg: #131624;
+            --sidebar-border: #23263A;
+            --card-bg: #23263A;
+            --card-border: #6366f1;
+            --navbar-bg: #23263A;
+            --text-color: #EEE95B;
+            --card-shadow: 0 2px 8px #6366f122;
+            --hover-shadow: 0 8px 25px #6366f144;
+        }
+        
+        /* Sidebar styles */
+        .sidebar-logo-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0.1rem;
+            margin-top: 0;
+            padding: 0.2rem 0 0 0;
+            min-height: 170px;
+        }
+        .sidebar-logo {
+            max-width: 170px;
+            height: auto;
+            display: none;
+            transition: filter 0.3s;
+        }
+        .sidebar-logo-light {
+            display: block;
+        }
+        [data-bs-theme="dark"] .sidebar-logo-light {
+            display: none;
+        }
+        .sidebar-logo-dark {
+            display: none;
+        }
+        [data-bs-theme="dark"] .sidebar-logo-dark {
+            display: block;
+        }
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            max-height: 68vh;
+            overflow-y: auto;
+        }
+        .sidebar-nav a {
+            font-size: 1.13rem;
+            padding: 0.85rem 1.3rem;
+            font-weight: 500;
+            color: var(--text-color) !important;
+        }
+        [data-bs-theme="dark"] .sidebar-nav a {
+            color: #ffffff !important;
+        }
+        
+        /* Estilos para el video */
+        .video-container {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 2px solid var(--card-border);
+            margin-bottom: 1.5rem;
+        }
+        
+        .video-container h4 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        
+        .video-container video {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-bs-theme="dark"] .video-container {
+            background: var(--card-bg);
+            border-color: var(--card-border);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar trivia-navbar">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div style="flex:1; display:flex; align-items:center;">
+                    <a class="navbar-brand trivia-navbar-brand" href="../index.html">
+                        <i class="bi bi-currency-exchange me-2"></i>
+                        Finx
+                    </a>
+                </div>
+                <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
+                    <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
+                        <i class="bi bi-translate"></i>
+                    </button>
+                    <button class="trivia-theme-toggle" id="themeToggle" title="Change theme">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <nav class="leccion-sidebar">
+        <div class="container-fluid">
+            <div class="sidebar-logo-container text-center mb-3">
+                <img src="../images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
+                <img src="../images/modo-oscuro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-dark">
+            </div>
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="bi bi-house-door-fill"></i>
+                        <span>Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="trivia.html" class="active">
+                        <i class="bi bi-book-fill"></i>
+                        <span>Lessons</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="logros.html">
+                        <i class="bi bi-trophy-fill"></i>
+                        <span>Achievements</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../goals.html">
+                        <i class="bi bi-flag-fill"></i>
+                        <span>Goals</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../helpcenter2.html">
+                        <i class="bi bi-question-circle-fill"></i>
+                        <span>Help</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../chatbot.html">
+                        <i class="bi bi-robot"></i>
+                        <span>Assistant</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="dashboard-section">
+            <div class="container">
+                <!-- Hero Section -->
+                <section class="dashboard-hero mb-4">
+                    <h1 class="dashboard-title">🧙‍♂️ Wealth Wizard</h1>
+                    <p class="lead">Unlock the magical secrets of wealth building! ✨</p>
+                </section>
+                
+                <!-- Progress Cards -->
+                <div class="user-stats">
+                    <div class="row g-4 mb-4 justify-content-center animated-fadein" id="cardsRow">
+                        <div class="col-md-4">
+                            <div class="summary-card" id="progressCard">
+                                <i class="fas fa-chart-line"></i>
+                                <h3 class="h5 mt-2">Progress</h3>
+                                <div class="stat-number">75%</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="summary-card" id="xpCard">
+                                <i class="fas fa-magic"></i>
+                                <h3 class="h5 mt-2">XP Earned</h3>
+                                <div class="stat-number">50</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="summary-card">
+                                <i class="fas fa-scroll"></i>
+                                <h3 class="h5 mt-2">Spells</h3>
+                                <div class="stat-number">1/1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson Content -->
+                <div class="row animated-fadein" id="lessonRow">
+                    <div class="col-12">
+                        <div class="card p-4 shadow-sm animated-fadein" id="lessonCard">
+                            <h3 class="h4 mb-4">🔮 Study Material</h3>
+                            
+                            <!-- Video Section -->
+                            <div class="video-container mb-4">
+                                <h4 class="h5 mb-3">🎥 Understanding Investment: A Guide for Young People</h4>
+                                <div class="ratio ratio-16x9 mb-3">
+                                    <video controls class="rounded">
+                                        <source src="../videos/Understanding Investment A Guide for Young People_1080p.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <p class="text-muted small">
+                                    Watch this comprehensive video to unlock the magical secrets of smart investing. 
+                                    This lesson covers fundamental investment concepts, risk management, and wealth-building strategies.
+                                </p>
+                            </div>
+
+                            <!-- Progress Button -->
+                            <div class="text-center">
+                                <button class="btn btn-primary btn-lg" onclick="markLessonComplete()">
+                                    <i class="bi bi-check-circle"></i> Mark as Complete
+                                </button>
+                            </div>
+                            
+                            <!-- Back to Lessons -->
+                            <div class="text-center mt-3">
+                                <a href="trivia.html" class="btn btn-outline-primary">
+                                    <i class="bi bi-arrow-left"></i> Back to All Lessons
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Theme toggle function
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const currentTheme = html.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-bs-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            if (newTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
+            }
+        }
+
+        // Función para guardar progreso de la lección
+        function saveLessonProgress() {
+            const lessonProgress = {
+                module: 'wealth_wizard',
+                completed: true,
+                date: new Date().toISOString(),
+                xpEarned: 50 // 50 XP por completar la lección
+            };
+            
+            // Guardar progreso de la lección
+            localStorage.setItem('lesson_wealth_wizard', JSON.stringify(lessonProgress));
+            
+            // Actualizar progreso general
+            let generalProgress = JSON.parse(localStorage.getItem('user_progress') || '{}');
+            
+            if (!generalProgress.xp) generalProgress.xp = 0;
+            if (!generalProgress.completedLessons) generalProgress.completedLessons = [];
+            
+            generalProgress.xp += lessonProgress.xpEarned;
+            if (!generalProgress.completedLessons.includes('wealth_wizard')) {
+                generalProgress.completedLessons.push('wealth_wizard');
+            }
+            
+            localStorage.setItem('user_progress', JSON.stringify(generalProgress));
+        }
+
+        // Función para mostrar notificación de progreso
+        function showProgressNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-4 shadow';
+            notification.style.zIndex = '2000';
+            notification.style.minWidth = '300px';
+            notification.innerHTML = `
+                <h5>🎉 Lesson Completed!</h5>
+                <p>You have earned <strong>50 XP</strong> for completing this lesson.</p>
+                <p>You have mastered the magical arts of investing!</p>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remover notificación después de 5 segundos
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // Función para marcar la lección como completada
+        function markLessonComplete() {
+            saveLessonProgress();
+            showProgressNotification();
+            
+            // Actualizar el botón para indicar que se completó
+            const btn = event.target;
+            btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Completed!';
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-success');
+            btn.disabled = true;
+            
+            // Actualizar las estadísticas en la página
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        }
+
+        // Initialize theme and effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            
+            const icon = document.getElementById('themeIcon');
+            if (savedTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
+            }
+            
+            // Event listener for theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+            // Fade-in animations
+            setTimeout(function() {
+                document.querySelectorAll('.animated-fadein').forEach(el => el.classList.add('visible'));
+            }, 200);
+        });
+
+        // Translation system
+        const translations = {
+            es: {
+                'management': 'Gestión',
+                'lessons': 'Lecciones',
+                'achievements': 'Logros',
+                'goals': 'Metas',
+                'help': 'Ayuda',
+                'financial-assistant': 'Asistente'
+            },
+            en: {
+                'management': 'Management',
+                'lessons': 'Lessons',
+                'achievements': 'Achievements',
+                'goals': 'Goals',
+                'help': 'Help',
+                'financial-assistant': 'Assistant'
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.setItem('finx_lang', lang);
+            // Update sidebar
+            document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['management'];
+            document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
+            document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
+            document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
+            document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
+            document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['financial-assistant'];
+        }
+
+        document.getElementById('langToggle').addEventListener('click', function() {
+            const current = localStorage.getItem('finx_lang') || 'es';
+            const next = current === 'es' ? 'en' : 'es';
+            setLanguage(next);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const lang = localStorage.getItem('finx_lang') || 'es';
+            setLanguage(lang);
+        });
+    </script>
+</body>
+</html>
