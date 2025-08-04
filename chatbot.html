@@ -602,11 +602,10 @@
                         <div class="chatbot-messages" id="chatbotMessages">
                             <!-- Los mensajes se agregarán aquí dinámicamente -->
                         </div>
-                        
-                        <div class="chatbot-input-container">
+                          <div class="chatbot-input-container">
                             <input type="text" class="form-control chat-input" id="chatbotInput" placeholder="Escribe tu pregunta financiera..." autocomplete="off">
                             <button id="chatbotSendBtn" class="btn btn-primary">
-                                <i class="bi bi-send-fill"></i> Enviar
+                                <i class="bi bi-send-fill"></i>
                             </button>
                         </div>
                     </div>
@@ -737,11 +736,15 @@
                 document.querySelector('.dropdown-user-level').textContent = translations[lang]['level'] || 'Level 2';
             }
         }
-        
-        document.getElementById('langToggle').addEventListener('click', function() {
+          document.getElementById('langToggle').addEventListener('click', function() {
             const current = localStorage.getItem('finx_lang') || 'es';
             const next = current === 'es' ? 'en' : 'es';
             setLanguage(next);
+            
+            // Actualizar el chatbot si la función existe
+            if (window.handleChatbotLanguageChange) {
+                window.handleChatbotLanguageChange();
+            }
         });
         
         document.addEventListener('DOMContentLoaded', function() {
