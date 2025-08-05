@@ -70,12 +70,36 @@
     border-bottom-right-radius: 0.2rem;
 }
 
+/* Modo claro - mensajes del usuario */
+[data-bs-theme="light"] .user-message {
+    background: #e3f2fd;
+    color: #333;
+}
+
 /* Mensajes del bot */
 .bot-message {
     align-self: flex-start;
     background: #f1f3f5;
     color: #212529;
     border-bottom-left-radius: 0.2rem;
+}
+
+/* Modo claro - mensajes del bot */
+[data-bs-theme="light"] .bot-message {
+    background: #f1f3f5;
+    color: #333;
+}
+
+/* Modo oscuro - mensajes del usuario */
+[data-bs-theme="dark"] .user-message {
+    background: #2c3e50;
+    color: #f8f9fa;
+}
+
+/* Modo oscuro - mensajes del bot */
+[data-bs-theme="dark"] .bot-message {
+    background: #2d303e;
+    color: #f8f9fa;
 }
 
 /* Opciones rápidas */
@@ -88,6 +112,12 @@
     border-top: 1px solid #e9ecef;
 }
 
+/* Modo oscuro - contenedor de opciones rápidas */
+[data-bs-theme="dark"] .quick-options {
+    background: #252836;
+    border-top: 1px solid #2d303e;
+}
+
 .quick-option {
     background: #e9ecef;
     border: none;
@@ -96,12 +126,22 @@
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.2s ease;
-    color: #495057;
+    color: #333;
 }
 
 .quick-option:hover {
     background: #dee2e6;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
+}
+
+/* Modo oscuro - opciones rápidas */
+[data-bs-theme="dark"] .quick-option {
+    background: #2d303e;
+    color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .quick-option:hover {
+    background: #3c4043;
 }
 
 /* Área de entrada */
@@ -111,6 +151,12 @@
     background: white;
     border-top: 1px solid #e9ecef;
     gap: 0.8rem;
+}
+
+/* Modo oscuro - área de entrada */
+[data-bs-theme="dark"] .chatbot-input-container {
+    background: #252836;
+    border-top: 1px solid #2d303e;
 }
 
 .chatbot-input-container input {
@@ -125,6 +171,21 @@
 
 .chatbot-input-container input:focus {
     border-color: #004AAD;
+}
+
+/* Modo oscuro - input */
+[data-bs-theme="dark"] .chatbot-input-container input {
+    background: #2d303e;
+    border-color: #3c4043;
+    color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .chatbot-input-container input:focus {
+    border-color: #6366f1;
+}
+
+[data-bs-theme="dark"] .chatbot-input-container input::placeholder {
+    color: rgba(248, 249, 250, 0.6);
 }
 
 .chatbot-input-container button {
@@ -188,10 +249,6 @@
     background: #252836;
     border-color: #2d303e;
     color: #e9ecef;
-}
-
-[data-bs-theme="dark"] .chatbot-input-container input:focus {
-    border-color: #4a8cff;
 }
 
 /* Barra de desplazamiento personalizada */

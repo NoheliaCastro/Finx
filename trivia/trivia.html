@@ -1110,11 +1110,11 @@
 
         @keyframes levelUpGlow {
             0%, 100% { 
-                box-shadow: 0 0 20px rgba(99,102,241,0.5);
+                box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
                 transform: scale(1);
             }
             50% { 
-                box-shadow: 0 0 40px rgba(99,102,241,0.8), 0 0 60px rgba(139,92,246,0.6);
+                box-shadow: 0 0 40px rgba(99, 102, 241, 0.8), 0 0 60px rgba(139, 92, 246, 0.6);
                 transform: scale(1.05);
             }
         }
@@ -1526,6 +1526,130 @@
                 opacity: 0;
             }
         }
+
+        /* Tooltip styles for locked lessons */
+        .lesson-tooltip {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #1f2937, #374151);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 400px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .lesson-tooltip.show {
+            opacity: 1;
+            pointer-events: auto;
+            animation: tooltipBounce 0.5s ease-out;
+        }
+
+        .lesson-tooltip h4 {
+            margin-bottom: 1rem;
+            color: #fbbf24;
+            font-size: 1.3rem;
+        }
+
+        .lesson-tooltip p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .lesson-tooltip button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lesson-tooltip button:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .lesson-tooltip-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .lesson-tooltip-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @keyframes tooltipBounce {
+            0% {
+                transform: translate(-50%, -50%) scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Enhanced module card states */
+        .module-card.completed {
+            border: 2px solid #10b981;
+            background: linear-gradient(145deg, rgba(16,185,129,0.1), rgba(5,150,105,0.05));
+        }
+
+        .module-card.completed .module-icon {
+            background: linear-gradient(135deg, #10b981, #059669);
+            animation: completedPulse 2s ease-in-out infinite;
+        }
+
+        .module-card.in-progress {
+            border: 2px solid var(--primary-color);
+            background: linear-gradient(145deg, rgba(99,102,241,0.1), rgba(79,70,229,0.05));
+        }
+
+        .module-card.in-progress .module-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            animation: progressPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes completedPulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(16,185,129,0.4);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(16,185,129,0.6);
+            }
+        }
+
+        @keyframes progressPulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(99,102,241,0.4);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(99,102,241,0.6);
+            }
+        }
     </style>
 </head>
 <body>
@@ -1734,71 +1858,69 @@
                         </div>
                     </div>
                 </div>
-            </section>
-
-            <!-- Learning Modules -->
-            <section class="modules-grid fade-in-up">
-                <!-- Module 1: Money Foundations -->
-                <a href="leccion.html" class="module-card">
+            </section>            <!-- Learning Modules -->
+            <section class="modules-grid fade-in-up" id="learningModules">
+                <!-- Module 1: Ahorro Inteligente -->
+                <a href="quiz_ahorro_inteligente.html" class="module-card" id="module-ahorro-inteligente" data-lesson="ahorro_inteligente">
                     <div class="module-icon">
-                        <i class="bi bi-house-fill"></i>
-            </div>
-                    <h3 class="module-title">� The Basics</h3>
+                        <i class="bi bi-piggy-bank-fill"></i>
+                    </div>
+                    <h3 class="module-title">💰 Ahorro Inteligente</h3>
                     <p class="module-description">
-                        Start your financial journey by learning the basics of budgeting, saving, and smart money management.
+                        Aprende los fundamentos del ahorro inteligente y gestión del dinero personal.
                     </p>
                     <div class="module-progress">
-                        <div class="module-progress-fill" style="width: 30%;"></div>
+                        <div class="module-progress-fill" id="progress-ahorro-inteligente" style="width: 0%;"></div>
                     </div>
                     <div class="module-stats">
-                        <span>📚 3 of 10 lessons</span>
-                        <span class="text-success">✅ 30%</span>
+                        <span id="stats-ahorro-inteligente">📚 Lección disponible</span>
+                        <span class="text-success" id="status-ahorro-inteligente">🔓 Desbloqueado</span>
                     </div>
                 </a>
 
-                <!-- World 2: Investment Kingdom -->
-                <a href="#" class="module-card" onclick="showLockedMessage(event)">
+                <!-- Module 2: Savings Ninja -->
+                <a href="quiz_savings_ninja.html" class="module-card locked" id="module-savings-ninja" data-lesson="savings_ninja">
                     <div class="module-icon">
                         <i class="bi bi-graph-up"></i>
                     </div>
-                    <h3 class="module-title">� Savings Ninja</h3>
+                    <h3 class="module-title">🥷 Savings Ninja</h3>
                     <p class="module-description">
-                        Discover the secrets of investing, from stocks to bonds, and learn how to grow your wealth over time.
+                        Domina técnicas avanzadas de ahorro y estrategias de inversión básica.
                     </p>
                     <div class="module-progress">
-                        <div class="module-progress-fill" style="width: 0%;"></div>
+                        <div class="module-progress-fill" id="progress-savings-ninja" style="width: 0%;"></div>
                     </div>
                     <div class="module-stats">
-                        <span>📚 0 of 8 lessons</span>
-                        <span class="text-muted">🔒 Complete World 1 first</span>
+                        <span id="stats-savings-ninja">📚 Lección bloqueada</span>
+                        <span class="text-muted" id="status-savings-ninja">🔒 Completa Ahorro Inteligente primero</span>
                     </div>
                 </a>
 
-                <!-- World 3: Credit Castle -->
-                <a href="#" class="module-card" onclick="showLockedMessage(event)">
+                <!-- Module 3: Investment Wizard -->
+                <a href="quiz_investment_wizard.html" class="module-card locked" id="module-investment-wizard" data-lesson="investment_wizard">
                     <div class="module-icon">
-                        <i class="bi bi-credit-card"></i>
+                        <i class="bi bi-magic"></i>
                     </div>
-                    <h3 class="module-title">🧙‍♂️ Wealth Wizard</h3>
+                    <h3 class="module-title">🧙‍♂️ Investment Wizard</h3>
                     <p class="module-description">
-                        Master credit cards, loans, and build a strong credit score that will open doors to financial success.
+                        Conviértete en un experto en inversiones y construcción de riqueza a largo plazo.
                     </p>
                     <div class="module-progress">
-                        <div class="module-progress-fill" style="width: 0%;"></div>
+                        <div class="module-progress-fill" id="progress-investment-wizard" style="width: 0%;"></div>
                     </div>
                     <div class="module-stats">
-                        <span>📚 0 of 5 lessons</span>
-                        <span class="text-muted">🔒 Complete World 2 first</span>
+                        <span id="stats-investment-wizard">📚 Lección bloqueada</span>
+                        <span class="text-muted" id="status-investment-wizard">🔒 Completa Savings Ninja primero</span>
                     </div>
                 </a>
             </section>
 
 
         </div>
-    </main>
-
-    <!-- Bootstrap JS -->
+    </main>    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Lesson Progress Utility -->
+    <script src="lesson-progress.js"></script>
     
     <script>
         // Función para cambiar tema
@@ -2117,19 +2239,21 @@ const translations = {
         'level-label': '🏆 Nivel 2',
         'keep-moving': '⚡ ¡Sigue avanzando en tu camino de aprendizaje! 🚀',
         'completed': '📊 60% completado',
-        'xp': '💎 240 XP',
-        'smart-saving': '� The Basics',
-        'smart-saving-desc': 'Comienza tu viaje financiero aprendiendo los conceptos básicos de presupuesto, ahorro y gestión inteligente del dinero.',
-        'basic-investment': '📈 Mundo 2: Reino de Inversiones',
-        'basic-investment-desc': '� Domina técnicas sigilosas de ahorro y estrategias secretas para hacer crecer tu riqueza silenciosamente.',
-        'credit-without-fear': '🏰 Mundo 3: Castillo del Crédito',
-        'credit-without-fear-desc': 'Domina las tarjetas de crédito, préstamos y construye un puntaje crediticio sólido que abrirá puertas al éxito financiero.',
-        'lessons-label-1': '📚 3 de 10 lecciones',
-        'lessons-label-2': '📚 0 de 8 lecciones',
-        'lessons-label-3': '📚 0 de 5 lecciones',
-        'percent-30': '✅ 30%',
-        'percent-0': '🔒 Completa Mundo 1 primero',
-        'percent-0-2': '🔒 Completa Mundo 2 primero',
+        'xp': '💎 240 XP',        'smart-saving': '💰 Ahorro Inteligente',
+        'smart-saving-desc': 'Aprende los fundamentos del ahorro inteligente y gestión del dinero personal.',
+        'basic-investment': '🥷 Savings Ninja',
+        'basic-investment-desc': 'Domina técnicas avanzadas de ahorro y estrategias de inversión básica.',
+        'credit-without-fear': '🧙‍♂️ Investment Wizard',
+        'credit-without-fear-desc': 'Conviértete en un experto en inversiones y construcción de riqueza a largo plazo.',
+        'lesson-available': '📚 Lección disponible',
+        'lesson-blocked': '📚 Lección bloqueada',
+        'lesson-completed': '📚 Lección completada',
+        'lesson-in-progress': '📚 Lección en progreso',
+        'unlocked': '🔓 Desbloqueado',
+        'completed': '✅ Completado',
+        'available': '🔓 Disponible',
+        'complete-first': '🔒 Completa Ahorro Inteligente primero',
+        'complete-second': '🔒 Completa Savings Ninja primero',
         'financial-assistant': 'Asistente'
     },
     en: {
@@ -2149,19 +2273,21 @@ const translations = {
         'level-label': '🏆 Level 2',
         'keep-moving': '⚡ Keep moving forward on your learning path! 🚀',
         'completed': '📊 60% completed',
-        'xp': '💎 240 XP',
-        'smart-saving': '� The Basics',
-        'smart-saving-desc': 'Start your financial journey by learning the basics of budgeting, saving, and smart money management.',
-        'basic-investment': '📈 World 2: Investment Kingdom',
-        'basic-investment-desc': '� Master stealthy saving techniques and secret strategies to grow your wealth silently.',
-        'credit-without-fear': '🏰 World 3: Credit Castle',
-        'credit-without-fear-desc': 'Master credit cards, loans, and build a strong credit score that will open doors to financial success.',
-        'lessons-label-1': '📚 3 of 10 lessons',
-        'lessons-label-2': '📚 0 of 8 lessons',
-        'lessons-label-3': '📚 0 of 5 lessons',
-        'percent-30': '✅ 30%',
-        'percent-0': '🔒 Complete World 1 first',
-        'percent-0-2': '🔒 Complete World 2 first',
+        'xp': '💎 240 XP',        'smart-saving': '💰 Smart Saving',
+        'smart-saving-desc': 'Learn the fundamentals of smart saving and personal money management.',
+        'basic-investment': '🥷 Savings Ninja',
+        'basic-investment-desc': 'Master advanced saving techniques and basic investment strategies.',
+        'credit-without-fear': '🧙‍♂️ Investment Wizard',
+        'credit-without-fear-desc': 'Become an expert in investments and long-term wealth building.',
+        'lesson-available': '📚 Lesson available',
+        'lesson-blocked': '📚 Lesson blocked',
+        'lesson-completed': '📚 Lesson completed',
+        'lesson-in-progress': '📚 Lesson in progress',
+        'unlocked': '🔓 Unlocked',
+        'completed': '✅ Completed',
+        'available': '🔓 Available',
+        'complete-first': '🔒 Complete Smart Saving first',
+        'complete-second': '🔒 Complete Savings Ninja first',
         'financial-assistant': 'Assistant'
     }
 };
@@ -2202,29 +2328,80 @@ function setLanguage(lang) {
         dropdownItems[2].textContent = translations[lang]['privacy'];
         dropdownItems[3].textContent = translations[lang]['logout'];
     }
-    
-    // Hero
+      // Hero
     document.querySelector('.trivia-hero h1').textContent = translations[lang]['hero-title'];
     document.querySelector('.trivia-hero .lead').textContent = translations[lang]['hero-lead'];
     // Progreso
     document.querySelector('.xp-progress-container h3').textContent = translations[lang]['level-label'];
     document.querySelector('.xp-progress-container p').textContent = translations[lang]['keep-moving'];
-    document.querySelector('.xp-progress-container .d-flex span.text-muted').textContent = translations[lang]['completed'];
-    document.querySelector('.xp-progress-container .d-flex span.text-primary').textContent = translations[lang]['xp'];
-    // Módulos
-    document.querySelectorAll('.module-title')[0].textContent = translations[lang]['smart-saving'];
-    document.querySelectorAll('.module-title')[1].textContent = translations[lang]['basic-investment'];
-    document.querySelectorAll('.module-title')[2].textContent = translations[lang]['credit-without-fear'];
-    document.querySelectorAll('.module-description')[0].textContent = translations[lang]['smart-saving-desc'];
-    document.querySelectorAll('.module-description')[1].textContent = translations[lang]['basic-investment-desc'];
-    document.querySelectorAll('.module-description')[2].textContent = translations[lang]['credit-without-fear-desc'];
-    document.querySelectorAll('.module-stats span:first-child')[0].textContent = translations[lang]['lessons-label-1'];
-    document.querySelectorAll('.module-stats span:first-child')[1].textContent = translations[lang]['lessons-label-2'];
-    document.querySelectorAll('.module-stats span:first-child')[2].textContent = translations[lang]['lessons-label-3'];
-    document.querySelectorAll('.module-stats span:last-child')[0].textContent = translations[lang]['percent-30'];
-    document.querySelectorAll('.module-stats span:last-child')[1].textContent = translations[lang]['percent-0'];
-    document.querySelectorAll('.module-stats span:last-child')[2].textContent = translations[lang]['percent-0'];
+    
+    // Update module content with dynamic system
+    updateModuleTranslations(lang);
 }
+
+// Update module translations dynamically
+function updateModuleTranslations(lang) {
+    // Update static content
+    const modules = [
+        { id: 'module-ahorro-inteligente', titleKey: 'smart-saving', descKey: 'smart-saving-desc' },
+        { id: 'module-savings-ninja', titleKey: 'basic-investment', descKey: 'basic-investment-desc' },
+        { id: 'module-investment-wizard', titleKey: 'credit-without-fear', descKey: 'credit-without-fear-desc' }
+    ];
+    
+    modules.forEach(module => {
+        const moduleElement = document.getElementById(module.id);
+        if (moduleElement) {
+            const title = moduleElement.querySelector('.module-title');
+            const description = moduleElement.querySelector('.module-description');
+            
+            if (title) title.textContent = translations[lang][module.titleKey];
+            if (description) description.textContent = translations[lang][module.descKey];
+        }
+    });
+    
+    // Update dynamic status content with current lesson states
+    updateDynamicModuleStatus(lang);
+}
+
+// Update module status content based on current progress
+function updateDynamicModuleStatus(lang) {
+    const lessons = ['ahorro_inteligente', 'savings_ninja', 'investment_wizard'];
+    
+    lessons.forEach(lesson => {
+        const isUnlocked = isLessonUnlocked(lesson);
+        const isPassed = isQuizPassed(lesson);
+        const isCompleted = isLessonCompleted(lesson);
+        
+        const statsElement = document.getElementById(`stats-${lesson.replace('_', '-')}`);
+        const statusElement = document.getElementById(`status-${lesson.replace('_', '-')}`);
+        
+        if (statsElement) {
+            if (isPassed || isCompleted) {
+                statsElement.textContent = translations[lang]['lesson-completed'];
+            } else if (isUnlocked) {
+                statsElement.textContent = translations[lang]['lesson-in-progress'];
+            } else {
+                statsElement.textContent = translations[lang]['lesson-blocked'];
+            }
+        }
+        
+        if (statusElement) {
+            if (isPassed || isCompleted) {
+                statusElement.textContent = translations[lang]['completed'];
+            } else if (isUnlocked) {
+                statusElement.textContent = translations[lang]['available'];
+            } else {
+                // Set specific prerequisite messages
+                if (lesson === 'savings_ninja') {
+                    statusElement.textContent = translations[lang]['complete-first'];
+                } else if (lesson === 'investment_wizard') {
+                    statusElement.textContent = translations[lang]['complete-second'];
+                }
+            }
+        }
+    });
+}
+
 document.getElementById('langToggle').addEventListener('click', function() {
     const current = localStorage.getItem('finx_lang') || 'es';
     const next = current === 'es' ? 'en' : 'es';
@@ -2233,6 +2410,9 @@ document.getElementById('langToggle').addEventListener('click', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const lang = localStorage.getItem('finx_lang') || 'es';
     setLanguage(lang);
+
+    // Initialize lesson progress system
+    initializeLessonProgress();
 
     // Menú de usuario con click
     var userProfile = document.querySelector('.user-profile-navbar');
@@ -2268,6 +2448,111 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Initialize lesson progress and visual states
+function initializeLessonProgress() {
+    const lessons = ['ahorro_inteligente', 'savings_ninja', 'investment_wizard'];
+    
+    lessons.forEach(lesson => {
+        const moduleCard = document.getElementById(`module-${lesson.replace('_', '-')}`);
+        const progressBar = document.getElementById(`progress-${lesson.replace('_', '-')}`);
+        const statsElement = document.getElementById(`stats-${lesson.replace('_', '-')}`);
+        const statusElement = document.getElementById(`status-${lesson.replace('_', '-')}`);
+        
+        if (!moduleCard) return;
+        
+        const isUnlocked = isLessonUnlocked(lesson);
+        const isPassed = isQuizPassed(lesson);
+        const isCompleted = isLessonCompleted(lesson);
+        
+        // Update visual state
+        if (isUnlocked) {
+            moduleCard.classList.remove('locked');
+            moduleCard.classList.add('unlocked');
+            
+            // Remove onclick handler for locked lessons
+            moduleCard.removeAttribute('onclick');
+            
+            if (isPassed || isCompleted) {
+                if (progressBar) progressBar.style.width = '100%';
+                if (statsElement) statsElement.textContent = '📚 Lección completada';
+                if (statusElement) {
+                    statusElement.textContent = '✅ Completado';
+                    statusElement.className = 'text-success';
+                }
+            } else {
+                if (progressBar) progressBar.style.width = '50%';
+                if (statsElement) statsElement.textContent = '📚 Lección en progreso';
+                if (statusElement) {
+                    statusElement.textContent = '🔓 Disponible';
+                    statusElement.className = 'text-primary';
+                }
+            }
+        } else {
+            moduleCard.classList.add('locked');
+            moduleCard.classList.remove('unlocked');
+            
+            // Add click handler for locked lessons
+            moduleCard.addEventListener('click', function(e) {
+                e.preventDefault();
+                showLockedLessonTooltip(lesson);
+            });
+            
+            if (progressBar) progressBar.style.width = '0%';
+            
+            // Update locked message based on prerequisites
+            const prerequisiteMessages = {
+                'savings_ninja': '🔒 Completa Ahorro Inteligente primero',
+                'investment_wizard': '🔒 Completa Savings Ninja primero'
+            };
+            
+            if (statusElement && prerequisiteMessages[lesson]) {
+                statusElement.textContent = prerequisiteMessages[lesson];
+                statusElement.className = 'text-muted';
+            }
+        }
+    });
+      // Update overall user progress display
+    updateUserProgressDisplay();
+    
+    // Update translations for current language
+    const currentLang = localStorage.getItem('finx_lang') || 'es';
+    updateDynamicModuleStatus(currentLang);
+}
+
+// Update the user progress section with current stats
+function updateUserProgressDisplay() {
+    const userProgress = getUserProgress();
+    const totalLessons = Object.keys(userProgress.lessons).length;
+    const completedLessons = Object.values(userProgress.lessons).filter(lesson => lesson.completed).length;
+    const completionPercentage = Math.round((completedLessons / totalLessons) * 100);
+    
+    // Update XP display
+    const xpElement = document.querySelector('.xp-progress-container .d-flex span.text-primary');
+    if (xpElement) {
+        xpElement.textContent = `${userProgress.totalXP} XP`;
+    }
+    
+    // Update completion percentage
+    const completedElement = document.querySelector('.xp-progress-container .d-flex span.text-muted');
+    if (completedElement) {
+        completedElement.textContent = `${completionPercentage}% Completado`;
+    }
+    
+    // Update progress bar
+    const progressBar = document.querySelector('.xp-progress-fill');
+    if (progressBar) {
+        progressBar.style.width = `${completionPercentage}%`;
+    }
+    
+    // Update level display
+    const level = Math.floor(userProgress.totalXP / 100) + 1;
+    const xpInCurrentLevel = userProgress.totalXP % 100;
+    const levelElement = document.querySelector('.xp-progress-container h3');
+    if (levelElement) {
+        levelElement.textContent = `Nivel ${level} (${xpInCurrentLevel}/100 XP)`;
+    }
+}
 </script>
 </body>
 </html>

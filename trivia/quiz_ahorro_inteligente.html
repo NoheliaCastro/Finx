@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finx - Quiz: Ahorro Inteligente</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../styles.css">
+    <!-- Shared Sidebar CSS -->
+    <link rel="stylesheet" href="shared-sidebar.css">
+    <style>
+        /* Variables de colores */
+        :root {
+            --fun-primary: #6366f1;
+            --fun-secondary: #8b5cf6;
+            --fun-accent: #06b6d4;
+            --fun-success: #10b981;
+            --fun-warning: #f59e0b;
+            --fun-danger: #ef4444;
+        }
+
+        /* Estilos específicos para el quiz */
+        .quiz-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2.2rem;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            padding: 3.5rem 2.5rem;
+            margin-bottom: 3rem;
+            color: white;
+            text-align: center;
+        }
+
+        [data-bs-theme="dark"] .quiz-hero {
+            background: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 100%);
+        }
+
+        .quiz-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+        }
+
+        .quiz-hero .lead {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-hero small {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+        }
+
+        /* Contenedor del quiz */
+        .quiz-container {
+            background: var(--card-bg);
+            border-radius: 2rem;
+            box-shadow: var(--card-shadow);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 2px solid var(--card-border);
+        }
+
+        /* Barra de progreso */
+        .quiz-progress-container {
+            margin-bottom: 2rem;
+        }
+
+        .quiz-progress {
+            height: 12px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--fun-primary), var(--fun-secondary));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* Pregunta */
+        .question-container {
+            margin-bottom: 2rem;
+        }
+
+        .question-number {
+            color: var(--fun-primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        /* Opciones */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option-button {
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 1rem;
+            padding: 1.2rem 1.5rem;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .option-button:hover {
+            border-color: var(--fun-primary);
+            background: rgba(99, 102, 241, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+        }
+
+        .option-button.selected {
+            border-color: var(--fun-primary);
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--fun-primary);
+        }
+
+        .option-button.correct {
+            border-color: var(--fun-success);
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--fun-success);
+        }
+
+        .option-button.incorrect {
+            border-color: var(--fun-danger);
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--fun-danger);
+        }
+
+        /* Explicación */
+        .explanation-container {
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .explanation-container.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .explanation-title {
+            color: var(--fun-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .explanation-text {
+            color: var(--text-color);
+            line-height: 1.5;
+        }
+
+        /* Navegación */
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            padding: 0.8rem 2rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button.primary {
+            background: linear-gradient(135deg, var(--fun-primary), var(--fun-secondary));
+            color: white;
+        }
+
+        .nav-button.secondary {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 2px solid var(--card-border);
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+
+        /* Resultados */
+        .results-container {
+            text-align: center;
+            display: none;
+        }
+
+        .results-container.show {
+            display: block;
+            animation: fadeInUp 0.7s ease;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--fun-success), var(--fun-accent));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem auto;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.3);
+        }
+
+        .score-number {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-text {
+            font-size: 1.1rem;
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .quiz-container {
+                padding: 1.5rem;
+            }
+            
+            .question-text {
+                font-size: 1.2rem;
+            }
+            
+            .score-circle {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .score-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar trivia-navbar">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div style="flex:1; display:flex; align-items:center;">
+                    <a class="navbar-brand trivia-navbar-brand" href="../index.html">
+                        <i class="bi bi-currency-exchange me-2"></i>
+                        Finx
+                    </a>
+                </div>
+                <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
+                    <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
+                        <i class="bi bi-translate"></i>
+                    </button>
+                    <button class="trivia-theme-toggle" id="themeToggle" title="Change theme">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <nav class="leccion-sidebar">
+        <div class="container-fluid">
+            <div class="sidebar-logo-container text-center mb-3">
+                <img src="../images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
+                <img src="../images/modo-oscuro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-dark">
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="../dashboard.html"><i class="bi bi-house-door-fill"></i><span>Gestión</span></a></li>
+                <li><a href="trivia.html" class="active"><i class="bi bi-book-fill"></i><span>Lecciones</span></a></li>
+                <li><a href="logros.html"><i class="bi bi-trophy-fill"></i><span>Logros</span></a></li>
+                <li><a href="../goals.html"><i class="bi bi-flag-fill"></i><span>Metas</span></a></li>
+                <li><a href="../helpcenter2.html"><i class="bi bi-question-circle-fill"></i><span>Ayuda</span></a></li>
+                <li><a href="../chatbot.html"><i class="bi bi-robot"></i><span>Asistente</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="quiz-hero">
+                <h1>💰 Quiz: Ahorro Inteligente</h1>
+                <p class="lead">🎯 Pon a prueba tus conocimientos sobre conceptos básicos de finanzas personales</p>
+                <small>Basado en el video "Conceptos Básicos de Finanzas Personales"</small>
+            </section>
+
+            <!-- Lesson Completed Message -->
+            <div id="lessonCompletedMessage" class="alert alert-success d-none mb-4" style="border-radius: 1.5rem; border: 2px solid var(--fun-success); background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));">
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 2rem;"></i>
+                    </div>
+                    <div>
+                        <h5 class="alert-heading mb-1" id="lessonCompletedTitle">🎉 ¡Lección Completada!</h5>
+                        <p class="mb-0" id="lessonCompletedText">Has completado exitosamente la lección <span id="completedLessonName" class="fw-bold">Ahorro Inteligente</span>. ¡Ahora pon a prueba tus conocimientos con este quiz!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenedor del Quiz -->
+            <div class="quiz-container" id="quizContainer">
+                <!-- Barra de progreso -->
+                <div class="quiz-progress-container">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted">Progreso del Quiz</span>
+                        <span class="text-primary fw-bold" id="progressText">0/7</span>
+                    </div>
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <!-- Pregunta -->
+                <div class="question-container" id="questionContainer">
+                    <div class="question-number" id="questionNumber">Pregunta 1 de 7</div>
+                    <div class="question-text" id="questionText"></div>
+                    
+                    <!-- Opciones -->
+                    <div class="options-container" id="optionsContainer"></div>
+                    
+                    <!-- Explicación -->
+                    <div class="explanation-container" id="explanationContainer">
+                        <div class="explanation-title">💡 Explicación</div>
+                        <div class="explanation-text" id="explanationText"></div>
+                    </div>
+                </div>
+
+                <!-- Navegación -->
+                <div class="quiz-navigation">
+                    <button class="nav-button secondary" id="prevBtn" style="display: none;">
+                        <i class="bi bi-arrow-left"></i> Anterior
+                    </button>
+                    <button class="nav-button primary" id="nextBtn">
+                        Siguiente <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resultados -->
+            <div class="results-container" id="resultsContainer">
+                <h2>🎉 ¡Quiz Completado!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="scoreNumber">0%</div>
+                    <div class="score-text">Puntuación</div>
+                </div>
+                <h3 id="badgeEarned">🏆 Badge Ahorro Inteligente</h3>
+                <p class="lead">¡Excelente trabajo! Has demostrado un buen conocimiento sobre conceptos básicos de finanzas personales.</p>
+                <div class="quiz-navigation">
+                    <a href="leccion.html" class="nav-button secondary">
+                        <i class="bi bi-arrow-left"></i> Volver a la Lección
+                    </a>
+                    <a href="trivia.html" class="nav-button primary">
+                        Continuar <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Variables globales del quiz
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+        let quizCompleted = false;
+
+        // Base de datos de preguntas específicas para Ahorro Inteligente (Conceptos Básicos)
+        const quizQuestions = [
+            {
+                question: {
+                    es: "¿Cuál es el primer paso para crear un presupuesto personal efectivo?",
+                    en: "What is the first step to create an effective personal budget?"
+                },
+                options: [
+                    { es: "Invertir en acciones", en: "Invest in stocks" },
+                    { es: "Calcular todos tus ingresos mensuales", en: "Calculate all your monthly income" },
+                    { es: "Comprar seguros", en: "Buy insurance" },
+                    { es: "Abrir múltiples cuentas bancarias", en: "Open multiple bank accounts" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "Antes de planificar gastos, necesitas saber exactamente cuánto dinero tienes disponible cada mes.",
+                    en: "Before planning expenses, you need to know exactly how much money you have available each month."
+                }
+            },
+            {
+                question: {
+                    es: "¿Qué porcentaje de tus ingresos se recomienda destinar al ahorro?",
+                    en: "What percentage of your income is recommended to allocate to savings?"
+                },
+                options: [
+                    { es: "5%", en: "5%" },
+                    { es: "10-20%", en: "10-20%" },
+                    { es: "30%", en: "30%" },
+                    { es: "50%", en: "50%" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "Los expertos recomiendan ahorrar entre el 10% y 20% de tus ingresos mensuales para tener un futuro financiero saludable.",
+                    en: "Experts recommend saving between 10% and 20% of your monthly income to have a healthy financial future."
+                }
+            },
+            {
+                question: {
+                    es: "¿Cuál es la diferencia entre gastos fijos y gastos variables?",
+                    en: "What is the difference between fixed and variable expenses?"
+                },
+                options: [
+                    { es: "Los gastos fijos cambian cada mes, los variables son constantes", en: "Fixed expenses change each month, variable ones are constant" },
+                    { es: "Los gastos fijos son constantes cada mes, los variables cambian", en: "Fixed expenses are constant each month, variable ones change" },
+                    { es: "No hay diferencia", en: "There is no difference" },
+                    { es: "Solo los ricos tienen gastos fijos", en: "Only rich people have fixed expenses" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "Los gastos fijos como la renta o hipoteca se mantienen iguales cada mes, mientras que los variables como entretenimiento pueden cambiar.",
+                    en: "Fixed expenses like rent or mortgage stay the same each month, while variable ones like entertainment can change."
+                }
+            },
+            {
+                question: {
+                    es: "¿Qué es un fondo de emergencia y por qué es importante?",
+                    en: "What is an emergency fund and why is it important?"
+                },
+                options: [
+                    { es: "Dinero para vacaciones", en: "Money for vacations" },
+                    { es: "Dinero reservado para gastos inesperados", en: "Money reserved for unexpected expenses" },
+                    { es: "Dinero para compras impulsivas", en: "Money for impulse purchases" },
+                    { es: "Dinero solo para inversiones", en: "Money only for investments" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "Un fondo de emergencia es dinero guardado para cubrir gastos inesperados como problemas médicos o pérdida de empleo, proporcionando seguridad financiera.",
+                    en: "An emergency fund is money saved to cover unexpected expenses like medical issues or job loss, providing financial security."
+                }
+            },
+            {
+                question: {
+                    es: "¿Cuál es una buena estrategia para controlar los gastos innecesarios?",
+                    en: "What is a good strategy to control unnecessary expenses?"
+                },
+                options: [
+                    { es: "Usar solo tarjetas de crédito", en: "Use only credit cards" },
+                    { es: "Llevar un registro detallado de todos los gastos", en: "Keep a detailed record of all expenses" },
+                    { es: "Evitar revisar los estados de cuenta", en: "Avoid reviewing bank statements" },
+                    { es: "Gastar todo el dinero inmediatamente", en: "Spend all money immediately" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "Llevar un registro de gastos te ayuda a identificar patrones y áreas donde puedes reducir gastos innecesarios.",
+                    en: "Keeping an expense record helps you identify patterns and areas where you can reduce unnecessary spending."
+                }
+            },
+            {
+                question: {
+                    es: "¿Qué característica debe tener un buen plan financiero personal?",
+                    en: "What characteristic should a good personal financial plan have?"
+                },
+                options: [
+                    { es: "Ser muy complicado", en: "Be very complicated" },
+                    { es: "Ser realista y alcanzable", en: "Be realistic and achievable" },
+                    { es: "Cambiar constantemente", en: "Change constantly" },
+                    { es: "Enfocarse solo en el corto plazo", en: "Focus only on short term" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "Un buen plan financiero debe ser realista y alcanzable, adaptado a tu situación actual y metas futuras para poder mantenerlo a largo plazo.",
+                    en: "A good financial plan should be realistic and achievable, adapted to your current situation and future goals to maintain it long term."
+                }
+            },
+            {
+                question: {
+                    es: "¿Cuándo es recomendable empezar a planificar tu futuro financiero?",
+                    en: "When is it recommended to start planning your financial future?"
+                },
+                options: [
+                    { es: "Solo cuando seas mayor", en: "Only when you're older" },
+                    { es: "Lo más pronto posible, preferiblemente desde joven", en: "As soon as possible, preferably from a young age" },
+                    { es: "Solo cuando tengas mucho dinero", en: "Only when you have a lot of money" },
+                    { es: "Nunca es necesario planificar", en: "It's never necessary to plan" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "Empezar a planificar desde joven te da más tiempo para que el interés compuesto trabaje a tu favor y puedas alcanzar tus metas más fácilmente.",
+                    en: "Starting to plan from a young age gives you more time for compound interest to work in your favor and achieve your goals more easily."
+                }
+            }
+        ];
+
+        // Traducciones
+        const translations = {
+            es: {
+                'quiz-title': '💰 Quiz: Ahorro Inteligente',
+                'quiz-subtitle': '🎯 Pon a prueba tus conocimientos sobre conceptos básicos de finanzas personales',
+                'quiz-based-on': 'Basado en el video "Conceptos Básicos de Finanzas Personales"',
+                'lesson-completed-title': '🎉 ¡Lección Completada!',
+                'lesson-completed-message': 'Has completado exitosamente la lección Ahorro Inteligente. ¡Ahora pon a prueba tus conocimientos con este quiz!',
+                'quiz-progress': 'Progreso del Quiz',
+                'question-of': 'Pregunta',
+                'of': 'de',
+                'previous': 'Anterior',
+                'next': 'Siguiente',
+                'finish': 'Finalizar',
+                'quiz-completed': '🎉 ¡Quiz Completado!',
+                'score': 'Puntuación',
+                'badge-earned': '🏆 Badge Ahorro Inteligente',
+                'excellent': '¡Excelente trabajo! Has demostrado un buen conocimiento sobre conceptos básicos de finanzas personales.',
+                'back-to-lesson': 'Volver a la Lección',
+                'continue': 'Continuar',
+                'explanation': '💡 Explicación',
+                'select-answer': 'Por favor selecciona una respuesta antes de continuar.',
+                'sidebar-management': 'Gestión',
+                'sidebar-lessons': 'Lecciones',
+                'sidebar-achievements': 'Logros',
+                'sidebar-goals': 'Metas',
+                'sidebar-help': 'Ayuda',
+                'sidebar-assistant': 'Asistente'
+            },
+            en: {
+                'quiz-title': '💰 Quiz: Smart Savings',
+                'quiz-subtitle': '🎯 Test your knowledge about basic personal finance concepts',
+                'quiz-based-on': 'Based on "Basic Concepts of Personal Finances" video',
+                'lesson-completed-title': '🎉 Lesson Completed!',
+                'lesson-completed-message': 'You have successfully completed the Smart Savings lesson. Now test your knowledge with this quiz!',
+                'quiz-progress': 'Quiz Progress',
+                'question-of': 'Question',
+                'of': 'of',
+                'previous': 'Previous',
+                'next': 'Next',
+                'finish': 'Finish',
+                'quiz-completed': '🎉 Quiz Completed!',
+                'score': 'Score',
+                'badge-earned': '🏆 Smart Savings Badge',
+                'excellent': 'Great job! You have shown good knowledge about basic personal finance concepts.',
+                'back-to-lesson': 'Back to Lesson',
+                'continue': 'Continue',
+                'explanation': '💡 Explanation',
+                'select-answer': 'Please select an answer before continuing.',
+                'sidebar-management': 'Management',
+                'sidebar-lessons': 'Lessons',
+                'sidebar-achievements': 'Achievements',
+                'sidebar-goals': 'Goals',
+                'sidebar-help': 'Help',
+                'sidebar-assistant': 'Assistant'
+            }
+        };
+
+        // Función para cambiar tema
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const currentTheme = html.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-bs-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            if (newTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
+            }
+        }
+
+        // Función para mostrar pregunta
+        function showQuestion() {
+            if (currentQuestion >= quizQuestions.length) {
+                showResults();
+                return;
+            }
+
+            const question = quizQuestions[currentQuestion];
+            const currentLang = localStorage.getItem('finx_lang') || 'es';
+            
+            // Actualizar número de pregunta
+            document.getElementById('questionNumber').textContent = `${translations[currentLang]['question-of']} ${currentQuestion + 1} ${translations[currentLang]['of']} ${quizQuestions.length}`;
+            document.getElementById('progressText').textContent = `${currentQuestion}/${quizQuestions.length}`;
+            
+            // Actualizar barra de progreso
+            const progressPercent = (currentQuestion / quizQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = `${progressPercent}%`;
+            
+            // Mostrar pregunta
+            document.getElementById('questionText').textContent = question.question[currentLang];
+            
+            // Mostrar opciones
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = option[currentLang];
+                button.onclick = () => selectOption(index);
+                optionsContainer.appendChild(button);
+            });
+            
+            // Ocultar explicación
+            document.getElementById('explanationContainer').classList.remove('show');
+            
+            // Actualizar botones de navegación
+            updateNavigationButtons();
+        }
+
+        // Función para seleccionar opción
+        function selectOption(optionIndex) {
+            const buttons = document.querySelectorAll('.option-button');
+            buttons.forEach(button => button.classList.remove('selected'));
+            buttons[optionIndex].classList.add('selected');
+            
+            userAnswers[currentQuestion] = optionIndex;
+            
+            // Mostrar explicación después de seleccionar
+            setTimeout(() => {
+                showExplanation();
+            }, 500);
+        }
+
+        // Función para mostrar explicación
+        function showExplanation() {
+            const question = quizQuestions[currentQuestion];
+            const currentLang = localStorage.getItem('finx_lang') || 'es';
+            const userAnswer = userAnswers[currentQuestion];
+            
+            // Colorear opciones
+            const buttons = document.querySelectorAll('.option-button');
+            buttons.forEach((button, index) => {
+                if (index === question.correct) {
+                    button.classList.add('correct');
+                } else if (index === userAnswer && index !== question.correct) {
+                    button.classList.add('incorrect');
+                }
+            });
+            
+            // Mostrar explicación
+            document.getElementById('explanationText').textContent = question.explanation[currentLang];
+            document.getElementById('explanationContainer').classList.add('show');
+            
+            // Actualizar puntuación
+            if (userAnswer === question.correct) {
+                score++;
+            }
+        }
+
+        // Función para actualizar botones de navegación
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const currentLang = localStorage.getItem('finx_lang') || 'es';
+            
+            if (currentQuestion === 0) {
+                prevBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'block';
+            }
+            
+            if (currentQuestion === quizQuestions.length - 1) {
+                nextBtn.innerHTML = `${translations[currentLang]['finish']} <i class="bi bi-check"></i>`;
+            } else {
+                nextBtn.innerHTML = `${translations[currentLang]['next']} <i class="bi bi-arrow-right"></i>`;
+            }
+        }
+
+        // Función para ir a la siguiente pregunta
+        function nextQuestion() {
+            if (userAnswers[currentQuestion] === undefined) {
+                const currentLang = localStorage.getItem('finx_lang') || 'es';
+                alert(translations[currentLang]['select-answer']);
+                return;
+            }
+            
+            currentQuestion++;
+            showQuestion();
+        }
+
+        // Función para ir a la pregunta anterior
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+
+        // Función para mostrar resultados
+        function showResults() {
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultsContainer').classList.add('show');
+            
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            document.getElementById('scoreNumber').textContent = `${percentage}%`;
+            
+            // Guardar progreso del quiz
+            saveQuizProgress(percentage);
+            
+            // Actualizar texto según idioma
+            const currentLang = localStorage.getItem('finx_lang') || 'es';
+            updateResultsLanguage(currentLang);
+        }        // Función para guardar progreso del quiz
+        function saveQuizProgress(percentage) {
+            const quizProgress = {
+                lesson: 'ahorro_inteligente',
+                score: percentage,
+                completed: true,
+                date: new Date().toISOString(),
+                xpEarned: 75 // 75 XP por completar el quiz
+            };
+            
+            localStorage.setItem('quiz_ahorro_inteligente', JSON.stringify(quizProgress));
+            
+            // Actualizar progreso general
+            let generalProgress = JSON.parse(localStorage.getItem('user_progress') || '{}');
+            if (!generalProgress.xp) generalProgress.xp = 0;
+            if (!generalProgress.completedQuizzes) generalProgress.completedQuizzes = [];
+            if (!generalProgress.unlockedLessons) generalProgress.unlockedLessons = ['ahorro_inteligente']; // Primera lección siempre desbloqueada
+            
+            generalProgress.xp += quizProgress.xpEarned;
+            if (!generalProgress.completedQuizzes.includes('ahorro_inteligente')) {
+                generalProgress.completedQuizzes.push('ahorro_inteligente');
+            }
+            
+            // Verificar si se desbloquea la siguiente lección
+            const MINIMUM_PASSING_SCORE = 60; // Nota mínima requerida (60%)
+            if (percentage >= MINIMUM_PASSING_SCORE) {
+                unlockNextLesson('ahorro_inteligente', generalProgress);
+            }
+            
+            localStorage.setItem('user_progress', JSON.stringify(generalProgress));
+        }
+        
+        // Función para desbloquear la siguiente lección
+        function unlockNextLesson(currentLesson, progress) {
+            const lessonSequence = {
+                'ahorro_inteligente': 'savings_ninja',
+                'savings_ninja': 'wealth_wizard',
+                'wealth_wizard': null // Última lección
+            };
+            
+            const nextLesson = lessonSequence[currentLesson];
+            if (nextLesson && !progress.unlockedLessons.includes(nextLesson)) {
+                progress.unlockedLessons.push(nextLesson);
+                
+                // Mostrar notificación de nueva lección desbloqueada
+                showUnlockNotification(nextLesson);
+            }
+        }
+        
+        // Función para mostrar notificación de lección desbloqueada
+        function showUnlockNotification(lessonId) {
+            const currentLang = localStorage.getItem('finx_lang') || 'es';
+            const lessonNames = {
+                'savings_ninja': {
+                    es: 'Savings Ninja',
+                    en: 'Savings Ninja'
+                },
+                'wealth_wizard': {
+                    es: 'Investment Wizard',
+                    en: 'Investment Wizard'
+                }
+            };
+            
+            const lessonName = lessonNames[lessonId]?.[currentLang] || lessonId;
+            
+            const notification = document.createElement('div');
+            notification.className = 'alert alert-info position-fixed top-0 start-50 translate-middle-x mt-4 shadow';
+            notification.style.zIndex = '2001';
+            notification.style.minWidth = '350px';
+            notification.style.background = 'linear-gradient(135deg, #10b981, #06b6d4)';
+            notification.style.color = 'white';
+            notification.style.border = 'none';
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <i class="bi bi-unlock-fill" style="font-size: 1.8rem;"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1">🎉 ${currentLang === 'es' ? '¡Nueva Lección Desbloqueada!' : 'New Lesson Unlocked!'}</h6>
+                        <p class="mb-0 small">${currentLang === 'es' ? 'Has desbloqueado' : 'You have unlocked'}: <strong>${lessonName}</strong></p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animar entrada
+            setTimeout(() => {
+                notification.style.transform = 'translateX(-50%) translateY(10px)';
+                notification.style.opacity = '1';
+            }, 100);
+            
+            // Remover notificación después de 6 segundos
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 6000);
+        }
+
+        // Función para traducir la página
+        function setLanguage(lang) {
+            localStorage.setItem('finx_lang', lang);
+            
+            // Actualizar elementos de la página
+            document.querySelector('.quiz-hero h1').textContent = translations[lang]['quiz-title'];
+            document.querySelector('.quiz-hero .lead').textContent = translations[lang]['quiz-subtitle'];
+            document.querySelector('.quiz-hero small').textContent = translations[lang]['quiz-based-on'];
+            
+            // Actualizar sidebar
+            const sidebarLinks = document.querySelectorAll('.sidebar-nav a span');
+            sidebarLinks[0].textContent = translations[lang]['sidebar-management'];
+            sidebarLinks[1].textContent = translations[lang]['sidebar-lessons'];
+            sidebarLinks[2].textContent = translations[lang]['sidebar-achievements'];
+            sidebarLinks[3].textContent = translations[lang]['sidebar-goals'];
+            sidebarLinks[4].textContent = translations[lang]['sidebar-help'];
+            sidebarLinks[5].textContent = translations[lang]['sidebar-assistant'];
+            
+            // Actualizar pregunta actual si está visible
+            if (currentQuestion < quizQuestions.length) {
+                showQuestion();
+            }
+            
+            // Actualizar resultados si están visibles
+            if (document.getElementById('resultsContainer').classList.contains('show')) {
+                updateResultsLanguage(lang);
+            }
+        }
+
+        // Función para actualizar idioma de resultados
+        function updateResultsLanguage(lang) {
+            document.querySelector('#resultsContainer h2').textContent = translations[lang]['quiz-completed'];
+            document.querySelector('#resultsContainer .score-text').textContent = translations[lang]['score'];
+            document.getElementById('badgeEarned').textContent = translations[lang]['badge-earned'];
+            document.querySelector('#resultsContainer .lead').textContent = translations[lang]['excellent'];
+            document.querySelectorAll('#resultsContainer .nav-button')[0].innerHTML = `<i class="bi bi-arrow-left"></i> ${translations[lang]['back-to-lesson']}`;
+            document.querySelectorAll('#resultsContainer .nav-button')[1].innerHTML = `${translations[lang]['continue']} <i class="bi bi-arrow-right"></i>`;
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar tema
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            
+            const icon = document.getElementById('themeIcon');
+            if (savedTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
+            }
+            
+            // Event listeners para botones
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            document.getElementById('langToggle').addEventListener('click', function() {
+                const current = localStorage.getItem('finx_lang') || 'es';
+                const next = current === 'es' ? 'en' : 'es';
+                setLanguage(next);
+            });
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+            document.getElementById('prevBtn').addEventListener('click', prevQuestion);
+            
+            // Verificar si viene de una lección completada
+            const urlParams = new URLSearchParams(window.location.search);
+            const completedLesson = urlParams.get('lesson');
+            
+            if (completedLesson === 'ahorro_inteligente') {
+                document.getElementById('lessonCompletedMessage').classList.remove('d-none');
+                
+                // Animar la aparición del mensaje
+                setTimeout(() => {
+                    const message = document.getElementById('lessonCompletedMessage');
+                    message.style.opacity = '0';
+                    message.style.transform = 'translateY(-20px)';
+                    message.style.transition = 'all 0.5s ease';
+                    setTimeout(() => {
+                        message.style.opacity = '1';
+                        message.style.transform = 'translateY(0)';
+                    }, 100);
+                }, 500);
+            }
+            
+            // Inicializar idioma
+            const lang = localStorage.getItem('finx_lang') || 'es';
+            setLanguage(lang);
+            
+            // Mostrar primera pregunta
+            showQuestion();
+        });
+    </script>
+</body>
+</html>

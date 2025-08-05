@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finx - Quiz: Savings Ninja</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../styles.css">
+    <!-- Shared Sidebar CSS -->
+    <link rel="stylesheet" href="shared-sidebar.css">
+    <style>
+        /* Variables de colores - Ninja theme */
+        :root {
+            --fun-primary: #2563eb;
+            --fun-secondary: #1d4ed8;
+            --fun-accent: #06b6d4;
+            --fun-success: #10b981;
+            --fun-warning: #f59e0b;
+            --fun-danger: #ef4444;
+            --ninja-primary: #1e40af;
+            --ninja-secondary: #3730a3;
+        }
+
+        /* Estilos específicos para el quiz */
+        .quiz-hero {
+            background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
+            border-radius: 2.2rem;
+            box-shadow: 0 20px 40px rgba(30, 64, 175, 0.3);
+            padding: 3.5rem 2.5rem;
+            margin-bottom: 3rem;
+            color: white;
+            text-align: center;
+        }
+
+        [data-bs-theme="dark"] .quiz-hero {
+            background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+        }
+
+        .quiz-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+        }
+
+        .quiz-hero .lead {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-hero small {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+        }
+
+        /* Contenedor del quiz */
+        .quiz-container {
+            background: var(--card-bg);
+            border-radius: 2rem;
+            box-shadow: var(--card-shadow);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 2px solid var(--card-border);
+        }
+
+        /* Barra de progreso */
+        .quiz-progress-container {
+            margin-bottom: 2rem;
+        }
+
+        .quiz-progress {
+            height: 12px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--ninja-primary), var(--ninja-secondary));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* Pregunta */
+        .question-container {
+            margin-bottom: 2rem;
+        }
+
+        .question-number {
+            color: var(--ninja-primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        /* Opciones */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option-button {
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 1rem;
+            padding: 1.2rem 1.5rem;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .option-button:hover {
+            border-color: var(--ninja-primary);
+            background: rgba(30, 64, 175, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
+        }
+
+        .option-button.selected {
+            border-color: var(--ninja-primary);
+            background: rgba(30, 64, 175, 0.1);
+            color: var(--ninja-primary);
+        }
+
+        .option-button.correct {
+            border-color: var(--fun-success);
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--fun-success);
+        }
+
+        .option-button.incorrect {
+            border-color: var(--fun-danger);
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--fun-danger);
+        }
+
+        /* Explicación */
+        .explanation-container {
+            background: rgba(30, 64, 175, 0.05);
+            border: 1px solid rgba(30, 64, 175, 0.2);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .explanation-container.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .explanation-title {
+            color: var(--ninja-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .explanation-text {
+            color: var(--text-color);
+            line-height: 1.5;
+        }
+
+        /* Navegación */
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            padding: 0.8rem 2rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button.primary {
+            background: linear-gradient(135deg, var(--ninja-primary), var(--ninja-secondary));
+            color: white;
+        }
+
+        .nav-button.secondary {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 2px solid var(--card-border);
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+        }
+
+        /* Resultados */
+        .results-container {
+            text-align: center;
+            display: none;
+        }
+
+        .results-container.show {
+            display: block;
+            animation: fadeInUp 0.7s ease;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--fun-success), var(--fun-accent));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem auto;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.3);
+        }
+
+        .score-number {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-text {
+            font-size: 1.1rem;
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .quiz-container {
+                padding: 1.5rem;
+            }
+            
+            .question-text {
+                font-size: 1.2rem;
+            }
+            
+            .score-circle {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .score-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar trivia-navbar">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div style="flex:1; display:flex; align-items:center;">
+                    <a class="navbar-brand trivia-navbar-brand" href="../index.html">
+                        <i class="bi bi-currency-exchange me-2"></i>
+                        Finx
+                    </a>
+                </div>
+                <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
+                    <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
+                        <i class="bi bi-translate"></i>
+                    </button>
+                    <button class="trivia-theme-toggle" id="themeToggle" title="Change theme">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <nav class="leccion-sidebar">
+        <div class="container-fluid">
+            <div class="sidebar-logo-container text-center mb-3">
+                <img src="../images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
+                <img src="../images/modo-oscuro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-dark">
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="../dashboard.html"><i class="bi bi-house-door-fill"></i><span>Gestión</span></a></li>
+                <li><a href="trivia.html" class="active"><i class="bi bi-book-fill"></i><span>Lecciones</span></a></li>
+                <li><a href="logros.html"><i class="bi bi-trophy-fill"></i><span>Logros</span></a></li>
+                <li><a href="../goals.html"><i class="bi bi-flag-fill"></i><span>Metas</span></a></li>
+                <li><a href="../helpcenter2.html"><i class="bi bi-question-circle-fill"></i><span>Ayuda</span></a></li>
+                <li><a href="../chatbot.html"><i class="bi bi-robot"></i><span>Asistente</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="quiz-hero">
+                <h1>🥷 Quiz: Savings Ninja</h1>
+                <p class="lead">🎯 Domina las técnicas ninja del ahorro inteligente</p>
+                <small>Basado en el video "Understanding Savings: A Guide for Young People"</small>
+            </section>
+
+            <!-- Lesson Completed Message -->
+            <div id="lessonCompletedMessage" class="alert alert-success d-none mb-4" style="border-radius: 1.5rem; border: 2px solid var(--fun-success); background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));">
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 2rem;"></i>
+                    </div>
+                    <div>
+                        <h5 class="alert-heading mb-1" id="lessonCompletedTitle">🎉 ¡Lección Completada!</h5>
+                        <p class="mb-0" id="lessonCompletedText">Has completado exitosamente la lección <span id="completedLessonName" class="fw-bold">Savings Ninja</span>. ¡Ahora pon a prueba tus conocimientos con este quiz!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenedor del Quiz -->
+            <div class="quiz-container" id="quizContainer">
+                <!-- Barra de progreso -->
+                <div class="quiz-progress-container">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted">Progreso del Quiz</span>
+                        <span class="text-primary fw-bold" id="progressText">0/8</span>
+                    </div>
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <!-- Pregunta -->
+                <div class="question-container" id="questionContainer">
+                    <div class="question-number" id="questionNumber">Pregunta 1 de 8</div>
+                    <div class="question-text" id="questionText"></div>
+                    
+                    <!-- Opciones -->
+                    <div class="options-container" id="optionsContainer"></div>
+                    
+                    <!-- Explicación -->
+                    <div class="explanation-container" id="explanationContainer">
+                        <div class="explanation-title">💡 Explicación</div>
+                        <div class="explanation-text" id="explanationText"></div>
+                    </div>
+                </div>
+
+                <!-- Navegación -->
+                <div class="quiz-navigation">
+                    <button class="nav-button secondary" id="prevBtn" style="display: none;">
+                        <i class="bi bi-arrow-left"></i> Anterior
+                    </button>
+                    <button class="nav-button primary" id="nextBtn">
+                        Siguiente <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resultados -->
+            <div class="results-container" id="resultsContainer">
+                <h2>🎉 ¡Quiz Completado!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="scoreNumber">0%</div>
+                    <div class="score-text">Puntuación</div>
+                </div>
+                <h3 id="badgeEarned">🥷 Badge Savings Ninja</h3>
+                <p class="lead">¡Excelente trabajo! Has dominado las técnicas ninja del ahorro inteligente.</p>
+                <div class="quiz-navigation">
+                    <a href="savings_master.html" class="nav-button secondary">
+                        <i class="bi bi-arrow-left"></i> Volver a la Lección
+                    </a>
+                    <a href="trivia.html" class="nav-button primary">
+                        Continuar <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Variables globales del quiz
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+        let quizCompleted = false;
+
+        // Base de datos de preguntas específicas para Savings Ninja
+        const quizQuestions = [
+            {
+                question: {
+                    es: "¿Cuál es la regla 50/30/20 para gestionar el dinero?",
+                    en: "What is the 50/30/20 rule for managing money?"
+                },
+                options: [
+                    { es: "50% gastos, 30% ahorros, 20% inversiones", en: "50% expenses, 30% savings, 20% investments" },
+                    { es: "50% necesidades, 30% deseos, 20% ahorros", en: "50% needs, 30% wants, 20% savings" },
+                    { es: "50% inversiones, 30% gastos, 20% emergencias", en: "50% investments, 30% expenses, 20% emergencies" },
+                    { es: "50% diversión, 30% comida, 20% ropa", en: "50% fun, 30% food, 20% clothes" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "La regla 50/30/20 sugiere destinar 50% a necesidades básicas, 30% a deseos personales y 20% a ahorros e inversiones.",
+                    en: "The 50/30/20 rule suggests allocating 50% to basic needs, 30% to personal wants, and 20% to savings and investments."
+                }
+            },
+            {
+                question: {
+                    es: "¿Cuál es la mejor estrategia para automatizar tus ahorros?",
+                    en: "What is the best strategy to automate your savings?"
+                },
+                options: [
+                    { es: "Ahorrar solo cuando te acuerdes", en: "Save only when you remember" },
+                    { es: "Configurar transferencias automáticas a una cuenta de ahorros", en: "Set up automatic transfers to a savings account" },
+                    { es: "Ahorrar solo cuando recibas dinero extra", en: "Save only when you receive extra money" },
+                    { es: "Esperar al final del mes para ver qué sobra", en: "Wait until the end of the month to see what's left" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "Las transferencias automáticas aseguran que ahorres de manera consistente sin depender de la disciplina manual.",
+                    en: "Automatic transfers ensure you save consistently without relying on manual discipline."
+                }
+            },
+            {
+                question: {
+                    es: "¿Cuántos meses de gastos debería cubrir tu fondo de emergencia?",
+                    en: "How many months of expenses should your emergency fund cover?"
+                },
+                options: [
+                    { es: "1 mes", en: "1 month" },
+                    { es: "3-6 meses", en: "3-6 months" },
+                    { es: "1 año", en: "1 year" },
+                    { es: "No es necesario tener fondo de emergencia", en: "An emergency fund is not necessary" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "Los expertos recomiendan tener entre 3 y 6 meses de gastos en tu fondo de emergencia para estar preparado ante imprevistos.",
+                    en: "Experts recommend having 3 to 6 months of expenses in your emergency fund to be prepared for unexpected events."
+                }
+            },
+            {
+                question: {
+                    es: "¿Cuál es la diferencia entre ahorrar e invertir?",
+                    en: "What is the difference between saving and investing?"
+                },
+                options: [
+                    { es: "No hay diferencia", en: "There is no difference" },
+                    { es: "Ahorrar es para el corto plazo y baja rentabilidad, invertir es para el largo plazo y mayor rentabilidad", en: "Saving is for short term and low returns, investing is for long term and higher returns" },
+                    { es: "Ahorrar es más arriesgado que invertir", en: "Saving is riskier than investing" },
+                    { es: "Solo los ricos pueden invertir", en: "Only rich people can invest" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "Ahorrar preserva el dinero con bajo riesgo y rendimientos menores, mientras que invertir busca hacer crecer el dinero con mayor riesgo y potencial de rendimientos mayores.",
+                    en: "Saving preserves money with low risk and lower returns, while investing seeks to grow money with higher risk and potential for greater returns."
+                }
+            },
+            {
+                question: {
+                    es: "¿Qué es el interés compuesto y por qué es poderoso para el ahorro?",
+                    en: "What is compound interest and why is it powerful for saving?"
+                },
+                options: [
+                    { es: "Interés que se paga una sola vez", en: "Interest that is paid only once" },
+                    { es: "Interés que se gana sobre el capital inicial más los intereses acumulados", en: "Interest earned on the initial capital plus accumulated interest" },
+                    { es: "Un tipo de préstamo bancario", en: "A type of bank loan" },
+                    { es: "Solo funciona con grandes cantidades de dinero", en: "Only works with large amounts of money" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "El interés compuesto permite que tu dinero crezca exponencialmente porque ganas intereses sobre el capital inicial y sobre los intereses previamente ganados.",
+                    en: "Compound interest allows your money to grow exponentially because you earn interest on the initial capital and on previously earned interest."
+                }
+            },
+            {
+                question: {
+                    es: "¿Cuál es una buena estrategia para reducir gastos innecesarios?",
+                    en: "What is a good strategy to reduce unnecessary expenses?"
+                },
+                options: [
+                    { es: "Eliminar todos los gastos de entretenimiento", en: "Eliminate all entertainment expenses" },
+                    { es: "Aplicar la regla de las 24 horas antes de comprar algo no esencial", en: "Apply the 24-hour rule before buying something non-essential" },
+                    { es: "Usar solo efectivo para todo", en: "Use only cash for everything" },
+                    { es: "Nunca salir a comer fuera", en: "Never eat out" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "La regla de las 24 horas te da tiempo para reflexionar si realmente necesitas una compra, evitando compras impulsivas.",
+                    en: "The 24-hour rule gives you time to reflect on whether you really need a purchase, avoiding impulse buying."
+                }
+            },
+            {
+                question: {
+                    es: "¿Qué tipo de cuenta es mejor para un fondo de emergencia?",
+                    en: "What type of account is best for an emergency fund?"
+                },
+                options: [
+                    { es: "Cuenta corriente sin intereses", en: "Checking account with no interest" },
+                    { es: "Cuenta de ahorros de alto rendimiento con fácil acceso", en: "High-yield savings account with easy access" },
+                    { es: "Inversiones en acciones", en: "Stock investments" },
+                    { es: "Criptomonedas", en: "Cryptocurrencies" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "Una cuenta de ahorros de alto rendimiento ofrece mejor rentabilidad que una cuenta corriente, mantiene la liquidez necesaria y tiene menor riesgo que las inversiones.",
+                    en: "A high-yield savings account offers better returns than a checking account, maintains necessary liquidity, and has lower risk than investments."
+                }
+            },
+            {
+                question: {
+                    es: "¿Cuál es la mejor edad para empezar a ahorrar?",
+                    en: "What is the best age to start saving?"
+                },
+                options: [
+                    { es: "Solo cuando tengas un trabajo de tiempo completo", en: "Only when you have a full-time job" },
+                    { es: "Lo más pronto posible, sin importar la edad", en: "As soon as possible, regardless of age" },
+                    { es: "Después de los 30 años", en: "After age 30" },
+                    { es: "Solo cuando tengas mucho dinero", en: "Only when you have a lot of money" }
+                ],
+                correct: 1,
+                explanation: {
+                    es: "Empezar a ahorrar lo más pronto posible, incluso con pequeñas cantidades, permite aprovechar el poder del interés compuesto durante más tiempo.",
+                    en: "Starting to save as soon as possible, even with small amounts, allows you to take advantage of the power of compound interest for longer."
+                }
+            }
+        ];
+
+        // Traducciones
+        const translations = {
+            es: {
+                'quiz-title': '🥷 Quiz: Savings Ninja',
+                'quiz-subtitle': '🎯 Domina las técnicas ninja del ahorro inteligente',
+                'quiz-based-on': 'Basado en el video "Understanding Savings: A Guide for Young People"',
+                'lesson-completed-title': '🎉 ¡Lección Completada!',
+                'lesson-completed-message': 'Has completado exitosamente la lección Savings Ninja. ¡Ahora pon a prueba tus conocimientos con este quiz!',
+                'quiz-progress': 'Progreso del Quiz',
+                'question-of': 'Pregunta',
+                'of': 'de',
+                'previous': 'Anterior',
+                'next': 'Siguiente',
+                'finish': 'Finalizar',
+                'quiz-completed': '🎉 ¡Quiz Completado!',
+                'score': 'Puntuación',
+                'badge-earned': '🥷 Badge Savings Ninja',
+                'excellent': '¡Excelente trabajo! Has dominado las técnicas ninja del ahorro inteligente.',
+                'back-to-lesson': 'Volver a la Lección',
+                'continue': 'Continuar',
+                'explanation': '💡 Explicación',
+                'select-answer': 'Por favor selecciona una respuesta antes de continuar.',
+                'sidebar-management': 'Gestión',
+                'sidebar-lessons': 'Lecciones',
+                'sidebar-achievements': 'Logros',
+                'sidebar-goals': 'Metas',
+                'sidebar-help': 'Ayuda',
+                'sidebar-assistant': 'Asistente'
+            },
+            en: {
+                'quiz-title': '🥷 Quiz: Savings Ninja',
+                'quiz-subtitle': '🎯 Master the ninja techniques of smart saving',
+                'quiz-based-on': 'Based on "Understanding Savings: A Guide for Young People" video',
+                'lesson-completed-title': '🎉 Lesson Completed!',
+                'lesson-completed-message': 'You have successfully completed the Savings Ninja lesson. Now test your knowledge with this quiz!',
+                'quiz-progress': 'Quiz Progress',
+                'question-of': 'Question',
+                'of': 'of',
+                'previous': 'Previous',
+                'next': 'Next',
+                'finish': 'Finish',
+                'quiz-completed': '🎉 Quiz Completed!',
+                'score': 'Score',
+                'badge-earned': '🥷 Savings Ninja Badge',
+                'excellent': 'Great job! You have mastered the ninja techniques of smart saving.',
+                'back-to-lesson': 'Back to Lesson',
+                'continue': 'Continue',
+                'explanation': '💡 Explanation',
+                'select-answer': 'Please select an answer before continuing.',
+                'sidebar-management': 'Management',
+                'sidebar-lessons': 'Lessons',
+                'sidebar-achievements': 'Achievements',
+                'sidebar-goals': 'Goals',
+                'sidebar-help': 'Help',
+                'sidebar-assistant': 'Assistant'
+            }
+        };
+
+        // Función para cambiar tema
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const currentTheme = html.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-bs-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            if (newTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
+            }
+        }
+
+        // Función para mostrar pregunta
+        function showQuestion() {
+            if (currentQuestion >= quizQuestions.length) {
+                showResults();
+                return;
+            }
+
+            const question = quizQuestions[currentQuestion];
+            const currentLang = localStorage.getItem('finx_lang') || 'es';
+            
+            // Actualizar número de pregunta
+            document.getElementById('questionNumber').textContent = `${translations[currentLang]['question-of']} ${currentQuestion + 1} ${translations[currentLang]['of']} ${quizQuestions.length}`;
+            document.getElementById('progressText').textContent = `${currentQuestion}/${quizQuestions.length}`;
+            
+            // Actualizar barra de progreso
+            const progressPercent = (currentQuestion / quizQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = `${progressPercent}%`;
+            
+            // Mostrar pregunta
+            document.getElementById('questionText').textContent = question.question[currentLang];
+            
+            // Mostrar opciones
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = option[currentLang];
+                button.onclick = () => selectOption(index);
+                optionsContainer.appendChild(button);
+            });
+            
+            // Ocultar explicación
+            document.getElementById('explanationContainer').classList.remove('show');
+            
+            // Actualizar botones de navegación
+            updateNavigationButtons();
+        }
+
+        // Función para seleccionar opción
+        function selectOption(optionIndex) {
+            const buttons = document.querySelectorAll('.option-button');
+            buttons.forEach(button => button.classList.remove('selected'));
+            buttons[optionIndex].classList.add('selected');
+            
+            userAnswers[currentQuestion] = optionIndex;
+            
+            // Mostrar explicación después de seleccionar
+            setTimeout(() => {
+                showExplanation();
+            }, 500);
+        }
+
+        // Función para mostrar explicación
+        function showExplanation() {
+            const question = quizQuestions[currentQuestion];
+            const currentLang = localStorage.getItem('finx_lang') || 'es';
+            const userAnswer = userAnswers[currentQuestion];
+            
+            // Colorear opciones
+            const buttons = document.querySelectorAll('.option-button');
+            buttons.forEach((button, index) => {
+                if (index === question.correct) {
+                    button.classList.add('correct');
+                } else if (index === userAnswer && index !== question.correct) {
+                    button.classList.add('incorrect');
+                }
+            });
+            
+            // Mostrar explicación
+            document.getElementById('explanationText').textContent = question.explanation[currentLang];
+            document.getElementById('explanationContainer').classList.add('show');
+            
+            // Actualizar puntuación
+            if (userAnswer === question.correct) {
+                score++;
+            }
+        }
+
+        // Función para actualizar botones de navegación
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const currentLang = localStorage.getItem('finx_lang') || 'es';
+            
+            if (currentQuestion === 0) {
+                prevBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'block';
+            }
+            
+            if (currentQuestion === quizQuestions.length - 1) {
+                nextBtn.innerHTML = `${translations[currentLang]['finish']} <i class="bi bi-check"></i>`;
+            } else {
+                nextBtn.innerHTML = `${translations[currentLang]['next']} <i class="bi bi-arrow-right"></i>`;
+            }
+        }
+
+        // Función para ir a la siguiente pregunta
+        function nextQuestion() {
+            if (userAnswers[currentQuestion] === undefined) {
+                const currentLang = localStorage.getItem('finx_lang') || 'es';
+                alert(translations[currentLang]['select-answer']);
+                return;
+            }
+            
+            currentQuestion++;
+            showQuestion();
+        }
+
+        // Función para ir a la pregunta anterior
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+
+        // Función para mostrar resultados
+        function showResults() {
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultsContainer').classList.add('show');
+            
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            document.getElementById('scoreNumber').textContent = `${percentage}%`;
+            
+            // Guardar progreso del quiz
+            saveQuizProgress(percentage);
+            
+            // Actualizar texto según idioma
+            const currentLang = localStorage.getItem('finx_lang') || 'es';
+            updateResultsLanguage(currentLang);
+        }        // Función para guardar progreso del quiz
+        function saveQuizProgress(percentage) {
+            const quizProgress = {
+                lesson: 'savings_ninja',
+                score: percentage,
+                completed: true,
+                date: new Date().toISOString(),
+                xpEarned: 75 // 75 XP por completar el quiz
+            };
+            
+            localStorage.setItem('quiz_savings_ninja', JSON.stringify(quizProgress));
+            
+            // Actualizar progreso general
+            let generalProgress = JSON.parse(localStorage.getItem('user_progress') || '{}');
+            if (!generalProgress.xp) generalProgress.xp = 0;
+            if (!generalProgress.completedQuizzes) generalProgress.completedQuizzes = [];
+            if (!generalProgress.unlockedLessons) generalProgress.unlockedLessons = ['ahorro_inteligente']; // Primera lección siempre desbloqueada
+            
+            generalProgress.xp += quizProgress.xpEarned;
+            if (!generalProgress.completedQuizzes.includes('savings_ninja')) {
+                generalProgress.completedQuizzes.push('savings_ninja');
+            }
+            
+            // Verificar si se desbloquea la siguiente lección
+            const MINIMUM_PASSING_SCORE = 60; // Nota mínima requerida (60%)
+            if (percentage >= MINIMUM_PASSING_SCORE) {
+                unlockNextLesson('savings_ninja', generalProgress);
+            }
+            
+            localStorage.setItem('user_progress', JSON.stringify(generalProgress));
+        }
+        
+        // Función para desbloquear la siguiente lección
+        function unlockNextLesson(currentLesson, progress) {
+            const lessonSequence = {
+                'ahorro_inteligente': 'savings_ninja',
+                'savings_ninja': 'wealth_wizard',
+                'wealth_wizard': null // Última lección
+            };
+            
+            const nextLesson = lessonSequence[currentLesson];
+            if (nextLesson && !progress.unlockedLessons.includes(nextLesson)) {
+                progress.unlockedLessons.push(nextLesson);
+                
+                // Mostrar notificación de nueva lección desbloqueada
+                showUnlockNotification(nextLesson);
+            }
+        }
+        
+        // Función para mostrar notificación de lección desbloqueada
+        function showUnlockNotification(lessonId) {
+            const currentLang = localStorage.getItem('finx_lang') || 'es';
+            const lessonNames = {
+                'savings_ninja': {
+                    es: 'Savings Ninja',
+                    en: 'Savings Ninja'
+                },
+                'wealth_wizard': {
+                    es: 'Investment Wizard',
+                    en: 'Investment Wizard'
+                }
+            };
+            
+            const lessonName = lessonNames[lessonId]?.[currentLang] || lessonId;
+            
+            const notification = document.createElement('div');
+            notification.className = 'alert alert-info position-fixed top-0 start-50 translate-middle-x mt-4 shadow';
+            notification.style.zIndex = '2001';
+            notification.style.minWidth = '350px';
+            notification.style.background = 'linear-gradient(135deg, #10b981, #06b6d4)';
+            notification.style.color = 'white';
+            notification.style.border = 'none';
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <i class="bi bi-unlock-fill" style="font-size: 1.8rem;"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1">🎉 ${currentLang === 'es' ? '¡Nueva Lección Desbloqueada!' : 'New Lesson Unlocked!'}</h6>
+                        <p class="mb-0 small">${currentLang === 'es' ? 'Has desbloqueado' : 'You have unlocked'}: <strong>${lessonName}</strong></p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animar entrada
+            setTimeout(() => {
+                notification.style.transform = 'translateX(-50%) translateY(10px)';
+                notification.style.opacity = '1';
+            }, 100);
+            
+            // Remover notificación después de 6 segundos
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 6000);
+        }
+
+        // Función para traducir la página
+        function setLanguage(lang) {
+            localStorage.setItem('finx_lang', lang);
+            
+            // Actualizar elementos de la página
+            document.querySelector('.quiz-hero h1').textContent = translations[lang]['quiz-title'];
+            document.querySelector('.quiz-hero .lead').textContent = translations[lang]['quiz-subtitle'];
+            document.querySelector('.quiz-hero small').textContent = translations[lang]['quiz-based-on'];
+            
+            // Actualizar sidebar
+            const sidebarLinks = document.querySelectorAll('.sidebar-nav a span');
+            sidebarLinks[0].textContent = translations[lang]['sidebar-management'];
+            sidebarLinks[1].textContent = translations[lang]['sidebar-lessons'];
+            sidebarLinks[2].textContent = translations[lang]['sidebar-achievements'];
+            sidebarLinks[3].textContent = translations[lang]['sidebar-goals'];
+            sidebarLinks[4].textContent = translations[lang]['sidebar-help'];
+            sidebarLinks[5].textContent = translations[lang]['sidebar-assistant'];
+            
+            // Actualizar pregunta actual si está visible
+            if (currentQuestion < quizQuestions.length) {
+                showQuestion();
+            }
+            
+            // Actualizar resultados si están visibles
+            if (document.getElementById('resultsContainer').classList.contains('show')) {
+                updateResultsLanguage(lang);
+            }
+        }
+
+        // Función para actualizar idioma de resultados
+        function updateResultsLanguage(lang) {
+            document.querySelector('#resultsContainer h2').textContent = translations[lang]['quiz-completed'];
+            document.querySelector('#resultsContainer .score-text').textContent = translations[lang]['score'];
+            document.getElementById('badgeEarned').textContent = translations[lang]['badge-earned'];
+            document.querySelector('#resultsContainer .lead').textContent = translations[lang]['excellent'];
+            document.querySelectorAll('#resultsContainer .nav-button')[0].innerHTML = `<i class="bi bi-arrow-left"></i> ${translations[lang]['back-to-lesson']}`;
+            document.querySelectorAll('#resultsContainer .nav-button')[1].innerHTML = `${translations[lang]['continue']} <i class="bi bi-arrow-right"></i>`;
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar tema
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            
+            const icon = document.getElementById('themeIcon');
+            if (savedTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
+            }
+            
+            // Event listeners para botones
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            document.getElementById('langToggle').addEventListener('click', function() {
+                const current = localStorage.getItem('finx_lang') || 'es';
+                const next = current === 'es' ? 'en' : 'es';
+                setLanguage(next);
+            });
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+            document.getElementById('prevBtn').addEventListener('click', prevQuestion);
+            
+            // Verificar si viene de una lección completada
+            const urlParams = new URLSearchParams(window.location.search);
+            const completedLesson = urlParams.get('lesson');
+            
+            if (completedLesson === 'savings_ninja') {
+                document.getElementById('lessonCompletedMessage').classList.remove('d-none');
+                
+                // Animar la aparición del mensaje
+                setTimeout(() => {
+                    const message = document.getElementById('lessonCompletedMessage');
+                    message.style.opacity = '0';
+                    message.style.transform = 'translateY(-20px)';
+                    message.style.transition = 'all 0.5s ease';
+                    setTimeout(() => {
+                        message.style.opacity = '1';
+                        message.style.transform = 'translateY(0)';
+                    }, 100);
+                }, 500);
+            }
+            
+            // Inicializar idioma
+            const lang = localStorage.getItem('finx_lang') || 'es';
+            setLanguage(lang);
+            
+            // Mostrar primera pregunta
+            showQuestion();
+        });
+    </script>
+</body>
+</html>

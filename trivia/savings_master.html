@@ -443,9 +443,7 @@
             setTimeout(() => {
                 notification.remove();
             }, 5000);
-        }
-
-        // Función para marcar la lección como completada
+        }        // Función para marcar la lección como completada
         function markLessonComplete() {
             saveLessonProgress();
             showProgressNotification();
@@ -456,10 +454,9 @@
             btn.classList.remove('btn-primary');
             btn.classList.add('btn-success');
             btn.disabled = true;
-            
-            // Actualizar las estadísticas en la página
+              // Redirigir al quiz después de un breve retraso
             setTimeout(() => {
-                location.reload();
+                window.location.href = 'quiz_savings_ninja.html?lesson=savings_ninja';
             }, 2000);
         }
 

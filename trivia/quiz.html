@@ -835,15 +835,25 @@
 
     <!-- Contenido principal -->
     <main class="main-content">
-        <div class="container-fluid">
-            <!-- Hero Section -->
+        <div class="container-fluid">            <!-- Hero Section -->
             <section class="quiz-hero">
                 <div class="text-center">
                     <h1>🧠 Quiz The Basics</h1>
                     <p class="lead">🎯 Test your knowledge about the video content and earn rewards</p>
                     <small class="text-white-50">Based on "Basic Concepts of Personal Finances" video</small>
                 </div>
-            </section>
+            </section>            <!-- Lesson Completed Message -->
+            <div id="lessonCompletedMessage" class="alert alert-success d-none mb-4" style="border-radius: 1.5rem; border: 2px solid var(--fun-success); background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));">
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 2rem;"></i>
+                    </div>
+                    <div>
+                        <h5 class="alert-heading mb-1" id="lessonCompletedTitle">🎉 ¡Lección Completada!</h5>
+                        <p class="mb-0" id="lessonCompletedText">Has completado exitosamente la lección <span id="completedLessonName" class="fw-bold"></span>. ¡Ahora pon a prueba tus conocimientos con este quiz!</p>
+                    </div>
+                </div>
+            </div>
 
             <!-- Contenedor del Quiz -->
             <div class="quiz-container" id="quizContainer">
@@ -1300,8 +1310,7 @@
             }
         });
 
-        // Inicializar
-        document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar        document.addEventListener('DOMContentLoaded', function() {
             // Inicializar tema
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-bs-theme', savedTheme);
@@ -1315,6 +1324,52 @@
             
             // Event listener para el botón de tema
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+              // Verificar si viene de una lección completada
+            const urlParams = new URLSearchParams(window.location.search);
+            const completedLesson = urlParams.get('lesson');
+            
+            if (completedLesson) {
+                const lessonNames = {
+                    es: {
+                        'ahorro_inteligente': 'Ahorro Inteligente',
+                        'savings_ninja': 'Savings Ninja',
+                        'wealth_wizard': 'Investment Wizard'
+                    },
+                    en: {
+                        'ahorro_inteligente': 'Smart Savings',
+                        'savings_ninja': 'Savings Ninja',
+                        'wealth_wizard': 'Investment Wizard'
+                    }
+                };
+                
+                const lessonCompletedMessage = document.getElementById('lessonCompletedMessage');
+                const completedLessonName = document.getElementById('completedLessonName');
+                const currentLang = localStorage.getItem('finx_lang') || 'es';
+                
+                if (lessonNames[currentLang] && lessonNames[currentLang][completedLesson]) {
+                    // Update lesson completion message with translations
+                    const lessonName = lessonNames[currentLang][completedLesson];
+                    completedLessonName.textContent = lessonName;
+                    
+                    // Update title and message text
+                    document.getElementById('lessonCompletedTitle').textContent = translations[currentLang]['lesson-completed-title'];
+                    document.getElementById('lessonCompletedText').innerHTML = 
+                        translations[currentLang]['lesson-completed-message'].replace('{lesson}', `<span id="completedLessonName" class="fw-bold">${lessonName}</span>`);
+                    
+                    lessonCompletedMessage.classList.remove('d-none');
+                    
+                    // Animar la aparición del mensaje
+                    setTimeout(() => {
+                        lessonCompletedMessage.style.opacity = '0';
+                        lessonCompletedMessage.style.transform = 'translateY(-20px)';
+                        lessonCompletedMessage.style.transition = 'all 0.5s ease';
+                        setTimeout(() => {
+                            lessonCompletedMessage.style.opacity = '1';
+                            lessonCompletedMessage.style.transform = 'translateY(0)';
+                        }, 100);
+                    }, 500);
+                }
+            }
             
             // Mostrar primera pregunta
             showQuestion();
@@ -1363,10 +1418,11 @@ const translations = {
         'financial-assistant': 'Asistente',
         'logout': 'Cerrar sesión',
         'user': 'Usuario',
-        'level': 'Nivel 2',
-        'quiz-hero-title': '🧠 Quiz The Basics',
+        'level': 'Nivel 2',        'quiz-hero-title': '🧠 Quiz The Basics',
         'quiz-hero-lead': '🎯 Pon a prueba tus conocimientos y gana recompensas',
         'quiz-hero-subtitle': 'Basado en el video "Conceptos Básicos de Finanzas Personales"',
+        'lesson-completed-title': '🎉 ¡Lección Completada!',
+        'lesson-completed-message': 'Has completado exitosamente la lección {lesson}. ¡Ahora pon a prueba tus conocimientos con este quiz!',
         'quiz-progress': 'Progreso del Quiz',
         'question-of': 'Pregunta',
         'of': 'de',
@@ -1379,8 +1435,7 @@ const translations = {
         'back-to-path': 'Volver al Camino',
         'continue': 'Continuar',
         'select-answer': 'Por favor selecciona una respuesta antes de continuar.',
-    },
-    en: {
+    },    en: {
         'dashboard': 'Management',
         'lessons': 'Lessons',
         'achievements': 'Achievements',
@@ -1393,6 +1448,8 @@ const translations = {
         'quiz-hero-title': '🧠 The Basics Quiz',
         'quiz-hero-lead': '🎯 Test your knowledge and earn rewards',
         'quiz-hero-subtitle': 'Based on "Basic Concepts of Personal Finances" video',
+        'lesson-completed-title': '🎉 Lesson Completed!',
+        'lesson-completed-message': 'You have successfully completed the lesson {lesson}. Now test your knowledge with this quiz!',
         'quiz-progress': 'Quiz Progress',
         'question-of': 'Question',
         'of': 'of',
@@ -1434,6 +1491,36 @@ function setLanguage(lang) {
     document.querySelector('.quiz-hero h1').textContent = translations[lang]['quiz-hero-title'];
     document.querySelector('.quiz-hero .lead').textContent = translations[lang]['quiz-hero-lead'];
     document.querySelector('.quiz-hero small').textContent = translations[lang]['quiz-hero-subtitle'];
+    
+    // Update lesson completion message if visible
+    const lessonCompletedMessage = document.getElementById('lessonCompletedMessage');
+    if (lessonCompletedMessage && !lessonCompletedMessage.classList.contains('d-none')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const completedLesson = urlParams.get('lesson');
+        
+        if (completedLesson) {
+            const lessonNames = {
+                es: {
+                    'ahorro_inteligente': 'Ahorro Inteligente',
+                    'savings_ninja': 'Savings Ninja',
+                    'wealth_wizard': 'Investment Wizard'
+                },
+                en: {
+                    'ahorro_inteligente': 'Smart Savings',
+                    'savings_ninja': 'Savings Ninja',
+                    'wealth_wizard': 'Investment Wizard'
+                }
+            };
+            
+            if (lessonNames[lang] && lessonNames[lang][completedLesson]) {
+                const lessonName = lessonNames[lang][completedLesson];
+                document.getElementById('lessonCompletedTitle').textContent = translations[lang]['lesson-completed-title'];
+                document.getElementById('lessonCompletedText').innerHTML = 
+                    translations[lang]['lesson-completed-message'].replace('{lesson}', `<span id="completedLessonName" class="fw-bold">${lessonName}</span>`);
+            }
+        }
+    }
+    
     // Progreso
     document.querySelector('.quiz-progress-container .d-flex span.text-muted').textContent = translations[lang]['quiz-progress'];
     // Navegación

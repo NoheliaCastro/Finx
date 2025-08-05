@@ -927,11 +927,10 @@
                     // Lógica de navegación según el nivel
                     if (nivel === '1') {
                         // Material de estudio - ir a la lección
-                        window.location.href = 'leccion.html';
-                    } else if (nivel === '2') {
-                        // Quiz - ir a la página de quiz
+                        window.location.href = 'leccion.html';                    } else if (nivel === '2') {
+                        // Quiz - ir a la página de quiz específica
                         if (this.classList.contains('activo') || this.classList.contains('completado')) {
-                            window.location.href = 'quiz.html';
+                            window.location.href = 'quiz_ahorro_inteligente.html';
                         } else {
                             alert('Completa la lección primero para desbloquear el quiz.');
                         }
