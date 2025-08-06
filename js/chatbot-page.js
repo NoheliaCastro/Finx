@@ -183,6 +183,26 @@ document.addEventListener('DOMContentLoaded', function() {
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
         
+        // Aplicar estilos según el tema actual usando setProperty con important
+        const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+        if (currentTheme === 'dark') {
+            if (isUser) {
+                messageDiv.style.setProperty('background-color', '#2c3e50', 'important');
+                messageDiv.style.setProperty('color', '#f8f9fa', 'important');
+            } else {
+                messageDiv.style.setProperty('background-color', '#2d303e', 'important');
+                messageDiv.style.setProperty('color', '#f8f9fa', 'important');
+            }
+        } else {
+            if (isUser) {
+                messageDiv.style.setProperty('background-color', '#e3f2fd', 'important');
+                messageDiv.style.setProperty('color', '#333', 'important');
+            } else {
+                messageDiv.style.setProperty('background-color', '#f1f3f5', 'important');
+                messageDiv.style.setProperty('color', '#333', 'important');
+            }
+        }
+        
         // Agregar animación de aparición
         messageDiv.style.opacity = '0';
         messageDiv.style.transform = 'translateY(20px)';

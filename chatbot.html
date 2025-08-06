@@ -23,6 +23,12 @@
             display: flex;
             flex-direction: column;
         }
+
+        /* Modo oscuro para el contenedor principal */
+        [data-bs-theme="dark"] .chatbot-main-content {
+            background: #1e1e2d !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+        }
         
         .chatbot-messages {
             flex: 1;
@@ -32,6 +38,11 @@
             background: white;
             border-radius: 0.75rem;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        [data-bs-theme="dark"] .chatbot-messages {
+            background: #252836 !important;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
         }
         
         .message {
@@ -54,6 +65,17 @@
             border-bottom-left-radius: 0.25rem;
             color: #333;
         }
+
+        /* Estilos específicos para modo oscuro - con !important para asegurar prioridad */
+        [data-bs-theme="dark"] .user-message {
+            background: #2c3e50 !important;
+            color: #f8f9fa !important;
+        }
+        
+        [data-bs-theme="dark"] .bot-message {
+            background: #2d303e !important;
+            color: #f8f9fa !important;
+        }
         
         .chatbot-input-container {
             display: flex;
@@ -73,6 +95,18 @@
             border-color: #86b7fe;
             box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1);
             outline: none;
+        }
+
+        /* Modo oscuro para chatbot-input */
+        [data-bs-theme="dark"] .chatbot-input {
+            background: #252836 !important;
+            border-color: #2d303e !important;
+            color: #f8f9fa !important;
+        }
+        
+        [data-bs-theme="dark"] .chatbot-input:focus {
+            border-color: #86b7fe !important;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1) !important;
         }
         
         /* Estilos adicionales para el input del chatbot */
@@ -137,24 +171,36 @@
             background: #dee2e6;
         }
         
-        /* Tema oscuro */
+        /* Tema oscuro - SECCIÓN CONSOLIDADA */
         [data-bs-theme="dark"] .chatbot-main-content {
-            background: #1e1e2d;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            background: #1e1e2d !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
         }
         
         [data-bs-theme="dark"] .chatbot-messages {
-            background: #252836;
+            background: #252836 !important;
+        }
+
+        /* MENSAJES - ESTILOS MUY ESPECÍFICOS PARA FORZAR MODO OSCURO */
+        [data-bs-theme="dark"] .message.user-message {
+            background: #2c3e50 !important;
+            color: #f8f9fa !important;
         }
         
-        [data-bs-theme="dark"] .user-message {
-            background: #2c3e50;
-            color: #f8f9fa;
+        [data-bs-theme="dark"] .message.bot-message {
+            background: #2d303e !important;
+            color: #f8f9fa !important;
+        }
+
+        /* Estilos adicionales con mayor especificidad */
+        html[data-bs-theme="dark"] .chatbot-messages .message.user-message {
+            background-color: #2c3e50 !important;
+            color: #f8f9fa !important;
         }
         
-        [data-bs-theme="dark"] .bot-message {
-            background: #2d303e;
-            color: #f8f9fa;
+        html[data-bs-theme="dark"] .chatbot-messages .message.bot-message {
+            background-color: #2d303e !important;
+            color: #f8f9fa !important;
         }
           [data-bs-theme="dark"] .chatbot-input {
             background: #252836;
@@ -163,12 +209,24 @@
         }
         
         [data-bs-theme="dark"] .quick-option {
-            background: #2d303e;
-            color: #f9f9fa;
+            background: #2d303e !important;
+            color: #f8f9fa !important;
         }
         
         [data-bs-theme="dark"] .quick-option:hover {
-            background: #3c4043;
+            background: #3c4043 !important;
+        }
+
+        /* Estilos adicionales con mayor especificidad para quick options */
+        html[data-bs-theme="dark"] .quick-options .quick-option {
+            background-color: #2d303e !important;
+            color: #f8f9fa !important;
+            border-color: #2d303e !important;
+        }
+        
+        html[data-bs-theme="dark"] .quick-options .quick-option:hover {
+            background-color: #3c4043 !important;
+            border-color: #3c4043 !important;
         }
         .trivia-theme-toggle {
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
@@ -499,6 +557,126 @@
             font-weight: 500;
         }
         
+        /* Header y navegación estilo navbar principal */
+        .trivia-navbar {
+            background-color: var(--background-color) !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 0.75rem 0;
+            min-height: 95px;
+            transition: all 0.3s ease;
+        }
+
+        .trivia-navbar-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Logo en el navbar */
+        .navbar-logo-container {
+            display: flex;
+            align-items: center;
+            margin-right: 0.5rem;
+        }
+
+        .navbar-logo {
+            max-height: 80px;
+            height: auto;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-logo-light {
+            display: block;
+        }
+
+        [data-bs-theme="dark"] .navbar-logo-light {
+            display: none;
+        }
+
+        .navbar-logo-dark {
+            display: none;
+        }
+
+        [data-bs-theme="dark"] .navbar-logo-dark {
+            display: block;
+        }
+
+        /* Responsive para logo del navbar */
+        @media (max-width: 768px) {
+            .navbar-logo {
+                max-height: 65px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-logo {
+                max-height: 55px;
+            }
+        }
+
+        /* Sidebar toggle y animaciones */
+        .trivia-sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        /* Botón para toggle del sidebar */
+        .sidebar-toggle-btn {
+            position: fixed;
+            left: 280px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 60px;
+            border-radius: 0 15px 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            transform: translateY(-50%) translateX(5px);
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-toggle-btn.sidebar-hidden {
+            left: 0;
+            border-radius: 0 15px 15px 0;
+        }
+
+        /* Contenido principal */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        /* Ajustar contenido cuando sidebar está oculto */
+        .main-content.sidebar-hidden {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        /* Responsive para sidebar toggle */
+        @media (max-width: 991.98px) {
+            .sidebar-toggle-btn {
+                display: none;
+            }
+        }
+
         /* Aplicar fuentes a todo el body */
         body {
             font-family: 'Rubik', sans-serif;
@@ -539,11 +717,12 @@
     <nav class="navbar trivia-navbar">
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-between w-100">
-                <div style="flex:1; display:flex; align-items:center;">
-                    <a class="navbar-brand trivia-navbar-brand" href="index.html">
-                        <i class="bi bi-currency-exchange me-2"></i>
-                        Finx
-                    </a>
+                <div style="flex:1; display:flex; align-items:center; gap: 1rem;">
+                    <!-- Logo de Finx en navbar -->
+                    <div class="navbar-logo-container">
+                        <img src="images/modo-claro.png" alt="Finx Logo" class="navbar-logo navbar-logo-light">
+                        <img src="images/modo-oscuro.png" alt="Finx Logo" class="navbar-logo navbar-logo-dark">
+                    </div>
                 </div>
                 <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
                     <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
@@ -652,6 +831,11 @@
         </div>
     </nav>
 
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle-btn" id="sidebarToggle">
+        <i class="bi bi-chevron-left"></i>
+    </button>
+
     <!-- Contenido principal del Chatbot -->
     <main class="main-content">
         <div class="container-fluid py-4">
@@ -705,7 +889,76 @@
                 document.documentElement.setAttribute('data-bs-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
                 themeIcon.className = newTheme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
+                
+                // Forzar actualización de estilos de mensajes
+                updateMessageStyles(newTheme);
             });
+
+            // Función para forzar estilos de mensajes
+            function updateMessageStyles(theme) {
+                const userMessages = document.querySelectorAll('.user-message');
+                const botMessages = document.querySelectorAll('.bot-message');
+                const quickOptions = document.querySelectorAll('.quick-option');
+                
+                if (theme === 'dark') {
+                    userMessages.forEach(msg => {
+                        msg.style.setProperty('background-color', '#2c3e50', 'important');
+                        msg.style.setProperty('color', '#f8f9fa', 'important');
+                    });
+                    botMessages.forEach(msg => {
+                        msg.style.setProperty('background-color', '#2d303e', 'important');
+                        msg.style.setProperty('color', '#f8f9fa', 'important');
+                    });
+                    quickOptions.forEach(option => {
+                        option.style.setProperty('background-color', '#2d303e', 'important');
+                        option.style.setProperty('color', '#f8f9fa', 'important');
+                        option.style.setProperty('border-color', '#2d303e', 'important');
+                    });
+                } else {
+                    userMessages.forEach(msg => {
+                        msg.style.setProperty('background-color', '#e3f2fd', 'important');
+                        msg.style.setProperty('color', '#333', 'important');
+                    });
+                    botMessages.forEach(msg => {
+                        msg.style.setProperty('background-color', '#f1f3f5', 'important');
+                        msg.style.setProperty('color', '#333', 'important');
+                    });
+                    quickOptions.forEach(option => {
+                        option.style.setProperty('background-color', '#e9ecef', 'important');
+                        option.style.setProperty('color', '#333', 'important');
+                        option.style.setProperty('border-color', '#e9ecef', 'important');
+                    });
+                }
+            }
+
+            // Aplicar estilos iniciales
+            updateMessageStyles(savedTheme);
+
+            // Forzar aplicación de estilos cada 500ms para asegurar que funcione
+            setInterval(() => {
+                const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+                if (currentTheme === 'dark') {
+                    document.querySelectorAll('.user-message').forEach(msg => {
+                        if (msg.style.backgroundColor !== 'rgb(44, 62, 80)') {
+                            msg.style.setProperty('background-color', '#2c3e50', 'important');
+                            msg.style.setProperty('color', '#f8f9fa', 'important');
+                        }
+                    });
+                    document.querySelectorAll('.bot-message').forEach(msg => {
+                        if (msg.style.backgroundColor !== 'rgb(45, 48, 62)') {
+                            msg.style.setProperty('background-color', '#2d303e', 'important');
+                            msg.style.setProperty('color', '#f8f9fa', 'important');
+                        }
+                    });
+                    document.querySelectorAll('.quick-option').forEach(option => {
+                        if (option.style.backgroundColor !== 'rgb(45, 48, 62)') {
+                            option.style.setProperty('background-color', '#2d303e', 'important');
+                            option.style.setProperty('color', '#f8f9fa', 'important');
+                            option.style.setProperty('border-color', '#2d303e', 'important');
+                        }
+                    });
+                }
+            }, 500);
 
             // Cerrar sesión
             const logoutBtnNavbar = document.getElementById('logoutBtnNavbar');
@@ -748,6 +1001,37 @@
             // Aplicar idioma guardado
             const lang = localStorage.getItem('finx_lang') || 'es';
             setLanguage(lang);
+
+            // Observador de mutaciones para aplicar estilos a nuevos mensajes
+            const chatMessagesContainer = document.getElementById('chatbotMessages');
+            if (chatMessagesContainer) {
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'childList') {
+                            mutation.addedNodes.forEach((node) => {
+                                if (node.nodeType === Node.ELEMENT_NODE && 
+                                    (node.classList.contains('user-message') || node.classList.contains('bot-message'))) {
+                                    const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+                                    if (currentTheme === 'dark') {
+                                        if (node.classList.contains('user-message')) {
+                                            node.style.setProperty('background-color', '#2c3e50', 'important');
+                                            node.style.setProperty('color', '#f8f9fa', 'important');
+                                        } else {
+                                            node.style.setProperty('background-color', '#2d303e', 'important');
+                                            node.style.setProperty('color', '#f8f9fa', 'important');
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+                
+                observer.observe(chatMessagesContainer, {
+                    childList: true,
+                    subtree: true
+                });
+            }
         });
     </script>
     <script>
@@ -819,7 +1103,28 @@
         document.addEventListener('DOMContentLoaded', function() {
             const lang = localStorage.getItem('finx_lang') || 'es';
             setLanguage(lang);
+            
+            // Event listener para el toggle del sidebar
+            document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
         });
+
+        // Función para toggle del sidebar
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.trivia-sidebar');
+            const toggleBtn = document.getElementById('sidebarToggle');
+            const icon = toggleBtn.querySelector('i');
+            const mainContent = document.querySelector('.main-content');
+            
+            sidebar.classList.toggle('hidden');
+            toggleBtn.classList.toggle('sidebar-hidden');
+            mainContent.classList.toggle('sidebar-hidden');
+            
+            if (sidebar.classList.contains('hidden')) {
+                icon.className = 'bi bi-chevron-right';
+            } else {
+                icon.className = 'bi bi-chevron-left';
+            }
+        }
     </script>
 </body>
 </html>
