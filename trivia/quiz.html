@@ -19,6 +19,126 @@
     <!-- Shared Sidebar CSS -->
     <link rel="stylesheet" href="shared-sidebar.css">
     <style>
+        /* Header y navegación estilo navbar principal */
+        .trivia-navbar {
+            background-color: var(--background-color) !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 0.75rem 0;
+            min-height: 95px;
+            transition: all 0.3s ease;
+        }
+
+        .trivia-navbar-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Logo en el navbar */
+        .navbar-logo-container {
+            display: flex;
+            align-items: center;
+            margin-right: 0.5rem;
+        }
+
+        .navbar-logo {
+            max-height: 80px;
+            height: auto;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-logo-light {
+            display: block;
+        }
+
+        [data-bs-theme="dark"] .navbar-logo-light {
+            display: none;
+        }
+
+        .navbar-logo-dark {
+            display: none;
+        }
+
+        [data-bs-theme="dark"] .navbar-logo-dark {
+            display: block;
+        }
+
+        /* Responsive para logo del navbar */
+        @media (max-width: 768px) {
+            .navbar-logo {
+                max-height: 65px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-logo {
+                max-height: 55px;
+            }
+        }
+
+        /* Sidebar toggle y animaciones */
+        .trivia-sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        /* Botón para toggle del sidebar */
+        .sidebar-toggle-btn {
+            position: fixed;
+            left: 280px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 60px;
+            border-radius: 0 15px 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            transform: translateY(-50%) translateX(5px);
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-toggle-btn.sidebar-hidden {
+            left: 0;
+            border-radius: 0 15px 15px 0;
+        }
+
+        /* Contenido principal */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        /* Ajustar contenido cuando sidebar está oculto */
+        .main-content.sidebar-hidden {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        /* Responsive para sidebar toggle */
+        @media (max-width: 991.98px) {
+            .sidebar-toggle-btn {
+                display: none;
+            }
+        }
+
         /* Variables de colores */
         :root {
             --fun-primary: #6366f1;
@@ -718,11 +838,12 @@
     <nav class="navbar trivia-navbar">
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-between w-100">
-                <div style="flex:1; display:flex; align-items:center;">
-                    <a class="navbar-brand trivia-navbar-brand" href="../index.html">
-                        <i class="bi bi-currency-exchange me-2"></i>
-                        Finx
-                    </a>
+                <div style="flex:1; display:flex; align-items:center; gap: 1rem;">
+                    <!-- Logo de Finx en navbar -->
+                    <div class="navbar-logo-container">
+                        <img src="../images/modo-claro.png" alt="Finx Logo" class="navbar-logo navbar-logo-light">
+                        <img src="../images/modo-oscuro.png" alt="Finx Logo" class="navbar-logo navbar-logo-dark">
+                    </div>
                 </div>
                 <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
                     <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
@@ -830,8 +951,11 @@
             </ul>
         </div>
     </nav>
-        </div>
-    </nav>
+
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle-btn" id="sidebarToggle">
+        <i class="bi bi-chevron-left"></i>
+    </button>
 
     <!-- Contenido principal -->
     <main class="main-content">
@@ -1541,7 +1665,28 @@ document.getElementById('langToggle').addEventListener('click', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const lang = localStorage.getItem('finx_lang') || 'es';
     setLanguage(lang);
+    
+    // Event listener para el toggle del sidebar
+    document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
 });
+
+// Función para toggle del sidebar
+function toggleSidebar() {
+    const sidebar = document.querySelector('.trivia-sidebar');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const icon = toggleBtn.querySelector('i');
+    const mainContent = document.querySelector('.main-content');
+    
+    sidebar.classList.toggle('hidden');
+    toggleBtn.classList.toggle('sidebar-hidden');
+    mainContent.classList.toggle('sidebar-hidden');
+    
+    if (sidebar.classList.contains('hidden')) {
+        icon.className = 'bi bi-chevron-right';
+    } else {
+        icon.className = 'bi bi-chevron-left';
+    }
+}
 </script>
 </body>
 </html> 

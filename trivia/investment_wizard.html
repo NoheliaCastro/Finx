@@ -116,6 +116,17 @@
             transform: translateY(0);
         }
         
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
         /* Wizard themed gradients */
         .wizard-gradient {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -363,7 +374,7 @@
                             <div class="video-container mb-4">
                                 <h4 class="h5 mb-3">🎥 Understanding Investment: A Guide for Young People</h4>
                                 <div class="ratio ratio-16x9 mb-3">
-                                    <video controls class="rounded">
+                                    <video id="lessonVideo" controls class="rounded">
                                         <source src="../videos/Understanding Investment A Guide for Young People_1080p.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
@@ -374,11 +385,23 @@
                                 </p>
                             </div>
 
-                            <!-- Progress Button -->
-                            <div class="text-center">
-                                <button class="btn btn-primary btn-lg" onclick="markLessonComplete()">
-                                    <i class="bi bi-check-circle"></i> Mark as Complete
+                            <!-- Quiz Button (initially hidden) -->
+                            <div class="text-center" id="quizButtonContainer" style="display: none;">
+                                <div class="alert alert-success mb-3">
+                                    <h5>🎉 Video Completed!</h5>
+                                    <p class="mb-0">Great job! Now you can take the quiz to test your knowledge.</p>
+                                </div>
+                                <button class="btn btn-primary btn-lg" onclick="goToQuiz()">
+                                    <i class="bi bi-question-circle"></i> Take Quiz
                                 </button>
+                            </div>
+
+                            <!-- Video Progress Message -->
+                            <div class="text-center" id="videoProgressMessage">
+                                <div class="alert alert-info">
+                                    <h5>📺 Watch the Video</h5>
+                                    <p class="mb-0">Please watch the complete video to unlock the quiz.</p>
+                                </div>
                             </div>
                             
                             <!-- Back to Lessons -->
@@ -459,21 +482,15 @@
             setTimeout(() => {
                 notification.remove();
             }, 5000);
-        }        // Función para marcar la lección como completada
-        function markLessonComplete() {
+        }
+        
+        // Función para ir al quiz
+        function goToQuiz() {
+            // Save lesson progress first
             saveLessonProgress();
-            showProgressNotification();
             
-            // Actualizar el botón para indicar que se completó
-            const btn = event.target;
-            btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Completed!';
-            btn.classList.remove('btn-primary');
-            btn.classList.add('btn-success');
-            btn.disabled = true;
-              // Redirigir al quiz después de un breve retraso
-            setTimeout(() => {
-                window.location.href = 'quiz_investment_wizard.html?lesson=wealth_wizard';
-            }, 2000);
+            // Redirect to quiz
+            window.location.href = 'quiz_investment_wizard.html';
         }
 
         // Initialize theme and effects
@@ -496,6 +513,24 @@
             setTimeout(function() {
                 document.querySelectorAll('.animated-fadein').forEach(el => el.classList.add('visible'));
             }, 200);
+
+            // Add video event listener
+            setTimeout(() => {
+                const video = document.getElementById('lessonVideo');
+                const quizButton = document.getElementById('quizButtonContainer');
+                const progressMessage = document.getElementById('videoProgressMessage');
+                
+                if (video && quizButton && progressMessage) {
+                    video.addEventListener('ended', function() {
+                        // Hide progress message and show quiz button
+                        progressMessage.style.display = 'none';
+                        quizButton.style.display = 'block';
+                        
+                        // Add animation effect
+                        quizButton.style.animation = 'fadeInUp 0.8s ease-out';
+                    });
+                }
+            }, 100);
         });
 
         // Translation system
