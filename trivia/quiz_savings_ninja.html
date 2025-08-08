@@ -31,6 +31,119 @@
             --ninja-secondary: #3730a3;
         }
 
+        /* Sidebar base styles */
+        .trivia-sidebar,
+        .leccion-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--card-bg, var(--background-color));
+            z-index: 1050;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 0 1.5rem 1.5rem 0;
+            padding: 2rem 0;
+        }
+        
+        .trivia-sidebar.hidden,
+        .leccion-sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        /* Contenido principal */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        /* Ajustar contenido cuando sidebar está oculto */
+        .main-content.sidebar-hidden {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        /* Botón para toggle del sidebar */
+        .sidebar-toggle-btn {
+            position: fixed;
+            left: 280px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 60px;
+            border-radius: 0 15px 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            transform: translateY(-50%) translateX(5px);
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-toggle-btn.sidebar-hidden {
+            left: 0;
+            border-radius: 0 15px 15px 0;
+        }
+
+        /* Navbar Logo System */
+        .navbar-logo {
+            height: 40px;
+            width: auto;
+            transition: opacity 0.3s ease;
+        }
+
+        .navbar-logo-light {
+            opacity: 1;
+        }
+
+        .navbar-logo-dark {
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        [data-bs-theme="dark"] .navbar-logo-light {
+            opacity: 0;
+        }
+
+        [data-bs-theme="dark"] .navbar-logo-dark {
+            opacity: 1;
+        }
+
+        .navbar-brand {
+            position: relative;
+            display: flex !important;
+            align-items: center;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .main-content.shifted {
+                margin-left: 0;
+            }
+            
+            .leccion-sidebar {
+                width: 280px;
+                left: -280px;
+            }
+        }
+
         /* Estilos específicos para el quiz */
         .quiz-hero {
             background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
@@ -305,8 +418,8 @@
             <div class="d-flex align-items-center justify-content-between w-100">
                 <div style="flex:1; display:flex; align-items:center;">
                     <a class="navbar-brand trivia-navbar-brand" href="../index.html">
-                        <i class="bi bi-currency-exchange me-2"></i>
-                        Finx
+                        <img src="../images/modo-claro.png" alt="Finx Logo" class="navbar-logo navbar-logo-light">
+                        <img src="../images/modo-oscuro.png" alt="Finx Logo" class="navbar-logo navbar-logo-dark">
                     </a>
                 </div>
                 <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
@@ -322,7 +435,7 @@
     </nav>
 
     <!-- Sidebar -->
-    <nav class="leccion-sidebar">
+    <nav class="leccion-sidebar trivia-sidebar">
         <div class="container-fluid">
             <div class="sidebar-logo-container text-center mb-3">
                 <img src="../images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
@@ -338,6 +451,11 @@
             </ul>
         </div>
     </nav>
+
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle-btn" id="sidebarToggle">
+        <i class="bi bi-chevron-left"></i>
+    </button>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -969,6 +1087,54 @@
             
             // Mostrar primera pregunta
             showQuestion();
+        });
+
+        // Función para toggle del sidebar (solución definitiva)
+        function toggleSidebar() {
+            console.log('Toggle sidebar function called');
+            
+            const sidebar = document.querySelector('.trivia-sidebar') || document.querySelector('.leccion-sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const toggleBtn = document.getElementById('sidebarToggle');
+            
+            if (sidebar && mainContent && toggleBtn) {
+                const isHidden = sidebar.classList.contains('hidden');
+                
+                if (isHidden) {
+                    // Mostrar sidebar
+                    sidebar.classList.remove('hidden');
+                    mainContent.classList.remove('sidebar-hidden');
+                    toggleBtn.classList.remove('sidebar-hidden');
+                    console.log('Sidebar shown');
+                } else {
+                    // Ocultar sidebar
+                    sidebar.classList.add('hidden');
+                    mainContent.classList.add('sidebar-hidden');
+                    toggleBtn.classList.add('sidebar-hidden');
+                    console.log('Sidebar hidden');
+                }
+            } else {
+                console.error('Elementos del sidebar no encontrados');
+            }
+        }
+
+        // Initialize sidebar toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded - initializing sidebar toggle');
+            
+            const toggleButton = document.getElementById('sidebarToggle');
+            
+            if (toggleButton) {
+                console.log('Toggle button found, adding event listener');
+                toggleButton.addEventListener('click', function(e) {
+                    console.log('Toggle button clicked');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleSidebar();
+                });
+            } else {
+                console.error('Toggle button not found');
+            }
         });
     </script>
 </body>

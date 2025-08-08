@@ -202,7 +202,20 @@
         }
 
         /* Sidebar toggle y animaciones */
-        .trivia-sidebar.hidden {
+        .trivia-sidebar,
+        .leccion-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--card-bg);
+            z-index: 1050;
+            transition: transform 0.3s ease;
+        }
+        
+        .trivia-sidebar.hidden,
+        .leccion-sidebar.hidden {
             transform: translateX(-100%);
         }
 
@@ -436,8 +449,14 @@
             font-weight: 500;
             color: var(--text-color) !important;
         }
+        .sidebar-nav a.active {
+            color: #ffffff !important;
+        }
         
         [data-bs-theme="dark"] .sidebar-nav a {
+            color: #ffffff !important;
+        }
+        [data-bs-theme="dark"] .sidebar-nav a.active {
             color: #ffffff !important;
         }
         
@@ -1245,7 +1264,7 @@
             saveLessonProgress();
             
             // Redirect to quiz
-            window.location.href = 'quiz.html';
+            window.location.href = 'quiz_ahorro_inteligente.html';
         }
     </script>
     <script>
@@ -1311,26 +1330,60 @@ document.addEventListener('DOMContentLoaded', function() {
     const lang = localStorage.getItem('finx_lang') || 'es';
     setLanguage(lang);
     
-    // Event listener para el toggle del sidebar
-    document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
+    // Event listener para el toggle del sidebar (Solución definitiva)
+    const sidebarToggleBtn = document.getElementById('sidebarToggle');
+    if (sidebarToggleBtn) {
+        sidebarToggleBtn.addEventListener('click', toggleSidebar);
+        console.log('Sidebar toggle inicializado correctamente en leccion.html');
+    } else {
+        console.error('Botón de toggle del sidebar no encontrado en leccion.html');
+    }
 });
 
-// Función para toggle del sidebar
+// Función para toggle del sidebar (solución definitiva)
 function toggleSidebar() {
-    const sidebar = document.querySelector('.trivia-sidebar');
-    const toggleBtn = document.getElementById('sidebarToggle');
-    const icon = toggleBtn.querySelector('i');
-    const mainContent = document.querySelector('.main-content');
+    // Buscar sidebar con múltiples selectores
+    const sidebar = document.querySelector('.trivia-sidebar') || 
+                   document.querySelector('.leccion-sidebar') || 
+                   document.querySelector('nav[class*="sidebar"]');
     
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const mainContent = document.querySelector('.main-content') || 
+                       document.querySelector('main') ||
+                       document.querySelector('[class*="main"]');
+    
+    // Verificar que todos los elementos existen
+    if (!sidebar || !toggleBtn || !mainContent) {
+        console.error('Elementos del sidebar no encontrados:', {
+            sidebar: !!sidebar,
+            toggleBtn: !!toggleBtn,
+            mainContent: !!mainContent
+        });
+        return;
+    }
+    
+    const icon = toggleBtn.querySelector('i');
+    
+    // Aplicar toggle
     sidebar.classList.toggle('hidden');
     toggleBtn.classList.toggle('sidebar-hidden');
     mainContent.classList.toggle('sidebar-hidden');
     
-    if (sidebar.classList.contains('hidden')) {
-        icon.className = 'bi bi-chevron-right';
-    } else {
-        icon.className = 'bi bi-chevron-left';
+    // Cambiar icono si existe
+    if (icon) {
+        if (sidebar.classList.contains('hidden')) {
+            icon.className = 'bi bi-chevron-right';
+        } else {
+            icon.className = 'bi bi-chevron-left';
+        }
     }
+    
+    // Debug log
+    console.log('Sidebar toggled:', {
+        sidebarHidden: sidebar.classList.contains('hidden'),
+        buttonHidden: toggleBtn.classList.contains('sidebar-hidden'),
+        contentAdjusted: mainContent.classList.contains('sidebar-hidden')
+    });
 }
 </script>
 </body>
