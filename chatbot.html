@@ -619,7 +619,8 @@
         }
 
         /* Sidebar toggle y animaciones */
-        .trivia-sidebar.hidden {
+        .trivia-sidebar.hidden,
+        .leccion-sidebar.hidden {
             transform: translateX(-100%);
         }
 
@@ -784,7 +785,8 @@
     </nav>
 
     <!-- Sidebar -->
-    <nav class="leccion-sidebar">
+    <!-- Sidebar -->
+    <nav class="leccion-sidebar trivia-sidebar">
         <div class="container-fluid">
             <div class="sidebar-logo-container text-center mb-3">
                 <img src="images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
@@ -1110,7 +1112,7 @@
 
         // Función para toggle del sidebar
         function toggleSidebar() {
-            const sidebar = document.querySelector('.trivia-sidebar');
+            const sidebar = document.querySelector('.trivia-sidebar, .leccion-sidebar');
             const toggleBtn = document.getElementById('sidebarToggle');
             const icon = toggleBtn.querySelector('i');
             const mainContent = document.querySelector('.main-content');

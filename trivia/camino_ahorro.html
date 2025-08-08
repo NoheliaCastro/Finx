@@ -458,6 +458,48 @@
             background-clip: text;
         }
 
+        /* Logo en el navbar */
+        .navbar-logo-container {
+            display: flex;
+            align-items: center;
+            margin-right: 0.5rem;
+        }
+
+        .navbar-logo {
+            max-height: 80px;
+            height: auto;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-logo-light {
+            display: block;
+        }
+
+        [data-bs-theme="dark"] .navbar-logo-light {
+            display: none;
+        }
+
+        .navbar-logo-dark {
+            display: none;
+        }
+
+        [data-bs-theme="dark"] .navbar-logo-dark {
+            display: block;
+        }
+
+        /* Responsive para logo del navbar */
+        @media (max-width: 768px) {
+            .navbar-logo {
+                max-height: 65px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-logo {
+                max-height: 55px;
+            }
+        }
+
         .camino-theme-toggle {
             background: var(--fun-primary);
             border: none;
@@ -492,6 +534,7 @@
             top: 0;
             width: 280px;
             z-index: 999;
+            transition: transform 0.3s ease;
         }
 
         .sidebar-nav {
@@ -529,6 +572,46 @@
             font-size: 1.2rem;
         }
 
+        /* Sidebar toggle y animaciones */
+        .trivia-sidebar.hidden,
+        .leccion-sidebar.hidden,
+        .camino-sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        /* Botón para toggle del sidebar */
+        .sidebar-toggle-btn {
+            position: fixed;
+            left: 280px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 60px;
+            border-radius: 0 15px 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            transform: translateY(-50%) translateX(5px);
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-toggle-btn.sidebar-hidden {
+            left: 0;
+            border-radius: 0 15px 15px 0;
+        }
+
         /* Contenido principal */
         .main-content {
             margin-left: 280px;
@@ -536,7 +619,20 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        /* Ajustar contenido cuando sidebar está oculto */
+        .main-content.sidebar-hidden {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        /* Responsive para sidebar toggle */
+        @media (max-width: 991.98px) {
+            .sidebar-toggle-btn {
+                display: none;
+            }
         }
 
         /* Avatar estilo dashboard */
@@ -705,11 +801,12 @@
     <nav class="navbar camino-navbar">
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-between w-100">
-                <div style="flex:1; display:flex; align-items:center;">
-                    <a class="navbar-brand camino-navbar-brand" href="../index.html">
-                        <i class="bi bi-currency-exchange me-2"></i>
-                        Finx
-                    </a>
+                <div style="flex:1; display:flex; align-items:center; gap: 1rem;">
+                    <!-- Logo de Finx en navbar -->
+                    <div class="navbar-logo-container">
+                        <img src="../images/modo-claro.png" alt="Finx Logo" class="navbar-logo navbar-logo-light">
+                        <img src="../images/modo-oscuro.png" alt="Finx Logo" class="navbar-logo navbar-logo-dark">
+                    </div>
                 </div>
                 <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
                     <button class="camino-theme-toggle" id="langToggle" title="Traducir página">
@@ -733,7 +830,7 @@
     </nav>
 
     <!-- Sidebar -->
-    <nav class="camino-sidebar">
+    <nav class="camino-sidebar leccion-sidebar trivia-sidebar">
         <div class="container-fluid">
             <div class="sidebar-logo-container text-center mb-3">
                 <img src="../images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
@@ -780,6 +877,11 @@
             </ul>
         </div>
         </nav>
+
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle-btn" id="sidebarToggle">
+        <i class="bi bi-chevron-left"></i>
+    </button>
 
     <!-- Contenido principal -->
     <main class="main-content">
@@ -1080,6 +1182,21 @@ document.getElementById('langToggle').addEventListener('click', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const lang = localStorage.getItem('finx_lang') || 'es';
     setLanguage(lang);
+});
+
+// Funcionalidad del toggle sidebar
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const sidebar = document.querySelector('.camino-sidebar') || document.querySelector('.leccion-sidebar') || document.querySelector('.trivia-sidebar');
+    const mainContent = document.querySelector('.main-content');
+    
+    if (toggleBtn && sidebar && mainContent) {
+        toggleBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('hidden');
+            toggleBtn.classList.toggle('sidebar-hidden');
+            mainContent.classList.toggle('sidebar-hidden');
+        });
+    }
 });
 </script>
 </body>
