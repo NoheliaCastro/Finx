@@ -55,15 +55,19 @@
         }
         .summary-card h3 {
             color: var(--card-border);
-        }
-        .summary-card .stat-number {
-            color: #EEE95B;
+        }        .summary-card .stat-number {
+            color: #004AAD;
             background: none;
             -webkit-text-fill-color: unset;
             font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
             word-break: break-all;
+        }
+        
+        /* Modo oscuro - mantener el azul pero más vibrante */
+        [data-bs-theme="dark"] .summary-card .stat-number {
+            color: #6A9BD1;
         }
         .lesson-card {
             background: var(--card-bg);
