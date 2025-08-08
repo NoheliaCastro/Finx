@@ -113,8 +113,7 @@
             border-radius: 0 15px 15px 0;
         }
 
-        /* Contenido principal */
-        .main-content {
+        /* Contenido principal */        .main-content {
             margin-left: 280px;
             padding: 2rem;
             min-height: 100vh;
@@ -127,25 +126,103 @@
             width: 100%;
         }
 
-        /* Responsive para sidebar toggle */
+        /* Responsive para main-content */
+        @media (max-width: 1199.98px) {
+            .main-content {
+                margin-left: 280px;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .main-content {
+                padding: 0.75rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .main-content {
+                padding: 0.5rem;
+            }
+        }        /* Responsive para sidebar toggle */
         @media (max-width: 991.98px) {
             .sidebar-toggle-btn {
                 display: none;
             }
+            
+            /* En mobile, agregar un botón de menú en el navbar si es necesario */
+            .mobile-menu-toggle {
+                display: block;
+                background: linear-gradient(135deg, #6366f1, #8b5cf6);
+                border: none;
+                color: white;
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                font-size: 1.2rem;
+                transition: all 0.3s ease;
+            }
+            
+            .mobile-menu-toggle:hover {
+                background: linear-gradient(135deg, #8b5cf6, #6366f1);
+                transform: scale(1.05);
+            }
         }
 
-        html, body {
+        @media (min-width: 992px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+        }html, body {
             background: #fff;
             margin: 0;
             padding: 0;
             width: 100vw;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         .main-section, .goals-section {
             background: #fff;
             min-height: 100vh;
             margin: 0;
             padding: 0;
+        }
+
+        /* Responsive para sección de goals */
+        .goals-section {
+            padding: 3rem 2rem !important;
+        }
+
+        @media (max-width: 1199.98px) {
+            .goals-section {
+                padding: 2.5rem 1.5rem !important;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .goals-section {
+                padding: 2rem 1rem !important;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .goals-section {
+                padding: 1.5rem 0.75rem !important;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .goals-section {
+                padding: 1rem 0.5rem !important;
+            }
         }
         [data-bs-theme="dark"] html, [data-bs-theme="dark"] body {
             background: #181C24;
@@ -156,8 +233,7 @@
         [data-bs-theme="dark"] .trivia-sidebar {
             background: #181C24 !important;
             border-right: 1.5px solid #232A36;
-        }
-        .goal-title {
+        }        .goal-title {
             font-weight: 800;
             color: #004AAD !important;
             letter-spacing: 1px;
@@ -165,7 +241,28 @@
             font-size: 2.2rem;
             margin-bottom: 2.5rem;
         }
-        .goal-card {
+
+        /* Responsive para título principal */
+        @media (max-width: 991.98px) {
+            .goal-title {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .goal-title {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .goal-title {
+                font-size: 1.6rem;
+                margin-bottom: 1rem;
+            }
+        }        .goal-card {
             background: #fff !important;
             color: #002366 !important;
             border: 2px solid #004AAD !important;
@@ -177,48 +274,200 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .goal-card .goal-title {
+
+        /* Responsive para tarjetas de metas */
+        @media (max-width: 1199.98px) {
+            .goal-card {
+                padding: 1.2rem 1.3rem !important;
+                margin-bottom: 1.8rem !important;
+                max-width: 550px;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .goal-card {
+                padding: 1rem 1.2rem !important;
+                margin-bottom: 1.5rem !important;
+                min-height: 100px;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .goal-card {
+                padding: 0.9rem 1rem !important;
+                margin-bottom: 1.2rem !important;
+                min-height: 90px;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .goal-card {
+                padding: 0.8rem 0.9rem !important;
+                margin-bottom: 1rem !important;
+                min-height: 80px;
+                max-width: 100%;
+            }
+        }.goal-card .goal-title {
             color: #004AAD !important;
             font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
-        .goal-card .badge {
+
+        /* Responsive para título de tarjetas */
+        @media (max-width: 991.98px) {
+            .goal-card .goal-title {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .goal-card .goal-title {
+                font-size: 1.1rem;
+                margin-bottom: 0.4rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .goal-card .goal-title {
+                font-size: 1rem;
+                margin-bottom: 0.3rem;
+            }
+        }        .goal-card .badge {
             font-size: 0.95em;
             border-radius: 0.7em;
             padding: 0.3em 0.8em;
+            white-space: nowrap;
         }
-        .goal-card .progress-bar {
+
+        /* Responsive para badges */
+        @media (max-width: 767.98px) {
+            .goal-card .badge {
+                font-size: 0.85em;
+                padding: 0.25em 0.6em;
+                border-radius: 0.5em;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .goal-card .badge {
+                font-size: 0.8em;
+                padding: 0.2em 0.5em;
+                border-radius: 0.4em;
+            }
+        }        .goal-card .progress-bar {
             background: #E6E5E5;
             border-radius: 1rem;
             height: 0.8rem;
             margin-bottom: 0.5rem;
+        }
+
+        /* Responsive para barra de progreso */
+        @media (max-width: 767.98px) {
+            .goal-card .progress-bar {
+                height: 0.7rem;
+                border-radius: 0.8rem;
+                margin-bottom: 0.4rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .goal-card .progress-bar {
+                height: 0.6rem;
+                border-radius: 0.6rem;
+                margin-bottom: 0.3rem;
+            }
         }
         .goal-card .progress {
             background: #EEE95B;
             height: 100%;
             border-radius: 1rem;
             transition: width 0.5s;
-        }
-        .goal-card .goal-progress-text {
+        }        .goal-card .goal-progress-text {
             color: #002366 !important;
             font-weight: 600;
             font-size: 1em;
             margin-bottom: 0.5rem;
         }
-        .goal-actions {
+
+        /* Responsive para texto de progreso */
+        @media (max-width: 767.98px) {
+            .goal-card .goal-progress-text {
+                font-size: 0.9em;
+                margin-bottom: 0.4rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .goal-card .goal-progress-text {
+                font-size: 0.85em;
+                margin-bottom: 0.3rem;
+            }
+        }.goal-actions {
             display: flex;
             gap: 0.7rem;
             margin-top: 0.7rem;
+            flex-wrap: wrap;
         }
-        .goal-actions .btn {
+
+        /* Responsive para acciones de metas */
+        @media (max-width: 767.98px) {
+            .goal-actions {
+                gap: 0.5rem;
+                margin-top: 0.5rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .goal-actions {
+                gap: 0.4rem;
+                margin-top: 0.4rem;
+                flex-direction: column;
+            }
+            
+            .goal-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }        .goal-actions .btn {
             font-size: 1rem;
             border-radius: 0.7rem;
             padding: 0.5rem 1.3rem;
             font-weight: 700;
             box-shadow: 0 1px 4px #00236611;
             transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        }
+
+        /* Responsive para botones */
+        @media (max-width: 991.98px) {
+            .goal-actions .btn {
+                font-size: 0.95rem;
+                padding: 0.45rem 1.1rem;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .goal-actions .btn {
+                font-size: 0.9rem;
+                padding: 0.4rem 1rem;
+                border-radius: 0.6rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .goal-actions .btn {
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+            }
         }
         .goal-actions .btn-outline-success {
             background: #EEE95B !important;
@@ -237,8 +486,7 @@
         .goal-actions .btn-outline-danger:hover {
             background: #004AAD !important;
             color: #fff !important;
-        }
-        .form-modern h5 {
+        }        .form-modern h5 {
             text-align: center;
             color: #EEE95B;
             font-weight: 800;
@@ -246,11 +494,32 @@
             margin-bottom: 2rem;
             letter-spacing: 1px;
         }
+
+        /* Responsive para título del formulario */
+        @media (max-width: 991.98px) {
+            .form-modern h5 {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .form-modern h5 {
+                font-size: 1.6rem;
+                margin-bottom: 1.2rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .form-modern h5 {
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+            }
+        }
         .form-modern .form-label {
             color: #fff;
             font-weight: 600;
-        }
-        .form-modern .form-control, .form-modern .form-select {
+        }        .form-modern .form-control, .form-modern .form-select {
             border-radius: 10px;
             border: 2px solid #bfc9d1;
             background: #fff;
@@ -259,6 +528,25 @@
             padding: 0.75rem 1rem;
             margin-bottom: 1rem;
             transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        /* Responsive para inputs del formulario */
+        @media (max-width: 767.98px) {
+            .form-modern .form-control, .form-modern .form-select {
+                font-size: 1rem;
+                padding: 0.65rem 0.9rem;
+                margin-bottom: 0.8rem;
+                border-radius: 8px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .form-modern .form-control, .form-modern .form-select {
+                font-size: 0.95rem;
+                padding: 0.6rem 0.8rem;
+                margin-bottom: 0.7rem;
+                border-radius: 6px;
+            }
         }
         .form-modern .form-control:focus, .form-modern .form-select:focus {
             border-color: #EEE95B;
@@ -293,14 +581,59 @@
         .form-modern .btn-secondary:hover, .modal-footer .btn-secondary:hover, .goal-actions .btn-outline-danger:hover {
             background: #EEE95B !important;
             color: #002366 !important;
-        }
-        /* Modal diseño institucional */
+        }        /* Modal diseño institucional */
         .modal-header {
             border-bottom: 2px solid #EEE95B;
         }
         .modal-title {
             color: #EEE95B;
             font-weight: 800;
+        }
+
+        /* Responsive para modales */
+        @media (max-width: 767.98px) {
+            .modal-dialog {
+                margin: 1rem 0.5rem;
+                max-width: calc(100% - 1rem);
+            }
+            
+            .modal-body {
+                padding: 1rem;
+            }
+            
+            .modal-header {
+                padding: 1rem;
+            }
+            
+            .modal-footer {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .modal-footer .btn {
+                width: 100%;
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .modal-dialog {
+                margin: 0.5rem 0.25rem;
+                max-width: calc(100% - 0.5rem);
+            }
+            
+            .modal-body {
+                padding: 0.75rem;
+            }
+            
+            .modal-header {
+                padding: 0.75rem;
+            }
+            
+            .modal-footer {
+                padding: 0.75rem;
+            }
         }
         @media (prefers-color-scheme: dark) {
             body {
@@ -337,8 +670,7 @@
         [data-bs-theme="dark"] .navbar .btn-primary:hover {
             background: #bdb82e !important;
             color: #23272b !important;
-        }
-        .goal-achieved-card {
+        }        .goal-achieved-card {
             border: 2.5px solid #004AAD;
             background: #fff;
             color: #23272b;
@@ -353,6 +685,35 @@
             gap: 0.7rem;
             animation: goal-shine 1.2s ease-in-out;
         }
+
+        /* Responsive para tarjeta de logro */
+        @media (max-width: 767.98px) {
+            .goal-achieved-card {
+                font-size: 1rem;
+                padding: 0.9rem 1rem;
+                gap: 0.5rem;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .goal-achieved-card .goal-emoji {
+                font-size: 1.8rem;
+                margin-right: 0;
+                margin-bottom: 0.2rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .goal-achieved-card {
+                font-size: 0.95rem;
+                padding: 0.8rem 0.9rem;
+            }
+            
+            .goal-achieved-card .goal-emoji {
+                font-size: 1.6rem;
+            }
+        }
+
         .goal-achieved-card .goal-emoji {
             font-size: 2rem;
             margin-right: 0.5rem;
@@ -861,9 +1222,150 @@
             background: linear-gradient(135deg, #8b5cf6, #6366f1);
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(129,140,248,0.18);
-        }
-        .trivia-theme-toggle i {
+        }        .trivia-theme-toggle i {
             font-size: 1.5rem;
+        }
+
+        /* Estilos responsive para contenedores de metas */
+        .goals-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: 1fr;
+            max-width: 100%;
+            margin: 0 auto;
+        }        /* Contenedor del formulario responsive */
+        .goal-form-container {
+            max-width: 500px;
+            margin: 0 auto 2rem auto;
+            width: 100%;
+        }
+
+        /* Grid responsive para las metas - centrado mejorado */
+        @media (min-width: 1200px) {
+            .goals-container {
+                grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+                gap: 2rem;
+                justify-content: center;
+                margin: 0 auto;
+            }
+            
+            .main-content:not(.sidebar-hidden) .goals-container {
+                grid-template-columns: 1fr;
+                max-width: 800px;
+                justify-items: center;
+            }
+            
+            .main-content.sidebar-hidden .goals-container {
+                grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+                max-width: 1200px;
+                justify-content: center;
+                justify-items: center;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .goals-container {
+                grid-template-columns: 1fr;
+                max-width: 700px;
+                justify-items: center;
+                margin: 0 auto;
+            }
+            
+            .main-content.sidebar-hidden .goals-container {
+                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+                max-width: 1000px;
+                justify-content: center;
+                justify-items: center;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            .goals-container {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+                justify-items: center;
+                margin: 0 auto;
+            }
+            
+            .goal-form-container {
+                max-width: 450px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .goals-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                max-width: 100%;
+                justify-items: center;
+                margin: 0 auto;
+            }
+            
+            .goal-form-container {
+                max-width: 100%;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        /* Ajustes dinámicos según el estado del sidebar */
+        .main-content {
+            transition: all 0.3s ease;
+        }
+
+        .main-content .goals-section {
+            transition: all 0.3s ease;
+        }        /* Sidebar visible - contenido más estrecho y centrado */
+        @media (min-width: 992px) {
+            .main-content:not(.sidebar-hidden) {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 2rem 1rem;
+            }
+            
+            .main-content:not(.sidebar-hidden) .goals-section {
+                width: 100%;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 2rem 1rem !important;
+            }
+            
+            .main-content:not(.sidebar-hidden) .goal-form-container {
+                max-width: 500px;
+                margin: 0 auto 2rem auto;
+            }
+            
+            .main-content:not(.sidebar-hidden) .goals-container {
+                max-width: 700px;
+                margin: 0 auto;
+            }
+        }
+
+        /* Sidebar oculto - contenido más amplio y centrado */
+        @media (min-width: 992px) {
+            .main-content.sidebar-hidden {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 2rem 2rem;
+            }
+            
+            .main-content.sidebar-hidden .goals-section {
+                width: 100%;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem !important;
+            }
+            
+            .main-content.sidebar-hidden .goal-form-container {
+                max-width: 600px;
+                margin: 0 auto 2rem auto;
+            }
+            
+            .main-content.sidebar-hidden .goals-container {
+                max-width: 1000px;
+                margin: 0 auto;
+            }
         }
     </style>
 </head>
@@ -955,13 +1457,39 @@
         background: #fff !important;
         color: #002366 !important;
         border-color: #004AAD !important;
-    }
-    .main-content {
+    }    .main-content {
         width: 100vw;
         min-height: 100vh;
         margin: 0;
         padding: 0;
         background: transparent;
+    }
+
+    /* Responsive para main-content override */
+    @media (max-width: 991.98px) {
+        .main-content {
+            margin-left: 0 !important;
+            width: 100% !important;
+        }
+    }
+
+    /* Ajuste para pantallas muy pequeñas */
+    @media (max-width: 320px) {
+        .main-content {
+            min-width: 320px;
+        }
+        
+        .goals-section {
+            padding: 0.5rem 0.25rem !important;
+        }
+        
+        .goal-form-container {
+            padding: 0.75rem !important;
+        }
+        
+        .goal-card {
+            padding: 0.6rem 0.7rem !important;
+        }
     }
     </style>
     <!-- Sidebar -->
@@ -1016,36 +1544,38 @@
     <!-- Sidebar Toggle Button -->
     <button class="sidebar-toggle-btn" id="sidebarToggle">
         <i class="bi bi-chevron-left"></i>
-    </button>
-
-    <!-- Contenido principal -->
+    </button>    <!-- Contenido principal -->
     <main class="main-content">
         <section class="goals-section w-100 py-5">
-            <h1 class="mb-4 goal-title">My Financial Goals</h1>
-            <!-- Formulario para agregar meta -->
-            <div class="card p-4 mb-4" style="max-width:500px;margin:auto;">
-                <h5 class="mb-3">Add New Goal</h5>
-                <form id="goalForm">
-                    <div class="mb-3">
-                        <label for="goalName" class="form-label">Goal Name</label>
-                        <input type="text" class="form-control" id="goalName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="goalTarget" class="form-label">Target Amount</label>
-                        <input type="number" class="form-control" id="goalTarget" min="1" step="0.01" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="goalDeadline" class="form-label">Deadline (optional)</label>
-                        <input type="date" class="form-control" id="goalDeadline">
-                    </div>
-                    <div class="d-flex justify-content-end gap-2">
-                        <button type="reset" class="btn btn-secondary">Clear</button>
-                        <button type="submit" class="btn btn-primary">Add Goal</button>
-                    </div>
-                </form>
+            <div class="container-fluid px-0">
+                <h1 class="mb-4 goal-title">My Financial Goals</h1>
+                <!-- Formulario para agregar meta -->
+                <div class="card p-4 mb-4 goal-form-container">
+                    <h5 class="mb-3">Add New Goal</h5>
+                    <form id="goalForm">
+                        <div class="mb-3">
+                            <label for="goalName" class="form-label">Goal Name</label>
+                            <input type="text" class="form-control" id="goalName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="goalTarget" class="form-label">Target Amount</label>
+                            <input type="number" class="form-control" id="goalTarget" min="1" step="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="goalDeadline" class="form-label">Deadline (optional)</label>
+                            <input type="date" class="form-control" id="goalDeadline">
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 flex-wrap">
+                            <button type="reset" class="btn btn-secondary">Clear</button>
+                            <button type="submit" class="btn btn-primary">Add Goal</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Lista de metas -->
+                <div class="goals-container">
+                    <div id="goalsList"></div>
+                </div>
             </div>
-            <!-- Lista de metas -->
-            <div id="goalsList" class="mt-4"></div>
         </section>
         <!-- Modal para agregar ahorro -->
         <div class="modal fade" id="addSavingModal" tabindex="-1" aria-labelledby="addSavingModalLabel" aria-hidden="true" style="z-index:1055;">
@@ -1073,8 +1603,7 @@
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/components.js"></script>
-    <script src="js/chatbot-sidebar.js"></script>
-    <script>
+    <script src="js/chatbot-sidebar.js"></script>    <script>
         // Menú de usuario con click
         document.addEventListener('DOMContentLoaded', function() {
             var userProfile = document.querySelector('.user-profile-navbar');
@@ -1113,6 +1642,56 @@
                     window.location.href = 'index.html';
                 });
             }
+
+            // Sidebar toggle functionality
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.querySelector('.trivia-sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const toggleIcon = sidebarToggle.querySelector('i');
+
+            // Verificar si estamos en desktop
+            function isDesktop() {
+                return window.innerWidth >= 992;
+            }
+
+            // Estado inicial del sidebar
+            let sidebarHidden = localStorage.getItem('sidebar-hidden') === 'true';
+            
+            function updateSidebarState() {
+                if (isDesktop()) {
+                    if (sidebarHidden) {
+                        sidebar.classList.add('hidden');
+                        mainContent.classList.add('sidebar-hidden');
+                        sidebarToggle.classList.add('sidebar-hidden');
+                        toggleIcon.className = 'bi bi-chevron-right';
+                    } else {
+                        sidebar.classList.remove('hidden');
+                        mainContent.classList.remove('sidebar-hidden');
+                        sidebarToggle.classList.remove('sidebar-hidden');
+                        toggleIcon.className = 'bi bi-chevron-left';
+                    }
+                } else {
+                    // En mobile, sidebar siempre oculto
+                    sidebar.classList.add('hidden');
+                    mainContent.classList.add('sidebar-hidden');
+                    sidebarToggle.classList.add('sidebar-hidden');
+                }
+            }
+
+            // Aplicar estado inicial
+            updateSidebarState();
+
+            // Toggle del sidebar
+            sidebarToggle.addEventListener('click', function() {
+                if (isDesktop()) {
+                    sidebarHidden = !sidebarHidden;
+                    localStorage.setItem('sidebar-hidden', sidebarHidden.toString());
+                    updateSidebarState();
+                }
+            });
+
+            // Actualizar en resize
+            window.addEventListener('resize', updateSidebarState);
         });
     </script>
     <script>
@@ -1122,14 +1701,13 @@
         }
         function saveGoals(goals) {
             localStorage.setItem('finx_goals', JSON.stringify(goals));
-        }
-        // Renderizar metas
+        }        // Renderizar metas
         function renderGoals() {
             const goals = getGoals();
             const container = document.getElementById('goalsList');
             container.innerHTML = '';
             if (goals.length === 0) {
-                container.innerHTML = '<div class="text-center text-muted">No goals yet. Add your first goal!</div>';
+                container.innerHTML = '<div class="text-center text-muted p-4">No goals yet. Add your first goal!</div>';
                 return;
             }
             goals.forEach((goal, idx) => {
@@ -1140,14 +1718,17 @@
                     achievedCard = `<div class="goal-achieved-card"><span class="goal-emoji">🏆</span>¡Achievement reached! You can go for your <b>${goal.name}</b></div>`;
                     actions = `<button class="btn btn-sm btn-outline-danger" onclick="deleteGoal(${idx})">Delete</button>`;
                 } else {
-                    actions = `<button class="btn btn-sm btn-outline-success" onclick="addToGoal(${idx})">Add Saving</button>\n<button class="btn btn-sm btn-outline-danger" onclick="deleteGoal(${idx})">Delete</button>`;
+                    actions = `<button class="btn btn-sm btn-outline-success" onclick="addToGoal(${idx})">Add Saving</button>
+                              <button class="btn btn-sm btn-outline-danger" onclick="deleteGoal(${idx})">Delete</button>`;
                 }
-                container.innerHTML += `
-                <div class="goal-card">
+                
+                const goalCard = document.createElement('div');
+                goalCard.className = 'goal-card';
+                goalCard.innerHTML = `
                     ${achievedCard}
-                    <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap">
                         <h4 class="goal-title mb-0">${goal.name}</h4>
-                        <div>
+                        <div class="d-flex gap-1 mt-2 mt-md-0">
                             <span class="badge bg-${percent === 100 ? 'success' : 'primary'} me-1">${percent}%</span>
                             <span class="badge bg-info text-dark">$${(goal.saved || 0).toLocaleString()}</span>
                         </div>
@@ -1160,7 +1741,8 @@
                     <div class="goal-actions">
                         ${actions}
                     </div>
-                </div>`;
+                `;
+                container.appendChild(goalCard);
             });
         }
         // Agregar meta
