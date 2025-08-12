@@ -1380,6 +1380,95 @@
             }
         }
     </style>
+    <style>
+    /* Ajuste: ampliar ancho de las tarjetas de metas para que el bloque de progreso no se vea angosto */
+    /* Solo ampliar las tarjetas de progreso (goal-card), no el formulario */
+    /* Layout más amplio: las tarjetas de progreso ocupan todo el ancho disponible */
+    @media (min-width: 992px) {
+        .goals-container { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 2rem; 
+            width: 100%;
+            max-width: 1600px; /* ancho total permitido */
+            margin: 0 auto;
+        }
+        .goals-container .goal-card { 
+            max-width: none; 
+            width: 100%; 
+        }
+        .main-content.sidebar-hidden .goals-container { max-width: 1800px; }
+    }
+    @media (min-width: 1600px) {
+        .goals-container { max-width: 1800px; }
+        .main-content.sidebar-hidden .goals-container { max-width: 2000px; }
+    }
+    /* Fondo armonizado: mantener página clara pero dar una leve tarjeta suave coherente con la paleta */
+    .goals-section { background: var(--light-background, #f8fafc) !important; }
+    .goal-form-container.card { background: #ffffff !important; }
+    .goal-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f2f6fb 100%) !important;
+        border: 1.5px solid #d7e2ee !important;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.04) !important;
+        backdrop-filter: none;
+    }
+    .goal-card .progress-bar { background: #e6ecf2; }
+    .goal-card .progress { background: linear-gradient(90deg,#004AAD,#6366f1); }
+    /* Hover sutil */
+    .goal-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.07), 0 3px 8px rgba(0,0,0,0.05) !important; transform: translateY(-2px); transition: .25s; }
+    .goal-card { transition: box-shadow .25s, transform .25s; }
+    /* Modo oscuro: tonos profundos suaves y contraste mejorado */
+    [data-bs-theme="dark"] .goals-section { background: #181C24 !important; }
+    [data-bs-theme="dark"] .goal-form-container.card { background: #222b36 !important; border: 1.5px solid #2f3a47; }
+    [data-bs-theme="dark"] .goal-card {
+        background: linear-gradient(135deg, #232e3a 0%, #1c252f 100%) !important;
+        border: 1.5px solid #2f3a47 !important;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.02) !important;
+    }
+    [data-bs-theme="dark"] .goal-card:hover { box-shadow: 0 6px 22px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) !important; }
+    [data-bs-theme="dark"] .goal-card .progress-bar { background: #2f3a47; }
+    [data-bs-theme="dark"] .goal-card .progress { background: linear-gradient(90deg,#EEE95B,#818cf8); }
+    /* Texto de montos en amarillo institucional */
+    /* Colores de montos según tema */
+    html[data-bs-theme="dark"] .goal-card .amount-badge,
+    html[data-bs-theme="dark"] .goal-card .goal-progress-text { color: #EEE95B !important; }
+    html[data-bs-theme="dark"] .goal-card .amount-badge { background: rgba(238,233,91,0.15) !important; border: 1px solid #EEE95B; }
+    html[data-bs-theme="light"] .goal-card .amount-badge,
+    html[data-bs-theme="light"] .goal-card .goal-progress-text { color: #002366 !important; }
+    html[data-bs-theme="light"] .goal-card .amount-badge { background: #e6ecf5 !important; border: 1px solid #004AAD; }
+    /* Override final: tarjeta con fondo oscuro neutro en ambos modos (eliminar azul) */
+    .goal-card { background: #1f2732 !important; color: #f3f6fa !important; border: 1.5px solid #2d3946 !important; }
+    /* Títulos por tema */
+    html[data-bs-theme="dark"] .goal-card .goal-title { color: #FFE676 !important; }
+    html[data-bs-theme="light"] .goal-card { background: #ffffff !important; border: 1.5px solid #d7e2ee !important; color: #002366 !important; }
+    html[data-bs-theme="light"] .goal-card .goal-title { color: #004AAD !important; }
+    .goal-card .progress-bar { background: #2d3946 !important; }
+    .goal-card .progress { background: linear-gradient(90deg,#6366f1,#EEE95B) !important; }
+    .goal-card .badge:not(.amount-badge) { background: #2d3946; color: #FFE676; }
+    .goal-card .goal-actions .btn-outline-success { background: #FFE676 !important; color: #1f2732 !important; }
+    .goal-card .goal-actions .btn-outline-success:hover { background: #6366f1 !important; color: #FFE676 !important; }
+    .goal-card .goal-actions .btn-outline-danger { background: transparent !important; color: #FFE676 !important; border-color: #FFE676; }
+    .goal-card .goal-actions .btn-outline-danger:hover { background: #FFE676 !important; color: #1f2732 !important; }
+    /* Hover adaptado */
+    .goal-card:hover { box-shadow: 0 8px 28px -4px rgba(0,0,0,0.55) !important; }
+    /* Ajuste solicitado: en modo oscuro la tarjeta debe parecerse más al fondo de la página */
+    html[data-bs-theme="dark"] .goal-card {
+        background: #181C24 !important; /* mismo tono base que el fondo */
+        border: 1px solid #232A36 !important;
+        box-shadow: 0 4px 18px -4px rgba(0,0,0,0.65) !important;
+    }
+    html[data-bs-theme="dark"] .goal-card:hover {
+        box-shadow: 0 6px 24px -4px rgba(0,0,0,0.75) !important;
+    }
+    /* Ajustar formulario para que no se vea como bloque distinto */
+    .goal-form-container.card {
+        border: 2px solid rgba(0,0,0,0.08);
+        box-shadow: none !important;
+    }
+    [data-bs-theme="dark"] .goal-form-container.card {
+        border: 2px solid rgba(255,255,255,0.12);
+    }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
@@ -1506,7 +1595,8 @@
     </style>
     <!-- Sidebar -->
     <!-- Sidebar -->
-    <nav class="leccion-sidebar trivia-sidebar">
+    <!-- sidebar instance (marker v1) -->
+    <nav class="leccion-sidebar trivia-sidebar" data-sidebar-version="1">
         <div class="container-fluid">
             <div class="sidebar-logo-container text-center mb-3">
                 <img src="images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
@@ -1740,7 +1830,7 @@
                         <h4 class="goal-title mb-0">${goal.name}</h4>
                         <div class="d-flex gap-1 mt-2 mt-md-0">
                             <span class="badge bg-${percent === 100 ? 'success' : 'primary'} me-1">${percent}%</span>
-                            <span class="badge bg-info text-dark">$${(goal.saved || 0).toLocaleString()}</span>
+                            <span class="badge amount-badge">$${(goal.saved || 0).toLocaleString()}</span>
                         </div>
                     </div>
                     <div class="progress-bar mb-2">
