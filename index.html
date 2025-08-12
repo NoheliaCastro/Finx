@@ -757,6 +757,118 @@
         .hero-image-container * {
           pointer-events: auto !important;
         }
+
+        [data-bs-theme="dark"] .features {
+            background-color: #111827;
+            color: #f3f4f6;
+        }
+
+        [data-bs-theme="dark"] .features .features-text {
+            color: #d1d5db !important;
+        }
+
+        [data-bs-theme="dark"] .features h2 {
+            color: #f3f4f6;
+        }
+
+        /* Dark Mode Styles for Features Beautiful Section */
+        [data-bs-theme="dark"] .features-beautiful-section {
+            background: #374151 !important;
+            color: #f3f4f6 !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3) !important;
+        }
+
+        [data-bs-theme="dark"] .features-beautiful-section:hover {
+            box-shadow: 0 16px 48px rgba(0,0,0,0.4) !important;
+        }
+
+        [data-bs-theme="dark"] .features-img-beautiful {
+            box-shadow: 0 4px 24px rgba(0,0,0,0.4) !important;
+        }
+
+        [data-bs-theme="dark"] .features-img-beautiful:hover {
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5) !important;
+        }
+
+        /* Dark Mode Styles for Subscription Section */
+        [data-bs-theme="dark"] .subscription-section {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
+        }
+
+        .subscription-section {
+            background: linear-gradient(135deg, #e6f7f6 0%, #f0f9ff 100%);
+        }
+
+        [data-bs-theme="dark"] .subscription-title,
+        [data-bs-theme="dark"] .subscription-description {
+            color: #f3f4f6 !important;
+        }
+
+        [data-bs-theme="dark"] .plan-card {
+            background: #374151 !important;
+            border: 1px solid #4b5563;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        [data-bs-theme="dark"] .plan-card:hover {
+            box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+        }
+
+        /* Dark Mode Styles for Newsletter Section */
+        [data-bs-theme="dark"] .newsletter-section {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
+        }
+
+        .newsletter-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        [data-bs-theme="dark"] .newsletter-title {
+            color: #f3f4f6 !important;
+        }
+
+        .newsletter-title {
+            color: #11254b;
+        }
+
+        [data-bs-theme="dark"] .newsletter-input {
+            background-color: #374151 !important;
+            border-color: #4b5563 !important;
+            color: #f3f4f6 !important;
+        }
+
+        [data-bs-theme="dark"] .newsletter-input::placeholder {
+            color: #9ca3af !important;
+        }
+
+        [data-bs-theme="dark"] .newsletter-input:focus {
+            background-color: #374151 !important;
+            border-color: #6366f1 !important;
+            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25) !important;
+        }
+
+        .newsletter-input {
+            border-radius: 50px 0 0 50px;
+            border: 2px solid #e9ecef;
+            padding: 12px 20px;
+        }
+
+        .newsletter-btn {
+            border-radius: 0 50px 50px 0;
+            background: #11254b;
+            border: 2px solid #11254b;
+            padding: 12px 30px;
+        }
+
+        [data-bs-theme="dark"] .newsletter-btn {
+            background: #6366f1 !important;
+            border-color: #6366f1 !important;
+        }
+
+        [data-bs-theme="dark"] .newsletter-btn:hover {
+            background: #4f46e5 !important;
+            border-color: #4f46e5 !important;
+        }
     </style>
 </head>
 <body>
@@ -770,14 +882,14 @@
                 <div class="col-md-6 d-flex flex-column justify-content-center align-items-center" data-aos="fade-right" data-aos-delay="100" style="min-height: 600px;">
                     <div class="text-center w-100">
                         <div style="text-align: left; margin-left: 2.5rem;">
-                            <h1 class="display-4 fw-bold mb-4 title-font hero-animate" id="heroTitle">Welcome to Finx</h1>
-                            <p class="lead mb-4 hero-animate delay-1" id="heroSubtitle">Track, Manage, and Save with Ease!</p>
+                            <h1 class="display-4 fw-bold mb-4 title-font hero-animate" id="heroTitle" data-translate="hero-title">Welcome to Finx</h1>
+                            <p class="lead mb-4 hero-animate delay-1" id="heroSubtitle" data-translate="hero-subtitle">Track, Manage, and Save with Ease!</p>
                             <div class="d-flex gap-3 hero-animate delay-2" id="heroButtons" style="margin-left: -6rem;">
-                                <button class="btn btn-primary btn-lg btn-animated" data-aos="zoom-in" data-aos-delay="200">
+                                <button class="btn btn-primary btn-lg btn-animated" data-aos="zoom-in" data-aos-delay="200" data-translate="get-started">
                                     Get Started
                                 </button>
                                 <button class="btn btn-outline-primary btn-lg btn-same-width btn-animated" data-aos="zoom-in" data-aos-delay="300">
-                                    <i class="bi bi-play-fill me-2 icono-grande"></i>Watch demo
+                                    <i class="bi bi-play-fill me-2 icono-grande"></i><span data-translate="watch-demo">Watch demo</span>
                                 </button>
                             </div>
                         </div>
@@ -851,8 +963,8 @@
                     <div class="card h-100 border-0 shadow-sm gradient-card">
                         <div class="card-body d-flex flex-column align-items-center justify-content-center text-center">
                             <i class="fas fa-shield-alt mb-3" style="color: #2c5282; font-size: 3rem;"></i>
-                            <h3 class="h4 mb-2 text-center">Security</h3>
-                            <p class="text-center">Your data and money protected</p>
+                            <h3 class="h4 mb-2 text-center" data-translate="security">Security</h3>
+                            <p class="text-center" data-translate="security-desc">Your data and money protected</p>
                         </div>
                     </div>
                 </div>
@@ -860,8 +972,8 @@
                     <div class="card h-100 border-0 shadow-sm gradient-card">
                         <div class="card-body d-flex flex-column align-items-center justify-content-center text-center">
                             <i class="fas fa-book-open mb-3" style="color: #ff7a33; font-size: 3.5rem;"></i>
-                            <h3 class="h4 mb-2 text-center">Financial Education</h3>
-                            <p class="text-center">Learn while managing your money</p>
+                            <h3 class="h4 mb-2 text-center" data-translate="financial-education">Financial Education</h3>
+                            <p class="text-center" data-translate="financial-education-desc">Learn while managing your money</p>
                         </div>
                     </div>
                 </div>
@@ -869,8 +981,8 @@
                     <div class="card h-100 border-0 shadow-sm gradient-card">
                         <div class="card-body d-flex flex-column align-items-center justify-content-center text-center">
                             <i class="fas fa-gem mb-3" style="color: #74C0FC; font-size: 3.5rem;"></i>
-                            <h3 class="h4 mb-2 text-center">Ease of Use</h3>
-                            <p class="text-center">Intuitive, fast and made for you</p>
+                            <h3 class="h4 mb-2 text-center" data-translate="ease-of-use">Ease of Use</h3>
+                            <p class="text-center" data-translate="ease-of-use-desc">Intuitive, fast and made for you</p>
                         </div>
                     </div>
                 </div>
@@ -882,12 +994,12 @@
     <section class="features py-5" id="features" data-aos="fade-up">
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-down">
-                <h2 class="display-4 fw-bold title-font" data-aos="fade-up">Why Choose Us</h2>
+                <h2 class="display-4 fw-bold title-font" data-aos="fade-up" data-translate="why-choose-us">Why Choose Us</h2>
             </div>
             <div class="row align-items-center features-beautiful-section">
                 <div class="col-md-6 text-start" data-aos="fade-right" data-aos-delay="100">
-                    <p style="font-size:1.5rem; text-align: justify;">At Finx, we believe that managing your finances shouldn't be a daunting task. Our mission is to empower individuals to take control of their money and achieve financial stability.</p>
-                    <button class="btn btn-primary btn-lg btn-features-pulse" style="background:#11254b;color:#fff;font-weight:500;" data-aos="zoom-in" data-aos-delay="200">View more</button>
+                    <p style="font-size:1.5rem; text-align: justify;" class="features-text" data-translate="features-text">At Finx, we believe that managing your finances shouldn't be a daunting task. Our mission is to empower individuals to take control of their money and achieve financial stability.</p>
+                    <button class="btn btn-primary btn-lg btn-features-pulse" style="background:#11254b;color:#fff;font-weight:500;" data-aos="zoom-in" data-aos-delay="200" data-translate="view-more">View more</button>
                 </div>
                 <div class="col-md-6 text-center" data-aos="fade-left" data-aos-delay="200">
                     <img src="https://img.freepik.com/fotos-premium/graficos-tablas_55997-2974.jpg" alt="Finx" class="features-img-beautiful features-img-animate" data-aos="zoom-in-up" data-aos-delay="300">
@@ -904,11 +1016,11 @@
                     <img src="images/cerdito.jpg" alt="Finx App" class="img-fluid rounded-4 shadow-lg benefits-hero-img" style="max-width: 90%; height: 480px; object-fit: contain;">
                 </div>
                 <div class="col-md-6 text-center text-md-center d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="300">
-                    <h2 class="display-3 fw-bold mb-3 benefits-hero-title" style="animation: heroTextPop 1.1s cubic-bezier(.4,2,.6,1);">Your money, your future.<br>Take control with <span style='color:#00b8d9'>Finx</span>.</h2>
-                    <p class="lead mb-4 benefits-hero-subtitle text-center">Empower yourself to save, manage, and achieve your dreams. Finx makes your financial journey simple, smart, and secure.</p>
+                    <h2 class="display-3 fw-bold mb-3 benefits-hero-title" style="animation: heroTextPop 1.1s cubic-bezier(.4,2,.6,1);"><span data-translate="your-money-future">Your money, your future.</span><br><span data-translate="take-control">Take control with</span> <span style='color:#00b8d9'>Finx</span>.</h2>
+                    <p class="lead mb-4 benefits-hero-subtitle text-center" data-translate="benefits-desc">Empower yourself to save, manage, and achieve your dreams. Finx makes your financial journey simple, smart, and secure.</p>
                     <div class="d-flex gap-3">
-                        <a href="login.html" class="btn btn-lg btn-primary benefits-hero-btn-main btn-animated">Log In</a>
-                        <a href="about_us.html" class="btn btn-lg btn-outline-primary benefits-hero-btn-secondary btn-animated">Learn More</a>
+                        <a href="login.html" class="btn btn-lg btn-primary benefits-hero-btn-main btn-animated" data-translate="log-in">Log In</a>
+                        <a href="about_us.html" class="btn btn-lg btn-outline-primary benefits-hero-btn-secondary btn-animated" data-translate="learn-more">Learn More</a>
                     </div>
                 </div>
             </div>
@@ -916,46 +1028,46 @@
     </section>
 
     <!-- Subscription Plans Section -->
-    <section class="subscription-section py-5" id="subscription" data-aos="fade-up" style="background: #e6f7f6;">
+    <section class="subscription-section py-5" id="subscription" data-aos="fade-up">
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-down">
-                <h2 class="display-4 fw-bold title-font" style="text-align: center !important; max-width:600px; margin:0 auto;">Suscriptions</h2>
-                <p class="lead" style="text-align: center !important; max-width:600px; margin:0 auto;">
+                <h2 class="display-4 fw-bold title-font subscription-title" style="text-align: center !important; max-width:600px; margin:0 auto;" data-translate="subscriptions">Suscriptions</h2>
+                <p class="lead subscription-description" style="text-align: center !important; max-width:600px; margin:0 auto;" data-translate="subscriptions-desc">
                     Choose the FINX plan that best fits your financial journey. Upgrade anytime to unlock more powerful features!
                 </p>
             </div>
             <div class="subscription-plans-container">
                 <div class="plan-card" id="basicPlanCard" style="cursor:pointer;">
                     <div class="plan-header basic-header">
-                        <div class="plan-desc">Perfect for beginners</div>
-                        Basic Plan
+                        <div class="plan-desc" data-translate="perfect-beginners">Perfect for beginners</div>
+                        <span data-translate="basic-plan">Basic Plan</span>
                     </div>
                     <div class="plan-body d-flex flex-column align-items-center justify-content-center">
                         <div class="plan-icon-container"><i class="fas fa-clipboard-list plan-icon-basic"></i></div>
-                        <button class="plan-btn basic mt-3">Choose Plan</button>
+                        <button class="plan-btn basic mt-3" data-translate="choose-plan">Choose Plan</button>
                     </div>
                     <div class="plan-footer basic-footer">$5</div>
                 </div>
                 <div class="plan-card" id="standardPlanCard" style="z-index:2; cursor:pointer;">
-                    <span class="badge-popular">Most Popular</span>
+                    <span class="badge-popular" data-translate="most-popular">Most Popular</span>
                     <div class="plan-header standard-header">
-                        <div class="plan-desc">Best value</div>
-                        Standard Plan
+                        <div class="plan-desc" data-translate="best-value">Best value</div>
+                        <span data-translate="standard-plan">Standard Plan</span>
                     </div>
                     <div class="plan-body d-flex flex-column align-items-center justify-content-center">
                         <div class="plan-icon-container"><i class="fas fa-file-alt plan-icon-standard"></i></div>
-                        <button class="plan-btn standard mt-3">Choose Plan</button>
+                        <button class="plan-btn standard mt-3" data-translate="choose-plan">Choose Plan</button>
                     </div>
                     <div class="plan-footer standard-footer">$10/month</div>
                 </div>
                 <div class="plan-card" id="premiumPlanCard" style="cursor:pointer;">
                     <div class="plan-header premium-header">
-                        <div class="plan-desc">For power users</div>
-                        Premium Plan
+                        <div class="plan-desc" data-translate="advanced-features">For power users</div>
+                        <span data-translate="premium-plan">Premium Plan</span>
                     </div>
                     <div class="plan-body d-flex flex-column align-items-center justify-content-center">
                         <div class="plan-icon-container"><i class="fas fa-gem plan-icon-premium"></i></div>
-                        <button class="plan-btn premium mt-3">Choose Plan</button>
+                        <button class="plan-btn premium mt-3" data-translate="choose-plan">Choose Plan</button>
                     </div>
                     <div class="plan-footer premium-footer">$20/month</div>
                 </div>
@@ -1036,21 +1148,19 @@
     </div>
 
     <!-- Newsletter Subscription Section -->
-    <section class="newsletter-section py-5" id="newsletter" data-aos="fade-up" style="background: #f8f9fa;">
+    <section class="newsletter-section py-5" id="newsletter" data-aos="fade-up">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
                     <div class="newsletter-content" data-aos="fade-down">
-                        <h2 class="display-5 fw-bold mb-3" style="color: #11254b;">Newsletter</h2>
+                        <h2 class="display-5 fw-bold mb-3 newsletter-title" data-translate="newsletter">Newsletter</h2>
                         <form class="newsletter-form" id="newsletterForm" data-aos="fade-up">
                             <div class="row justify-content-center">
                                 <div class="col-md-8 col-lg-6">
                                     <div class="input-group mb-3">
-                                        <input type="email" class="form-control form-control-lg" id="newsletterEmail" 
-                                               placeholder="Enter your email address" required 
-                                               style="border-radius: 50px 0 0 50px; border: 2px solid #e9ecef; padding: 12px 20px;">
-                                        <button class="btn btn-primary btn-lg" type="submit" 
-                                                style="border-radius: 0 50px 50px 0; background: #11254b; border: 2px solid #11254b; padding: 12px 30px;">
+                                        <input type="email" class="form-control form-control-lg newsletter-input" id="newsletterEmail" 
+                                               placeholder="Enter your email address" required>
+                                        <button class="btn btn-primary btn-lg newsletter-btn" type="submit">
                                             Subscribe
                                         </button>
                                     </div>
@@ -1240,6 +1350,145 @@
                 }, { threshold: 0.3 });
                 benefitsImg.style.animationPlayState = 'paused';
                 benefitsImgObs.observe(benefitsImg);
+            }
+        });
+
+        // Sistema de traducción
+        const translations = {
+            en: {
+                'home': 'Home',
+                'about-us': 'About us',
+                'help-center': 'Help center',
+                'register': 'Register',
+                'login': 'Login',
+                'hero-title': 'Welcome to Finx',
+                'hero-subtitle': 'Track, Manage, and Save with Ease!',
+                'get-started': 'Get Started',
+                'watch-demo': 'Watch demo',
+                'security': 'Security',
+                'security-desc': 'Your data and money protected',
+                'financial-education': 'Financial Education',
+                'financial-education-desc': 'Learn while managing your money',
+                'ease-of-use': 'Ease of Use',
+                'ease-of-use-desc': 'Intuitive, fast and made for you',
+                'why-choose-us': 'Why Choose Us',
+                'features-text': 'At Finx, we believe that managing your finances shouldn\'t be a daunting task. Our mission is to empower individuals to take control of their money and achieve financial stability.',
+                'view-more': 'View more',
+                'your-money-future': 'Your money, your future.',
+                'take-control': 'Take control with',
+                'benefits-desc': 'Empower yourself to save, manage, and achieve your dreams. Finx makes your financial journey simple, smart, and secure.',
+                'log-in': 'Log In',
+                'learn-more': 'Learn More',
+                'subscriptions': 'Subscriptions',
+                'subscriptions-desc': 'Choose the FINX plan that best fits your financial journey. Upgrade anytime to unlock more powerful features!',
+                'basic-plan': 'Basic Plan',
+                'perfect-beginners': 'Perfect for beginners',
+                'standard-plan': 'Standard Plan',
+                'best-value': 'Best value',
+                'premium-plan': 'Premium Plan',
+                'advanced-features': 'For power users',
+                'most-popular': 'Most Popular',
+                'choose-plan': 'Choose Plan',
+                'newsletter': 'Newsletter',
+                'enter-email': 'Enter your email address',
+                'subscribe': 'Subscribe',
+                'thank-subscribe': 'Thank you for subscribing! We\'ll keep you updated with the latest Finx news.',
+                'valid-email': 'Please enter a valid email address.'
+            },
+            es: {
+                'home': 'Inicio',
+                'about-us': 'Acerca de',
+                'help-center': 'Centro de ayuda',
+                'register': 'Registrarse',
+                'login': 'Iniciar Sesión',
+                'hero-title': 'Bienvenido a Finx',
+                'hero-subtitle': '¡Rastrea, Gestiona y Ahorra con Facilidad!',
+                'get-started': 'Empezar',
+                'watch-demo': 'Ver demo',
+                'security': 'Seguridad',
+                'security-desc': 'Tus datos y dinero protegidos',
+                'financial-education': 'Educación Financiera',
+                'financial-education-desc': 'Aprende mientras gestionas tu dinero',
+                'ease-of-use': 'Facilidad de Uso',
+                'ease-of-use-desc': 'Intuitivo, rápido y hecho para ti',
+                'why-choose-us': '¿Por Qué Elegirnos?',
+                'features-text': 'En Finx, creemos que gestionar tus finanzas no debería ser una tarea desalentadora. Nuestra misión es empoderar a las personas para que tomen control de su dinero y logren estabilidad financiera.',
+                'view-more': 'Ver más',
+                'your-money-future': 'Tu dinero, tu futuro.',
+                'take-control': 'Toma control con',
+                'benefits-desc': 'Empodérate para ahorrar, gestionar y alcanzar tus sueños. Finx hace que tu viaje financiero sea simple, inteligente y seguro.',
+                'log-in': 'Iniciar Sesión',
+                'learn-more': 'Saber Más',
+                'subscriptions': 'Suscripciones',
+                'subscriptions-desc': '¡Elige el plan de FINX que mejor se adapte a tu viaje financiero. Actualiza en cualquier momento para desbloquear características más poderosas!',
+                'basic-plan': 'Plan Básico',
+                'perfect-beginners': 'Perfecto para principiantes',
+                'standard-plan': 'Plan Estándar',
+                'best-value': 'Mejor valor',
+                'premium-plan': 'Plan Premium',
+                'advanced-features': 'Para usuarios avanzados',
+                'most-popular': 'Más Popular',
+                'choose-plan': 'Elegir Plan',
+                'newsletter': 'Boletín',
+                'enter-email': 'Ingresa tu dirección de correo electrónico',
+                'subscribe': 'Suscribirse',
+                'thank-subscribe': '¡Gracias por suscribirte! Te mantendremos actualizado con las últimas noticias de Finx.',
+                'valid-email': 'Por favor ingresa una dirección de correo electrónico válida.'
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.setItem('finx_lang', lang);
+            
+            // Traducir todos los elementos con atributo data-translate
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.tagName.toLowerCase() === 'input' && element.type === 'email') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+
+            // Actualizar elementos específicos del header si existen
+            const langIcon = document.getElementById('langToggle');
+            if (langIcon) {
+                langIcon.title = lang === 'es' ? 'Traducir página' : 'Translate page';
+            }
+
+            // Actualizar placeholder del email de newsletter
+            const newsletterEmail = document.getElementById('newsletterEmail');
+            if (newsletterEmail) {
+                newsletterEmail.placeholder = translations[lang]['enter-email'];
+            }
+
+            // Actualizar mensajes de éxito y error del newsletter
+            const successMsg = document.getElementById('newsletterSuccess');
+            const errorMsg = document.getElementById('newsletterError');
+            if (successMsg) {
+                successMsg.innerHTML = `<i class="fas fa-check-circle me-2"></i>${translations[lang]['thank-subscribe']}`;
+            }
+            if (errorMsg) {
+                errorMsg.innerHTML = `<i class="fas fa-exclamation-circle me-2"></i>${translations[lang]['valid-email']}`;
+            }
+        }
+
+        // Event listener para el botón de traducción
+        document.addEventListener('DOMContentLoaded', function() {
+            // Aplicar idioma guardado o por defecto español
+            const savedLang = localStorage.getItem('finx_lang') || 'es';
+            setLanguage(savedLang);
+
+            // Event listener para el toggle de idioma
+            const langToggleBtn = document.getElementById('langToggle');
+            if (langToggleBtn) {
+                langToggleBtn.addEventListener('click', function() {
+                    const currentLang = localStorage.getItem('finx_lang') || 'es';
+                    const newLang = currentLang === 'es' ? 'en' : 'es';
+                    setLanguage(newLang);
+                });
             }
         });
     </script>

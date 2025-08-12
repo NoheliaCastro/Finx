@@ -5,10 +5,10 @@
       <!-- Línea divisoria vertical -->
       <div class="d-none d-lg-block" style="position:absolute;left:25%;top:0;height:calc(100% - 40px);width:1px;background:linear-gradient(to bottom,#004AAD22 0%,#004AAD66 100%);z-index:1;"></div>
       <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-end mb-4 mb-lg-0 pt-lg-2 justify-content-center" style="z-index:2;">
-        <picture class="mb-2 w-100 d-flex justify-content-center align-items-center">
-          <source srcset="images/modo-oscuro.png" media="(prefers-color-scheme: dark)">
-          <img src="images/modo-claro2.png" alt="Finx Logo" style="width:100%; max-width:170px; height:auto; display:block;">
-        </picture>
+        <div class="footer-logo-container mb-2 w-100 d-flex justify-content-center align-items-center">
+          <img src="images/modo-claro.png" alt="Finx Logo" class="footer-logo-light" style="width:100%; max-width:170px; height:auto; display:block;">
+          <img src="images/modo-oscuro.png" alt="Finx Logo" class="footer-logo-dark" style="width:100%; max-width:170px; height:auto; display:none;">
+        </div>
         <span class="footer-desc fw-bold text-center mt-2" style="font-size:1.3rem;">Your financial education platform.<br>Learn, play, and grow with us.</span>
       </div>
       <div class="col-lg-3 d-flex flex-column align-items-center align-items-lg-start justify-content-center pt-lg-4 ps-lg-5" style="z-index:2;">
@@ -80,5 +80,60 @@
   .footer .footer-link {
     font-size: 1rem;
   }
+}
+
+/* Dark Mode Styles for Footer */
+[data-bs-theme="dark"] .footer {
+  background-color: #111827 !important;
+  color: #f3f4f6 !important;
+}
+
+[data-bs-theme="dark"] .footer .footer-desc {
+  color: #d1d5db !important;
+}
+
+[data-bs-theme="dark"] .footer .footer-link {
+  color: #d1d5db !important;
+}
+
+[data-bs-theme="dark"] .footer .footer-link:hover {
+  color: #6366f1 !important;
+}
+
+[data-bs-theme="dark"] .footer h3 {
+  color: #f3f4f6 !important;
+}
+
+[data-bs-theme="dark"] .footer .footer-social {
+  color: #6366f1 !important;
+}
+
+[data-bs-theme="dark"] .footer .footer-social:hover {
+  color: #4f46e5 !important;
+}
+
+[data-bs-theme="dark"] .footer hr {
+  border-color: #374151 !important;
+}
+
+[data-bs-theme="dark"] .footer .text-muted {
+  color: #9ca3af !important;
+}
+
+/* Logo visibility control based on theme */
+.footer-logo-light {
+  display: block !important;
+}
+
+.footer-logo-dark {
+  display: none !important;
+}
+
+[data-bs-theme="dark"] .footer-logo-light {
+  display: none !important;
+}
+
+[data-bs-theme="dark"] .footer-logo-dark {
+  display: block !important;
 }
 </style>
