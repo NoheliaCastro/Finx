@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
     
     <meta charset="UTF-8">
@@ -8,89 +8,54 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 400;
-            line-height: 1.6;
-            color: #222;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Estilos para la sección FAQ */
-        .faq-section {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 40px 0;
-        }
-
-        .accordion-item {
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .accordion-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        }
-
-        .accordion-button {
-            background-color: #fff;
-            color: #1a237e;
-            font-weight: 600;
-            padding: 1.25rem;
-            border-radius: 12px 12px 0 0;
-            transition: all 0.3s ease;
-        }
-
-        .accordion-button:not(.collapsed) {
-            background-color: #e3f2fd;
-            color: #1565c0;
-        }
-
-        .accordion-button::after {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%231a237e'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-        }
-
-        .accordion-body {
-            background: #fff;
-            border-radius: 0 0 12px 12px;
-            padding: 1.5rem;
-            border-top: none;
-        }
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width,initial-scale=1" />
+            <title>Redirecting…</title>
+            <meta http-equiv="refresh" content="0; url=Help_center_fixed.html" />
+            <link rel="canonical" href="Help_center_fixed.html" />
+            <style>body{font-family:Montserrat,Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#0d1117;color:#fff;text-align:center}a{color:#58a6ff;text-decoration:none}</style>
+        </head>
+        <body>
+            <div>
+                <h1>Redirecting…</h1>
+                <p>You are being redirected to the updated Help Center.</p>
+                <p><a href="Help_center_fixed.html">Go now</a></p>
+            </div>
+            <script>window.location.replace('Help_center_fixed.html');</script>
+        </body>
+    </html>
+                window.addEventListener('scroll', revealOnScroll);
+                revealOnScroll(); // Run on load
+            }
+        
+            console.log('✅ Finx Help Center (reemplazado) listo.');
+        </script>
+    </body>
+    </html>
 
         .faq-item {
-            border-bottom: 1px solid #e2e8f0;
-            padding: 1rem 0;
+            border-bottom: 1px solid #e2e8f0 !important;
+            padding: 1rem 0 !important;
         }
 
         .faq-item:last-child {
-            border-bottom: none;
+            border-bottom: none !important;
         }
 
         .faq-question {
-            color: #1a237e;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+            color: #11254b !important;
+            font-weight: 600 !important;
+            margin-bottom: 0.5rem !important;
+            cursor: pointer !important;
+            transition: color 0.3s ease !important;
         }
 
         .faq-answer {
-            color: #424242;
-            line-height: 1.6;
+            color: #555555 !important;
+            line-height: 1.6 !important;
         }
 
         /* Animaciones */
@@ -170,6 +135,24 @@
         html[data-bs-theme="dark"] .submit-btn:hover {
             background: #23272b;
             color: #0d6efd;
+        }
+
+        /* Estilos adicionales para asegurar visibilidad en modo oscuro */
+        html[data-bs-theme="dark"] .faq-item {
+            border-bottom-color: #4b5563 !important;
+        }
+
+        html[data-bs-theme="dark"] .accordion-body {
+            border-top-color: #4b5563 !important;
+        }
+
+        html[data-bs-theme="dark"] .container {
+            background: transparent !important;
+        }
+
+        html[data-bs-theme="dark"] #help-center-content {
+            background: transparent !important;
+            color: #f3f4f6 !important;
         }
 
         h1 {
@@ -858,6 +841,138 @@
             background-color: #11254b !important;
             color: #fff !important;
         }
+
+        /* Estilos específicos para modo oscuro - Botones del navbar */
+        html[data-bs-theme="dark"] .btn-primary {
+            background-color: #6366f1 !important;
+            border-color: #6366f1 !important;
+            color: #ffffff !important;
+        }
+
+        html[data-bs-theme="dark"] .btn-primary:hover {
+            background-color: #4f46e5 !important;
+            border-color: #4f46e5 !important;
+            color: #ffffff !important;
+        }
+
+        html[data-bs-theme="dark"] .btn-outline-primary {
+            background-color: transparent !important;
+            color: #f3f4f6 !important;
+            border: 2px solid #6366f1 !important;
+        }
+
+        html[data-bs-theme="dark"] .btn-outline-primary:hover {
+            background-color: #6366f1 !important;
+            color: #ffffff !important;
+            border-color: #6366f1 !important;
+        }
+
+        /* Asegurar que los botones mantengan su estilo en el navbar */
+        .navbar .btn-primary,
+        .navbar .btn-outline-primary {
+            font-weight: 500 !important;
+            border-radius: 8px !important;
+            padding: 0.5rem 1rem !important;
+            transition: all 0.3s ease !important;
+        }
+
+        html[data-bs-theme="dark"] .navbar .btn-primary {
+            background-color: #6366f1 !important;
+            border-color: #6366f1 !important;
+        }
+
+        html[data-bs-theme="dark"] .navbar .btn-outline-primary {
+            border-color: #6366f1 !important;
+            color: #f3f4f6 !important;
+        }
+
+        /* Fix para iconos en botones */
+        .btn i {
+            color: inherit !important;
+        }
+
+        /* Estados adicionales para mejor UX */
+        .btn-primary:focus,
+        .btn-primary:active {
+            box-shadow: 0 0 0 0.25rem rgba(17, 37, 75, 0.25) !important;
+        }
+
+        .btn-outline-primary:focus,
+        .btn-outline-primary:active {
+            box-shadow: 0 0 0 0.25rem rgba(17, 37, 75, 0.25) !important;
+        }
+
+        html[data-bs-theme="dark"] .btn-primary:focus,
+        html[data-bs-theme="dark"] .btn-primary:active {
+            box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.25) !important;
+        }
+
+        html[data-bs-theme="dark"] .btn-outline-primary:focus,
+        html[data-bs-theme="dark"] .btn-outline-primary:active {
+            box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.25) !important;
+        }
+
+        /* Estilos específicos para elementos del navbar */
+        .navbar .btn {
+            margin: 0 0.25rem !important;
+        }
+
+        .navbar .btn i {
+            margin-right: 0.5rem !important;
+        }
+
+        /* Asegurar que el texto sea legible en todos los casos */
+        html[data-bs-theme="dark"] .navbar .btn-primary span,
+        html[data-bs-theme="dark"] .navbar .btn-outline-primary span {
+            color: inherit !important;
+        }
+
+        /* Estilos para botones de toggle (idioma y tema) */
+        .btn-link {
+            color: #11254b !important;
+            border: none !important;
+            background: none !important;
+            padding: 0.5rem !important;
+            border-radius: 8px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .btn-link:hover {
+            color: #0d6efd !important;
+            background-color: rgba(17, 37, 75, 0.1) !important;
+        }
+
+        html[data-bs-theme="dark"] .btn-link {
+            color: #f3f4f6 !important;
+        }
+
+        html[data-bs-theme="dark"] .btn-link:hover {
+            color: #6366f1 !important;
+            background-color: rgba(99, 102, 241, 0.1) !important;
+        }
+
+        /* Estilos para nav-links */
+        .navbar-nav .nav-link {
+            color: #333 !important;
+            font-weight: 500 !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 6px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #11254b !important;
+            background-color: rgba(17, 37, 75, 0.1) !important;
+        }
+
+        html[data-bs-theme="dark"] .navbar-nav .nav-link {
+            color: #f3f4f6 !important;
+        }
+
+        html[data-bs-theme="dark"] .navbar-nav .nav-link:hover {
+            color: #6366f1 !important;
+            background-color: rgba(99, 102, 241, 0.1) !important;
+        }
         [data-bs-theme="dark"] .category-card {
             background: linear-gradient(145deg, #232A36, #181C24);
             color: #fff;
@@ -870,13 +985,172 @@
             color: #d1d5db;
         }
     </style>
+    <style>
+        /* Hard kill any top gap above the navbar on this page */
+        html, body { margin-top: 0 !important; padding-top: 0 !important; }
+        #header, #header > * { margin-top: 0 !important; padding-top: 0 !important; }
+        /* Avoid first-child collapsing margins creating gaps */
+        body > :first-child { margin-top: 0 !important; }
+    </style>
+    
+    <!-- SOLUCIÓN RADICAL DEFINITIVA PARA BOTONES DEL NAVBAR -->
+    <style id="navbar-buttons-ultimate-fix">
+        /* RESET COMPLETO Y ESTILOS FORZADOS */
+        
+        /* Eliminar TODOS los estilos previos de botones */
+        .navbar .btn,
+        .navbar a.btn,
+        .navbar a[href*="register"],
+        .navbar a[href*="login"],
+        .navbar .btn-primary,
+        .navbar .btn-outline-primary,
+        .navbar a.btn-primary,
+        .navbar a.btn-outline-primary {
+            all: unset !important;
+        }
+        
+        /* CLASES PERSONALIZADAS PARA LOS BOTONES */
+        .register-btn-custom {
+            background: #007bff !important;
+            border: 2px solid #007bff !important;
+            color: #ffffff !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-family: 'Montserrat', sans-serif !important;
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            text-decoration: none !important;
+            border-radius: 10px !important;
+            padding: 12px 24px !important;
+            margin: 0 6px !important;
+            cursor: pointer !important;
+            min-height: 46px !important;
+            white-space: nowrap !important;
+            box-shadow: 0 2px 8px rgba(0,123,255,0.3) !important;
+            z-index: 9999 !important;
+            position: relative !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        .register-btn-custom:hover {
+            background: #0056b3 !important;
+            border-color: #0056b3 !important;
+            color: #ffffff !important;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 6px 20px rgba(0,123,255,0.5) !important;
+        }
+        
+        .login-btn-custom {
+            background: #ffffff !important;
+            border: 2px solid #000000 !important;
+            color: #000000 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-family: 'Montserrat', sans-serif !important;
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            text-decoration: none !important;
+            border-radius: 10px !important;
+            padding: 12px 24px !important;
+            margin: 0 6px !important;
+            cursor: pointer !important;
+            min-height: 46px !important;
+            white-space: nowrap !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+            z-index: 9999 !important;
+            position: relative !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        .login-btn-custom:hover {
+            background: #000000 !important;
+            border-color: #000000 !important;
+            color: #ffffff !important;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3) !important;
+        }
+        
+        /* MODO OSCURO */
+        html[data-bs-theme="dark"] .register-btn-custom {
+            background: linear-gradient(45deg, #8b5cf6, #a855f7) !important;
+            border: 2px solid #8b5cf6 !important;
+            color: #ffffff !important;
+            box-shadow: 0 2px 8px rgba(139,92,246,0.4) !important;
+        }
+        
+        html[data-bs-theme="dark"] .register-btn-custom:hover {
+            background: linear-gradient(45deg, #7c3aed, #8b5cf6) !important;
+            border-color: #7c3aed !important;
+            color: #ffffff !important;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 6px 20px rgba(139,92,246,0.6) !important;
+        }
+        
+        html[data-bs-theme="dark"] .login-btn-custom {
+            background: rgba(255,255,255,0.15) !important;
+            border: 2px solid #a855f7 !important;
+            color: #ffffff !important;
+            backdrop-filter: blur(10px) !important;
+            box-shadow: 0 2px 8px rgba(168,85,247,0.3) !important;
+        }
+        
+        html[data-bs-theme="dark"] .login-btn-custom:hover {
+            background: #8b5cf6 !important;
+            border-color: #8b5cf6 !important;
+            color: #ffffff !important;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 6px 20px rgba(139,92,246,0.6) !important;
+        }
+        
+        /* ICONOS Y TEXTO - FORZAR HERENCIA */
+        .register-btn-custom *,
+        .login-btn-custom * {
+            color: inherit !important;
+            font-size: inherit !important;
+            font-weight: inherit !important;
+        }
+        
+        /* ULTRA-ESPECÍFICO PARA ELEMENTOS INTERNOS */
+        .register-btn-custom i,
+        .register-btn-custom span {
+            color: #ffffff !important;
+        }
+        
+        .login-btn-custom i,
+        .login-btn-custom span {
+            color: #000000 !important;
+        }
+        
+        .login-btn-custom:hover i,
+        .login-btn-custom:hover span {
+            color: #ffffff !important;
+        }
+        
+        html[data-bs-theme="dark"] .login-btn-custom i,
+        html[data-bs-theme="dark"] .login-btn-custom span {
+            color: #ffffff !important;
+        }
+        
+        /* ELIMINACIÓN DE ESTILOS BOOTSTRAP CONFLICTIVOS */
+        .navbar .register-btn-custom.btn,
+        .navbar .login-btn-custom.btn,
+        .navbar .register-btn-custom.btn-primary,
+        .navbar .login-btn-custom.btn-outline-primary {
+            all: unset !important;
+            /* Re-aplicar estilos después del reset */
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+    </style>
 </head>
 <body>
     <!-- Header reutilizable -->
     <div id="header"></div>
 
-
-
+    <main>
     <!-- Mensaje de bienvenida y jerarquía visual -->
     <section class="welcome-section section-shadow" style="padding: 120px 0 60px 0;">
         <div class="container text-center" style="max-width: 800px;">
@@ -1101,7 +1375,203 @@
             if (footerElement) {
                 loadComponent('footer', 'components/footer.html');
             }
+
+            // Theme toggle functionality
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            
+            // Wait for header to load then add event listener to theme toggle
+            setTimeout(() => {
+                const themeToggle = document.getElementById('themeToggle');
+                if (themeToggle) {
+                    themeToggle.addEventListener('click', () => {
+                        const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+                        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                        document.documentElement.setAttribute('data-bs-theme', newTheme);
+                        localStorage.setItem('theme', newTheme);
+                        
+                        // Update theme toggle icon
+                        const icon = themeToggle.querySelector('i');
+                        if (icon) {
+                            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                        }
+                        
+                        // Force re-apply button styles
+                        forceButtonStyleUpdate();
+                    });
+                    
+                    // Set initial icon
+                    const icon = themeToggle.querySelector('i');
+                    if (icon) {
+                        icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                }
+                
+                // Force button style update after header loads
+                forceButtonStyleUpdate();
+                
+                // Agregar listener para cambios de tema
+                const themeToggleBtn = document.querySelector('#themeToggle');
+                if (themeToggleBtn) {
+                    themeToggleBtn.addEventListener('click', function() {
+                        setTimeout(() => {
+                            forceButtonStyleUpdate();
+                            console.log('🎨 Estilos actualizados después de cambio de tema');
+                        }, 100);
+                    });
+                }
+            }, 500);
         });
+        
+        // SCRIPT DE INICIALIZACIÓN INMEDIATA - VERSIÓN CORREGIDA
+        (function() {
+            console.log('🚀 INICIALIZACIÓN INMEDIATA DE BOTONES - VERSIÓN CORREGIDA...');
+            
+            function applyImmediateClasses() {
+                const registerBtn = document.querySelector('a[href="register.html"]');
+                const loginBtn = document.querySelector('a[href="login.html"]');
+                
+                if (registerBtn) {
+                    // Remover todas las clases Bootstrap
+                    registerBtn.classList.remove('btn', 'btn-primary', 'btn-outline-primary', 'btn-secondary', 'btn-success', 'btn-danger', 'btn-warning', 'btn-info', 'btn-light', 'btn-dark');
+                    registerBtn.className = 'register-btn-custom';
+                    
+                    console.log('✅ Clase aplicada a Register:', registerBtn.className);
+                }
+                
+                if (loginBtn) {
+                    // Remover todas las clases Bootstrap
+                    loginBtn.classList.remove('btn', 'btn-primary', 'btn-outline-primary', 'btn-secondary', 'btn-success', 'btn-danger', 'btn-warning', 'btn-info', 'btn-light', 'btn-dark');
+                    loginBtn.className = 'login-btn-custom';
+                    
+                    console.log('✅ Clase aplicada a Login:', loginBtn.className);
+                    
+                    // Forzar texto negro en modo claro
+                    if (document.documentElement.getAttribute('data-bs-theme') !== 'dark') {
+                        const textElements = loginBtn.querySelectorAll('*');
+                        textElements.forEach(el => {
+                            el.style.setProperty('color', '#000000', 'important');
+                        });
+                    }
+                }
+            }
+            
+            // Ejecutar inmediatamente y repetir hasta que los elementos estén presentes
+            const interval = setInterval(() => {
+                const registerBtn = document.querySelector('a[href="register.html"]');
+                const loginBtn = document.querySelector('a[href="login.html"]');
+                
+                if (registerBtn && loginBtn) {
+                    applyImmediateClasses();
+                    clearInterval(interval);
+                    console.log('✅ CLASES PERSONALIZADAS APLICADAS INMEDIATAMENTE');
+                }
+            }, 50); // Más frecuente para aplicar antes
+            
+            // Timeout de seguridad
+            setTimeout(() => clearInterval(interval), 3000);
+        })();
+        
+        // FUNCIÓN DEFINITIVA ULTRA-AGRESIVA PARA BOTONES - VERSIÓN CORREGIDA
+        function forceButtonStyleUpdate() {
+            console.log('🚀 EJECUTANDO SOLUCIÓN DEFINITIVA DE BOTONES - VERSIÓN CORREGIDA...');
+            
+            // Obtener referencias directas
+            const registerBtn = document.querySelector('a[href="register.html"]');
+            const loginBtn = document.querySelector('a[href="login.html"]');
+            const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+            
+            console.log('Tema:', isDark ? 'OSCURO' : 'CLARO');
+            console.log('Register encontrado:', !!registerBtn);
+            console.log('Login encontrado:', !!loginBtn);
+            
+            if (registerBtn) {
+                // ELIMINAR TODAS LAS CLASES BOOTSTRAP
+                registerBtn.classList.remove('btn', 'btn-primary', 'btn-outline-primary', 'btn-secondary', 'btn-success', 'btn-danger', 'btn-warning', 'btn-info', 'btn-light', 'btn-dark');
+                registerBtn.removeAttribute('class');
+                registerBtn.className = 'register-btn-custom';
+                
+                // APLICAR ESTILOS INLINE DIRECTOS
+                const registerStyles = {
+                    background: isDark ? 'linear-gradient(45deg, #8b5cf6, #a855f7)' : '#007bff',
+                    border: isDark ? '2px solid #8b5cf6' : '2px solid #007bff',
+                    color: '#ffffff',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontFamily: 'Montserrat, sans-serif',
+                    fontWeight: '700',
+                    fontSize: '14px',
+                    textDecoration: 'none',
+                    borderRadius: '10px',
+                    padding: '12px 24px',
+                    margin: '0 6px',
+                    transition: 'all 0.2s ease',
+                    cursor: 'pointer',
+                    minHeight: '46px',
+                    whiteSpace: 'nowrap',
+                    boxShadow: isDark ? '0 2px 8px rgba(139,92,246,0.4)' : '0 2px 8px rgba(0,123,255,0.3)',
+                    zIndex: '9999',
+                    position: 'relative'
+                };
+                
+                Object.assign(registerBtn.style, registerStyles);
+                
+                // Forzar color de contenido
+                const regIcons = registerBtn.querySelectorAll('*');
+                regIcons.forEach(el => {
+                    el.style.color = '#ffffff';
+                    el.style.setProperty('color', '#ffffff', 'important');
+                });
+            }
+            
+            if (loginBtn) {
+                // ELIMINAR TODAS LAS CLASES BOOTSTRAP
+                loginBtn.classList.remove('btn', 'btn-primary', 'btn-outline-primary', 'btn-secondary', 'btn-success', 'btn-danger', 'btn-warning', 'btn-info', 'btn-light', 'btn-dark');
+                loginBtn.removeAttribute('class');
+                loginBtn.className = 'login-btn-custom';
+                
+                // APLICAR ESTILOS INLINE DIRECTOS
+                const loginStyles = {
+                    background: isDark ? 'rgba(255,255,255,0.15)' : '#ffffff',
+                    border: isDark ? '2px solid #a855f7' : '2px solid #000000',
+                    color: isDark ? '#ffffff' : '#000000',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontFamily: 'Montserrat, sans-serif',
+                    fontWeight: '700',
+                    fontSize: '14px',
+                    textDecoration: 'none',
+                    borderRadius: '10px',
+                    padding: '12px 24px',
+                    margin: '0 6px',
+                    transition: 'all 0.2s ease',
+                    cursor: 'pointer',
+                    minHeight: '46px',
+                    whiteSpace: 'nowrap',
+                    boxShadow: isDark ? '0 2px 8px rgba(168,85,247,0.3)' : '0 2px 8px rgba(0,0,0,0.1)',
+                    zIndex: '9999',
+                    position: 'relative'
+                };
+                
+                if (isDark) {
+                    loginStyles.backdropFilter = 'blur(10px)';
+                }
+                
+                Object.assign(loginBtn.style, loginStyles);
+                
+                // Forzar color de contenido
+                const logIcons = loginBtn.querySelectorAll('*');
+                const textColor = isDark ? '#ffffff' : '#000000';
+                logIcons.forEach(el => {
+                    el.style.color = textColor;
+                    el.style.setProperty('color', textColor, 'important');
+                });
+            }
+            
+            console.log('✅ ESTILOS DEFINITIVOS APLICADOS CORRECTAMENTE SIN CLASES BOOTSTRAP');
+        }
     </script>
     <script src="js/components.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
