@@ -550,6 +550,10 @@
             font-size: 1.35rem;
             font-weight: 500;
         }
+        /* Dark mode override for benefits subtitle readability */
+        [data-bs-theme="dark"] .benefits-hero-subtitle {
+            color: #ffffff !important;
+        }
         .benefits-hero-btn-main {
             background: #004AAD !important;
             color: #fff !important;
@@ -1159,18 +1163,18 @@
                                 <div class="col-md-8 col-lg-6">
                                     <div class="input-group mb-3">
                                         <input type="email" class="form-control form-control-lg newsletter-input" id="newsletterEmail" 
-                                               placeholder="Enter your email address" required>
-                                        <button class="btn btn-primary btn-lg newsletter-btn" type="submit">
+                                               placeholder="Enter your email address" data-translate="enter-email" required>
+                                        <button class="btn btn-primary btn-lg newsletter-btn" type="submit" data-translate="subscribe">
                                             Subscribe
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <div id="newsletterSuccess" class="alert alert-success mt-3 d-none" role="alert">
+                        <div id="newsletterSuccess" class="alert alert-success mt-3 d-none" role="alert" data-translate="thank-subscribe">
                             <i class="fas fa-check-circle me-2"></i>Thank you for subscribing! We'll keep you updated with the latest Finx news.
                         </div>
-                        <div id="newsletterError" class="alert alert-danger mt-3 d-none" role="alert">
+                        <div id="newsletterError" class="alert alert-danger mt-3 d-none" role="alert" data-translate="valid-email">
                             <i class="fas fa-exclamation-circle me-2"></i>Please enter a valid email address.
                         </div>
                     </div>
@@ -1351,146 +1355,7 @@
                 benefitsImg.style.animationPlayState = 'paused';
                 benefitsImgObs.observe(benefitsImg);
             }
-        });
-
-        // Sistema de traducción
-        const translations = {
-            en: {
-                'home': 'Home',
-                'about-us': 'About us',
-                'help-center': 'Help center',
-                'register': 'Register',
-                'login': 'Login',
-                'hero-title': 'Welcome to Finx',
-                'hero-subtitle': 'Track, Manage, and Save with Ease!',
-                'get-started': 'Get Started',
-                'watch-demo': 'Watch demo',
-                'security': 'Security',
-                'security-desc': 'Your data and money protected',
-                'financial-education': 'Financial Education',
-                'financial-education-desc': 'Learn while managing your money',
-                'ease-of-use': 'Ease of Use',
-                'ease-of-use-desc': 'Intuitive, fast and made for you',
-                'why-choose-us': 'Why Choose Us',
-                'features-text': 'At Finx, we believe that managing your finances shouldn\'t be a daunting task. Our mission is to empower individuals to take control of their money and achieve financial stability.',
-                'view-more': 'View more',
-                'your-money-future': 'Your money, your future.',
-                'take-control': 'Take control with',
-                'benefits-desc': 'Empower yourself to save, manage, and achieve your dreams. Finx makes your financial journey simple, smart, and secure.',
-                'log-in': 'Log In',
-                'learn-more': 'Learn More',
-                'subscriptions': 'Subscriptions',
-                'subscriptions-desc': 'Choose the FINX plan that best fits your financial journey. Upgrade anytime to unlock more powerful features!',
-                'basic-plan': 'Basic Plan',
-                'perfect-beginners': 'Perfect for beginners',
-                'standard-plan': 'Standard Plan',
-                'best-value': 'Best value',
-                'premium-plan': 'Premium Plan',
-                'advanced-features': 'For power users',
-                'most-popular': 'Most Popular',
-                'choose-plan': 'Choose Plan',
-                'newsletter': 'Newsletter',
-                'enter-email': 'Enter your email address',
-                'subscribe': 'Subscribe',
-                'thank-subscribe': 'Thank you for subscribing! We\'ll keep you updated with the latest Finx news.',
-                'valid-email': 'Please enter a valid email address.'
-            },
-            es: {
-                'home': 'Inicio',
-                'about-us': 'Acerca de',
-                'help-center': 'Centro de ayuda',
-                'register': 'Registrarse',
-                'login': 'Iniciar Sesión',
-                'hero-title': 'Bienvenido a Finx',
-                'hero-subtitle': '¡Rastrea, Gestiona y Ahorra con Facilidad!',
-                'get-started': 'Empezar',
-                'watch-demo': 'Ver demo',
-                'security': 'Seguridad',
-                'security-desc': 'Tus datos y dinero protegidos',
-                'financial-education': 'Educación Financiera',
-                'financial-education-desc': 'Aprende mientras gestionas tu dinero',
-                'ease-of-use': 'Facilidad de Uso',
-                'ease-of-use-desc': 'Intuitivo, rápido y hecho para ti',
-                'why-choose-us': '¿Por Qué Elegirnos?',
-                'features-text': 'En Finx, creemos que gestionar tus finanzas no debería ser una tarea desalentadora. Nuestra misión es empoderar a las personas para que tomen control de su dinero y logren estabilidad financiera.',
-                'view-more': 'Ver más',
-                'your-money-future': 'Tu dinero, tu futuro.',
-                'take-control': 'Toma control con',
-                'benefits-desc': 'Empodérate para ahorrar, gestionar y alcanzar tus sueños. Finx hace que tu viaje financiero sea simple, inteligente y seguro.',
-                'log-in': 'Iniciar Sesión',
-                'learn-more': 'Saber Más',
-                'subscriptions': 'Suscripciones',
-                'subscriptions-desc': '¡Elige el plan de FINX que mejor se adapte a tu viaje financiero. Actualiza en cualquier momento para desbloquear características más poderosas!',
-                'basic-plan': 'Plan Básico',
-                'perfect-beginners': 'Perfecto para principiantes',
-                'standard-plan': 'Plan Estándar',
-                'best-value': 'Mejor valor',
-                'premium-plan': 'Plan Premium',
-                'advanced-features': 'Para usuarios avanzados',
-                'most-popular': 'Más Popular',
-                'choose-plan': 'Elegir Plan',
-                'newsletter': 'Boletín',
-                'enter-email': 'Ingresa tu dirección de correo electrónico',
-                'subscribe': 'Suscribirse',
-                'thank-subscribe': '¡Gracias por suscribirte! Te mantendremos actualizado con las últimas noticias de Finx.',
-                'valid-email': 'Por favor ingresa una dirección de correo electrónico válida.'
-            }
-        };
-
-        function setLanguage(lang) {
-            localStorage.setItem('finx_lang', lang);
-            
-            // Traducir todos los elementos con atributo data-translate
-            document.querySelectorAll('[data-translate]').forEach(element => {
-                const key = element.getAttribute('data-translate');
-                if (translations[lang] && translations[lang][key]) {
-                    if (element.tagName.toLowerCase() === 'input' && element.type === 'email') {
-                        element.placeholder = translations[lang][key];
-                    } else {
-                        element.textContent = translations[lang][key];
-                    }
-                }
-            });
-
-            // Actualizar elementos específicos del header si existen
-            const langIcon = document.getElementById('langToggle');
-            if (langIcon) {
-                langIcon.title = lang === 'es' ? 'Traducir página' : 'Translate page';
-            }
-
-            // Actualizar placeholder del email de newsletter
-            const newsletterEmail = document.getElementById('newsletterEmail');
-            if (newsletterEmail) {
-                newsletterEmail.placeholder = translations[lang]['enter-email'];
-            }
-
-            // Actualizar mensajes de éxito y error del newsletter
-            const successMsg = document.getElementById('newsletterSuccess');
-            const errorMsg = document.getElementById('newsletterError');
-            if (successMsg) {
-                successMsg.innerHTML = `<i class="fas fa-check-circle me-2"></i>${translations[lang]['thank-subscribe']}`;
-            }
-            if (errorMsg) {
-                errorMsg.innerHTML = `<i class="fas fa-exclamation-circle me-2"></i>${translations[lang]['valid-email']}`;
-            }
-        }
-
-        // Event listener para el botón de traducción
-        document.addEventListener('DOMContentLoaded', function() {
-            // Aplicar idioma guardado o por defecto español
-            const savedLang = localStorage.getItem('finx_lang') || 'es';
-            setLanguage(savedLang);
-
-            // Event listener para el toggle de idioma
-            const langToggleBtn = document.getElementById('langToggle');
-            if (langToggleBtn) {
-                langToggleBtn.addEventListener('click', function() {
-                    const currentLang = localStorage.getItem('finx_lang') || 'es';
-                    const newLang = currentLang === 'es' ? 'en' : 'es';
-                    setLanguage(newLang);
-                });
-            }
-        });
+    });
     </script>
 </body>
 </html>
