@@ -288,16 +288,7 @@
                 margin-bottom: 1.8rem !important;
                 max-width: 550px;
             }
-        }
-
-        @media (max-width: 991.98px) {
-            .goal-card {
-                padding: 1rem 1.2rem !important;
-                margin-bottom: 1.5rem !important;
-                min-height: 100px;
-                max-width: 500px;
-            }
-        }
+    }
 
         @media (max-width: 767.98px) {
             .goal-card {
@@ -320,6 +311,13 @@
             font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
+        }
+
+        /* Mejor contraste en modo oscuro (título principal y títulos dentro de tarjetas) */
+        html[data-bs-theme="dark"] h1.goal-title,
+        html[data-bs-theme="dark"] .goal-card .goal-title {
+            color: #FFE676 !important;
+            text-shadow: 0 0 6px rgba(0,0,0,0.35);
         }
 
         /* Responsive para título de tarjetas */
@@ -593,6 +591,13 @@
         /* Responsive para modales */
         @media (max-width: 767.98px) {
             .modal-dialog {
+        /* Mejor contraste en modo oscuro para el título principal y títulos dentro de tarjetas */
+        [data-bs-theme="dark"] h1.goal-title { /* título principal arriba */
+            color: #EEE95B !important;
+        }
+        [data-bs-theme="dark"] .goal-card .goal-title { /* títulos de cada meta */
+            color: #EEE95B !important;
+        }
                 margin: 1rem 0.5rem;
                 max-width: calc(100% - 1rem);
             }
@@ -635,18 +640,24 @@
                 padding: 0.75rem;
             }
         }
-        @media (prefers-color-scheme: dark) {
-            body {
-                background: #1a1d23;
-            }
-            .goal-card, .card.form-modern, .modal-content {
-                background: #002366 !important;
-                color: #fff !important;
-            }
-            .form-modern .form-control, .form-modern .form-select {
-                background: #E6E5E5;
-                color: #002366;
-            }
+        /* Ajuste: antes este bloque usaba @media (prefers-color-scheme: dark) y forzaba fondo oscuro
+           incluso cuando el usuario seleccionaba manualmente el modo claro.
+           Ahora solo aplicamos estilos oscuros cuando realmente el atributo data-bs-theme="dark" está activo. */
+        :root[data-bs-theme="dark"] body, [data-bs-theme="dark"] body {
+            background: #1a1d23;
+        }
+        :root[data-bs-theme="dark"] .goal-card, [data-bs-theme="dark"] .card.form-modern, [data-bs-theme="dark"] .modal-content {
+            background: #002366 !important;
+            color: #fff !important;
+        }
+        :root[data-bs-theme="dark"] .form-modern .form-control, :root[data-bs-theme="dark"] .form-modern .form-select,
+        [data-bs-theme="dark"] .form-modern .form-control, [data-bs-theme="dark"] .form-modern .form-select {
+            background: #E6E5E5;
+            color: #002366;
+        }
+        /* Forzar fondo claro limpio cuando data-bs-theme="light" aunque el SO esté en dark */
+        :root[data-bs-theme="light"] body, [data-bs-theme="light"] body {
+            background: #ffffff !important;
         }
         [data-bs-theme="dark"] .navbar {
             background: #23272b !important;
