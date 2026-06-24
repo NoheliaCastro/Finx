@@ -78,11 +78,15 @@ function updateLogoVisibility(theme) {
 function assignDashboardLogout() {
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
+        logoutBtn.addEventListener('click', async function() {
             if (confirm('¿Estás seguro que deseas cerrar sesión y salir del sitio?')) {
-                // Aquí puedes limpiar localStorage/sessionStorage si usas autenticación
-                // localStorage.clear();
-                // sessionStorage.clear();
+                if (window.FinxAuth) {
+                    try {
+                        await FinxAuth.logoutUser();
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
                 window.location.href = 'index.html';
             }
         });
