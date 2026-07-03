@@ -30,6 +30,27 @@ async function registerUser({ firstName, lastName, email, password }) {
         throw new Error(translateAuthError(error.message));
     }
 
+    if (data.user) {
+        const fullName = `${firstName} ${lastName}`.trim();
+
+        const { error: profileError } = await supabase
+            .from('profiles')
+            .upsert({
+                id: data.user.id,
+                first_name: firstName,
+                last_name: lastName,
+                full_name: fullName,
+                email,
+                language: 'es'
+            }, {
+                onConflict: 'id'
+            });
+
+        if (profileError) {
+            throw new Error(profileError.message);
+        }
+    }
+
     return data;
 }
 
