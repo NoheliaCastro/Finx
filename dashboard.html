@@ -1001,7 +1001,7 @@
                                 </div>
                             </div>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
+                            <a href="profile.html" class="dropdown-item">
                                 <div class="dropdown-item-content">
                                     <i class="bi bi-person-circle"></i>
                                     <span>Mi Perfil</span>
@@ -1279,26 +1279,52 @@
     <!-- Animación de números (CountUp.js) -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script> -->
     <script>
+        let dashboardMovements = [];
+
+        function formatAmount(num) {
+            return Number.isInteger(num)
+                ? num.toLocaleString()
+                : num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        async function loadDashboardMovements() {
+            const session = await FinxAuth.getSession();
+
+            if (!session || !session.user) {
+                dashboardMovements = [];
+                return dashboardMovements;
+            }
+
+            const supabase = getSupabase();
+            const { data, error } = await supabase
+                .from('financial_movements')
+                .select('id,user_id,type,category,amount,date,created_at')
+                .eq('user_id', session.user.id)
+                .order('date', { ascending: true })
+                .order('id', { ascending: true });
+
+            if (error) {
+                throw new Error(error.message);
+            }
+
+            dashboardMovements = data || [];
+            return dashboardMovements;
+        }
+
         // Actualizar totales de tarjetas Income y Expenses
-        function updateDashboardTotals() {
-            const movements = JSON.parse(localStorage.getItem('finx_movements') || '[]');
+        function updateDashboardTotals(movements = dashboardMovements) {
             let totalIncome = 0;
             let totalExpense = 0;
             movements.forEach(mov => {
                 if (mov.type === 'income') totalIncome += Number(mov.amount);
                 if (mov.type === 'expense') totalExpense += Number(mov.amount);
             });
-            // Mostrar sin decimales si es entero, con dos decimales si es necesario
-            function formatAmount(num) {
-                return Number.isInteger(num) ? num.toLocaleString() : num.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
-            }
             document.getElementById('incomeTotal').textContent = `$${formatAmount(totalIncome)}`;
             document.getElementById('expenseTotal').textContent = `$${formatAmount(totalExpense)}`;
         }
 
         // Llenar tabla de movimientos recientes filtrada por tipo
-        function fillMovementsTableByType() {
-            const movements = JSON.parse(localStorage.getItem('finx_movements') || '[]');
+        function fillMovementsTableByType(movements = dashboardMovements) {
             const tbody = document.getElementById('movementsTableBody');
             const type = document.getElementById('typeSelector').value;
             tbody.innerHTML = '';
@@ -1320,7 +1346,7 @@
                 <tr>
                     <td>${mov.date}</td>
                     <td>${mov.category}</td>
-                    <td class="${color}">${sign}$${Number(mov.amount).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
+                    <td class="${color}">${sign}$${formatAmount(Number(mov.amount))}</td>
                     <td><span class="badge ${badge}">${mov.type.charAt(0).toUpperCase() + mov.type.slice(1)}</span></td>
                 </tr>`;
             });
@@ -1330,7 +1356,12 @@
         }
         document.getElementById('typeSelector').addEventListener('change', fillMovementsTableByType);
         document.addEventListener('DOMContentLoaded', async function() {
-            await FinxAuth.requireAuth();
+            const session = await FinxAuth.requireAuth();
+            if (!session) {
+                return;
+            }
+
+            await loadDashboardMovements();
             updateDashboardTotals();
             fillMovementsTableByType();
             const overlay = document.getElementById('welcomeOverlay');
@@ -1399,20 +1430,37 @@
                 document.getElementById('expenseAmount').focus();
             });
             // Evento para limpiar historial
-            document.getElementById('clearHistoryBtn').addEventListener('click', function() {
+            document.getElementById('clearHistoryBtn').addEventListener('click', async function() {
                 if (confirm('¿Estás seguro de que deseas limpiar todo el historial de gastos e ingresos? Esta acción no se puede deshacer.')) {
-                    localStorage.removeItem('finx_movements');
-                    updateDashboardTotals();
-                    fillMovementsTableByType();
-                    showSuccessAlert('¡Historial limpiado exitosamente!');
+                    try {
+                        const currentSession = await FinxAuth.getSession();
+                        if (!currentSession || !currentSession.user) return;
+
+                        const supabase = getSupabase();
+                        const { error } = await supabase
+                            .from('financial_movements')
+                            .delete()
+                            .eq('user_id', currentSession.user.id);
+
+                        if (error) {
+                            throw new Error(error.message);
+                        }
+
+                        await loadDashboardMovements();
+                        updateDashboardTotals();
+                        fillMovementsTableByType();
+                        showSuccessAlert('¡Historial limpiado exitosamente!');
+                    } catch (error) {
+                        showSuccessAlert(error.message || 'No se pudo limpiar el historial.', 'danger');
+                    }
                 }
             });
         });
 
         // Mostrar alerta de éxito
-        function showSuccessAlert(message) {
+        function showSuccessAlert(message, type = 'success') {
             let alert = document.createElement('div');
-            alert.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-4 shadow';
+            alert.className = `alert alert-${type} position-fixed top-0 start-50 translate-middle-x mt-4 shadow`;
             alert.style.zIndex = '2000';
             alert.style.minWidth = '300px';
             alert.innerHTML = message;
@@ -1422,40 +1470,66 @@
             }, 1800);
         }
         // Income form
-        document.getElementById('incomeForm').addEventListener('submit', function(e) {
+        document.getElementById('incomeForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const movements = JSON.parse(localStorage.getItem('finx_movements') || '[]');
-            movements.push({
-                type: 'income',
-                date: document.getElementById('incomeDate').value,
-                category: document.getElementById('incomeCategory').value,
-                amount: parseFloat(document.getElementById('incomeAmount').value)
-            });
-            localStorage.setItem('finx_movements', JSON.stringify(movements));
-            updateDashboardTotals();
-            fillMovementsTableByType();
-            if (window.renderMovementsChart) window.renderMovementsChart();
-            bootstrap.Modal.getInstance(document.getElementById('incomeModal')).hide();
-            showSuccessAlert('Income added successfully!');
-            this.reset();
+            try {
+                const currentSession = await FinxAuth.getSession();
+                if (!currentSession || !currentSession.user) return;
+
+                const supabase = getSupabase();
+                const { error } = await supabase.from('financial_movements').insert({
+                    user_id: currentSession.user.id,
+                    type: 'income',
+                    date: document.getElementById('incomeDate').value,
+                    category: document.getElementById('incomeCategory').value,
+                    amount: parseFloat(document.getElementById('incomeAmount').value)
+                });
+
+                if (error) {
+                    throw new Error(error.message);
+                }
+
+                await loadDashboardMovements();
+                updateDashboardTotals();
+                fillMovementsTableByType();
+                if (window.renderMovementsChart) window.renderMovementsChart();
+                bootstrap.Modal.getInstance(document.getElementById('incomeModal')).hide();
+                showSuccessAlert('Income added successfully!');
+                this.reset();
+            } catch (error) {
+                showSuccessAlert(error.message || 'No se pudo guardar el ingreso.', 'danger');
+            }
         });
         // Expense form
-        document.getElementById('expenseForm').addEventListener('submit', function(e) {
+        document.getElementById('expenseForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const movements = JSON.parse(localStorage.getItem('finx_movements') || '[]');
-            movements.push({
-                type: 'expense',
-                date: document.getElementById('expenseDate').value,
-                category: document.getElementById('expenseCategory').value,
-                amount: parseFloat(document.getElementById('expenseAmount').value)
-            });
-            localStorage.setItem('finx_movements', JSON.stringify(movements));
-            updateDashboardTotals();
-            fillMovementsTableByType();
-            if (window.renderMovementsChart) window.renderMovementsChart();
-            bootstrap.Modal.getInstance(document.getElementById('expenseModal')).hide();
-            showSuccessAlert('Expense added successfully!');
-            this.reset();
+            try {
+                const currentSession = await FinxAuth.getSession();
+                if (!currentSession || !currentSession.user) return;
+
+                const supabase = getSupabase();
+                const { error } = await supabase.from('financial_movements').insert({
+                    user_id: currentSession.user.id,
+                    type: 'expense',
+                    date: document.getElementById('expenseDate').value,
+                    category: document.getElementById('expenseCategory').value,
+                    amount: parseFloat(document.getElementById('expenseAmount').value)
+                });
+
+                if (error) {
+                    throw new Error(error.message);
+                }
+
+                await loadDashboardMovements();
+                updateDashboardTotals();
+                fillMovementsTableByType();
+                if (window.renderMovementsChart) window.renderMovementsChart();
+                bootstrap.Modal.getInstance(document.getElementById('expenseModal')).hide();
+                showSuccessAlert('Expense added successfully!');
+                this.reset();
+            } catch (error) {
+                showSuccessAlert(error.message || 'No se pudo guardar el gasto.', 'danger');
+            }
         });
 
         // Función para cambiar tema
@@ -1745,20 +1819,18 @@ document.addEventListener('DOMContentLoaded', function() {
             fillMovementsTableByType();
         }
         // Modificar fillMovementsTableByType para traducir mensajes vacíos
-        const originalFillMovements = fillMovementsTableByType;
         fillMovementsTableByType = function() {
             const lang = localStorage.getItem('finx_lang') || 'es';
-            const movements = JSON.parse(localStorage.getItem('finx_movements') || '[]');
             const tbody = document.getElementById('movementsTableBody');
             const type = document.getElementById('typeSelector').value;
             tbody.innerHTML = '';
-            if (movements.length === 0) {
+            if (dashboardMovements.length === 0) {
                 tbody.innerHTML = `<tr><td colspan=\"4\" class=\"text-center\">${translations[lang]['no-movements']}</td></tr>`;
                 return;
             }
-            let filtered = movements;
+            let filtered = dashboardMovements;
             if (type !== 'all') {
-                filtered = movements.filter(mov => mov.type === type);
+                filtered = dashboardMovements.filter(mov => mov.type === type);
             }
             filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
             filtered.forEach(mov => {
@@ -1769,7 +1841,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tr>
                     <td>${mov.date}</td>
                     <td>${mov.category}</td>
-                    <td class=\"${color}\">${sign}$${Number(mov.amount).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
+                    <td class="${color}">${sign}$${formatAmount(Number(mov.amount))}</td>
                     <td><span class=\"badge ${badge}\">${mov.type.charAt(0).toUpperCase() + mov.type.slice(1)}</span></td>
                 </tr>`;
             });

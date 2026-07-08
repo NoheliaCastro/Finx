@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finx - Mi Perfil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        body {
+            background: #E6E5E5;
+            min-height: 100vh;
+        }
+
+        [data-bs-theme="dark"] body {
+            background: #181C24;
+        }
+
+        .trivia-navbar {
+            background-color: var(--background-color) !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 0.75rem 0;
+            min-height: 95px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-logo-container {
+            display: flex;
+            align-items: center;
+            margin-right: 0.5rem;
+        }
+
+        .navbar-logo {
+            max-height: 80px;
+            height: auto;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-logo-light {
+            display: block;
+        }
+
+        [data-bs-theme="dark"] .navbar-logo-light {
+            display: none;
+        }
+
+        .navbar-logo-dark {
+            display: none;
+        }
+
+        [data-bs-theme="dark"] .navbar-logo-dark {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-logo {
+                max-height: 65px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-logo {
+                max-height: 55px;
+            }
+        }
+
+        .trivia-theme-toggle {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
+            cursor: pointer;
+        }
+
+        .trivia-theme-toggle:hover {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+        }
+
+        .trivia-theme-toggle i {
+            font-size: 1.5rem;
+        }
+
+        .user-profile-navbar {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            z-index: 13000;
+        }
+
+        .user-profile-navbar:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .avatar-small {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        }
+
+        .user-info-small {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.2;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #333;
+            margin: 0;
+        }
+
+        .user-level {
+            font-size: 0.75rem;
+            color: #666;
+            margin: 0;
+        }
+
+        [data-bs-theme="dark"] .user-profile-navbar {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        [data-bs-theme="dark"] .user-profile-navbar:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-bs-theme="dark"] .user-name {
+            color: #fff;
+        }
+
+        [data-bs-theme="dark"] .user-level {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .user-profile-navbar {
+                padding: 0.4rem 0.75rem;
+                gap: 0.5rem;
+            }
+
+            .avatar-small {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+
+            .user-name {
+                font-size: 0.8rem;
+            }
+
+            .user-level {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .user-info-small {
+                display: none;
+            }
+
+            .user-profile-navbar {
+                padding: 0.5rem;
+                gap: 0;
+            }
+
+            .avatar-small {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 280px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 14000;
+            margin-top: 8px;
+            overflow: hidden;
+            pointer-events: none;
+            display: block;
+        }
+
+        .user-profile-navbar.open .user-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dropdown-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.4rem;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .dropdown-user-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+
+        .dropdown-user-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #333;
+            margin: 0;
+        }
+
+        .dropdown-user-level {
+            font-size: 0.8rem;
+            color: #666;
+            margin: 0;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: rgba(0, 0, 0, 0.08);
+            margin: 8px 0;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            box-sizing: border-box;
+            padding: 0;
+            border: none;
+            background: none;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            width: 100%;
+        }
+
+        .dropdown-item span,
+        .dropdown-item i {
+            pointer-events: none;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(99, 102, 241, 0.05);
+            color: #6366f1;
+            transform: translateX(4px);
+        }
+
+        .dropdown-item span {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-item-danger {
+            color: #dc3545;
+        }
+
+        .dropdown-item-danger:hover {
+            background: rgba(220, 53, 69, 0.05);
+            color: #dc3545;
+        }
+
+        [data-bs-theme="dark"] .user-dropdown-menu {
+            background: #232A36;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-bs-theme="dark"] .dropdown-header {
+            background: linear-gradient(135deg, #2d3748, #1a202c);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        [data-bs-theme="dark"] .dropdown-user-name {
+            color: #fff;
+        }
+
+        [data-bs-theme="dark"] .dropdown-user-level {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        [data-bs-theme="dark"] .dropdown-divider {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-bs-theme="dark"] .dropdown-item {
+            color: #fff;
+        }
+
+        [data-bs-theme="dark"] .dropdown-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+        }
+
+        [data-bs-theme="dark"] .dropdown-item-danger {
+            color: #ff6b6b;
+        }
+
+        [data-bs-theme="dark"] .dropdown-item-danger:hover {
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+        }
+
+        @media (max-width: 768px) {
+            .user-dropdown-menu {
+                width: 260px;
+                right: -10px;
+            }
+
+            .dropdown-header {
+                padding: 14px 16px;
+            }
+
+            .dropdown-avatar {
+                width: 42px;
+                height: 42px;
+                font-size: 1.2rem;
+            }
+
+            .dropdown-item {
+                padding: 10px 16px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .user-dropdown-menu {
+                width: 240px;
+                right: -20px;
+            }
+
+            .dropdown-header {
+                padding: 12px 14px;
+            }
+
+            .dropdown-avatar {
+                width: 38px;
+                height: 38px;
+                font-size: 1.1rem;
+            }
+
+            .dropdown-item {
+                padding: 8px 14px;
+            }
+
+            .dropdown-item span {
+                font-size: 0.85rem;
+            }
+        }
+
+        .dashboard-lead {
+            color: #111;
+        }
+
+        [data-bs-theme="dark"] .dashboard-lead {
+            color: #fff;
+        }
+
+        .profile-shell {
+            padding: 1.5rem 0 4rem;
+        }
+
+        .profile-card {
+            border: none;
+            border-radius: 1.5rem;
+            box-shadow: 0 2px 8px #00236622;
+            overflow: hidden;
+            border: 2px solid #004AAD;
+        }
+
+        .profile-hero {
+            background: linear-gradient(135deg, #004AAD 0%, #11254b 100%);
+            color: white;
+            padding: 2rem;
+        }
+
+        .profile-avatar {
+            width: 92px;
+            height: 92px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.18);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1rem;
+            padding: 1rem;
+        }
+
+        .section-card {
+            border: none;
+            border-radius: 1.25rem;
+            box-shadow: 0 2px 8px #00236622;
+            border: 1.5px solid #004AAD;
+        }
+
+        [data-bs-theme="dark"] .section-card,
+        [data-bs-theme="dark"] .profile-card {
+            background: #232A36;
+            color: #fff;
+        }
+
+        .label-small {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #6c757d;
+        }
+
+        .profile-hero-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+        }
+
+        .profile-stat {
+            background: #FFFFFF;
+            border-radius: 1.25rem;
+            box-shadow: 0 2px 8px #00236622;
+            border: 2px solid #004AAD;
+            padding: 1.25rem 1.5rem;
+            height: 100%;
+        }
+
+        .profile-stat i {
+            font-size: 2rem;
+            color: #004AAD;
+        }
+
+        .profile-stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #004AAD;
+            margin: 0;
+            word-break: break-word;
+        }
+
+        .profile-stat-label {
+            color: #6c757d;
+            margin: 0;
+        }
+
+        [data-bs-theme="dark"] .label-small {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        [data-bs-theme="dark"] .profile-stat {
+            background: #232A36;
+            border-color: #EEE95B;
+        }
+
+        [data-bs-theme="dark"] .profile-stat i,
+        [data-bs-theme="dark"] .profile-stat-value {
+            color: #EEE95B;
+        }
+
+        [data-bs-theme="dark"] .profile-stat-label {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        [data-bs-theme="dark"] .profile-hero {
+            background: linear-gradient(135deg, #11254b 0%, #181C24 100%);
+        }
+
+        [data-bs-theme="dark"] .section-card {
+            border-color: #EEE95B;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar trivia-navbar">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div style="flex:1; display:flex; align-items:center; gap: 1rem;">
+                    <div class="navbar-logo-container">
+                        <img src="images/modo-claro.png" alt="Finx Logo" class="navbar-logo navbar-logo-light">
+                        <img src="images/modo-oscuro.png" alt="Finx Logo" class="navbar-logo navbar-logo-dark">
+                    </div>
+                </div>
+                <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
+                    <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
+                        <i class="bi bi-translate"></i>
+                    </button>
+                    <button class="trivia-theme-toggle" id="themeToggle" title="Change theme">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </button>
+                    <div class="user-profile-navbar">
+                        <div class="avatar-small">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        <div class="user-info-small">
+                            <span class="user-name">Usuario</span>
+                            <small class="user-level">Nivel 2</small>
+                        </div>
+                        <div class="user-dropdown-menu">
+                            <div class="dropdown-header">
+                                <div class="dropdown-avatar">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+                                <div class="dropdown-user-info">
+                                    <span class="dropdown-user-name">Usuario</span>
+                                    <small class="dropdown-user-level">Nivel 2</small>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="profile.html" class="dropdown-item">
+                                <div class="dropdown-item-content">
+                                    <i class="bi bi-person-circle"></i>
+                                    <span>Mi Perfil</span>
+                                </div>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <div class="dropdown-item-content">
+                                    <i class="bi bi-gear"></i>
+                                    <span>Configuración</span>
+                                </div>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <div class="dropdown-item-content">
+                                    <i class="bi bi-shield-check"></i>
+                                    <span>Privacidad</span>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item dropdown-item-danger" id="logoutBtnNavbar">
+                                <div class="dropdown-item-content">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Cerrar Sesión</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="profile-shell">
+        <div class="container">
+            <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <p class="label-small mb-1">Cuenta</p>
+                    <h1 class="fw-bold mb-0">Mi Perfil</h1>
+                    <p class="profile-hero-subtitle mb-0">Aquí ves tu información básica y, más adelante, tus datos guardados en Supabase.</p>
+                </div>
+                <a href="dashboard.html" class="btn btn-primary">
+                    <i class="bi bi-arrow-left me-1"></i> Volver al dashboard
+                </a>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="profile-stat">
+                        <div class="d-flex align-items-center justify-content-between gap-3">
+                            <div>
+                                <p class="profile-stat-label">Estado</p>
+                                <p class="profile-stat-value" id="profileStatusText">Activo</p>
+                            </div>
+                            <i class="bi bi-check-circle-fill"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="profile-stat">
+                        <div class="d-flex align-items-center justify-content-between gap-3">
+                            <div>
+                                <p class="profile-stat-label">Nivel</p>
+                                <p class="profile-stat-value" id="profileLevelMini">1</p>
+                            </div>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="profile-stat">
+                        <div class="d-flex align-items-center justify-content-between gap-3">
+                            <div>
+                                <p class="profile-stat-label">Idioma</p>
+                                <p class="profile-stat-value" id="profileLanguageMini">es</p>
+                            </div>
+                            <i class="bi bi-translate"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card profile-card mb-4">
+                <div class="profile-hero">
+                    <div class="row align-items-center g-4">
+                        <div class="col-md-auto text-center text-md-start">
+                            <div class="profile-avatar mx-auto mx-md-0">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <p class="label-small text-white-50 mb-1">Usuario autenticado</p>
+                            <h2 class="fw-bold mb-2" id="profileFullName">Cargando...</h2>
+                            <p class="mb-2" id="profileEmail">Cargando correo...</p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-light text-dark" id="profileLevel">Nivel 1</span>
+                                <span class="badge bg-success" id="profileStatus">Activo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="section-card p-3 h-100">
+                                <p class="label-small mb-1">Nombre</p>
+                                <h5 class="mb-0" id="profileFirstName">-</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="section-card p-3 h-100">
+                                <p class="label-small mb-1">Apellido</p>
+                                <h5 class="mb-0" id="profileLastName">-</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="section-card p-3 h-100">
+                                <p class="label-small mb-1">Usuario ID</p>
+                                <h5 class="mb-0 text-break" id="profileUserId">-</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card section-card h-100">
+                        <div class="card-body p-4">
+                            <p class="label-small mb-2">Datos básicos</p>
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-2"><strong>Correo:</strong> <span id="profileEmailDetail">-</span></li>
+                                <li class="mb-2"><strong>Nombre completo:</strong> <span id="profileNameDetail">-</span></li>
+                                <li class="mb-2"><strong>Cuenta creada:</strong> <span id="profileCreatedAt">-</span></li>
+                                <li><strong>Idioma:</strong> <span id="profileLanguage">-</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card section-card h-100">
+                        <div class="card-body p-4">
+                            <p class="label-small mb-2">Próximo paso</p>
+                            <p class="mb-3">Después conectaremos la tabla <strong>profiles</strong> de Supabase para guardar avatar, metas personales y preferencias.</p>
+                            <div class="alert alert-info mb-0">
+                                Por ahora esta página muestra la información que ya existe en tu sesión de Supabase.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="footer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                const session = await FinxAuth.requireAuth();
+                const user = session.user;
+                const metadata = user.user_metadata || {};
+                const firstName = metadata.first_name || '';
+                const lastName = metadata.last_name || '';
+                const fullName = metadata.full_name || `${firstName} ${lastName}`.trim() || 'Usuario';
+
+                document.getElementById('profileFullName').textContent = fullName;
+                document.getElementById('profileEmail').textContent = user.email || 'Sin correo';
+                document.getElementById('profileFirstName').textContent = firstName || '-';
+                document.getElementById('profileLastName').textContent = lastName || '-';
+                document.getElementById('profileUserId').textContent = user.id || '-';
+                document.getElementById('profileEmailDetail').textContent = user.email || '-';
+                document.getElementById('profileNameDetail').textContent = fullName;
+                document.getElementById('profileCreatedAt').textContent = user.created_at ? new Date(user.created_at).toLocaleString() : '-';
+                const language = localStorage.getItem('finx_lang') || 'es';
+                document.getElementById('profileLanguage').textContent = language;
+                document.getElementById('profileLanguageMini').textContent = language;
+
+                const level = metadata.level || '1';
+                document.getElementById('profileLevel').textContent = `Nivel ${level}`;
+                document.getElementById('profileLevelMini').textContent = level;
+                document.getElementById('profileStatusText').textContent = 'Activo';
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const currentTheme = html.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-bs-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            if (newTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            const icon = document.getElementById('themeIcon');
+            if (savedTheme === 'dark') {
+                icon.className = 'bi bi-sun-fill';
+            } else {
+                icon.className = 'bi bi-moon-fill';
+            }
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+            const userProfile = document.querySelector('.user-profile-navbar');
+            const userMenu = document.querySelector('.user-dropdown-menu');
+
+            if (userProfile && userMenu) {
+                userProfile.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    userProfile.classList.toggle('open');
+                });
+
+                userMenu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (userProfile.classList.contains('open')) {
+                        if (!userProfile.contains(e.target)) {
+                            userProfile.classList.remove('open');
+                        }
+                    }
+                });
+            }
+
+            const logoutBtnNavbar = document.getElementById('logoutBtnNavbar');
+            if (logoutBtnNavbar) {
+                logoutBtnNavbar.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
+                        try {
+                            await FinxAuth.logoutUser();
+                        } catch (error) {
+                            console.error(error);
+                        }
+                        window.location.href = 'index.html';
+                    }
+                });
+            }
+
+            document.getElementById('langToggle').addEventListener('click', function() {
+                const current = localStorage.getItem('finx_lang') || 'es';
+                const next = current === 'es' ? 'en' : 'es';
+                localStorage.setItem('finx_lang', next);
+            });
+        });
+    </script>
+</body>
+</html>
