@@ -1,4 +1,4 @@
-/* Estilos para la página del Chatbot */
+﻿/* Estilos para la página del Chatbot */
 
 /* Contenedor principal del chatbot */
 .chatbot-container {
@@ -15,7 +15,7 @@
 
 /* Encabezado del chatbot */
 .chatbot-header {
-    background: linear-gradient(135deg, #004AAD, #003366);
+    background: linear-gradient(135deg, #1D488A, #083066);
     color: white;
     padding: 1.5rem 2rem;
     text-align: center;
@@ -65,7 +65,7 @@
 /* Mensajes del usuario */
 .user-message {
     align-self: flex-end;
-    background: #004AAD;
+    background: #1D488A;
     color: white;
     border-bottom-right-radius: 0.2rem;
 }
@@ -170,7 +170,7 @@
 }
 
 .chatbot-input-container input:focus {
-    border-color: #004AAD;
+    border-color: #1D488A;
 }
 
 /* Modo oscuro - input */
@@ -181,7 +181,7 @@
 }
 
 [data-bs-theme="dark"] .chatbot-input-container input:focus {
-    border-color: #6366f1;
+    border-color: #1D488A;
 }
 
 [data-bs-theme="dark"] .chatbot-input-container input::placeholder {
@@ -189,7 +189,7 @@
 }
 
 .chatbot-input-container button {
-    background: #004AAD;
+    background: #1D488A;
     color: white;
     border: none;
     width: 48px;
@@ -203,7 +203,7 @@
 }
 
 .chatbot-input-container button:hover {
-    background: #003366;
+    background: #083066;
     transform: scale(1.05);
 }
 
@@ -214,7 +214,7 @@
 }
 
 [data-bs-theme="dark"] .chatbot-header {
-    background: linear-gradient(135deg, #003366, #002244);
+    background: linear-gradient(135deg, #083066, #002244);
 }
 
 [data-bs-theme="dark"] .chatbot-messages {

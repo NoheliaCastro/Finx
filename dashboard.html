@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -22,7 +22,7 @@
             background: #E6E5E5;
         }
         [data-bs-theme="dark"] body {
-            background: #181C24;
+            background: #083066;
         }
         .dashboard-section {
             padding: 4rem 0 2rem 0;
@@ -30,12 +30,12 @@
             min-height: 100vh;
         }
         [data-bs-theme="dark"] .dashboard-section {
-            background: linear-gradient(135deg, #232A36 0%, #181C24 100%);
+            background: linear-gradient(135deg, #0C3D7A 0%, #083066 100%);
         }
         /* Ajustar el fondo del sidebar en modo oscuro si es necesario */
         [data-bs-theme="dark"] .trivia-sidebar {
-            background: #181C24 !important;
-            border-right: 1.5px solid #232A36;
+            background: #083066 !important;
+            border-right: 1.5px solid #0C3D7A;
         }
         .dashboard-title {
             font-size: 2.5rem;
@@ -43,31 +43,31 @@
             background: none;
             -webkit-text-fill-color: unset;
             margin-bottom: 2rem;
-            color: #002366;
+            color: #083066;
         }
         .summary-card i {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: #004AAD;
+            color: #1D488A;
         }
         .summary-card {
             background: #FFFFFF;
             border-radius: 1.5rem;
-            box-shadow: 0 2px 8px #00236622;
+            box-shadow: 0 2px 8px #08306622;
             padding: 2rem 1.5rem;
             text-align: center;
             transition: all 0.3s ease;
-            border: 2px solid #004AAD;
+            border: 2px solid #1D488A;
         }
         .summary-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--hover-shadow);
         }
         .summary-card h3 {
-            color: #004AAD;
+            color: #1D488A;
         }
         .summary-card .stat-number {
-            color: #004AAD;
+            color: #1D488A;
             background: none;
             -webkit-text-fill-color: unset;
             font-size: 2.5rem;
@@ -86,7 +86,7 @@
             }
         }
         .table thead th {
-            background: #004AAD;
+            background: #1D488A;
             color: #fff;
             border: none;
         }
@@ -101,25 +101,25 @@
             overflow-y: auto;
         }
         .btn-primary {
-            background: #004AAD;
-            border-color: #004AAD;
+            background: #1D488A;
+            border-color: #1D488A;
         }
         .btn-primary:hover {
-            background: #002366;
-            border-color: #002366;
+            background: #083066;
+            border-color: #083066;
         }
         .btn-danger {
-            background: #EEE95B;
-            color: #002366;
+            background: #FFDE32;
+            color: #083066;
             border: none;
         }
         .btn-danger:hover {
-            background: #004AAD;
+            background: #1D488A;
             color: #fff;
         }
         .card {
             background: #FFFFFF;
-            border: 1.5px solid #004AAD;
+            border: 1.5px solid #1D488A;
         }
         .table {
             background: #FFFFFF;
@@ -128,17 +128,17 @@
             background: #E6E5E5;
         }
         #typeSelector {
-            border: 2px solid #004AAD;
-            color: #002366;
+            border: 2px solid #1D488A;
+            color: #083066;
         }
         [data-bs-theme="dark"] #typeSelector {
-            background: #232A36;
-            color: #EEE95B;
-            border: 2px solid #EEE95B;
+            background: #0C3D7A;
+            color: #FFDE32;
+            border: 2px solid #FFDE32;
         }
         [data-bs-theme="dark"] #typeSelector option {
-            background: #232A36;
-            color: #EEE95B;
+            background: #0C3D7A;
+            color: #FFDE32;
         }
         .animated-fadein {
             opacity: 0;
@@ -214,7 +214,7 @@
         }
 
         .leccion-navbar {
-            background: linear-gradient(135deg, var(--background-color), rgba(99, 102, 241, 0.05)) !important;
+            background: linear-gradient(135deg, var(--background-color), rgba(145, 169, 204, 0.05)) !important;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             padding: 0.15rem 0;
             min-height: 80px;
@@ -251,16 +251,16 @@
             justify-content: center;
             font-size: 1.3rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 15px rgba(145, 169, 204, 0.3);
         }
         .leccion-theme-toggle:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 8px 25px rgba(145, 169, 204, 0.4);
         }
         
         /* Forzar estilos del botón de modo oscuro */
         .trivia-theme-toggle {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
             border: none;
             color: white;
             width: 45px;
@@ -271,13 +271,13 @@
             justify-content: center;
             font-size: 1.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
+            box-shadow: 0 2px 8px rgba(145, 169, 204,0.10);
             cursor: pointer;
         }
         .trivia-theme-toggle:hover {
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            background: linear-gradient(135deg, #91A9CC, #1D488A);
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+            box-shadow: 0 4px 16px rgba(145, 169, 204,0.18);
         }
         .trivia-theme-toggle i {
             font-size: 1.5rem;
@@ -305,14 +305,14 @@
         .avatar-small {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 1.2rem;
-            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 2px 8px rgba(145, 169, 204, 0.3);
         }
         
         .user-info-small {
@@ -437,14 +437,14 @@
         .dropdown-avatar {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 1.4rem;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 12px rgba(145, 169, 204, 0.3);
         }
         
         .dropdown-user-info {
@@ -500,8 +500,8 @@
             pointer-events: none;
         }
         .dropdown-item:hover {
-            background: rgba(99, 102, 241, 0.05);
-            color: #6366f1;
+            background: rgba(145, 169, 204, 0.05);
+            color: #1D488A;
             transform: translateX(4px);
         }
         
@@ -521,7 +521,7 @@
         
         /* Estilos para modo oscuro */
         [data-bs-theme="dark"] .user-dropdown-menu {
-            background: #232A36;
+            background: #0C3D7A;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
@@ -548,8 +548,8 @@
         }
         
         [data-bs-theme="dark"] .dropdown-item:hover {
-            background: rgba(99, 102, 241, 0.1);
-            color: #6366f1;
+            background: rgba(145, 169, 204, 0.1);
+            color: #1D488A;
         }
         
         [data-bs-theme="dark"] .dropdown-item-danger {
@@ -609,8 +609,8 @@
         }
         
         :root {
-            --fun-primary: #6366f1;
-            --fun-secondary: #8b5cf6;
+            --fun-primary: #1D488A;
+            --fun-secondary: #91A9CC;
             --fun-accent: #06b6d4;
             --fun-success: #10b981;
             --fun-warning: #f59e0b;
@@ -700,7 +700,7 @@
         #movementsChartContainer {
             background: #f8f9fa;
             border-radius:1rem;
-            border:1px dashed #004AAD;
+            border:1px dashed #1D488A;
             padding: 0;
             overflow: hidden;
             min-height: 320px;
@@ -714,8 +714,8 @@
             height: auto !important;
         }
         [data-bs-theme="dark"] #movementsChartContainer {
-            background: #11254b;
-            border:1px dashed #181C24;
+            background: #083066;
+            border:1px dashed #083066;
             padding: 0;
             overflow: hidden;
         }
@@ -812,7 +812,7 @@
             left: 280px;
             top: 50%;
             transform: translateY(-50%);
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
             border: none;
             color: white;
             width: 40px;
@@ -829,7 +829,7 @@
         }
 
         .sidebar-toggle-btn:hover {
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            background: linear-gradient(135deg, #91A9CC, #1D488A);
             transform: translateY(-50%) translateX(5px);
             box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
         }
@@ -918,29 +918,29 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
             color: #fff !important;
             border: none;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.7rem;
-            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
+            box-shadow: 0 2px 8px rgba(145, 169, 204,0.10);
             transition: all 0.3s;
             text-decoration: none;
             padding: 0;
         }
         .sidebar-logout-btn:hover {
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
-            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+            background: linear-gradient(135deg, #91A9CC, #1D488A);
+            box-shadow: 0 4px 16px rgba(145, 169, 204,0.18);
             transform: translateY(-2px);
         }
         [data-bs-theme="dark"] .sidebar-logout-btn {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
             color: #fff !important;
         }
         [data-bs-theme="dark"] .sidebar-logout-btn:hover {
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            background: linear-gradient(135deg, #91A9CC, #1D488A);
         }
         .leccion-sidebar .container-fluid {
             padding-top: 0.2rem;
@@ -1090,9 +1090,9 @@
         </div>
     </nav>
     <!-- Welcome Overlay -->
-    <div id="welcomeOverlay" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:#11254b;display:flex;align-items:center;justify-content:center;transition:opacity 0.7s cubic-bezier(.4,2,.6,1);opacity:1;">
+    <div id="welcomeOverlay" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:#083066;display:flex;align-items:center;justify-content:center;transition:opacity 0.7s cubic-bezier(.4,2,.6,1);opacity:1;">
       <div id="welcomeBlock" style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100vw;height:100vh;">
-        <div id="welcomeTitle" class="welcome-pop" style="font-size:4.2rem;font-weight:900;color:#fff;text-shadow:0 4px 32px #00236699,0 1px 0 #fff;letter-spacing:2px;margin-bottom:0.5rem;margin-top:0;opacity:0;z-index:2;display:none;">
+        <div id="welcomeTitle" class="welcome-pop" style="font-size:4.2rem;font-weight:900;color:#fff;text-shadow:0 4px 32px #08306699,0 1px 0 #fff;letter-spacing:2px;margin-bottom:0.5rem;margin-top:0;opacity:0;z-index:2;display:none;">
           Welcome to
         </div>
         <div class="logo-shadow-container" id="welcomeLogo" style="opacity:0;flex:1;max-height:420px;width:100%;margin-bottom:0.5rem;display:none;">
@@ -1152,7 +1152,7 @@
                         <div class="card p-3 shadow-sm animated-fadein" id="movementsCard">
                             <h3 class="h5 mb-3">Recent Movements</h3>
                             <!-- Espacio para la gráfica -->
-                            <div id="movementsChartContainer" style="width:100%; min-height:320px; height:340px; margin-bottom:1.5rem; display:flex; align-items:center; justify-content:center; background:#f8f9fa; border-radius:1rem; border:1px dashed #004AAD;">
+                            <div id="movementsChartContainer" style="width:100%; min-height:320px; height:340px; margin-bottom:1.5rem; display:flex; align-items:center; justify-content:center; background:#f8f9fa; border-radius:1rem; border:1px dashed #1D488A;">
                                 <!-- Aquí irá la gráfica -->
                             </div>
                             <div class="table-responsive table-responsive-scroll">

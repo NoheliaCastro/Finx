@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -56,7 +56,7 @@
         .summary-card h3 {
             color: var(--card-border);
         }        .summary-card .stat-number {
-            color: #004AAD;
+            color: #1D488A;
             background: none;
             -webkit-text-fill-color: unset;
             font-size: 2.5rem;
@@ -95,20 +95,20 @@
             overflow-y: auto;
         }
         .btn-primary {
-            background: #004AAD;
-            border-color: #004AAD;
+            background: #1D488A;
+            border-color: #1D488A;
         }
         .btn-primary:hover {
-            background: #002366;
-            border-color: #002366;
+            background: #083066;
+            border-color: #083066;
         }
         .btn-danger {
-            background: #EEE95B;
-            color: #002366;
+            background: #FFDE32;
+            color: #083066;
             border: none;
         }
         .btn-danger:hover {
-            background: #004AAD;
+            background: #1D488A;
             color: #fff;
         }
         .card {
@@ -229,7 +229,7 @@
             left: 280px;
             top: 50%;
             transform: translateY(-50%);
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
             border: none;
             color: white;
             width: 40px;
@@ -246,7 +246,7 @@
         }
 
         .sidebar-toggle-btn:hover {
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            background: linear-gradient(135deg, #91A9CC, #1D488A);
             transform: translateY(-50%) translateX(5px);
             box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
         }
@@ -306,16 +306,16 @@
             justify-content: center;
             font-size: 1.3rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 15px rgba(145, 169, 204, 0.3);
         }
         .leccion-theme-toggle:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 8px 25px rgba(145, 169, 204, 0.4);
         }
         
         /* Forzar estilos del botón de modo oscuro */
         .trivia-theme-toggle {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
             border: none;
             color: white;
             width: 45px;
@@ -326,13 +326,13 @@
             justify-content: center;
             font-size: 1.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
+            box-shadow: 0 2px 8px rgba(145, 169, 204,0.10);
             cursor: pointer;
         }
         .trivia-theme-toggle:hover {
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            background: linear-gradient(135deg, #91A9CC, #1D488A);
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+            box-shadow: 0 4px 16px rgba(145, 169, 204,0.18);
         }
         .trivia-theme-toggle i {
             font-size: 1.5rem;
@@ -354,8 +354,8 @@
         }
         
         :root {
-            --fun-primary: #6366f1;
-            --fun-secondary: #8b5cf6;
+            --fun-primary: #1D488A;
+            --fun-secondary: #91A9CC;
             --fun-accent: #06b6d4;
             --fun-success: #10b981;
             --fun-warning: #f59e0b;
@@ -369,22 +369,22 @@
             --sidebar-bg: #181C2A;
             --sidebar-border: #22263A;
             --card-bg: #FFFFFF;
-            --card-border: #004AAD;
-            --navbar-bg: #002366;
-            --text-color: #002366;
-            --card-shadow: 0 2px 8px #00236622;
-            --hover-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            --card-border: #1D488A;
+            --navbar-bg: #083066;
+            --text-color: #083066;
+            --card-shadow: 0 2px 8px #08306622;
+            --hover-shadow: 0 8px 25px rgba(145, 169, 204, 0.4);
         }
         [data-bs-theme="dark"] {
             --background-color: #181C2A;
             --sidebar-bg: #131624;
             --sidebar-border: #23263A;
             --card-bg: #23263A;
-            --card-border: #6366f1;
+            --card-border: #1D488A;
             --navbar-bg: #23263A;
-            --text-color: #EEE95B;
-            --card-shadow: 0 2px 8px #6366f122;
-            --hover-shadow: 0 8px 25px #6366f144;
+            --text-color: #FFDE32;
+            --card-shadow: 0 2px 8px #1D488A22;
+            --hover-shadow: 0 8px 25px #1D488A44;
         }
         
         /* Estilos específicos del sidebar copiados de dashboard.html */
@@ -466,7 +466,7 @@
         
         /* Estilos para el navbar y menú de usuario copiados de dashboard.html */
         .leccion-navbar {
-            background: linear-gradient(135deg, var(--background-color), rgba(99, 102, 241, 0.05)) !important;
+            background: linear-gradient(135deg, var(--background-color), rgba(145, 169, 204, 0.05)) !important;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             padding: 0.15rem 0;
             min-height: 80px;
@@ -493,16 +493,16 @@
             justify-content: center;
             font-size: 1.3rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 15px rgba(145, 169, 204, 0.3);
         }
         .leccion-theme-toggle:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 8px 25px rgba(145, 169, 204, 0.4);
         }
         
         /* Forzar estilos del botón de modo oscuro */
         .trivia-theme-toggle {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
             border: none;
             color: white;
             width: 45px;
@@ -513,13 +513,13 @@
             justify-content: center;
             font-size: 1.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(129,140,248,0.10);
+            box-shadow: 0 2px 8px rgba(145, 169, 204,0.10);
             cursor: pointer;
         }
         .trivia-theme-toggle:hover {
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            background: linear-gradient(135deg, #91A9CC, #1D488A);
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(129,140,248,0.18);
+            box-shadow: 0 4px 16px rgba(145, 169, 204,0.18);
         }
         .trivia-theme-toggle i {
             font-size: 1.5rem;
@@ -547,14 +547,14 @@
         .avatar-small {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 1.2rem;
-            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 2px 8px rgba(145, 169, 204, 0.3);
         }
         
         .user-info-small {
@@ -690,14 +690,14 @@
         .dropdown-avatar {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 1.4rem;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 12px rgba(145, 169, 204, 0.3);
         }
         
         .dropdown-user-info {
@@ -753,8 +753,8 @@
             pointer-events: none;
         }
         .dropdown-item:hover {
-            background: rgba(99, 102, 241, 0.05);
-            color: #6366f1;
+            background: rgba(145, 169, 204, 0.05);
+            color: #1D488A;
             transform: translateX(4px);
         }
         
@@ -774,7 +774,7 @@
         
         /* Estilos para modo oscuro */
         [data-bs-theme="dark"] .user-dropdown-menu {
-            background: #232A36;
+            background: #0C3D7A;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
@@ -801,8 +801,8 @@
         }
         
         [data-bs-theme="dark"] .dropdown-item:hover {
-            background: rgba(99, 102, 241, 0.1);
-            color: #6366f1;
+            background: rgba(145, 169, 204, 0.1);
+            color: #1D488A;
         }
         
         [data-bs-theme="dark"] .dropdown-item-danger {

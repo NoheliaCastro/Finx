@@ -1,4 +1,4 @@
-/* Estilos para el chatbot en el sidebar */
+﻿/* Estilos para el chatbot en el sidebar */
 .chatbot-sidebar {
     margin-top: 2rem;
     padding: 1.5rem 1rem;
@@ -16,12 +16,12 @@
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
-    color: #004AAD;
+    color: #1D488A;
     font-weight: 600;
 }
 
 [data-bs-theme="dark"] .chatbot-sidebar-header {
-    color: #EEE95B;
+    color: #FFDE32;
 }
 
 .chatbot-sidebar-header i {
@@ -73,12 +73,12 @@
 }
 
 .chatbot-input:focus {
-    border-color: #004AAD;
-    box-shadow: 0 0 0 0.2rem rgba(0, 74, 173, 0.25);
+    border-color: #1D488A;
+    box-shadow: 0 0 0 0.2rem rgba(29, 72, 138, 0.25);
 }
 
 .chatbot-send-btn {
-    background: #004AAD;
+    background: #1D488A;
     color: white;
     border: none;
     border-radius: 50%;
@@ -92,8 +92,8 @@
 }
 
 [data-bs-theme="dark"] .chatbot-send-btn {
-    background: #EEE95B;
-    color: #002366;
+    background: #FFDE32;
+    color: #083066;
 }
 
 .chatbot-send-btn:hover {
@@ -115,10 +115,10 @@
 }
 
 .chatbot-sidebar-messages::-webkit-scrollbar-thumb {
-    background: #004AAD;
+    background: #1D488A;
     border-radius: 10px;
 }
 
 [data-bs-theme="dark"] .chatbot-sidebar-messages::-webkit-scrollbar-thumb {
-    background: #EEE95B;
+    background: #FFDE32;
 }

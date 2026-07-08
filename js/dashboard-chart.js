@@ -1,4 +1,4 @@
-// dashboard-chart.js
+﻿// dashboard-chart.js
 // Renderiza una gráfica de líneas con los movimientos de ingresos y gastos
 
 let movementsChartInstance = null;
@@ -26,10 +26,10 @@ function renderMovementsChart() {
     // Detectar el tema actual (claro u oscuro)
     const html = document.documentElement;
     const isDark = html.getAttribute('data-bs-theme') === 'dark';
-    const chartBgColor = isDark ? '#181C24' : '#f8f9fa';
-    const chartAreaBgColor = isDark ? '#11254b' : '#fff';
+    const chartBgColor = isDark ? '#083066' : '#f8f9fa';
+    const chartAreaBgColor = isDark ? '#083066' : '#fff';
     const gridColor = isDark ? '#fff' : '#e0e0e0';
-    const borderColor = isDark ? '#11254b' : '#fff';
+    const borderColor = isDark ? '#083066' : '#fff';
     const fontColor = isDark ? '#fff' : '#222';
 
     // Obtener movimientos de localStorage
@@ -95,7 +95,7 @@ function renderMovementsChart() {
     }
 
     // Plugin para fondo completo del canvas
-    const canvasBgColor = isDark ? '#11254b' : '#fff';
+    const canvasBgColor = isDark ? '#083066' : '#fff';
     const fullCanvasBgPlugin = {
         id: 'fullCanvasBgColor',
         beforeDraw: (chart) => {
@@ -192,17 +192,17 @@ function renderMovementsChart() {
                         weight: 'bold', 
                         family: 'Montserrat, Rubik, sans-serif' 
                     },
-                    color: isDark ? '#EEE95B' : '#004AAD',
+                    color: isDark ? '#FFDE32' : '#1D488A',
                     padding: { 
                         top: window.innerWidth <= 576 ? 10 : 18, 
                         bottom: window.innerWidth <= 576 ? 5 : 10 
                     }
                 },
                 tooltip: {
-                    backgroundColor: isDark ? '#232A36' : '#fff',
-                    titleColor: isDark ? '#EEE95B' : '#004AAD',
+                    backgroundColor: isDark ? '#0C3D7A' : '#fff',
+                    titleColor: isDark ? '#FFDE32' : '#1D488A',
                     bodyColor: fontColor,
-                    borderColor: isDark ? '#EEE95B' : '#004AAD',
+                    borderColor: isDark ? '#FFDE32' : '#1D488A',
                     borderWidth: 1.5,
                     padding: window.innerWidth <= 576 ? 8 : 12,
                     caretSize: window.innerWidth <= 576 ? 6 : 8,

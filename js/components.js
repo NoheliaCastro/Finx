@@ -28,7 +28,9 @@ async function loadComponent(elementId, componentPath) {
 function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
+    if (!themeToggle) return;
     const icon = themeToggle.querySelector('i');
+    if (!icon) return;
     const logoLight = document.getElementById('logoLight');
     const logoDark = document.getElementById('logoDark');
 
@@ -64,7 +66,7 @@ function updateThemeIcon(icon, theme) {
 function updateLogoVisibility(theme) {
     const logoLight = document.getElementById('logoLight');
     const logoDark = document.getElementById('logoDark');
-    
+    if (!logoLight || !logoDark) return;
     if (theme === 'dark') {
         logoLight.style.display = 'none';
         logoDark.style.display = 'inline-block';
@@ -164,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // SISTEMA DE TRADUCCIÓN SIMPLE
 // =============================
 
-const translations = {
+const finxTranslations = {
     en: {
         // Navbar
         'home': 'Home',
@@ -385,7 +387,7 @@ function initLanguageToggle() {
 
 function applyTranslations() {
     const lang = getCurrentLanguage();
-    const dict = translations[lang] || {};
+    const dict = finxTranslations[lang] || {};
     // Elementos con atributo data-translate
     document.querySelectorAll('[data-translate]').forEach(el => {
         const key = el.getAttribute('data-translate');
