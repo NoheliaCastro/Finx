@@ -90,7 +90,7 @@
             left: 280px;
             top: 50%;
             transform: translateY(-50%);
-            background: linear-gradient(135deg, #1D488A, #91A9CC);
+            background: linear-gradient(135deg, var(--brand-deep-blue), var(--brand-light-blue));
             border: none;
             color: white;
             width: 40px;
@@ -107,7 +107,7 @@
         }
 
         .sidebar-toggle-btn:hover {
-            background: linear-gradient(135deg, #91A9CC, #1D488A);
+            background: linear-gradient(135deg, var(--brand-light-blue), var(--brand-deep-blue));
             transform: translateY(-50%) translateX(5px);
             box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
         }
@@ -144,7 +144,7 @@
             left: 280px;
             top: 50%;
             transform: translateY(-50%);
-            background: linear-gradient(135deg, #1D488A, #91A9CC);
+            background: linear-gradient(135deg, var(--brand-deep-blue), var(--brand-light-blue));
             border: none;
             color: white;
             width: 40px;
@@ -161,7 +161,7 @@
         }
 
         .sidebar-toggle-btn:hover {
-            background: linear-gradient(135deg, #91A9CC, #1D488A);
+            background: linear-gradient(135deg, var(--brand-light-blue), var(--brand-deep-blue));
             transform: translateY(-50%) translateX(5px);
             box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
         }
@@ -193,21 +193,21 @@
             background: #E6E5E5;
         }
         [data-bs-theme="dark"] body {
-            background: #083066;
+            background: var(--brand-dark-blue);
         }
         .main-section, .help-section {
             background: linear-gradient(135deg, var(--light-background, #fff) 0%, var(--background-color, #E6E5E5) 100%);
             min-height: 100vh;
         }
         [data-bs-theme="dark"] .main-section, [data-bs-theme="dark"] .help-section {
-            background: linear-gradient(135deg, #0C3D7A 0%, #083066 100%);
+            background: linear-gradient(135deg, var(--brand-dark-blue-alt) 0%, var(--brand-dark-blue) 100%);
         }
         [data-bs-theme="dark"] .trivia-sidebar {
-            background: #083066 !important;
-            border-right: 1.5px solid #0C3D7A;
+            background: var(--brand-dark-blue) !important;
+            border-right: 1.5px solid var(--brand-dark-blue-alt);
         }
         .leccion-navbar {
-            background: linear-gradient(135deg, var(--background-color), rgba(145, 169, 204, 0.05)) !important;
+            background: linear-gradient(135deg, var(--background-color), rgba(var(--brand-light-blue-rgb), 0.05)) !important;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             padding: 0.15rem 0;
             min-height: 80px;
@@ -249,16 +249,16 @@
             justify-content: center;
             font-size: 1.3rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(145, 169, 204, 0.3);
+            box-shadow: 0 4px 15px rgba(var(--brand-light-blue-rgb), 0.3);
         }
         .leccion-theme-toggle:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(145, 169, 204, 0.4);
+            box-shadow: 0 8px 25px rgba(var(--brand-light-blue-rgb), 0.4);
         }
         
         /* Forzar estilos del botón de modo oscuro */
         .trivia-theme-toggle {
-            background: linear-gradient(135deg, #1D488A, #91A9CC);
+            background: linear-gradient(135deg, var(--brand-deep-blue), var(--brand-light-blue));
             border: none;
             color: white;
             width: 45px;
@@ -269,16 +269,31 @@
             justify-content: center;
             font-size: 1.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(145, 169, 204,0.10);
+            box-shadow: 0 2px 8px rgba(var(--brand-light-blue-rgb),0.10);
             cursor: pointer;
         }
         .trivia-theme-toggle:hover {
-            background: linear-gradient(135deg, #91A9CC, #1D488A);
+            background: linear-gradient(135deg, var(--brand-light-blue), var(--brand-deep-blue));
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(145, 169, 204,0.18);
+            box-shadow: 0 4px 16px rgba(var(--brand-light-blue-rgb),0.18);
         }
         .trivia-theme-toggle i {
             font-size: 1.5rem;
+        }
+
+        .contact-form button[type="submit"] {
+            background: linear-gradient(135deg, var(--brand-deep-blue), var(--brand-light-blue));
+            border: none;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(var(--brand-light-blue-rgb), 0.18);
+            transition: all 0.3s ease;
+        }
+
+        .contact-form button[type="submit"]:hover {
+            background: linear-gradient(135deg, var(--brand-light-blue), var(--brand-deep-blue));
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(var(--brand-light-blue-rgb), 0.25);
         }
         
         /* Estilos para el perfil de usuario en el navbar */
@@ -303,14 +318,14 @@
         .avatar-small {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #1D488A, #91A9CC);
+            background: linear-gradient(135deg, var(--brand-deep-blue), var(--brand-light-blue));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 1.2rem;
-            box-shadow: 0 2px 8px rgba(145, 169, 204, 0.3);
+            box-shadow: 0 2px 8px rgba(var(--brand-light-blue-rgb), 0.3);
         }
         
         .user-info-small {
@@ -446,14 +461,14 @@
         .dropdown-avatar {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, #1D488A, #91A9CC);
+            background: linear-gradient(135deg, var(--brand-deep-blue), var(--brand-light-blue));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 1.4rem;
-            box-shadow: 0 4px 12px rgba(145, 169, 204, 0.3);
+            box-shadow: 0 4px 12px rgba(var(--brand-light-blue-rgb), 0.3);
         }
         
         .dropdown-user-info {
@@ -509,8 +524,8 @@
             pointer-events: none;
         }
         .dropdown-item:hover {
-            background: rgba(145, 169, 204, 0.05);
-            color: #1D488A;
+            background: rgba(var(--brand-light-blue-rgb), 0.05);
+            color: var(--brand-deep-blue);
             transform: translateX(4px);
         }
         
@@ -530,7 +545,7 @@
         
         /* Estilos para modo oscuro */
         [data-bs-theme="dark"] .user-dropdown-menu {
-            background: #0C3D7A;
+            background: var(--brand-dark-blue-alt);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
@@ -557,8 +572,8 @@
         }
         
         [data-bs-theme="dark"] .dropdown-item:hover {
-            background: rgba(145, 169, 204, 0.1);
-            color: #1D488A;
+            background: rgba(var(--brand-light-blue-rgb), 0.1);
+            color: var(--brand-deep-blue);
         }
         
         [data-bs-theme="dark"] .dropdown-item-danger {
@@ -688,8 +703,8 @@
         }
         
         :root {
-            --fun-primary: #1D488A;
-            --fun-secondary: #91A9CC;
+            --fun-primary: var(--brand-deep-blue);
+            --fun-secondary: var(--brand-light-blue);
             --fun-accent: #06b6d4;
             --fun-success: #10b981;
             --fun-warning: #f59e0b;
