@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -343,28 +343,31 @@
         
         /* Estilos para el video */
         .video-container {
-            background: var(--card-bg);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            border: 2px solid var(--card-border);
+            background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(248,250,252,0.9));
+            border-radius: 1.5rem;
+            padding: 1.75rem;
+            border: 2px solid rgba(30, 64, 175, 0.2);
             margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.08);
+            transition: all 0.3s ease;
         }
         
         .video-container h4 {
             color: var(--text-color);
-            margin-bottom: 1rem;
         }
         
-        .video-container video {
+        .video-container iframe {
             width: 100%;
-            height: auto;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            border-radius: 1rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            border: none;
         }
         
         [data-bs-theme="dark"] .video-container {
-            background: var(--card-bg);
-            border-color: var(--card-border);
+            background: linear-gradient(145deg, rgba(35, 42, 54, 0.95), rgba(29, 35, 47, 0.9));
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
@@ -490,36 +493,46 @@
                             
                             <!-- Video Section -->
                             <div class="video-container mb-4">
-                                <h4 class="h5 mb-3">🎥 Understanding Savings: A Guide for Young People</h4>
-                                <div class="ratio ratio-16x9 mb-3">
-                                    <video id="lessonVideo" controls class="rounded">
-                                        <source src="../videos/Understanding Savings A Guide for Young People_1080p.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
+                                <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                                    <h4 class="h5 mb-0 fw-bold">🎥 Time Value of Money Explained</h4>
+                                    <span class="badge bg-primary rounded-pill px-3 py-2">Nivel 2: Interés Compuesto & Valor del Dinero</span>
                                 </div>
-                                <p class="text-muted small">
-                                    Watch this comprehensive video to master the ninja techniques of smart saving. 
-                                    This lesson covers essential saving strategies, budgeting principles, and building a strong financial foundation.
+                                <div class="ratio ratio-16x9 mb-3">
+                                    <iframe id="lessonVideoFrame" 
+                                            src="https://www.youtube.com/embed/gkp-7yhfreg?enablejsapi=1&rel=0" 
+                                            title="Time Value of Money Explained" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                            allowfullscreen 
+                                            class="rounded-3">
+                                    </iframe>
+                                </div>
+                                <p class="text-muted small mb-0">
+                                    Descubre cómo el dinero cambia de valor con el tiempo, el poder exponencial del interés compuesto y por qué comenzar a ahorrar e invertir temprano hace una diferencia gigantesca.
                                 </p>
+                            </div>
+
+                            <!-- Video Progress Message & Manual Complete Button -->
+                            <div class="text-center mb-4" id="videoProgressMessage">
+                                <div class="alert alert-info d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                    <div class="text-start">
+                                        <h5 class="mb-1">📺 Mira el Video / Watch the Video</h5>
+                                        <p class="mb-0 small">Al terminar de ver el video se desbloqueará el quiz automáticamente.</p>
+                                    </div>
+                                    <button class="btn btn-outline-primary btn-sm rounded-pill px-3" onclick="unlockQuizManual()">
+                                        <i class="bi bi-check-circle-fill me-1"></i> Marcar como visto
+                                    </button>
+                                </div>
                             </div>
 
                             <!-- Quiz Button (initially hidden) -->
                             <div class="text-center" id="quizButtonContainer" style="display: none;">
                                 <div class="alert alert-success mb-3">
-                                    <h5>🎉 Video Completed!</h5>
-                                    <p class="mb-0">Great job! Now you can take the quiz to test your knowledge.</p>
+                                    <h5>🎉 ¡Video Completado! / Video Completed!</h5>
+                                    <p class="mb-0">¡Gran trabajo! Ahora puedes realizar el quiz de Savings Ninja.</p>
                                 </div>
-                                <button class="btn btn-primary btn-lg" onclick="goToQuiz()">
-                                    <i class="bi bi-question-circle"></i> Take Quiz
+                                <button class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm" onclick="goToQuiz()">
+                                    <i class="bi bi-question-circle me-2"></i> Realizar Quiz / Take Quiz
                                 </button>
-                            </div>
-
-                            <!-- Video Progress Message -->
-                            <div class="text-center" id="videoProgressMessage">
-                                <div class="alert alert-info">
-                                    <h5>📺 Watch the Video</h5>
-                                    <p class="mb-0">Please watch the complete video to unlock the quiz.</p>
-                                </div>
                             </div>
                             
                             <!-- Back to Lessons -->
@@ -632,23 +645,47 @@
                 document.querySelectorAll('.animated-fadein').forEach(el => el.classList.add('visible'));
             }, 200);
 
-            // Add video event listener
-            setTimeout(() => {
-                const video = document.getElementById('lessonVideo');
-                const quizButton = document.getElementById('quizButtonContainer');
-                const progressMessage = document.getElementById('videoProgressMessage');
-                
-                if (video && quizButton && progressMessage) {
-                    video.addEventListener('ended', function() {
-                        // Hide progress message and show quiz button
-                        progressMessage.style.display = 'none';
-                        quizButton.style.display = 'block';
-                        
-                        // Add animation effect
-                        quizButton.style.animation = 'fadeInUp 0.8s ease-out';
-                    });
-                }
-            }, 100);
+        // Función para desbloquear manualmente el quiz
+        function unlockQuizManual() {
+            const quizButton = document.getElementById('quizButtonContainer');
+            const progressMessage = document.getElementById('videoProgressMessage');
+            if (quizButton && progressMessage) {
+                progressMessage.style.display = 'none';
+                quizButton.style.display = 'block';
+                quizButton.style.animation = 'fadeInUp 0.8s ease-out';
+            }
+        }
+
+        function initYouTubePlayer() {
+            try {
+                new YT.Player('lessonVideoFrame', {
+                    events: {
+                        'onStateChange': function(event) {
+                            if (event.data === YT.PlayerState.ENDED) {
+                                unlockQuizManual();
+                            }
+                        }
+                    }
+                });
+            } catch (e) {
+                console.log('YouTube API init fallback:', e);
+            }
+        }
+
+        // Add video event listener
+        setTimeout(() => {
+            if (!window.YT) {
+                var tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            }
+            if (window.YT && window.YT.Player) {
+                initYouTubePlayer();
+            } else {
+                window.onYouTubeIframeAPIReady = initYouTubePlayer;
+            }
+        }, 100);
         });
 
         // Translation system

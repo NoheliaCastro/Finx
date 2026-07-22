@@ -6,24 +6,24 @@ Se han creado **3 quizzes específicos** para cada lección, cada uno con pregun
 
 ## 📚 Estructura de Quizzes
 
-### 1. Quiz: Ahorro Inteligente (`quiz_ahorro_inteligente.html`)
-- **Video Base**: "Basic Concepts of Personal Finances_1080p.mp4"
+### 1. Nivel 1: Cash Flow & Gastos (`quiz_ahorro_inteligente.html`)
+- **Video Base**: "Free Cash Flow Explained" (The Finance Storyteller - YouTube: `https://www.youtube.com/watch?v=FC0ZODWFzpo`)
 - **Lección**: `leccion.html`
-- **Tema**: Conceptos básicos de finanzas personales
+- **Tema**: Cash Flow / Flujo de caja libre y gestión de gastos
 - **Preguntas**: 7 preguntas sobre presupuesto, ahorros, gastos fijos/variables, fondos de emergencia
 - **ID Lección**: `ahorro_inteligente`
 
-### 2. Quiz: Savings Ninja (`quiz_savings_ninja.html`)
-- **Video Base**: "Understanding Savings A Guide for Young People_1080p.mp4"
+### 2. Nivel 2: Interés Compuesto (`quiz_savings_ninja.html`)
+- **Video Base**: "Time Value of Money Explained" (The Finance Storyteller - YouTube: `https://www.youtube.com/watch?v=gkp-7yhfreg`)
 - **Lección**: `savings_master.html`
-- **Tema**: Técnicas avanzadas de ahorro
+- **Tema**: Interés compuesto y el valor del dinero en el tiempo
 - **Preguntas**: 8 preguntas sobre regla 50/30/20, automatización, fondos de emergencia, interés compuesto
 - **ID Lección**: `savings_ninja`
 
-### 3. Quiz: Investment Wizard (`quiz_investment_wizard.html`)
-- **Video Base**: "Understanding Investment A Guide for Young People_1080p.mp4"
+### 3. Nivel 3: Activos y Pasivos (`quiz_investment_wizard.html`)
+- **Video Base**: "Assets vs Liabilities Explained" (The Finance Storyteller - YouTube: `https://www.youtube.com/watch?v=f4hIGyWByNA`)
 - **Lección**: `investment_wizard.html`
-- **Tema**: Fundamentos de inversiones
+- **Tema**: Activos vs Pasivos y decisiones financieras inteligentes
 - **Preguntas**: 8 preguntas sobre diversificación, riesgo, fondos mutuos, estrategias de inversión
 - **ID Lección**: `wealth_wizard`
 

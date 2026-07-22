@@ -7,9 +7,9 @@
     --light-text: #5A7294;
     --background-color: #ffffff;
     --light-background: #F4F7FB;
-    --section-padding: 6rem 2rem;
-    --card-shadow: 0 4px 6px -1px rgba(8, 48, 102, 0.1), 0 2px 4px -1px rgba(8, 48, 102, 0.06);
-    --hover-shadow: 0 20px 25px -5px rgba(8, 48, 102, 0.12), 0 10px 10px -5px rgba(8, 48, 102, 0.06);
+    --section-padding: 5rem 2rem;
+    --card-shadow: 0 2px 8px rgba(8, 48, 102, 0.06);
+    --hover-shadow: 0 8px 32px rgba(8, 48, 102, 0.10);
     --illustration-size: 200px;
     --icon-size: 3rem;
     --navbar-height: 80px;
@@ -83,11 +83,14 @@ body > :first-child {
 
 /* Custom Styles */
 .navbar {
-    padding: 0.15rem 0;
+    padding: 0.5rem 0;
     min-height: 80px;
-    background-color: var(--background-color) !important;
+    background-color: rgba(255, 255, 255, 0.95) !important;
     transition: var(--navbar-transition);
     box-shadow: var(--navbar-shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(29, 72, 138, 0.08);
 }
 
 .navbar.scrolled {
@@ -2124,4 +2127,111 @@ p, .lead, .text-muted {
 @keyframes chatbot-fadein-right {
     from { opacity: 0; transform: translateX(30px); }
     to { opacity: 1; transform: translateX(0); }
-} 
+}
+
+/* ─── Footer ─── */
+.footer {
+    background: var(--light-background) !important;
+    border-top: 1px solid rgba(29, 72, 138, 0.08);
+    padding: var(--space-16, 4rem) 0 var(--space-8, 2rem) !important;
+}
+
+.footer .footer-link {
+    color: var(--text-color);
+    font-size: var(--text-base, 1rem);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-weight: var(--font-weight-medium, 500);
+}
+
+.footer .footer-link:hover {
+    color: var(--primary-color);
+}
+
+.footer .footer-desc {
+    font-size: var(--text-lg, 1.125rem);
+    color: var(--light-text);
+    line-height: var(--line-height-relaxed, 1.75);
+    font-weight: var(--font-weight-normal, 400) !important;
+}
+
+.footer h3.h5 {
+    font-size: var(--text-sm, 0.875rem);
+    letter-spacing: 0.1em;
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--text-color);
+    margin-bottom: var(--space-5, 1.25rem);
+}
+
+.footer .footer-social {
+    color: var(--primary-color);
+    font-size: var(--text-xl, 1.25rem);
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full, 9999px);
+    background: rgba(29, 72, 138, 0.08);
+    transition: all 0.25s ease;
+}
+
+.footer .footer-social:hover {
+    color: #fff;
+    background: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.footer hr {
+    border-color: rgba(29, 72, 138, 0.12);
+    margin: var(--space-8, 2rem) 0 var(--space-4, 1rem);
+}
+
+.footer .text-muted {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--light-text) !important;
+}
+
+.footer-logo-light { display: block !important; }
+.footer-logo-dark { display: none !important; }
+
+[data-bs-theme="dark"] .footer {
+    background: var(--background-color) !important;
+    border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-bs-theme="dark"] .footer .footer-desc,
+[data-bs-theme="dark"] .footer .footer-link {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+[data-bs-theme="dark"] .footer .footer-link:hover {
+    color: var(--accent-color) !important;
+}
+
+[data-bs-theme="dark"] .footer h3.h5 {
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .footer .footer-social {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--secondary-color);
+}
+
+[data-bs-theme="dark"] .footer .footer-social:hover {
+    background: var(--accent-color);
+    color: var(--finx-dark-blue);
+}
+
+[data-bs-theme="dark"] .footer hr {
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-bs-theme="dark"] .footer-logo-light { display: none !important; }
+[data-bs-theme="dark"] .footer-logo-dark { display: block !important; }
+
+@media (max-width: 991.98px) {
+    .footer .row > div { margin-bottom: 2rem; }
+    .footer .footer-desc { font-size: var(--text-base, 1rem); }
+    .footer .footer-link { font-size: var(--text-sm, 0.875rem); }
+}
