@@ -24,6 +24,14 @@
     --dark-color: #343a40;
     --header-height: 80px;
     --transition-speed: 0.3s;
+    --brand-yellow: #FFDE32;
+    --brand-deep-blue: #1D488A;
+    --brand-dark-blue: #083066;
+    --brand-dark-blue-alt: #0C3D7A;
+    --brand-light-blue-rgb: 145, 169, 204;
+    --brand-deep-blue-rgb: 29, 72, 138;
+    --brand-yellow-rgb: 255, 222, 50;
+    --brand-light-blue: #91A9CC;
     --finx-yellow: #FFDE32;
     --finx-dark-blue: #083066;
     --finx-deep-blue: #1D488A;
