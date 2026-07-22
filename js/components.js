@@ -131,13 +131,56 @@ function addChatbotButtonToSidebars() {
     });
 }
 
+/**
+ * Agrega el enlace a la Calculadora de Salario Neto en las barras laterales.
+ * Resuelve la ruta relativa según si la página está en /trivia/ o en la raíz.
+ */
+function addSalaryCalculatorToSidebars() {
+    const sidebars = [
+        ...document.querySelectorAll('.trivia-sidebar, .leccion-sidebar, .camino-sidebar')
+    ];
+    const inTrivia = window.location.pathname.includes('/trivia/');
+    const calculatorHref = inTrivia ? '../calculadora-salario.html' : 'calculadora-salario.html';
+    const isActive = window.location.pathname.includes('calculadora-salario.html');
+
+    const calculatorMenuItemHTML = `
+        <li>
+            <a href="${calculatorHref}" class="${isActive ? 'active' : ''}">
+                <i class="bi bi-calculator-fill"></i>
+                <span>Salary Calculator</span>
+            </a>
+        </li>
+    `;
+
+    sidebars.forEach((sidebar) => {
+        const navMenu = sidebar.querySelector('.sidebar-nav');
+        if (!navMenu) return;
+
+        const alreadyExists = sidebar.querySelector('a[href*="calculadora-salario.html"]');
+        if (alreadyExists) return;
+
+        const logoutContainer = sidebar.querySelector('.sidebar-logout-container');
+        const helpLink = sidebar.querySelector('a[href*="helpcenter"], a[href*="Help_center"]');
+        const helpItem = helpLink ? helpLink.closest('li') : null;
+
+        if (helpItem) {
+            helpItem.insertAdjacentHTML('beforebegin', calculatorMenuItemHTML);
+        } else if (logoutContainer) {
+            logoutContainer.insertAdjacentHTML('beforebegin', calculatorMenuItemHTML);
+        } else {
+            navMenu.insertAdjacentHTML('beforeend', calculatorMenuItemHTML);
+        }
+    });
+}
+
 // Cargar componentes cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     // Cargar header y footer si existen los elementos
     const headerElement = document.getElementById('header');
     
-    // Añadir botón del chatbot a las barras laterales
+    // Añadir botón del chatbot y calculadora a las barras laterales
     addChatbotButtonToSidebars();
+    addSalaryCalculatorToSidebars();
     const footerElement = document.getElementById('footer');
     const headerDashboardElement = document.getElementById('header_dashboard');
     const chatbotContainer = document.getElementById('chatbot-container');
@@ -171,6 +214,7 @@ const finxTranslations = {
         // Navbar
         'home': 'Home',
         'about-us': 'About us',
+        'salary-calculator': 'Net Salary Calculator',
         'help-center': 'Help center',
         'register': 'Register',
         'login': 'Login',
@@ -265,6 +309,7 @@ const finxTranslations = {
         // Navbar
         'home': 'Inicio',
         'about-us': 'Sobre nosotros',
+        'salary-calculator': 'Calculadora de salario',
         'help-center': 'Centro de ayuda',
         'register': 'Registrar',
         'login': 'Iniciar sesión',
