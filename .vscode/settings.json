@@ -1,3 +1,5 @@
 {
-    "liveServer.settings.multiRootWorkspaceName": "Finx"
+    "liveServer.settings.multiRootWorkspaceName": "Finx",
+    "chat.disableAIFeatures": false,
+    "liveServer.settings.port": 5501
 }

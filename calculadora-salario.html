@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finx - Calculadora de Salario Neto</title>
+    <meta name="description" content="Calcula tu salario neto estimado en Panamá después de CSS, Seguro Educativo e ISR con la herramienta educativa de FINX.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="trivia/shared-sidebar.css">
+    <link rel="stylesheet" href="css/calculadora-salario.css">
+    <style>
+        .trivia-navbar {
+            background-color: var(--background-color) !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 0.75rem 0;
+            min-height: 95px;
+        }
+
+        .navbar-logo-container {
+            display: flex;
+            align-items: center;
+            margin-right: 0.5rem;
+        }
+
+        .navbar-logo {
+            max-height: 80px;
+            height: auto;
+        }
+
+        .navbar-logo-light { display: block; }
+        .navbar-logo-dark { display: none; }
+        [data-bs-theme="dark"] .navbar-logo-light { display: none; }
+        [data-bs-theme="dark"] .navbar-logo-dark { display: block; }
+
+        .trivia-theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 0.4rem 0.6rem;
+            border-radius: 50%;
+            transition: background 0.2s ease;
+        }
+
+        .trivia-theme-toggle:hover {
+            background: rgba(29, 72, 138, 0.1);
+        }
+
+        .user-profile-navbar {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .avatar-small {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .user-info-small {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .user-name { font-weight: 600; font-size: 0.9rem; color: #333; margin: 0; }
+        .user-level { font-size: 0.75rem; color: #666; margin: 0; }
+        [data-bs-theme="dark"] .user-name { color: #fff; }
+        [data-bs-theme="dark"] .user-level { color: rgba(255,255,255,0.7); }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 280px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 9999;
+            margin-top: 8px;
+            pointer-events: none;
+        }
+
+        .user-profile-navbar.open .user-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .dropdown-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.4rem;
+        }
+
+        .dropdown-user-name { font-weight: 700; color: #333; }
+        .dropdown-user-level { font-size: 0.8rem; color: #666; }
+        .dropdown-divider { height: 1px; background: #eee; margin: 0.25rem 0; }
+
+        .dropdown-item {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .dropdown-item:hover { background: #f1f3f5; }
+        .dropdown-item-content { display: flex; align-items: center; gap: 0.75rem; }
+        .dropdown-item-danger { color: #dc3545; }
+
+        [data-bs-theme="dark"] .user-dropdown-menu { background: #1e2a3a; }
+        [data-bs-theme="dark"] .dropdown-header { background: #162033; }
+        [data-bs-theme="dark"] .dropdown-user-name,
+        [data-bs-theme="dark"] .dropdown-item { color: #f3f4f6; }
+        [data-bs-theme="dark"] .dropdown-item:hover { background: #243447; }
+
+        .trivia-sidebar.hidden,
+        .leccion-sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar-toggle-btn {
+            position: fixed;
+            left: 280px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #1D488A, #91A9CC);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 60px;
+            border-radius: 0 15px 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: linear-gradient(135deg, #91A9CC, #1D488A);
+            transform: translateY(-50%) translateX(5px);
+        }
+
+        .sidebar-toggle-btn.sidebar-hidden {
+            left: 0;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 1.5rem;
+            min-height: 100vh;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        .main-content.sidebar-hidden {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 991.98px) {
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+                width: 100%;
+            }
+
+            .sidebar-toggle-btn {
+                left: 0;
+            }
+
+            .user-info-small {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-logo { max-height: 65px; }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-logo { max-height: 55px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar (mismo patrón del dashboard) -->
+    <nav class="navbar trivia-navbar">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div style="flex:1; display:flex; align-items:center; gap: 1rem;">
+                    <div class="navbar-logo-container">
+                        <img src="images/modo-claro.png" alt="Finx Logo" class="navbar-logo navbar-logo-light">
+                        <img src="images/modo-oscuro.png" alt="Finx Logo" class="navbar-logo navbar-logo-dark">
+                    </div>
+                </div>
+                <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
+                    <button class="trivia-theme-toggle" id="langToggle" title="Traducir página" type="button">
+                        <i class="bi bi-translate"></i>
+                    </button>
+                    <button class="trivia-theme-toggle" id="themeToggle" title="Cambiar tema" type="button">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </button>
+                    <div class="user-profile-navbar">
+                        <div class="avatar-small">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        <div class="user-info-small">
+                            <span class="user-name">Usuario</span>
+                            <small class="user-level">Nivel 2</small>
+                        </div>
+                        <div class="user-dropdown-menu">
+                            <div class="dropdown-header">
+                                <div class="dropdown-avatar">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+                                <div class="dropdown-user-info">
+                                    <span class="dropdown-user-name">Usuario</span>
+                                    <small class="dropdown-user-level">Nivel 2</small>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="profile.html" class="dropdown-item">
+                                <div class="dropdown-item-content">
+                                    <i class="bi bi-person-circle"></i>
+                                    <span>Mi Perfil</span>
+                                </div>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <div class="dropdown-item-content">
+                                    <i class="bi bi-gear"></i>
+                                    <span>Configuración</span>
+                                </div>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <div class="dropdown-item-content">
+                                    <i class="bi bi-shield-check"></i>
+                                    <span>Privacidad</span>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item dropdown-item-danger" id="logoutBtnNavbar">
+                                <div class="dropdown-item-content">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Cerrar Sesión</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar del dashboard -->
+    <nav class="leccion-sidebar trivia-sidebar" data-sidebar-version="1">
+        <div class="container-fluid">
+            <div class="sidebar-logo-container text-center mb-3">
+                <img src="images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
+                <img src="images/modo-oscuro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-dark">
+            </div>
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="dashboard.html">
+                        <i class="bi bi-house-door-fill"></i>
+                        <span>Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="trivia/trivia.html">
+                        <i class="bi bi-book-fill"></i>
+                        <span>Lessons</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="trivia/logros.html">
+                        <i class="bi bi-trophy-fill"></i>
+                        <span>Achievements</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="goals.html">
+                        <i class="bi bi-flag-fill"></i>
+                        <span>Goals</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="calculadora-salario.html" class="active">
+                        <i class="bi bi-calculator-fill"></i>
+                        <span>Salary Calculator</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="helpcenter2.html">
+                        <i class="bi bi-question-circle-fill"></i>
+                        <span>Help</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="chatbot.html">
+                        <i class="bi bi-robot"></i>
+                        <span>Assistant</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <button class="sidebar-toggle-btn" id="sidebarToggle" type="button" aria-label="Mostrar u ocultar menú">
+        <i class="bi bi-chevron-left"></i>
+    </button>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <div class="salary-page">
+            <header class="salary-hero">
+                <span class="badge-finx">
+                    <i class="bi bi-calculator"></i> Herramienta FINX
+                </span>
+                <h1>Calculadora de Salario Neto</h1>
+                <p class="lead">
+                    Calcula cuánto recibirás realmente después de impuestos y deducciones en Panamá.
+                </p>
+            </header>
+
+            <div class="salary-layout">
+                <section class="salary-card" aria-labelledby="formTitle">
+                    <h2 id="formTitle">Tus datos salariales</h2>
+                    <p class="card-subtitle">
+                        Completa el formulario para obtener una estimación de tu salario neto mensual.
+                    </p>
+
+                    <form id="salaryForm" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="salarioBruto" id="salarioLabel">Salario bruto mensual (B/.)</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="salarioBruto"
+                                name="salarioBruto"
+                                min="0.01"
+                                step="0.01"
+                                inputmode="decimal"
+                                required
+                                aria-describedby="salarioHint error-salarioBruto"
+                                placeholder="Ej: 1500.00"
+                            >
+                            <span class="field-hint" id="salarioHint">Ingresa tu salario bruto antes de deducciones.</span>
+                            <span class="field-error" id="error-salarioBruto" role="alert"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="frecuencia">Frecuencia de pago</label>
+                            <select class="form-select" id="frecuencia" name="frecuencia" aria-describedby="frecuenciaHint">
+                                <option value="mensual" selected>Mensual</option>
+                                <option value="quincenal">Quincenal</option>
+                            </select>
+                            <span class="field-hint" id="frecuenciaHint">Si eliges quincenal, el monto se convertirá a equivalente mensual.</span>
+                        </div>
+
+                        <fieldset class="mb-3">
+                            <legend class="form-label">¿Desea incluir el cálculo del décimo tercer mes?</legend>
+                            <div class="option-group" role="radiogroup" aria-label="Incluir décimo tercer mes">
+                                <div class="option-chip">
+                                    <input type="radio" id="incluirDecimoNo" name="incluirDecimo" value="no" checked>
+                                    <label for="incluirDecimoNo"><i class="bi bi-x-circle"></i> No</label>
+                                </div>
+                                <div class="option-chip">
+                                    <input type="radio" id="incluirDecimoSi" name="incluirDecimo" value="si">
+                                    <label for="incluirDecimoSi"><i class="bi bi-check-circle"></i> Sí</label>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="decimo-panel" id="decimoOptions" hidden aria-hidden="true">
+                            <p class="field-hint mb-2">
+                                El décimo tercer mes corresponde a una prestación laboral pagada en tres partidas durante el año.
+                                No asumimos que trabajaste todo el período: indica el salario acumulado del período correspondiente.
+                            </p>
+                            <label class="form-label" for="salarioAcumulado">Salario acumulado del período (B/.)</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="salarioAcumulado"
+                                name="salarioAcumulado"
+                                min="0.01"
+                                step="0.01"
+                                inputmode="decimal"
+                                placeholder="Ej: 6000.00"
+                                aria-describedby="acumuladoHint error-salarioAcumulado"
+                            >
+                            <span class="field-hint" id="acumuladoHint">Suma de salarios brutos recibidos en el período del décimo (aprox. 4 meses).</span>
+                            <span class="field-error" id="error-salarioAcumulado" role="alert"></span>
+                        </div>
+
+                        <div class="mb-3 mt-3">
+                            <label class="form-label" for="otrosDescuentos">Otros descuentos voluntarios (B/.)</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="otrosDescuentos"
+                                name="otrosDescuentos"
+                                min="0"
+                                step="0.01"
+                                inputmode="decimal"
+                                placeholder="Ej: 50.00 (opcional)"
+                                aria-describedby="otrosHint error-otrosDescuentos"
+                            >
+                            <span class="field-hint" id="otrosHint">Opcional. Préstamos, seguros privados u otros descuentos mensuales.</span>
+                            <span class="field-error" id="error-otrosDescuentos" role="alert"></span>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-salary-primary" id="btnCalcular">
+                                <i class="bi bi-calculator me-1"></i> Calcular mi salario
+                            </button>
+                            <button type="button" class="btn btn-salary-secondary" id="btnClear">
+                                <i class="bi bi-eraser me-1"></i> Limpiar
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <section
+                    class="salary-card results-section"
+                    id="resultsSection"
+                    hidden
+                    aria-live="polite"
+                    aria-atomic="true"
+                    aria-labelledby="resultsTitle"
+                >
+                    <h2 id="resultsTitle">Resultados</h2>
+                    <p class="card-subtitle">Estimación referencial con base en las deducciones obligatorias principales.</p>
+
+                    <div class="net-highlight">
+                        <div class="net-label">Tu salario neto estimado</div>
+                        <div class="net-value" id="netSalaryValue">B/. 0.00</div>
+                        <div class="net-note">Monto aproximado que podrías recibir al mes</div>
+                    </div>
+
+                    <p class="conversion-note" id="conversionNote" hidden></p>
+
+                    <ul class="breakdown-list" aria-label="Desglose de salario">
+                        <li>
+                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">💰</span> Salario bruto</span>
+                            <span class="breakdown-value" id="resultBruto">B/. 0.00</span>
+                        </li>
+                        <li>
+                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">🏥</span> Seguro Social</span>
+                            <span class="breakdown-value deduction-value" id="resultCSS">− B/. 0.00</span>
+                        </li>
+                        <li>
+                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">🎓</span> Seguro Educativo</span>
+                            <span class="breakdown-value deduction-value" id="resultSE">− B/. 0.00</span>
+                        </li>
+                        <li>
+                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">📊</span> Impuesto Sobre la Renta</span>
+                            <span class="breakdown-value deduction-value" id="resultISR">− B/. 0.00</span>
+                        </li>
+                        <li>
+                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">📌</span> Otros descuentos</span>
+                            <span class="breakdown-value deduction-value" id="resultOtros">− B/. 0.00</span>
+                        </li>
+                        <li>
+                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">💵</span> Salario neto</span>
+                            <span class="breakdown-value" id="resultNeto">B/. 0.00</span>
+                        </li>
+                    </ul>
+
+                    <div class="summary-stats">
+                        <div class="stat-box">
+                            <span class="stat-label">Total de deducciones</span>
+                            <span class="stat-value" id="totalDeducciones">B/. 0.00</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Porcentaje de tu salario que se descuenta</span>
+                            <span class="stat-value" id="porcentajeDeducciones">0.00%</span>
+                        </div>
+                    </div>
+
+                    <div class="salary-bar-wrap">
+                        <div class="salary-bar-title">Distribución visual del salario</div>
+                        <div class="salary-bar" role="img" aria-label="Barra de distribución del salario bruto">
+                            <span class="bar-neto" id="barNeto" style="width:0%" title="Salario neto"></span>
+                            <span class="bar-css" id="barCSS" style="width:0%" title="CSS"></span>
+                            <span class="bar-se" id="barSE" style="width:0%" title="Seguro Educativo"></span>
+                            <span class="bar-isr" id="barISR" style="width:0%" title="ISR"></span>
+                            <span class="bar-otros" id="barOtros" style="width:0%" title="Otros"></span>
+                        </div>
+                        <div class="bar-legend">
+                            <span><i class="legend-neto"></i> Neto</span>
+                            <span><i class="legend-css"></i> CSS</span>
+                            <span><i class="legend-se"></i> Seguro Educativo</span>
+                            <span><i class="legend-isr"></i> ISR</span>
+                            <span><i class="legend-otros"></i> Otros</span>
+                        </div>
+                    </div>
+
+                    <div class="isr-explain">
+                        <h3>Cómo se estimó el ISR</h3>
+                        <p class="mb-1">Se proyecta el ingreso anual y se aplica la tarifa progresiva; luego se divide entre 12 para obtener la retención mensual estimada.</p>
+                        <ul>
+                            <li>Ingreso anual estimado: <strong id="isrIngresoAnual">B/. 0.00</strong></li>
+                            <li>ISR anual estimado: <strong id="isrAnual">B/. 0.00</strong></li>
+                            <li>ISR mensual estimado: <strong id="isrMensualDetalle">B/. 0.00</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="decimo-results" id="decimoResults" hidden>
+                        <h3>Estimación del décimo tercer mes</h3>
+                        <p class="field-hint mb-3">
+                            El décimo tercer mes corresponde a una prestación laboral pagada en tres partidas durante el año.
+                            Estimación: salario acumulado ÷ 12, menos CSS (9.75%) y Seguro Educativo (1.25%).
+                        </p>
+                        <ul class="breakdown-list">
+                            <li>
+                                <span class="breakdown-item">Décimo bruto estimado</span>
+                                <span class="breakdown-value" id="decimoBruto">B/. 0.00</span>
+                            </li>
+                            <li>
+                                <span class="breakdown-item">CSS sobre el décimo</span>
+                                <span class="breakdown-value deduction-value" id="decimoCSS">− B/. 0.00</span>
+                            </li>
+                            <li>
+                                <span class="breakdown-item">Seguro Educativo sobre el décimo</span>
+                                <span class="breakdown-value deduction-value" id="decimoSE">− B/. 0.00</span>
+                            </li>
+                            <li>
+                                <span class="breakdown-item">Deducciones aplicables</span>
+                                <span class="breakdown-value deduction-value" id="decimoDeducciones">B/. 0.00</span>
+                            </li>
+                            <li>
+                                <span class="breakdown-item">Décimo neto estimado</span>
+                                <span class="breakdown-value" id="decimoNeto">B/. 0.00</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <p class="disclaimer">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Esta calculadora ofrece una <strong>estimación referencial</strong>. El cálculo real puede depender de tu situación fiscal,
+                        deducciones permitidas, tipo de contrato y la normativa vigente en Panamá.
+                    </p>
+                </section>
+            </div>
+
+            <section class="tips-section" aria-labelledby="tipsTitle">
+                <h2 id="tipsTitle">¿Sabías que?</h2>
+                <p class="tips-intro">Pequeños consejos para usar mejor tu salario neto.</p>
+                <div class="tips-grid">
+                    <article class="tip-card">
+                        <div class="tip-icon" aria-hidden="true"><i class="bi bi-wallet2"></i></div>
+                        <p>Tu salario bruto no es necesariamente el dinero que recibirás en tu cuenta.</p>
+                    </article>
+                    <article class="tip-card">
+                        <div class="tip-icon" aria-hidden="true"><i class="bi bi-pie-chart"></i></div>
+                        <p>Las deducciones reducen tu ingreso disponible.</p>
+                    </article>
+                    <article class="tip-card">
+                        <div class="tip-icon" aria-hidden="true"><i class="bi bi-journal-check"></i></div>
+                        <p>Conocer tu salario neto te ayuda a crear un presupuesto realista.</p>
+                    </article>
+                    <article class="tip-card">
+                        <div class="tip-icon" aria-hidden="true"><i class="bi bi-calendar-check"></i></div>
+                        <p>Antes de planificar tus gastos mensuales, utiliza tu salario neto como referencia.</p>
+                    </article>
+                </div>
+                <p class="finx-message">
+                    FINX te ayuda a entender mejor cómo se distribuye tu dinero para que puedas tomar decisiones financieras más informadas.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/calculadora-salario.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tema
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            if (themeIcon) {
+                themeIcon.className = savedTheme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
+            }
+
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function () {
+                    const current = document.documentElement.getAttribute('data-bs-theme');
+                    const next = current === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-bs-theme', next);
+                    localStorage.setItem('theme', next);
+                    themeIcon.className = next === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
+                });
+            }
+
+            // Sidebar toggle
+            const sidebar = document.querySelector('.trivia-sidebar, .leccion-sidebar');
+            const toggleBtn = document.getElementById('sidebarToggle');
+            const mainContent = document.querySelector('.main-content');
+
+            if (toggleBtn && sidebar && mainContent) {
+                toggleBtn.addEventListener('click', function () {
+                    sidebar.classList.toggle('hidden');
+                    toggleBtn.classList.toggle('sidebar-hidden');
+                    mainContent.classList.toggle('sidebar-hidden');
+                    const icon = toggleBtn.querySelector('i');
+                    if (icon) {
+                        icon.classList.toggle('bi-chevron-left');
+                        icon.classList.toggle('bi-chevron-right');
+                    }
+                });
+            }
+
+            // Menú de perfil
+            const userProfile = document.querySelector('.user-profile-navbar');
+            if (userProfile) {
+                userProfile.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    userProfile.classList.toggle('open');
+                });
+                document.addEventListener('click', function (e) {
+                    if (!userProfile.contains(e.target)) {
+                        userProfile.classList.remove('open');
+                    }
+                });
+            }
+
+            // Logout
+            const logoutBtn = document.getElementById('logoutBtnNavbar');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // Traducción básica del sidebar
+            const translations = {
+                es: {
+                    management: 'Gestión',
+                    lessons: 'Lecciones',
+                    achievements: 'Logros',
+                    goals: 'Metas',
+                    calculator: 'Calculadora',
+                    help: 'Ayuda',
+                    assistant: 'Asistente',
+                    user: 'Usuario',
+                    level: 'Nivel 2',
+                    profile: 'Mi Perfil',
+                    settings: 'Configuración',
+                    privacy: 'Privacidad',
+                    logout: 'Cerrar Sesión'
+                },
+                en: {
+                    management: 'Management',
+                    lessons: 'Lessons',
+                    achievements: 'Achievements',
+                    goals: 'Goals',
+                    calculator: 'Salary Calculator',
+                    help: 'Help',
+                    assistant: 'Assistant',
+                    user: 'User',
+                    level: 'Level 2',
+                    profile: 'My Profile',
+                    settings: 'Settings',
+                    privacy: 'Privacy',
+                    logout: 'Logout'
+                }
+            };
+
+            function setLanguage(lang) {
+                localStorage.setItem('finx_lang', lang);
+                const t = translations[lang] || translations.es;
+                const items = document.querySelectorAll('.sidebar-nav li span');
+                if (items.length >= 7) {
+                    items[0].textContent = t.management;
+                    items[1].textContent = t.lessons;
+                    items[2].textContent = t.achievements;
+                    items[3].textContent = t.goals;
+                    items[4].textContent = t.calculator;
+                    items[5].textContent = t.help;
+                    items[6].textContent = t.assistant;
+                }
+                document.querySelectorAll('.user-name, .dropdown-user-name').forEach((el) => {
+                    el.textContent = t.user;
+                });
+                document.querySelectorAll('.user-level, .dropdown-user-level').forEach((el) => {
+                    el.textContent = t.level;
+                });
+                const dropdownSpans = document.querySelectorAll('.dropdown-item span');
+                if (dropdownSpans.length >= 4) {
+                    dropdownSpans[0].textContent = t.profile;
+                    dropdownSpans[1].textContent = t.settings;
+                    dropdownSpans[2].textContent = t.privacy;
+                    dropdownSpans[3].textContent = t.logout;
+                }
+            }
+
+            const langToggle = document.getElementById('langToggle');
+            let currentLang = localStorage.getItem('finx_lang') || 'es';
+            setLanguage(currentLang);
+
+            if (langToggle) {
+                langToggle.addEventListener('click', function () {
+                    currentLang = currentLang === 'es' ? 'en' : 'es';
+                    setLanguage(currentLang);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

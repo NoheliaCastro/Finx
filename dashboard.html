@@ -45,31 +45,31 @@
             background: none;
             -webkit-text-fill-color: unset;
             margin-bottom: 2rem;
-            color: #083066;
+            color: var(--brand-dark-blue);
         }
         .summary-card i {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: #1D488A;
+            color: var(--brand-deep-blue);
         }
         .summary-card {
             background: #FFFFFF;
             border-radius: 1.5rem;
-            box-shadow: 0 2px 8px #08306622;
+            box-shadow: 0 2px 8px rgba(8, 48, 102, 0.14);
             padding: 2rem 1.5rem;
             text-align: center;
             transition: all 0.3s ease;
-            border: 2px solid #1D488A;
+            border: 2px solid var(--brand-deep-blue);
         }
         .summary-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--hover-shadow);
         }
         .summary-card h3 {
-            color: #1D488A;
+            color: var(--brand-deep-blue);
         }
         .summary-card .stat-number {
-            color: #1D488A;
+            color: var(--brand-deep-blue);
             background: none;
             -webkit-text-fill-color: unset;
             font-size: 2.5rem;
@@ -88,7 +88,7 @@
             }
         }
         .table thead th {
-            background: #1D488A;
+            background: var(--brand-deep-blue);
             color: #fff;
             border: none;
         }
@@ -103,25 +103,25 @@
             overflow-y: auto;
         }
         .btn-primary {
-            background: #1D488A;
-            border-color: #1D488A;
+            background: var(--brand-deep-blue);
+            border-color: var(--brand-deep-blue);
         }
         .btn-primary:hover {
-            background: #083066;
-            border-color: #083066;
+            background: var(--brand-dark-blue);
+            border-color: var(--brand-dark-blue);
         }
         .btn-danger {
-            background: #FFDE32;
-            color: #083066;
+            background: var(--brand-yellow);
+            color: var(--brand-dark-blue);
             border: none;
         }
         .btn-danger:hover {
-            background: #1D488A;
+            background: var(--brand-deep-blue);
             color: #fff;
         }
         .card {
             background: #FFFFFF;
-            border: 1.5px solid #1D488A;
+            border: 1.5px solid var(--brand-deep-blue);
         }
         .table {
             background: #FFFFFF;
@@ -130,17 +130,17 @@
             background: #E6E5E5;
         }
         #typeSelector {
-            border: 2px solid #1D488A;
-            color: #083066;
+            border: 2px solid var(--brand-deep-blue);
+            color: var(--brand-dark-blue);
         }
         [data-bs-theme="dark"] #typeSelector {
-            background: #0C3D7A;
-            color: #FFDE32;
-            border: 2px solid #FFDE32;
+            background: var(--brand-dark-blue);
+            color: var(--brand-yellow);
+            border: 2px solid var(--brand-yellow);
         }
         [data-bs-theme="dark"] #typeSelector option {
-            background: #0C3D7A;
-            color: #FFDE32;
+            background: var(--brand-dark-blue);
+            color: var(--brand-yellow);
         }
         .animated-fadein {
             opacity: 0;
@@ -262,7 +262,7 @@
         
         /* Forzar estilos del botón de modo oscuro */
         .trivia-theme-toggle {
-            background: linear-gradient(135deg, #1D488A, #91A9CC);
+            background: linear-gradient(135deg, var(--brand-deep-blue), var(--brand-light-blue));
             border: none;
             color: white;
             width: 45px;
@@ -277,7 +277,7 @@
             cursor: pointer;
         }
         .trivia-theme-toggle:hover {
-            background: linear-gradient(135deg, #91A9CC, #1D488A);
+            background: linear-gradient(135deg, var(--brand-light-blue), var(--brand-deep-blue));
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(145, 169, 204,0.18);
         }
@@ -1077,6 +1077,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="calculadora-salario.html">
+                        <i class="bi bi-calculator-fill"></i>
+                        <span>Salary Calculator</span>
+                    </a>
+                </li>
+                <li>
                     <a href="helpcenter2.html">
                         <i class="bi bi-question-circle-fill"></i>
                         <span>Help</span>
@@ -1673,7 +1679,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'privacy': 'Privacidad',
                 'welcome-to': 'Bienvenido a',
                 'track-manage': '¡Registra, gestiona y ahorra fácilmente!',
-                'financial-assistant': 'Asistente Financiero'
+                'financial-assistant': 'Asistente Financiero',
+                'salary-calculator': 'Calculadora'
             },
             en: {
                 'dashboard-lead': 'Visualize and control your finances in a modern and fun way.',
@@ -1725,18 +1732,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 'privacy': 'Privacy',
                 'welcome-to': 'Welcome to',
                 'track-manage': 'Track, Manage, and Save with Ease!',
-                'financial-assistant': 'Assistant'
+                'financial-assistant': 'Assistant',
+                'salary-calculator': 'Salary Calculator'
             }
         };
         function setLanguage(lang) {
             localStorage.setItem('finx_lang', lang);
             // Navbar y sidebar
-            document.querySelector('.sidebar-nav a.active span').textContent = translations[lang]['management'];
-            document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
-            document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
-            document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
-            document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
-            document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['financial-assistant'];
+            const sidebarSpans = document.querySelectorAll('.sidebar-nav li span');
+            if (sidebarSpans.length >= 7) {
+                sidebarSpans[0].textContent = translations[lang]['management'];
+                sidebarSpans[1].textContent = translations[lang]['lessons'];
+                sidebarSpans[2].textContent = translations[lang]['achievements'];
+                sidebarSpans[3].textContent = translations[lang]['goals'];
+                sidebarSpans[4].textContent = translations[lang]['salary-calculator'];
+                sidebarSpans[5].textContent = translations[lang]['help'];
+                sidebarSpans[6].textContent = translations[lang]['financial-assistant'];
+            }
             // Botón de logout del sidebar
             if (document.querySelector('.sidebar-logout-btn span')) {
                 document.querySelector('.sidebar-logout-btn span').textContent = translations[lang]['logout'];
