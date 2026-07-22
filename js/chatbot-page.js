@@ -1,353 +1,278 @@
-document.addEventListener('DOMContentLoaded', function() {
+/**
+ * Finx Chatbot Page Controller
+ * Conecta el Motor de IA Financiera con la Interfaz de Usuario
+ */
+
+document.addEventListener('DOMContentLoaded', function () {
     // Elementos del DOM
     const chatMessages = document.getElementById('chatbotMessages');
     const chatInput = document.getElementById('chatbotInput');
     const sendButton = document.getElementById('chatbotSendBtn');
-    const quickOptions = document.querySelectorAll('.quick-option');    // Base de conocimiento del chatbot en español e inglés
-    const knowledgeBase = {
-        es: {
-            'hola': '¡Hola! Soy tu asistente financiero de Finx. ¿En qué puedo ayudarte hoy?',
-            'hola!': '¡Hola! Soy tu asistente financiero de Finx. ¿En qué puedo ayudarte hoy?',
-            'buenos días': '¡Buenos días! Soy tu asistente financiero de Finx. ¿En qué puedo ayudarte hoy?',
-            'buenas tardes': '¡Buenas tardes! Soy tu asistente financiero de Finx. ¿En qué puedo ayudarte hoy?',
-            'buenas noches': '¡Buenas noches! Soy tu asistente financiero de Finx. ¿En qué puedo ayudarte hoy?',
-            'cómo estás': '¡Estoy aquí para ayudarte con tus finanzas! ¿En qué puedo asistirte hoy?',
-            'gracias': '¡De nada! Si tienes más preguntas, no dudes en preguntar.',
-            'muchas gracias': '¡De nada! Si tienes más preguntas, no dudes en preguntar.',
-            'adiós': '¡Hasta luego! Recuerda que estoy aquí para ayudarte con tus finanzas.',
-            'chao': '¡Hasta luego! Recuerda que estoy aquí para ayudarte con tus finanzas.',
-            'nos vemos': '¡Hasta luego! Recuerda que estoy aquí para ayudarte con tus finanzas.',
-            'ayuda': 'Puedo ayudarte con:\n- Consejos de ahorro\n- Inversiones\n- Presupuestos\n- Créditos\n- Educación financiera\n¿Sobre qué tema te gustaría saber más?',
-            'help': 'Puedo ayudarte con:\n- Consejos de ahorro\n- Inversiones\n- Presupuestos\n- Créditos\n- Educación financiera\n¿Sobre qué tema te gustaría saber más?',
-            
-            // Ahorro
-            'ahorrar': 'Para ahorrar dinero te recomiendo:\n1. Establece un presupuesto mensual\n2. Reduce gastos innecesarios\n3. Automatiza tus ahorros\n4. Establece metas de ahorro específicas\n5. Considera opciones de inversión',
-            'ahorro': 'Para ahorrar dinero te recomiendo:\n1. Establece un presupuesto mensual\n2. Reduce gastos innecesarios\n3. Automatiza tus ahorros\n4. Establece metas de ahorro específicas\n5. Considera opciones de inversión',
-            'cómo ahorrar': 'Para ahorrar dinero te recomiendo:\n1. Establece un presupuesto mensual\n2. Reduce gastos innecesarios\n3. Automatiza tus ahorros\n4. Establece metas de ahorro específicas\n5. Considera opciones de inversión',
-            'cómo ahorrar dinero': 'Para ahorrar dinero te recomiendo:\n1. Establece un presupuesto mensual\n2. Reduce gastos innecesarios\n3. Automatiza tus ahorros\n4. Establece metas de ahorro específicas\n5. Considera opciones de inversión',
-            'tipos de ahorro': 'Existen varios tipos de ahorro:\n\n1. Ahorro de emergencia (3-6 meses de gastos)\n2. Ahorro para metas específicas (viajes, estudios, etc.)\n3. Ahorro para el retiro\n4. Ahorro para inversión\n\n¿Te gustaría más información sobre alguno en particular?',
-            'cuánto ahorrar': 'Lo ideal es ahorrar al menos el 20% de tus ingresos. La regla 50/30/20 es un buen punto de partida:\n- 50% para necesidades básicas\n- 30% para deseos personales\n- 20% para ahorros e inversiones',
-            
-            // Inversiones
-            'inversión': 'Antes de invertir considera:\n1. Tu perfil de riesgo (conservador, moderado, arriesgado)\n2. Tu horizonte de tiempo (corto, mediano o largo plazo)\n3. La diversificación de tus inversiones\n4. Asesorarte con un experto financiero',
-            'invertir': 'Antes de invertir considera:\n1. Tu perfil de riesgo (conservador, moderado, arriesgado)\n2. Tu horizonte de tiempo (corto, mediano o largo plazo)\n3. La diversificación de tus inversiones\n4. Asesorarte con un experto financiero',
-            'inversiones': 'Antes de invertir considera:\n1. Tu perfil de riesgo (conservador, moderado, arriesgado)\n2. Tu horizonte de tiempo (corto, mediano o largo plazo)\n3. La diversificación de tus inversiones\n4. Asesorarte con un experto financiero',
-            'consejos de inversión': 'Antes de invertir considera:\n1. Tu perfil de riesgo (conservador, moderado, arriesgado)\n2. Tu horizonte de tiempo (corto, mediano o largo plazo)\n3. La diversificación de tus inversiones\n4. Asesorarte con un experto financiero',
-            'tipos de inversión': 'Algunos tipos comunes de inversión son:\n\n1. Cuentas de ahorro de alto rendimiento\n2. Fondos mutuos\n3. Acciones\n4. Bonos\n5. Bienes raíces\n6. Fondos indexados\n7. Criptomonedas (de alto riesgo)\n\n¿Te interesa saber más sobre alguno?',
-            'invertir poco dinero': '¡Claro! Puedes empezar a invertir con poco dinero en:\n\n1. Fondos indexados con aportaciones mínimas bajas\n2. Aplicaciones de inversión con fracciones de acciones\n3. Cuentas de ahorro de alto rendimiento\n4. Fondos mutuos con inversión inicial baja\n\nLo importante es comenzar y ser constante.',
-            
-            // Presupuestos
-            'presupuesto': 'Para crear un presupuesto efectivo:\n\n1. Registra todos tus ingresos\n2. Haz una lista de tus gastos fijos\n3. Identifica gastos variables\n4. Establece límites de gasto\n5. Haz un seguimiento mensual\n6. Ajusta según sea necesario\n\n¿Necesitas ayuda para crear uno?',
-            'qué es un presupuesto': 'Un presupuesto es un plan detallado que te ayuda a:\n\n- Controlar tus ingresos y gastos\n- Alcanzar tus metas financieras\n- Evitar gastos innecesarios\n- Planificar para el futuro\n\n¿Te ayudo a crear uno?',
-            'controlar gastos': 'Para controlar mejor tus gastos:\n\n1. Registra todos tus gastos diarios\n2. Clasifica tus gastos (necesidades, deseos, ahorros)\n3. Usa aplicaciones de finanzas personales\n4. Establece límites de gasto por categoría\n5. Revisa tus suscripciones recurrentes\n6. Compara precios antes de comprar',
-            
-            // Créditos
-            'crédito': 'Sobre créditos es importante saber que:\n\n1. Existen diferentes tipos (personales, hipotecarios, automotrices, etc.)\n2. La tasa de interés varía según tu historial crediticio\n3. Es importante comparar ofertas\n4. Debes considerar el CAT (Costo Anual Total)\n5. Un buen historial crediticio es valioso\n\n¿Qué tipo de crédito te interesa?',
-            'créditos': 'Sobre créditos es importante saber que:\n\n1. Existen diferentes tipos (personales, hipotecarios, automotrices, etc.)\n2. La tasa de interés varía según tu historial crediticio\n3. Es importante comparar ofertas\n4. Debes considerar el CAT (Costo Anual Total)\n5. Un buen historial crediticio es valioso\n\n¿Qué tipo de crédito te interesa?',
-            'mejorar historial crediticio': 'Para mejorar tu historial crediticio:\n\n1. Paga tus deudas a tiempo\n2. Mantén tus tarjetas de crédito por debajo del 30% de su límite\n3. No solicites muchos créditos en poco tiempo\n4. Revisa tu reporte crediticio regularmente\n5. Mantén cuentas antiguas abiertas (si no tienen costo)',
-            
-            // Educación financiera
-            'educación financiera': 'La educación financiera es clave para tomar decisiones informadas sobre tu dinero. Cubre temas como:\n\n1. Presupuestos\n2. Ahorro\n3. Inversión\n4. Créditos y deudas\n5. Planificación del retiro\n\n¿Sobre cuál de estos temas te gustaría aprender más?',
-            'consejos financieros': 'Algunos consejos financieros importantes:\n\n1. Gasta menos de lo que ganas\n2. Crea un fondo de emergencia\n3. Invierte en tu educación financiera\n4. Diversifica tus fuentes de ingreso\n5. Planea a largo plazo\n6. Evita las deudas de consumo\n7. Automatiza tus ahorros e inversiones',
-            
-            // Respuesta por defecto
-            'default': 'Lo siento, no estoy seguro de entender tu pregunta. ¿Podrías reformularla? Estoy aquí para ayudarte con temas de finanzas personales, ahorro, inversiones, créditos y más.',
-            'welcome': '¡Hola! Soy tu asistente financiero de Finx. ¿En qué puedo ayudarte hoy? Puedes preguntarme sobre ahorros, inversiones, presupuestos o cualquier otro tema financiero.'
-        },        en: {
-            'hello': 'Hello! I\'m your Finx financial assistant. How can I help you today?',
-            'hi': 'Hi! I\'m your Finx financial assistant. How can I help you today?',
-            'good morning': 'Good morning! I\'m your Finx financial assistant. How can I help you today?',
-            'good afternoon': 'Good afternoon! I\'m your Finx financial assistant. How can I help you today?',
-            'good evening': 'Good evening! I\'m your Finx financial assistant. How can I help you today?',
-            'how are you': 'I\'m here to help you with your finances! How can I assist you today?',
-            'thanks': 'You\'re welcome! If you have more questions, don\'t hesitate to ask.',
-            'thank you': 'You\'re welcome! If you have more questions, don\'t hesitate to ask.',
-            'goodbye': 'See you later! Remember I\'m here to help you with your finances.',
-            'bye': 'See you later! Remember I\'m here to help you with your finances.',
-            'see you': 'See you later! Remember I\'m here to help you with your finances.',
-            'help': 'I can help you with:\n- Savings advice\n- Investments\n- Budgets\n- Credits\n- Financial education\nWhat topic would you like to know more about?',
-            'ayuda': 'I can help you with:\n- Savings advice\n- Investments\n- Budgets\n- Credits\n- Financial education\nWhat topic would you like to know more about?',
-            
-            // Savings
-            'save': 'To save money I recommend:\n1. Set a monthly budget\n2. Reduce unnecessary expenses\n3. Automate your savings\n4. Set specific savings goals\n5. Consider investment options',
-            'saving': 'To save money I recommend:\n1. Set a monthly budget\n2. Reduce unnecessary expenses\n3. Automate your savings\n4. Set specific savings goals\n5. Consider investment options',
-            'how to save': 'To save money I recommend:\n1. Set a monthly budget\n2. Reduce unnecessary expenses\n3. Automate your savings\n4. Set specific savings goals\n5. Consider investment options',
-            'how to save money': 'To save money I recommend:\n1. Set a monthly budget\n2. Reduce unnecessary expenses\n3. Automate your savings\n4. Set specific savings goals\n5. Consider investment options',
-            'savings types': 'There are several types of savings:\n\n1. Emergency fund (3-6 months of expenses)\n2. Savings for specific goals (trips, studies, etc.)\n3. Retirement savings\n4. Investment savings\n\nWould you like more information about any particular one?',
-            'types of savings': 'There are several types of savings:\n\n1. Emergency fund (3-6 months of expenses)\n2. Savings for specific goals (trips, studies, etc.)\n3. Retirement savings\n4. Investment savings\n\nWould you like more information about any particular one?',
-            'how much to save': 'Ideally you should save at least 20% of your income. The 50/30/20 rule is a good starting point:\n- 50% for basic needs\n- 30% for personal wants\n- 20% for savings and investments',
-            
-            // Investments
-            'investment': 'Before investing consider:\n1. Your risk profile (conservative, moderate, aggressive)\n2. Your time horizon (short, medium or long term)\n3. Diversification of your investments\n4. Getting advice from a financial expert',
-            'invest': 'Before investing consider:\n1. Your risk profile (conservative, moderate, aggressive)\n2. Your time horizon (short, medium or long term)\n3. Diversification of your investments\n4. Getting advice from a financial expert',
-            'investments': 'Before investing consider:\n1. Your risk profile (conservative, moderate, aggressive)\n2. Your time horizon (short, medium or long term)\n3. Diversification of your investments\n4. Getting advice from a financial expert',
-            'investment tips': 'Before investing consider:\n1. Your risk profile (conservative, moderate, aggressive)\n2. Your time horizon (short, medium or long term)\n3. Diversification of your investments\n4. Getting advice from a financial expert',
-            'investment types': 'Some common types of investment are:\n\n1. High-yield savings accounts\n2. Mutual funds\n3. Stocks\n4. Bonds\n5. Real estate\n6. Index funds\n7. Cryptocurrencies (high risk)\n\nAre you interested in learning more about any of these?',
-            'types of investment': 'Some common types of investment are:\n\n1. High-yield savings accounts\n2. Mutual funds\n3. Stocks\n4. Bonds\n5. Real estate\n6. Index funds\n7. Cryptocurrencies (high risk)\n\nAre you interested in learning more about any of these?',
-            'invest little money': 'Sure! You can start investing with little money in:\n\n1. Index funds with low minimum contributions\n2. Investment apps with fractional shares\n3. High-yield savings accounts\n4. Mutual funds with low initial investment\n\nThe important thing is to start and be consistent.',
-            
-            // Budgets
-            'budget': 'To create an effective budget:\n\n1. Record all your income\n2. Make a list of your fixed expenses\n3. Identify variable expenses\n4. Set spending limits\n5. Track monthly\n6. Adjust as needed\n\nDo you need help creating one?',
-            'what is a budget': 'A budget is a detailed plan that helps you:\n\n- Control your income and expenses\n- Reach your financial goals\n- Avoid unnecessary expenses\n- Plan for the future\n\nShould I help you create one?',
-            'control expenses': 'To better control your expenses:\n\n1. Record all your daily expenses\n2. Classify your expenses (needs, wants, savings)\n3. Use personal finance apps\n4. Set spending limits by category\n5. Review your recurring subscriptions\n6. Compare prices before buying',
-            
-            // Credits
-            'credit': 'About credits it\'s important to know that:\n\n1. There are different types (personal, mortgage, automotive, etc.)\n2. Interest rate varies according to your credit history\n3. It\'s important to compare offers\n4. You should consider the APR (Annual Percentage Rate)\n5. A good credit history is valuable\n\nWhat type of credit interests you?',
-            'credits': 'About credits it\'s important to know that:\n\n1. There are different types (personal, mortgage, automotive, etc.)\n2. Interest rate varies according to your credit history\n3. It\'s important to compare offers\n4. You should consider the APR (Annual Percentage Rate)\n5. A good credit history is valuable\n\nWhat type of credit interests you?',
-            'improve credit history': 'To improve your credit history:\n\n1. Pay your debts on time\n2. Keep your credit cards below 30% of their limit\n3. Don\'t apply for many credits in a short time\n4. Check your credit report regularly\n5. Keep old accounts open (if they have no cost)',
-            
-            // Financial education
-            'financial education': 'Financial education is key to making informed decisions about your money. It covers topics like:\n\n1. Budgets\n2. Savings\n3. Investment\n4. Credits and debts\n5. Retirement planning\n\nWhich of these topics would you like to learn more about?',
-            'financial advice': 'Some important financial tips:\n\n1. Spend less than you earn\n2. Create an emergency fund\n3. Invest in your financial education\n4. Diversify your income sources\n5. Plan long term\n6. Avoid consumer debt\n7. Automate your savings and investments',
-            
-            // Default response
-            'default': 'Sorry, I\'m not sure I understand your question. Could you rephrase it? I\'m here to help you with personal finance topics, savings, investments, credits and more.',
-            'welcome': 'Hello! I\'m your Finx financial assistant. How can I help you today? You can ask me about savings, investments, budgets or any other financial topic.'
-        }
-    };    // Traducciones para elementos de la UI
-    const uiTranslations = {
-        es: {
-            'financial-assistant': 'Asistente Financiero',
-            'assistant-description': 'Pregúntame sobre finanzas personales, ahorros, inversiones y más',
-            'input-placeholder': 'Escribe tu pregunta financiera...',
-            'how-to-save': '¿Cómo ahorrar dinero?',
-            'investment-tips': 'Consejos de inversión',
-            'what-is-budget': '¿Qué es un presupuesto?',
-            'savings-types': 'Tipos de ahorro'
-        },
-        en: {
-            'financial-assistant': 'Financial Assistant',
-            'assistant-description': 'Ask me about personal finance, savings, investments and more',
-            'input-placeholder': 'Type your financial question...',
-            'how-to-save': 'How to save money?',
-            'investment-tips': 'Investment tips',
-            'what-is-budget': 'What is a budget?',
-            'savings-types': 'Types of savings'
-        }
-    };
+    const quickOptionsContainer = document.getElementById('quickOptions');
 
-    // Función para obtener el idioma actual
+    // Instancia del Motor de IA
+    const aiEngine = window.financialAIEngineInstance || new FinancialAIEngine();
+
+    // Obtener idioma actual
     function getCurrentLanguage() {
         return localStorage.getItem('finx_lang') || 'es';
-    }    // Función para traducir la interfaz del chatbot
-    function translateChatbotUI(lang) {
-        const translations = uiTranslations[lang];
-        
-        // Traducir título principal
-        const titleElement = document.querySelector('h2');
-        if (titleElement) {
-            titleElement.innerHTML = `<i class="bi bi-robot me-2"></i>${translations['financial-assistant']}`;
-        }
-        
-        // Traducir descripción
-        const descriptionElement = document.querySelector('.text-muted');
-        if (descriptionElement) {
-            descriptionElement.textContent = translations['assistant-description'];
-        }
-        
-        // Traducir placeholder del input
-        if (chatInput) {
-            chatInput.placeholder = translations['input-placeholder'];
-        }
-          // Traducir botón de enviar (solo ícono, sin texto)
-        const sendButtonText = document.querySelector('#chatbotSendBtn');
-        if (sendButtonText) {
-            sendButtonText.innerHTML = `<i class="bi bi-send-fill"></i>`;
-        }
-        
-        // Traducir opciones rápidas
-        const quickOptionButtons = document.querySelectorAll('.quick-option');
-        const quickOptionTexts = [
-            translations['how-to-save'],
-            translations['investment-tips'],
-            translations['what-is-budget'],
-            translations['savings-types']
-        ];
-        
-        quickOptionButtons.forEach((button, index) => {
-            if (quickOptionTexts[index]) {
-                button.textContent = quickOptionTexts[index];
+    }
+
+    // Traducción simple para sugerencias iniciales
+    const promptChips = {
+        es: [
+            { text: '💰 ¿Cuánto gasté este mes?', query: '¿Cuánto gasté este mes?' },
+            { text: '📊 Resumen financiero', query: 'Muéstrame un resumen financiero' },
+            { text: '🎯 Mis metas de ahorro', query: '¿Cómo van mis metas de ahorro?' },
+            { text: '📉 ¿En qué gasto más?', query: '¿En qué categoría gasto más?' },
+            { text: '💡 Consejos para ahorrar', query: '¿Cómo ahorro más?' }
+        ],
+        en: [
+            { text: '💰 How much did I spend?', query: 'How much did I spend this month?' },
+            { text: '📊 Financial Summary', query: 'Show me a financial summary' },
+            { text: '🎯 Savings goals', query: 'How are my savings goals doing?' },
+            { text: '📉 Top spending category', query: 'Which category do I spend the most in?' },
+            { text: '💡 Savings tips', query: 'How to save more money?' }
+        ]
+    };
+
+    /**
+     * Convierte texto plano con Markdown simple a HTML seguro
+     */
+    function parseSimpleMarkdown(text) {
+        if (!text) return '';
+
+        let html = text
+            // Escapar HTML no deseado
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+
+        // Negrita **texto**
+        html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+        // Cursiva *texto*
+        html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+        // Saltos de línea dobles para párrafos
+        const paragraphs = html.split('\n\n');
+        const formattedParagraphs = paragraphs.map(p => {
+            // Viñetas • o -
+            if (p.includes('• ') || p.includes('- ')) {
+                const lines = p.split('\n');
+                let listHtml = '<ul>';
+                lines.forEach(line => {
+                    const cleanLine = line.replace(/^[•\-]\s*/, '');
+                    if (cleanLine.trim()) {
+                        listHtml += `<li>${cleanLine}</li>`;
+                    }
+                });
+                listHtml += '</ul>';
+                return listHtml;
             }
+            return `<p>${p.replace(/\n/g, '<br>')}</p>`;
+        });
+
+        return formattedParagraphs.join('');
+    }
+
+    /**
+     * Agrega un mensaje al chat
+     */
+    function appendMessage(content, isUser = false, animateTypewriter = false) {
+        if (!chatMessages) return null;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = `message-wrapper ${isUser ? 'user-wrapper' : 'bot-wrapper'}`;
+
+        const avatar = document.createElement('div');
+        avatar.className = 'msg-avatar';
+        avatar.innerHTML = isUser ? '<i class="bi bi-person-fill"></i>' : '<i class="bi bi-robot"></i>';
+
+        const bubble = document.createElement('div');
+        bubble.className = 'message-bubble';
+
+        wrapper.appendChild(avatar);
+        wrapper.appendChild(bubble);
+        chatMessages.appendChild(wrapper);
+
+        if (isUser) {
+            bubble.textContent = content;
+            scrollToBottom();
+            return wrapper;
+        }
+
+        // Si es el bot y se solicita animación de escritura
+        if (animateTypewriter) {
+            typewriterEffect(bubble, content);
+        } else {
+            bubble.innerHTML = parseSimpleMarkdown(content);
+            scrollToBottom();
+        }
+
+        return wrapper;
+    }
+
+    /**
+     * Efecto de escritura progresiva (Typewriter) estilo ChatGPT
+     */
+    function typewriterEffect(element, fullText) {
+        const parsedHTML = parseSimpleMarkdown(fullText);
+        element.innerHTML = '';
+        
+        // Creamos un contenedor temporal
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = parsedHTML;
+        const plainText = tempDiv.textContent || tempDiv.innerText || fullText;
+
+        let index = 0;
+        const speed = 14; // ms por carácter
+
+        const interval = setInterval(() => {
+            index += 2;
+            if (index >= plainText.length) {
+                element.innerHTML = parsedHTML;
+                clearInterval(interval);
+                scrollToBottom();
+            } else {
+                element.textContent = plainText.substring(0, index);
+                scrollToBottom();
+            }
+        }, speed);
+    }
+
+    /**
+     * Muestra el indicador visual "IA pensando..."
+     */
+    function showTypingIndicator() {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'message-wrapper bot-wrapper';
+        wrapper.id = 'typingIndicatorWrapper';
+
+        const avatar = document.createElement('div');
+        avatar.className = 'msg-avatar';
+        avatar.innerHTML = '<i class="bi bi-robot"></i>';
+
+        const bubble = document.createElement('div');
+        bubble.className = 'message-bubble typing-indicator-bubble';
+        bubble.innerHTML = '<span></span><span></span><span></span>';
+
+        wrapper.appendChild(avatar);
+        wrapper.appendChild(bubble);
+        chatMessages.appendChild(wrapper);
+        scrollToBottom();
+    }
+
+    /**
+     * Remueve el indicador visual de escritura
+     */
+    function removeTypingIndicator() {
+        const indicator = document.getElementById('typingIndicatorWrapper');
+        if (indicator) {
+            indicator.remove();
+        }
+    }
+
+    /**
+     * Desplaza el scroll suavemente al último mensaje
+     */
+    function scrollToBottom() {
+        if (chatMessages) {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    }
+
+    /**
+     * Renderiza las opciones rápidas de consulta
+     */
+    function renderQuickOptions() {
+        if (!quickOptionsContainer) return;
+
+        const lang = getCurrentLanguage();
+        const chips = promptChips[lang] || promptChips['es'];
+
+        quickOptionsContainer.innerHTML = '';
+        chips.forEach(chip => {
+            const btn = document.createElement('button');
+            btn.className = 'quick-option';
+            btn.innerHTML = chip.text;
+            btn.addEventListener('click', () => {
+                if (chatInput) {
+                    chatInput.value = chip.query;
+                    handleSendMessage();
+                }
+            });
+            quickOptionsContainer.appendChild(btn);
         });
     }
 
-    // Función para limpiar el chat y mostrar mensaje de bienvenida
-    function resetChatWithLanguage(lang) {
-        chatMessages.innerHTML = '';
-        const knowledge = knowledgeBase[lang];
-        setTimeout(() => {
-            addMessage(knowledge['welcome']);
-        }, 500);
-    }    // Función para agregar un mensaje al chat
-    function addMessage(text, isUser = false) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
-        
-        // Aplicar estilos según el tema actual usando setProperty con important
-        const currentTheme = document.documentElement.getAttribute('data-bs-theme');
-        if (currentTheme === 'dark') {
-            if (isUser) {
-                messageDiv.style.setProperty('background-color', '#2c3e50', 'important');
-                messageDiv.style.setProperty('color', '#f8f9fa', 'important');
-            } else {
-                messageDiv.style.setProperty('background-color', '#2d303e', 'important');
-                messageDiv.style.setProperty('color', '#f8f9fa', 'important');
-            }
-        } else {
-            if (isUser) {
-                messageDiv.style.setProperty('background-color', '#e3f2fd', 'important');
-                messageDiv.style.setProperty('color', '#333', 'important');
-            } else {
-                messageDiv.style.setProperty('background-color', '#f1f3f5', 'important');
-                messageDiv.style.setProperty('color', '#333', 'important');
-            }
-        }
-        
-        // Agregar animación de aparición
-        messageDiv.style.opacity = '0';
-        messageDiv.style.transform = 'translateY(20px)';
-        messageDiv.textContent = text;
-        
-        chatMessages.appendChild(messageDiv);
-        
-        // Animar la aparición del mensaje
-        setTimeout(() => {
-            messageDiv.style.transition = 'all 0.3s ease';
-            messageDiv.style.opacity = '1';
-            messageDiv.style.transform = 'translateY(0)';
-        }, 50);
-        
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }// Función para obtener la respuesta del chatbot
-    function getResponse(userInput) {
-        const input = userInput.toLowerCase().trim();
-        const currentLang = getCurrentLanguage();
-        const knowledge = knowledgeBase[currentLang];
-        
-        // Buscar coincidencias exactas primero
-        if (knowledge[input]) {
-            return knowledge[input];
-        }
-        
-        // Buscar coincidencias parciales - ordenadas por relevancia
-        const matches = [];
-        for (const [key, value] of Object.entries(knowledge)) {
-            if (key !== 'default' && key !== 'welcome') {
-                if (input.includes(key)) {
-                    matches.push({ key, value, length: key.length });
-                }
-            }
-        }
-        
-        // Si hay coincidencias, devolver la más específica (más larga)
-        if (matches.length > 0) {
-            matches.sort((a, b) => b.length - a.length);
-            return matches[0].value;
-        }
-        
-        // Si no encuentra coincidencia, usar la respuesta por defecto
-        return knowledge['default'];
-    }    // Función para mostrar indicador de "escribiendo"
-    function showTypingIndicator() {
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'message bot-message typing-indicator';
-        typingDiv.id = 'typing-indicator';
-        typingDiv.innerHTML = '<span>●</span><span>●</span><span>●</span>';
-        
-        // Agregar estilos CSS para la animación
-        const style = document.createElement('style');
-        style.textContent = `
-            .typing-indicator span {
-                animation: typing 1.4s infinite;
-                opacity: 0.4;
-            }
-            .typing-indicator span:nth-child(2) {
-                animation-delay: 0.2s;
-            }
-            .typing-indicator span:nth-child(3) {
-                animation-delay: 0.4s;
-            }
-            @keyframes typing {
-                0%, 60%, 100% { opacity: 0.4; }
-                30% { opacity: 1; }
-            }
-        `;
-        if (!document.getElementById('typing-styles')) {
-            style.id = 'typing-styles';
-            document.head.appendChild(style);
-        }
-        
-        chatMessages.appendChild(typingDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
+    /**
+     * Maneja la transmisión de mensajes
+     */
+    async function handleSendMessage() {
+        if (!chatInput) return;
+        const text = chatInput.value.trim();
+        if (!text) return;
 
-    // Función para remover indicador de "escribiendo"
-    function removeTypingIndicator() {
-        const typingIndicator = document.getElementById('typing-indicator');
-        if (typingIndicator) {
-            typingIndicator.remove();
-        }
-    }
-
-    // Función para manejar el envío de mensajes
-    function handleSendMessage() {
-        const message = chatInput.value.trim();
-        if (!message) return;
-        
-        // Agregar mensaje del usuario
-        addMessage(message, true);
+        // Limpiar input
         chatInput.value = '';
-        
-        // Mostrar indicador de escritura
+
+        // Renderizar mensaje del usuario
+        appendMessage(text, true);
+
+        // Mostrar "La IA está procesando..."
         showTypingIndicator();
-        
-        // Simular tiempo de respuesta
-        setTimeout(() => {
+
+        const lang = getCurrentLanguage();
+
+        // Simular tiempo de análisis dinámico (entre 500ms y 1100ms)
+        const delay = Math.floor(Math.random() * 600) + 500;
+
+        setTimeout(async () => {
             removeTypingIndicator();
-            const response = getResponse(message);
-            addMessage(response);
-        }, 800 + Math.random() * 1000); // Tiempo variable entre 0.8-1.8 segundos
+            const responseObj = await aiEngine.processUserQuery(text, lang);
+            appendMessage(responseObj.text, false, true);
+        }, delay);
     }
 
     // Event Listeners
     if (sendButton) {
         sendButton.addEventListener('click', handleSendMessage);
     }
-    
+
     if (chatInput) {
-        chatInput.addEventListener('keypress', function(e) {
+        chatInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
+                e.preventDefault();
                 handleSendMessage();
             }
         });
     }
-    
-    // Opciones rápidas
-    quickOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            const text = this.textContent;
-            chatInput.value = text;
-            handleSendMessage();
-        });
-    });
 
-    // Función para manejar cambio de idioma
-    function handleLanguageChange() {
-        const currentLang = getCurrentLanguage();
-        translateChatbotUI(currentLang);
-        resetChatWithLanguage(currentLang);
+    // Inicializar chat con saludo inteligente
+    function initChat() {
+        if (!chatMessages) return;
+        chatMessages.innerHTML = '';
+
+        const lang = getCurrentLanguage();
+        const userProfile = FinxDataConnector.getUserProfile();
+        
+        const welcomeText = lang === 'en'
+            ? `Hello **${userProfile.name}**! 👋 I am your Finx Financial Assistant.\n\nI am connected live with your expenses, income, savings goals, and profile. How can I help you manage your money today?`
+            : `¡Hola **${userProfile.name}**! 👋 Soy tu Asistente Financiero Inteligente de **Finx**.\n\nEstoy conectado en tiempo real con tus gastos, ingresos, metas de ahorro e historial financiero. ¿Qué te gustaría consultar u optimizar hoy en tus finanzas?`;
+
+        renderQuickOptions();
+        
+        setTimeout(() => {
+            appendMessage(welcomeText, false, true);
+        }, 400);
     }
 
-    // Inicializar con el idioma actual
-    const initialLang = getCurrentLanguage();
-    translateChatbotUI(initialLang);
+    // Manejar cambio de idioma si existe la función global
+    window.handleChatbotLanguageChange = function() {
+        initChat();
+    };
 
-    // Mensaje de bienvenida inicial
-    setTimeout(() => {
-        const knowledge = knowledgeBase[initialLang];
-        addMessage(knowledge['welcome']);
-    }, 1000);
-
-    // Exponer la función para uso global
-    window.handleChatbotLanguageChange = handleLanguageChange;
+    // Ejecutar inicialización
+    initChat();
 });
