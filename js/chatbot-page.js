@@ -1,38 +1,45 @@
 /**
- * Finx Chatbot Page Controller
- * Conecta el Motor de IA Financiera con la Interfaz de Usuario
+ * Finx Chatbot Page Controller v2.2
+ * Maneja la interfaz del chat, persistencia conversacional por usuario,
+ * estado animado de escritura, widgets interactivos y limpieza de chat.
  */
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     // Elementos del DOM
     const chatMessages = document.getElementById('chatbotMessages');
     const chatInput = document.getElementById('chatbotInput');
     const sendButton = document.getElementById('chatbotSendBtn');
     const quickOptionsContainer = document.getElementById('quickOptions');
+    const clearChatBtn = document.getElementById('clearChatBtn');
 
     // Instancia del Motor de IA
     const aiEngine = window.financialAIEngineInstance || new FinancialAIEngine();
+
+    // Estado del usuario e historial
+    const currentUser = await FinxDataConnector.getCurrentUser();
+    const storageKey = `finx_chat_history_${currentUser.id || 'guest'}`;
+    let chatHistory = [];
 
     // Obtener idioma actual
     function getCurrentLanguage() {
         return localStorage.getItem('finx_lang') || 'es';
     }
 
-    // Traducción simple para sugerencias iniciales
+    // Chips de sugerencias de conversación compactas
     const promptChips = {
         es: [
-            { text: '💰 ¿Cuánto gasté este mes?', query: '¿Cuánto gasté este mes?' },
-            { text: '📊 Resumen financiero', query: 'Muéstrame un resumen financiero' },
-            { text: '🎯 Mis metas de ahorro', query: '¿Cómo van mis metas de ahorro?' },
-            { text: '📉 ¿En qué gasto más?', query: '¿En qué categoría gasto más?' },
-            { text: '💡 Consejos para ahorrar', query: '¿Cómo ahorro más?' }
+            { text: '💰 Mis gastos', query: '¿Cuánto gasté este mes?' },
+            { text: '📊 Resumen', query: 'Muéstrame un resumen financiero' },
+            { text: '📈 Comparar meses', query: 'Compárame este mes con el mes pasado' },
+            { text: '🎯 Presupuesto', query: '¿Cómo voy con mi presupuesto?' },
+            { text: '💳 Mayor gasto', query: '¿Cuál fue mi mayor gasto?' }
         ],
         en: [
-            { text: '💰 How much did I spend?', query: 'How much did I spend this month?' },
-            { text: '📊 Financial Summary', query: 'Show me a financial summary' },
-            { text: '🎯 Savings goals', query: 'How are my savings goals doing?' },
-            { text: '📉 Top spending category', query: 'Which category do I spend the most in?' },
-            { text: '💡 Savings tips', query: 'How to save more money?' }
+            { text: '💰 My expenses', query: 'How much did I spend this month?' },
+            { text: '📊 Summary', query: 'Show me a financial summary' },
+            { text: '📈 Compare months', query: 'Compare this month with last month' },
+            { text: '🎯 Budget', query: 'How am I doing with my budget?' },
+            { text: '💳 Top expense', query: 'What was my highest expense?' }
         ]
     };
 
@@ -43,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!text) return '';
 
         let html = text
-            // Escapar HTML no deseado
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;");
@@ -57,10 +63,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // Saltos de línea dobles para párrafos
         const paragraphs = html.split('\n\n');
         const formattedParagraphs = paragraphs.map(p => {
-            // Viñetas • o -
             if (p.includes('• ') || p.includes('- ')) {
                 const lines = p.split('\n');
-                let listHtml = '<ul>';
+                let listHtml = '<ul class="mb-2 ps-3">';
                 lines.forEach(line => {
                     const cleanLine = line.replace(/^[•\-]\s*/, '');
                     if (cleanLine.trim()) {
@@ -70,16 +75,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 listHtml += '</ul>';
                 return listHtml;
             }
-            return `<p>${p.replace(/\n/g, '<br>')}</p>`;
+            return `<p class="mb-2">${p.replace(/\n/g, '<br>')}</p>`;
         });
 
         return formattedParagraphs.join('');
     }
 
     /**
-     * Agrega un mensaje al chat
+     * Guarda el historial actual en localStorage
      */
-    function appendMessage(content, isUser = false, animateTypewriter = false) {
+    function saveHistory() {
+        try {
+            localStorage.setItem(storageKey, JSON.stringify(chatHistory));
+        } catch (e) {}
+    }
+
+    /**
+     * Agrega un mensaje al chat (y opcionalmente persiste en el historial)
+     */
+    function appendMessage(content, isUser = false, animateTypewriter = false, htmlWidget = null, shouldSave = true) {
         if (!chatMessages) return null;
 
         const wrapper = document.createElement('div');
@@ -98,15 +112,59 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (isUser) {
             bubble.textContent = content;
+            if (shouldSave) {
+                chatHistory.push({
+                    id: crypto.randomUUID(),
+                    content,
+                    isUser: true,
+                    htmlWidget: null,
+                    timestamp: new Date().toISOString()
+                });
+                saveHistory();
+            }
             scrollToBottom();
             return wrapper;
         }
 
-        // Si es el bot y se solicita animación de escritura
+        // Si es el bot
         if (animateTypewriter) {
-            typewriterEffect(bubble, content);
+            typewriterEffect(bubble, content, () => {
+                if (htmlWidget) {
+                    const widgetDiv = document.createElement('div');
+                    widgetDiv.className = 'bot-widget-container mt-2';
+                    widgetDiv.innerHTML = htmlWidget;
+                    bubble.appendChild(widgetDiv);
+                    scrollToBottom();
+                }
+                if (shouldSave) {
+                    chatHistory.push({
+                        id: crypto.randomUUID(),
+                        content,
+                        isUser: false,
+                        htmlWidget,
+                        timestamp: new Date().toISOString()
+                    });
+                    saveHistory();
+                }
+            });
         } else {
             bubble.innerHTML = parseSimpleMarkdown(content);
+            if (htmlWidget) {
+                const widgetDiv = document.createElement('div');
+                widgetDiv.className = 'bot-widget-container mt-2';
+                widgetDiv.innerHTML = htmlWidget;
+                bubble.appendChild(widgetDiv);
+            }
+            if (shouldSave) {
+                chatHistory.push({
+                    id: crypto.randomUUID(),
+                    content,
+                    isUser: false,
+                    htmlWidget,
+                    timestamp: new Date().toISOString()
+                });
+                saveHistory();
+            }
             scrollToBottom();
         }
 
@@ -114,19 +172,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
-     * Efecto de escritura progresiva (Typewriter) estilo ChatGPT
+     * Efecto de escritura progresiva (Typewriter)
      */
-    function typewriterEffect(element, fullText) {
+    function typewriterEffect(element, fullText, onComplete) {
         const parsedHTML = parseSimpleMarkdown(fullText);
         element.innerHTML = '';
-        
-        // Creamos un contenedor temporal
+
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = parsedHTML;
         const plainText = tempDiv.textContent || tempDiv.innerText || fullText;
 
         let index = 0;
-        const speed = 14; // ms por carácter
+        const speed = 10;
 
         const interval = setInterval(() => {
             index += 2;
@@ -134,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 element.innerHTML = parsedHTML;
                 clearInterval(interval);
                 scrollToBottom();
+                if (onComplete) onComplete();
             } else {
                 element.textContent = plainText.substring(0, index);
                 scrollToBottom();
@@ -142,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
-     * Muestra el indicador visual "IA pensando..."
+     * Muestra el indicador visual "Escribiendo..."
      */
     function showTypingIndicator() {
         const wrapper = document.createElement('div');
@@ -163,9 +221,6 @@ document.addEventListener('DOMContentLoaded', function () {
         scrollToBottom();
     }
 
-    /**
-     * Remueve el indicador visual de escritura
-     */
     function removeTypingIndicator() {
         const indicator = document.getElementById('typingIndicatorWrapper');
         if (indicator) {
@@ -173,9 +228,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    /**
-     * Desplaza el scroll suavemente al último mensaje
-     */
     function scrollToBottom() {
         if (chatMessages) {
             chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -207,72 +259,150 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
-     * Maneja la transmisión de mensajes
+     * Maneja el envío de mensajes por parte del usuario
      */
     async function handleSendMessage() {
         if (!chatInput) return;
         const text = chatInput.value.trim();
         if (!text) return;
 
-        // Limpiar input
+        // Limpiar input y reajustar altura
         chatInput.value = '';
+        chatInput.style.height = 'auto';
 
-        // Renderizar mensaje del usuario
-        appendMessage(text, true);
+        // Renderizar mensaje del usuario (y guardar)
+        appendMessage(text, true, false, null, true);
 
-        // Mostrar "La IA está procesando..."
+        // Mostrar indicador "Escribiendo..."
         showTypingIndicator();
 
         const lang = getCurrentLanguage();
-
-        // Simular tiempo de análisis dinámico (entre 500ms y 1100ms)
-        const delay = Math.floor(Math.random() * 600) + 500;
+        const delay = Math.floor(Math.random() * 300) + 300;
 
         setTimeout(async () => {
             removeTypingIndicator();
             const responseObj = await aiEngine.processUserQuery(text, lang);
-            appendMessage(responseObj.text, false, true);
+            appendMessage(responseObj.text, false, true, responseObj.htmlWidget, true);
         }, delay);
     }
 
-    // Event Listeners
+    /**
+     * Manejador de clics para botones de acciones interactivas
+     */
+    if (chatMessages) {
+        chatMessages.addEventListener('click', async function (e) {
+            const targetBtn = e.target.closest('button[data-action]');
+            if (!targetBtn) return;
+
+            const action = targetBtn.dataset.action;
+            const parentCard = targetBtn.closest('.action-confirm-card');
+
+            if (action === 'cancel_action') {
+                if (parentCard) {
+                    parentCard.innerHTML = `<div class="text-muted fs-6"><i class="bi bi-x-circle me-1"></i> Acción cancelada.</div>`;
+                }
+                return;
+            }
+
+            if (action === 'confirm_add_expense') {
+                const amount = targetBtn.dataset.amount;
+                const category = targetBtn.dataset.category;
+
+                targetBtn.disabled = true;
+                targetBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-1" role="status"></span> Guardando...`;
+
+                const result = await aiEngine.executeConfirmedAction(action, { amount, category });
+
+                if (parentCard) {
+                    parentCard.className = 'action-confirm-card border-success bg-success-subtle text-dark';
+                    parentCard.innerHTML = `
+                        <div>${result.message}</div>
+                        <div class="mt-2">${result.htmlWidget || ''}</div>
+                    `;
+                    scrollToBottom();
+                }
+            }
+        });
+    }
+
+    // Botón de Nueva conversación / Limpiar chat
+    if (clearChatBtn) {
+        clearChatBtn.addEventListener('click', function () {
+            if (confirm('¿Quieres comenzar una nueva conversación? Se borrará el historial de este chat.')) {
+                localStorage.removeItem(storageKey);
+                chatHistory = [];
+                chatMessages.innerHTML = '';
+                initChat(true);
+            }
+        });
+    }
+
+    // Event Listeners de entrada de texto
     if (sendButton) {
         sendButton.addEventListener('click', handleSendMessage);
     }
 
     if (chatInput) {
-        chatInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
+        // Enviar con Enter (sin Shift) y permitir saltos de línea con Shift + Enter
+        chatInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 handleSendMessage();
             }
         });
+
+        // Auto-crecer textarea suavemente
+        chatInput.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
     }
 
-    // Inicializar chat con saludo inteligente
-    function initChat() {
+    /**
+     * Inicializa o restaura la conversación
+     */
+    async function initChat(forceReset = false) {
         if (!chatMessages) return;
-        chatMessages.innerHTML = '';
 
         const lang = getCurrentLanguage();
-        const userProfile = FinxDataConnector.getUserProfile();
-        
-        const welcomeText = lang === 'en'
-            ? `Hello **${userProfile.name}**! 👋 I am your Finx Financial Assistant.\n\nI am connected live with your expenses, income, savings goals, and profile. How can I help you manage your money today?`
-            : `¡Hola **${userProfile.name}**! 👋 Soy tu Asistente Financiero Inteligente de **Finx**.\n\nEstoy conectado en tiempo real con tus gastos, ingresos, metas de ahorro e historial financiero. ¿Qué te gustaría consultar u optimizar hoy en tus finanzas?`;
+        const rawHistory = localStorage.getItem(storageKey);
 
         renderQuickOptions();
-        
+
+        if (!forceReset && rawHistory) {
+            try {
+                const parsed = JSON.parse(rawHistory);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    chatHistory = parsed;
+                    chatMessages.innerHTML = '';
+                    // Restaurar mensajes guardados en orden exacto sin duplicar ni escribir
+                    chatHistory.forEach(msg => {
+                        appendMessage(msg.content, msg.isUser, false, msg.htmlWidget, false);
+                    });
+                    scrollToBottom();
+                    return;
+                }
+            } catch (e) {}
+        }
+
+        // Si no hay historial previo (o si fue borrado)
+        chatHistory = [];
+        chatMessages.innerHTML = '';
+
+        const welcomeText = lang === 'en'
+            ? `Hi! 👋 How are your finances going today? I am here to help you understand your expenses, organize your money, or check how you are doing this month.`
+            : `¡Hola! 👋 ¿Cómo van tus finanzas hoy? Estoy aquí para ayudarte a entender tus gastos, organizar tu dinero o revisar cómo vas este mes.`;
+
         setTimeout(() => {
-            appendMessage(welcomeText, false, true);
-        }, 400);
+            appendMessage(welcomeText, false, true, null, true);
+        }, 200);
     }
 
-    // Manejar cambio de idioma si existe la función global
+    // Escuchar cambios de idioma
     window.handleChatbotLanguageChange = function() {
-        initChat();
+        initChat(true);
     };
 
-    // Ejecutar inicialización
+    // Inicializar
     initChat();
 });

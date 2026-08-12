@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finx - The Basics Lesson</title>
+    <title>Finx - Lección Conceptos Básicos</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1021,8 +1021,8 @@
             <div class="container">
                 <!-- Dashboard Hero Section -->
                 <section class="dashboard-hero achievements-hero mb-4">
-                    <h1 class="dashboard-title">💰 The Basics</h1>
-                    <p class="lead">Learn the fundamental concepts of personal finance! 🚀</p>
+                    <h1 class="dashboard-title">💰 Conceptos Básicos</h1>
+                    <p class="lead">Aprende los conceptos fundamentales de finanzas personales 🚀</p>
                 </section>
                 
                 <!-- Summary Cards -->
@@ -1198,9 +1198,9 @@
                     window.location.href = '../index.html';
                 });
             }
-            
-            // Actualizar el contenido de la lección con el video
-            updateLessonContent();
+            // Actualizar el contenido de la lección con el nuevo idioma
+            const lang = localStorage.getItem('finx_lang') || 'es';
+            updateLessonContent(lang);
         });
         
         // Función para desbloquear manualmente el quiz
@@ -1211,75 +1211,6 @@
                 progressMessage.style.display = 'none';
                 quizButton.style.display = 'block';
                 quizButton.style.animation = 'fadeInUp 0.8s ease-out';
-            }
-        }
-
-        // Función para actualizar el contenido de la lección
-        function updateLessonContent() {
-            const lessonCard = document.getElementById('lessonCard');
-            if (lessonCard) {
-                lessonCard.innerHTML = `
-                    <h3 class="h4 mb-4">📖 Material de Estudio / Study Material</h3>
-                    
-                    <!-- Video Section -->
-                    <div class="video-container mb-4">
-                        <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
-                            <h4 class="h5 mb-0 fw-bold">🎥 Free Cash Flow Explained</h4>
-                            <span class="badge bg-primary rounded-pill px-3 py-2">Nivel 1: Cash Flow & Gastos</span>
-                        </div>
-                        <div class="ratio ratio-16x9 mb-3">
-                            <iframe id="lessonVideoFrame" 
-                                    src="https://www.youtube.com/embed/FC0ZODWFzpo?enablejsapi=1&rel=0" 
-                                    title="Free Cash Flow Explained" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                    allowfullscreen 
-                                    class="rounded-3">
-                            </iframe>
-                        </div>
-                        <p class="text-muted small mb-0">
-                            Aprende cómo funciona el Flujo de Caja Libre (Free Cash Flow), la gestión de ingresos vs gastos y la importancia del capital líquido para tus finanzas personales y corporativas.
-                        </p>
-                    </div>
-
-                    <!-- Video Progress Message & Manual Complete Button -->
-                    <div class="text-center mb-4" id="videoProgressMessage">
-                        <div class="alert alert-info d-flex align-items-center justify-content-between flex-wrap gap-2">
-                            <div class="text-start">
-                                <h5 class="mb-1">📺 Mira el Video / Watch the Video</h5>
-                                <p class="mb-0 small">Al terminar de ver el video se desbloqueará el quiz automáticamente.</p>
-                            </div>
-                            <button class="btn btn-outline-primary btn-sm rounded-pill px-3" onclick="unlockQuizManual()">
-                                <i class="bi bi-check-circle-fill me-1"></i> Marcar como visto
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Quiz Button (initially hidden) -->
-                    <div class="text-center" id="quizButtonContainer" style="display: none;">
-                        <div class="alert alert-success mb-3">
-                            <h5>🎉 ¡Video Completado! / Video Completed!</h5>
-                            <p class="mb-0">¡Excelente trabajo! Ahora puedes realizar el quiz para poner a prueba tus conocimientos.</p>
-                        </div>
-                        <button class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm" onclick="goToQuiz()">
-                            <i class="bi bi-question-circle me-2"></i> Realizar Quiz / Take Quiz
-                        </button>
-                    </div>
-                `;
-                
-                // Cargar API de YouTube IFrame si no está cargada
-                if (!window.YT) {
-                    var tag = document.createElement('script');
-                    tag.src = "https://www.youtube.com/iframe_api";
-                    var firstScriptTag = document.getElementsByTagName('script')[0];
-                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-                }
-                
-                // Si la API ya está lista, inicializar listener
-                if (window.YT && window.YT.Player) {
-                    initYouTubePlayer();
-                } else {
-                    window.onYouTubeIframeAPIReady = initYouTubePlayer;
-                }
             }
         }
         
@@ -1309,67 +1240,255 @@
         }
     </script>
     <script>
-// Traducción de la página
+// Traducción completa de la página
 const translations = {
     es: {
+        // Sidebar Navigation
         'management': 'Gestión',
         'lessons': 'Lecciones',
         'achievements': 'Logros',
         'goals': 'Metas',
         'help': 'Ayuda',
-        'logout': 'Cerrar sesión',
+        'assistant': 'Asistente',
+        'my-profile': 'Mi Perfil',
+        'settings': 'Configuración',
+        'privacy': 'Privacidad',
+        'logout': 'Cerrar Sesión',
+        
+        // User Info
         'user': 'Usuario',
         'level': 'Nivel 2',
-        'financial-assistant': 'Asistente'
+        
+        // Main Content
+        'lesson-title': '💰 Los Fundamentos',
+        'lesson-subtitle': '¡Aprende los conceptos fundamentales de las finanzas personales! 🚀',
+        'progress': 'Progreso',
+        'xp-earned': 'XP Ganado',
+        'lessons-label': 'Lecciones',
+        'lesson-content': '📖 Contenido de la Lección',
+        'select-lesson': '¡Selecciona una lección del menú para comenzar a aprender! 📚',
+        
+        // Study Material
+        'study-material': 'Material de Estudio',
+        'video-title': '🎥 Flujo de Caja Libre Explicado',
+        'level-badge': 'Nivel 1: Flujo de Caja & Gastos',
+        'video-description': 'Aprende cómo funciona el Flujo de Caja Libre (Free Cash Flow), la gestión de ingresos vs gastos y la importancia del capital líquido para tus finanzas personales y corporativas.',
+        
+        // Video Progress
+        'watch-video': '📺 Mira el Video',
+        'video-progress-text': 'Al terminar de ver el video se desbloqueará el quiz automáticamente.',
+        'mark-as-watched': 'Marcar como visto',
+        
+        // Quiz completion
+        'video-completed': '🎉 ¡Video Completado!',
+        'excellent-work': '¡Excelente trabajo! Ahora puedes realizar el quiz para poner a prueba tus conocimientos.',
+        'take-quiz': 'Realizar Quiz',
+        
+        // Notifications
+        'lesson-completed-title': '🎉 ¡Lección Completada!',
+        'earned-xp': 'Has ganado 50 XP por completar esta lección.',
+        'take-quiz-notification': '¡Ahora puedes realizar el quiz para poner a prueba tus conocimientos!',
+        'lesson-completed-msg': '¡Completado!'
     },
     en: {
+        // Sidebar Navigation
         'management': 'Management',
         'lessons': 'Lessons',
         'achievements': 'Achievements',
         'goals': 'Goals',
         'help': 'Help',
+        'assistant': 'Assistant',
+        'my-profile': 'My Profile',
+        'settings': 'Settings',
+        'privacy': 'Privacy',
         'logout': 'Logout',
+        
+        // User Info
         'user': 'User',
         'level': 'Level 2',
-        'financial-assistant': 'Assistant'
+        
+        // Main Content
+        'lesson-title': '💰 The Basics',
+        'lesson-subtitle': 'Learn the fundamental concepts of personal finance! 🚀',
+        'progress': 'Progress',
+        'xp-earned': 'XP Earned',
+        'lessons-label': 'Lessons',
+        'lesson-content': '📖 Lesson Content',
+        'select-lesson': 'Select a lesson from the menu to start learning! 📚',
+        
+        // Study Material
+        'study-material': 'Study Material',
+        'video-title': '🎥 Free Cash Flow Explained',
+        'level-badge': 'Level 1: Cash Flow & Expenses',
+        'video-description': 'Learn how Free Cash Flow works, the management of income vs expenses, and the importance of liquid capital for your personal and corporate finances.',
+        
+        // Video Progress
+        'watch-video': '📺 Watch the Video',
+        'video-progress-text': 'The quiz will be automatically unlocked when you finish watching the video.',
+        'mark-as-watched': 'Mark as Watched',
+        
+        // Quiz completion
+        'video-completed': '🎉 Video Completed!',
+        'excellent-work': 'Excellent work! Now you can take the quiz to test your knowledge.',
+        'take-quiz': 'Take Quiz',
+        
+        // Notifications
+        'lesson-completed-title': '🎉 Lesson Completed!',
+        'earned-xp': 'You have earned 50 XP for completing this lesson.',
+        'take-quiz-notification': 'You can now take the quiz to test your knowledge!',
+        'lesson-completed-msg': 'Completed!'
     }
 };
+
 function setLanguage(lang) {
     localStorage.setItem('finx_lang', lang);
-    // Sidebar
-    document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['management'] || 'Management';
-    document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
-    document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
-    document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
-    document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
-    document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['financial-assistant'];
-    // Botón de logout del sidebar
-    if (document.getElementById('sidebarLogoutBtn')) {
-        document.getElementById('sidebarLogoutBtn').title = translations[lang]['logout'];
+    
+    // Traducir Sidebar
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav li');
+    if (sidebarLinks.length >= 6) {
+        sidebarLinks[0].querySelector('span').textContent = translations[lang]['management'];
+        sidebarLinks[1].querySelector('span').textContent = translations[lang]['lessons'];
+        sidebarLinks[2].querySelector('span').textContent = translations[lang]['achievements'];
+        sidebarLinks[3].querySelector('span').textContent = translations[lang]['goals'];
+        sidebarLinks[4].querySelector('span').textContent = translations[lang]['help'];
+        sidebarLinks[5].querySelector('span').textContent = translations[lang]['assistant'];
     }
-    // Perfil de usuario en navbar
-    if (document.querySelector('.user-name')) {
-        document.querySelector('.user-name').textContent = translations[lang]['user'] || 'User';
+    
+    // Traducir perfil de usuario en navbar
+    const userName = document.querySelector('.user-name');
+    if (userName) {
+        userName.textContent = translations[lang]['user'];
     }
-    if (document.querySelector('.user-level')) {
-        document.querySelector('.user-level').textContent = translations[lang]['level'] || 'Level 2';
+    
+    const userLevel = document.querySelector('.user-level');
+    if (userLevel) {
+        userLevel.textContent = translations[lang]['level'];
     }
-    // Menú desplegable
-    if (document.querySelector('.dropdown-user-name')) {
-        document.querySelector('.dropdown-user-name').textContent = translations[lang]['user'] || 'User';
+    
+    // Traducir menú desplegable
+    const dropdownUserName = document.querySelector('.dropdown-user-name');
+    if (dropdownUserName) {
+        dropdownUserName.textContent = translations[lang]['user'];
     }
-    if (document.querySelector('.dropdown-user-level')) {
-        document.querySelector('.dropdown-user-level').textContent = translations[lang]['level'] || 'Level 2';
+    
+    const dropdownUserLevel = document.querySelector('.dropdown-user-level');
+    if (dropdownUserLevel) {
+        dropdownUserLevel.textContent = translations[lang]['level'];
+    }
+    
+    // Traducir items del dropdown
+    const dropdownItems = document.querySelectorAll('.dropdown-item span');
+    if (dropdownItems.length >= 3) {
+        dropdownItems[0].textContent = translations[lang]['my-profile'];
+        dropdownItems[1].textContent = translations[lang]['settings'];
+        dropdownItems[2].textContent = translations[lang]['privacy'];
+        if (dropdownItems[3]) dropdownItems[3].textContent = translations[lang]['logout'];
+    }
+    
+    // Traducir contenido principal
+    const dashboardTitle = document.querySelector('.dashboard-title');
+    if (dashboardTitle) {
+        dashboardTitle.textContent = translations[lang]['lesson-title'];
+    }
+    
+    const leadText = document.querySelector('.lead');
+    if (leadText) {
+        leadText.textContent = translations[lang]['lesson-subtitle'];
+    }
+    
+    // Traducir tarjetas de resumen
+    const summaryCards = document.querySelectorAll('.summary-card');
+    if (summaryCards.length >= 3) {
+        summaryCards[0].querySelector('h3').textContent = translations[lang]['progress'];
+        summaryCards[1].querySelector('h3').textContent = translations[lang]['xp-earned'];
+        summaryCards[2].querySelector('h3').textContent = translations[lang]['lessons-label'];
+    }
+    
+    // Actualizar contenido de la lección con el nuevo idioma
+    updateLessonContent(lang);
+}
+
+function updateLessonContent(lang = localStorage.getItem('finx_lang') || 'es') {
+    const lessonCard = document.getElementById('lessonCard');
+    if (lessonCard) {
+        lessonCard.innerHTML = `
+            <h3 class="h4 mb-4">${translations[lang]['lesson-content']}</h3>
+            
+            <!-- Video Section -->
+            <div class="video-container mb-4">
+                <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                    <h4 class="h5 mb-0 fw-bold">${translations[lang]['video-title']}</h4>
+                    <span class="badge bg-primary rounded-pill px-3 py-2">${translations[lang]['level-badge']}</span>
+                </div>
+                <div class="ratio ratio-16x9 mb-3">
+                    <iframe id="lessonVideoFrame" 
+                            src="https://www.youtube.com/embed/FC0ZODWFzpo?enablejsapi=1&rel=0" 
+                            title="Free Cash Flow Explained" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen 
+                            class="rounded-3">
+                    </iframe>
+                </div>
+                <p class="text-muted small mb-0">
+                    ${translations[lang]['video-description']}
+                </p>
+            </div>
+
+            <!-- Video Progress Message & Manual Complete Button -->
+            <div class="text-center mb-4" id="videoProgressMessage">
+                <div class="alert alert-info d-flex align-items-center justify-content-between flex-wrap gap-2">
+                    <div class="text-start">
+                        <h5 class="mb-1">${translations[lang]['watch-video']}</h5>
+                        <p class="mb-0 small">${translations[lang]['video-progress-text']}</p>
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm rounded-pill px-3" onclick="unlockQuizManual()">
+                        <i class="bi bi-check-circle-fill me-1"></i> ${translations[lang]['mark-as-watched']}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Button (initially hidden) -->
+            <div class="text-center" id="quizButtonContainer" style="display: none;">
+                <div class="alert alert-success mb-3">
+                    <h5>${translations[lang]['video-completed']}</h5>
+                    <p class="mb-0">${translations[lang]['excellent-work']}</p>
+                </div>
+                <button class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm" onclick="goToQuiz()">
+                    <i class="bi bi-question-circle me-2"></i> ${translations[lang]['take-quiz']}
+                </button>
+            </div>
+        `;
+        
+        // Cargar API de YouTube IFrame si no está cargada
+        if (!window.YT) {
+            var tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+        
+        // Si la API ya está lista, inicializar listener
+        if (window.YT && window.YT.Player) {
+            initYouTubePlayer();
+        } else {
+            window.onYouTubeIframeAPIReady = initYouTubePlayer;
+        }
     }
 }
-document.getElementById('langToggle').addEventListener('click', function() {
-    const current = localStorage.getItem('finx_lang') || 'es';
-    const next = current === 'es' ? 'en' : 'es';
-    setLanguage(next);
-});
+
 document.addEventListener('DOMContentLoaded', function() {
     const lang = localStorage.getItem('finx_lang') || 'es';
     setLanguage(lang);
+    
+    // Event listener para el botón de cambio de idioma
+    const langToggle = document.getElementById('langToggle');
+    if (langToggle) {
+        langToggle.addEventListener('click', function() {
+            const current = localStorage.getItem('finx_lang') || 'es';
+            const next = current === 'es' ? 'en' : 'es';
+            setLanguage(next);
+        });
+    }
     
     // Event listener para el toggle del sidebar (Solución definitiva)
     const sidebarToggleBtn = document.getElementById('sidebarToggle');

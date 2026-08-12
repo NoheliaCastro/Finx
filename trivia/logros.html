@@ -1157,7 +1157,7 @@
                     </div>
                     <div class="text-end">
                         <div class="text-muted">Next level</div>
-                        <div class="level-number">Level 3</div>
+                        <div class="level-number" id="nextLevel">Level 3</div>
                     </div>
                 </div>
                 <div class="level-bar">
@@ -1360,7 +1360,7 @@
         }
 
         // Función para actualizar estadísticas
-        function updateStats(userStats) {
+        function updateStats(userStats, lang = 'es') {
             document.getElementById('totalXP').textContent = userStats.xp;
             document.getElementById('totalAchievements').textContent = userStats.achievements.length;
             document.getElementById('completedQuizzes').textContent = userStats.completedQuizzes.length;
@@ -1368,14 +1368,15 @@
             
             // Actualizar nivel
             const levelInfo = calculateLevel(userStats.xp);
-            document.getElementById('currentLevel').textContent = `Level ${levelInfo.level}`;
+            document.getElementById('currentLevel').textContent = `${translations[lang]['level-label']} ${levelInfo.level}`;
+            document.getElementById('nextLevel').textContent = `${translations[lang]['level-label']} ${levelInfo.level + 1}`;
             document.getElementById('currentXP').textContent = `${userStats.xp} XP`;
             document.getElementById('nextLevelXP').textContent = `${levelInfo.xpForNextLevel} XP`;
             document.getElementById('levelProgress').style.width = `${levelInfo.progress}%`;
         }
 
         // Función para generar logros
-        function generateAchievements(userStats) {
+        function generateAchievements(userStats, lang = 'es') {
             const grid = document.getElementById('achievementsGrid');
             grid.innerHTML = '';
             
@@ -1388,15 +1389,21 @@
                 let progress = 0;
                 let status = 'Locked';
                 
+                // Obtener título y descripción traducidos
+                const titleKey = achievement.id + '_title';
+                const descKey = achievement.id + '_desc';
+                const achievementTitle = translations[lang][titleKey] || achievement.title;
+                const achievementDesc = translations[lang][descKey] || achievement.description;
+                
                 // Calcular progreso
                 switch(achievement.type) {
                     case 'lessons':
                         progress = Math.min(100, (userStats.completedLessons.length / achievement.requirement) * 100);
-                        status = `${userStats.completedLessons.length}/${achievement.requirement} lessons`;
+                        status = `${userStats.completedLessons.length}/${achievement.requirement} ${translations[lang]['lessons_status']}`;
                         break;
                     case 'quizzes':
                         progress = Math.min(100, (userStats.completedQuizzes.length / achievement.requirement) * 100);
-                        status = `${userStats.completedQuizzes.length}/${achievement.requirement} quizzes`;
+                        status = `${userStats.completedQuizzes.length}/${achievement.requirement} ${translations[lang]['quizzes_status']}`;
                         break;
                     case 'quiz_percentage':
                         const quizProgress = JSON.parse(localStorage.getItem('quiz_ahorro_inteligente') || '{}');
@@ -1405,11 +1412,11 @@
                         break;
                     case 'module_completion':
                         progress = userStats.completedQuizzes.includes(achievement.module) ? 100 : 0;
-                        status = userStats.completedQuizzes.includes(achievement.module) ? 'Completed' : 'Pending';
+                        status = userStats.completedQuizzes.includes(achievement.module) ? translations[lang]['unlocked'] : 'Pending';
                         break;
                     case 'streak':
                         progress = Math.min(100, (userStats.streak / achievement.requirement) * 100);
-                        status = `${userStats.streak}/${achievement.requirement} days`;
+                        status = `${userStats.streak}/${achievement.requirement} ${translations[lang]['days_status']}`;
                         break;
                     case 'total_xp':
                         progress = Math.min(100, (userStats.xp / achievement.requirement) * 100);
@@ -1417,7 +1424,7 @@
                         break;
                     case 'total_modules':
                         progress = Math.min(100, (userStats.completedQuizzes.length / achievement.requirement) * 100);
-                        status = `${userStats.completedQuizzes.length}/${achievement.requirement} modules`;
+                        status = `${userStats.completedQuizzes.length}/${achievement.requirement} ${translations[lang]['modules_status']}`;
                         break;
                 }
                 
@@ -1425,13 +1432,13 @@
                     <div class="achievement-icon ${isUnlocked ? 'unlocked' : 'locked'}">
                         <i class="${achievement.icon}"></i>
                     </div>
-                    <h3 class="achievement-title">${achievement.title}</h3>
-                    <p class="achievement-description">${achievement.description}</p>
+                    <h3 class="achievement-title">${achievementTitle}</h3>
+                    <p class="achievement-description">${achievementDesc}</p>
                     <div class="achievement-progress">
                         <div class="achievement-progress-fill" style="width: ${progress}%"></div>
                     </div>
                     <div class="achievement-status ${isUnlocked ? 'unlocked' : 'locked'}">
-                        ${isUnlocked ? '✅ Unlocked' : status}
+                        ${isUnlocked ? translations[lang]['unlocked'] : status}
                     </div>
                 `;
                 
@@ -1440,7 +1447,7 @@
         }
 
         // Función para generar badges recientes
-        function generateRecentBadges(userStats) {
+        function generateRecentBadges(userStats, lang = 'es') {
             const container = document.getElementById('recentBadges');
             container.innerHTML = '';
             
@@ -1450,7 +1457,7 @@
                 container.innerHTML = `
                     <div class="text-center text-muted">
                         <i class="bi bi-trophy" style="font-size: 3rem;"></i>
-                        <p class="mt-3">You haven't unlocked any achievements yet. Start learning!</p>
+                        <p class="mt-3">${translations[lang]['no-badges']}</p>
                     </div>
                 `;
                 return;
@@ -1459,6 +1466,11 @@
             recentAchievements.forEach(achievementId => {
                 const achievement = achievements.find(a => a.id === achievementId);
                 if (achievement) {
+                    const titleKey = achievement.id + '_title';
+                    const descKey = achievement.id + '_desc';
+                    const achievementTitle = translations[lang][titleKey] || achievement.title;
+                    const achievementDesc = translations[lang][descKey] || achievement.description;
+                    
                     const badgeItem = document.createElement('div');
                     badgeItem.className = 'badge-item';
                     badgeItem.innerHTML = `
@@ -1466,8 +1478,8 @@
                             <i class="${achievement.icon}"></i>
                         </div>
                         <div class="badge-info">
-                            <h5>${achievement.title}</h5>
-                            <p>${achievement.description} • +${achievement.xpReward} XP</p>
+                            <h5>${achievementTitle}</h5>
+                            <p>${achievementDesc} • +${achievement.xpReward} XP</p>
                         </div>
                     `;
                     container.appendChild(badgeItem);
@@ -1491,11 +1503,14 @@
             // Event listener para el botón de tema
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
             
+            // Cargar idioma guardado
+            const lang = localStorage.getItem('finx_lang') || 'es';
+            
             // Cargar y mostrar datos
             const userStats = loadUserProgress();
-            updateStats(userStats);
-            generateAchievements(userStats);
-            generateRecentBadges(userStats);
+            updateStats(userStats, lang);
+            generateAchievements(userStats, lang);
+            generateRecentBadges(userStats, lang);
             
             // Verificar logros nuevos
             const newAchievements = checkAchievements(userStats);
@@ -1589,7 +1604,28 @@ const translations = {
         'recent-badges': '🏅 Insignias Recientes',
         'no-badges': 'Aún no has desbloqueado logros. ¡Comienza a aprender!',
         'unlocked': '✅ Desbloqueado',
-        'financial-assistant': 'Asistente'
+        'financial-assistant': 'Asistente',
+        // Traducciones de los 8 logros - usando los ids reales
+        'first_lesson_title': '📚 Primer Paso',
+        'first_lesson_desc': 'Completa tu primera lección',
+        'first_quiz_title': '🧠 Maestro de Quizzes',
+        'first_quiz_desc': 'Completa tu primer quiz',
+        'perfect_score_title': '🎯 Puntuación Perfecta',
+        'perfect_score_desc': 'Obtén 100% en cualquier quiz',
+        'savings_expert_title': '💰 Experto en Ahorros',
+        'savings_expert_desc': 'Completa el módulo Ahorro Inteligente',
+        'streak_3_title': '🔥 Racha de 3 Días',
+        'streak_3_desc': 'Completa 3 días consecutivos de aprendizaje',
+        'streak_7_title': '⚡ Racha de 7 Días',
+        'streak_7_desc': 'Completa 7 días consecutivos de aprendizaje',
+        'xp_1000_title': '💎 Maestro Financiero',
+        'xp_1000_desc': 'Alcanza 1000 XP totales',
+        'all_modules_title': '🏆 Completista',
+        'all_modules_desc': 'Completa todos los módulos disponibles',
+        'lessons_status': 'lecciones',
+        'quizzes_status': 'quizzes',
+        'days_status': 'días',
+        'modules_status': 'módulos'
     },
     en: {
         'management': 'Management',
@@ -1613,7 +1649,28 @@ const translations = {
         'recent-badges': '🏅 Recent Badges',
         'no-badges': "You haven't unlocked any achievements yet. Start learning!",
         'unlocked': '✅ Unlocked',
-        'financial-assistant': 'Assistant'
+        'financial-assistant': 'Assistant',
+        // Traducciones de los 8 logros - usando los ids reales
+        'first_lesson_title': '📚 First Step',
+        'first_lesson_desc': 'Complete your first lesson',
+        'first_quiz_title': '🧠 Quiz Master',
+        'first_quiz_desc': 'Complete your first quiz',
+        'perfect_score_title': '🎯 Perfect Score',
+        'perfect_score_desc': 'Get 100% on any quiz',
+        'savings_expert_title': '💰 Savings Expert',
+        'savings_expert_desc': 'Complete The Basics module',
+        'streak_3_title': '🔥 3-Day Streak',
+        'streak_3_desc': 'Complete 3 consecutive days of learning',
+        'streak_7_title': '⚡ 7-Day Streak',
+        'streak_7_desc': 'Complete 7 consecutive days of learning',
+        'xp_1000_title': '💎 Financial Master',
+        'xp_1000_desc': 'Reach 1000 total XP',
+        'all_modules_title': '🏆 Completionist',
+        'all_modules_desc': 'Complete all available modules',
+        'lessons_status': 'lessons',
+        'quizzes_status': 'quizzes',
+        'days_status': 'days',
+        'modules_status': 'modules'
     }
 };
 function setLanguage(lang) {
@@ -1663,6 +1720,11 @@ function setLanguage(lang) {
     if(noBadges) noBadges.textContent = translations[lang]['no-badges'];
     // Estado desbloqueado
     document.querySelectorAll('.achievement-status.unlocked').forEach(el => el.textContent = translations[lang]['unlocked']);
+    // Redibuja los logros con el idioma seleccionado
+    const userStats = loadUserProgress();
+    updateStats(userStats, lang);
+    generateAchievements(userStats, lang);
+    generateRecentBadges(userStats, lang);
 }
 document.getElementById('langToggle').addEventListener('click', function() {
     const current = localStorage.getItem('finx_lang') || 'es';

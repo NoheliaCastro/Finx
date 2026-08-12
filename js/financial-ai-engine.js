@@ -1,165 +1,520 @@
 /**
- * Finx Financial AI Engine
- * Motor de Inteligencia Financiera Contextual para Finx
+ * Finx Financial AI Engine v2.1
+ * Motor de Inteligencia Financiera Especializado para Finx
  */
 
+// ==========================================
+// 1. CAPA DE ACCESO A DATOS (DATA CONNECTOR)
+// ==========================================
 class FinxDataConnector {
-    /**
-     * Obtiene los movimientos registrados (ingresos y gastos)
-     */
-    static getMovements() {
-        let movements = JSON.parse(localStorage.getItem('finx_movements') || '[]');
-        
-        // Si no existen movimientos, inicializamos con un conjunto de datos realista de demostración
-        if (!movements || movements.length === 0) {
+    static async getCurrentUser() {
+        if (window.FinxAuth && typeof window.FinxAuth.getSession === 'function') {
+            const session = await window.FinxAuth.getSession();
+            if (session && session.user) {
+                return session.user;
+            }
+        }
+        // Fallback local
+        const rawSession = localStorage.getItem('finx_session');
+        if (rawSession) {
+            try {
+                const parsed = JSON.parse(rawSession);
+                if (parsed.user) return parsed.user;
+            } catch (e) {}
+        }
+        return {
+            id: 'guest-user',
+            email: 'guest@local',
+            first_name: 'Guest',
+            last_name: 'User',
+            full_name: 'Guest User'
+        };
+    }
+
+    static async getMovements() {
+        const user = await this.getCurrentUser();
+        const rawMovements = localStorage.getItem('finx_movements');
+
+        // Si es la primera vez absoluta que se abre la app y no existe la clave 'finx_movements',
+        // inicializamos la estructura en localStorage como lista vacía o demo si no ha sido inicializada
+        if (rawMovements === null) {
             const today = new Date();
             const year = today.getFullYear();
             const month = String(today.getMonth() + 1).padStart(2, '0');
-            
-            movements = [
-                { date: `${year}-${month}-02`, type: 'income', amount: 1800, category: 'Salario', description: 'Nómina quincenal' },
-                { date: `${year}-${month}-05`, type: 'expense', amount: 450, category: 'Vivienda', description: 'Renta / Alquiler' },
-                { date: `${year}-${month}-08`, type: 'expense', amount: 180, category: 'Comida', description: 'Supermercado semanal' },
-                { date: `${year}-${month}-10`, type: 'expense', amount: 65, category: 'Servicios', description: 'Internet y Teléfono' },
-                { date: `${year}-${month}-12`, type: 'expense', amount: 120, category: 'Comida', description: 'Restaurante con amigos' },
-                { date: `${year}-${month}-15`, type: 'income', amount: 1800, category: 'Salario', description: 'Segunda quincena' },
-                { date: `${year}-${month}-16`, type: 'expense', amount: 95, category: 'Entretenimiento', description: 'Suscripciones y Cine' },
-                { date: `${year}-${month}-18`, type: 'expense', amount: 45, category: 'Transporte', description: 'Gasolina / Transporte' },
-                { date: `${year}-${month}-20`, type: 'expense', amount: 210, category: 'Comida', description: 'Supermercado mensual' },
-                { date: `${year}-${month}-21`, type: 'expense', amount: 75, category: 'Salud', description: 'Farmacia' }
+            const prevMonthNum = today.getMonth() === 0 ? 12 : today.getMonth();
+            const prevYear = today.getMonth() === 0 ? year - 1 : year;
+            const prevMonth = String(prevMonthNum).padStart(2, '0');
+
+            const defaultDemo = [
+                { id: crypto.randomUUID(), user_id: user.id, date: `${year}-${month}-01`, type: 'income', amount: 2400, category: 'Salario', description: 'Nómina principal' },
+                { id: crypto.randomUUID(), user_id: user.id, date: `${year}-${month}-03`, type: 'expense', amount: 550, category: 'Vivienda', description: 'Renta del departamento' },
+                { id: crypto.randomUUID(), user_id: user.id, date: `${year}-${month}-05`, type: 'expense', amount: 220, category: 'Comida', description: 'Supermercado quincenal' },
+                { id: crypto.randomUUID(), user_id: user.id, date: `${year}-${month}-07`, type: 'expense', amount: 85, category: 'Servicios', description: 'Internet y luz' },
+                { id: crypto.randomUUID(), user_id: user.id, date: `${year}-${month}-10`, type: 'expense', amount: 140, category: 'Comida', description: 'Cenas y restaurantes' },
+                { id: crypto.randomUUID(), user_id: user.id, date: `${year}-${month}-12`, type: 'expense', amount: 95, category: 'Transporte', description: 'Gasolina y peaje' },
+                { id: crypto.randomUUID(), user_id: user.id, date: `${year}-${month}-14`, type: 'income', amount: 350, category: 'Freelance', description: 'Proyecto de diseño' },
+                { id: crypto.randomUUID(), user_id: user.id, date: `${year}-${month}-15`, type: 'expense', amount: 110, category: 'Entretenimiento', description: 'Suscripciones y juegos' },
+                
+                { id: crypto.randomUUID(), user_id: user.id, date: `${prevYear}-${prevMonth}-01`, type: 'income', amount: 2400, category: 'Salario', description: 'Nómina principal' },
+                { id: crypto.randomUUID(), user_id: user.id, date: `${prevYear}-${prevMonth}-04`, type: 'expense', amount: 550, category: 'Vivienda', description: 'Renta del departamento' },
+                { id: crypto.randomUUID(), user_id: user.id, date: `${prevYear}-${prevMonth}-08`, type: 'expense', amount: 310, category: 'Comida', description: 'Supermercado' }
             ];
-            localStorage.setItem('finx_movements', JSON.stringify(movements));
+            localStorage.setItem('finx_movements', JSON.stringify(defaultDemo));
+            return defaultDemo.filter(m => m.user_id === user.id);
         }
-        return movements;
+
+        const allMovements = JSON.parse(rawMovements || '[]');
+        return allMovements.filter(m => m.user_id === user.id);
     }
 
-    /**
-     * Obtiene las metas de ahorro del usuario
-     */
-    static getGoals() {
+    static async saveMovements(userMovements) {
+        const user = await this.getCurrentUser();
+        let allMovements = JSON.parse(localStorage.getItem('finx_movements') || '[]');
+        const otherMovements = allMovements.filter(m => m.user_id !== user.id);
+        const updatedAll = [...otherMovements, ...userMovements];
+        localStorage.setItem('finx_movements', JSON.stringify(updatedAll));
+    }
+
+    static async addMovement(movementData) {
+        const user = await this.getCurrentUser();
+        const newMovement = {
+            id: crypto.randomUUID(),
+            user_id: user.id,
+            type: movementData.type || 'expense',
+            amount: parseFloat(movementData.amount),
+            category: movementData.category || 'Otros',
+            date: movementData.date || new Date().toISOString().split('T')[0],
+            description: movementData.description || movementData.category || 'Registro de Chatbot',
+            created_at: new Date().toISOString()
+        };
+
+        let allMovements = JSON.parse(localStorage.getItem('finx_movements') || '[]');
+        allMovements.push(newMovement);
+        localStorage.setItem('finx_movements', JSON.stringify(allMovements));
+        return newMovement;
+    }
+
+    static async getGoals() {
         let goals = JSON.parse(localStorage.getItem('finx_goals') || '[]');
         if (!goals || goals.length === 0) {
             goals = [
-                { id: 1, title: 'Fondo de Emergencia', target: 2000, current: 1350, category: 'Ahorro', deadline: '2026-12-31', icon: 'bi-shield-check' },
-                { id: 2, title: 'Viaje de Vacaciones', target: 800, current: 420, category: 'Viajes', deadline: '2026-11-15', icon: 'bi-airplane' },
-                { id: 3, title: 'Laptop Nueva', target: 1200, current: 300, category: 'Tecnología', deadline: '2027-03-30', icon: 'bi-laptop' }
+                { id: 1, title: 'Fondo de Emergencia', name: 'Fondo de Emergencia', target: 2000, current: 1350, saved: 1350, category: 'Ahorro', deadline: '2026-12-31', icon: 'bi-shield-check' },
+                { id: 2, title: 'Viaje de Vacaciones', name: 'Viaje de Vacaciones', target: 800, current: 420, saved: 420, category: 'Viajes', deadline: '2026-11-15', icon: 'bi-airplane' }
             ];
             localStorage.setItem('finx_goals', JSON.stringify(goals));
         }
         return goals;
     }
 
-    /**
-     * Obtiene el perfil de usuario
-     */
-    static getUserProfile() {
+    static async getBudgets() {
+        let budgets = JSON.parse(localStorage.getItem('finx_budgets') || '[]');
+        if (!budgets || budgets.length === 0) {
+            budgets = [
+                { category: 'Comida', limit: 600 },
+                { category: 'Vivienda', limit: 600 },
+                { category: 'Transporte', limit: 200 },
+                { category: 'Entretenimiento', limit: 200 }
+            ];
+            localStorage.setItem('finx_budgets', JSON.stringify(budgets));
+        }
+        return budgets;
+    }
+
+    static async setBudget(category, limit) {
+        let budgets = await this.getBudgets();
+        const existingIdx = budgets.findIndex(b => b.category.toLowerCase() === category.toLowerCase());
+        if (existingIdx >= 0) {
+            budgets[existingIdx].limit = parseFloat(limit);
+        } else {
+            budgets.push({ category, limit: parseFloat(limit) });
+        }
+        localStorage.setItem('finx_budgets', JSON.stringify(budgets));
+        return budgets;
+    }
+
+    static async getUserProfile() {
+        const user = await this.getCurrentUser();
         const savedProfile = JSON.parse(localStorage.getItem('finx_user_profile') || '{}');
         return {
-            name: savedProfile.name || 'Usuario Finx',
-            level: savedProfile.level || 'Nivel 2 - Planificador',
-            monthlySalary: savedProfile.monthlySalary || 3600,
+            name: user.full_name || user.first_name || savedProfile.name || 'Guest User',
+            email: user.email || 'guest@local',
+            level: savedProfile.level || 'Nivel 2',
+            monthlySalary: savedProfile.monthlySalary || 2400,
             currency: savedProfile.currency || '$'
         };
     }
+}
 
-    /**
-     * Calcula métricas agregadas del mes actual
-     */
-    static getMonthlyMetrics() {
-        const movements = this.getMovements();
+// ==========================================
+// 2. ANALIZADOR DE FECHAS EN LENGUAJE NATURAL
+// ==========================================
+class DateParser {
+    static parseNaturalDate(input) {
+        const text = input.toLowerCase();
         const now = new Date();
         const currentYear = now.getFullYear();
         const currentMonth = now.getMonth();
 
-        let totalIncome = 0;
-        let totalExpenses = 0;
-        const expensesByCategory = {};
-        let highestExpense = { amount: 0, category: '', description: '', date: '' };
-        const recentMovements = [];
+        // 1. Hoy
+        if (text.includes('hoy') || text.includes('today')) {
+            const dateStr = now.toISOString().split('T')[0];
+            return { startDate: dateStr, endDate: dateStr, label: 'hoy' };
+        }
 
-        movements.forEach(mov => {
-            const movDate = new Date(mov.date);
-            const isCurrentMonth = movDate.getFullYear() === currentYear && movDate.getMonth() === currentMonth;
+        // 2. Ayer
+        if (text.includes('ayer') || text.includes('yesterday')) {
+            const y = new Date(now);
+            y.setDate(now.getDate() - 1);
+            const dateStr = y.toISOString().split('T')[0];
+            return { startDate: dateStr, endDate: dateStr, label: 'ayer' };
+        }
 
-            if (mov.type === 'income') {
-                if (isCurrentMonth) totalIncome += Number(mov.amount);
-            } else if (mov.type === 'expense') {
-                if (isCurrentMonth) {
-                    const amt = Number(mov.amount);
-                    totalExpenses += amt;
+        // 3. Esta semana
+        if (text.includes('esta semana') || text.includes('this week')) {
+            const monday = new Date(now);
+            const day = now.getDay();
+            const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+            monday.setDate(diff);
+            const sunday = new Date(monday);
+            sunday.setDate(monday.getDate() + 6);
+            return {
+                startDate: monday.toISOString().split('T')[0],
+                endDate: sunday.toISOString().split('T')[0],
+                label: 'esta semana'
+            };
+        }
 
-                    expensesByCategory[mov.category] = (expensesByCategory[mov.category] || 0) + amt;
+        // 4. La semana pasada
+        if (text.includes('semana pasada') || text.includes('last week')) {
+            const prevMonday = new Date(now);
+            const day = now.getDay();
+            const diff = now.getDate() - day + (day === 0 ? -6 : 1) - 7;
+            prevMonday.setDate(diff);
+            const prevSunday = new Date(prevMonday);
+            prevSunday.setDate(prevMonday.getDate() + 6);
+            return {
+                startDate: prevMonday.toISOString().split('T')[0],
+                endDate: prevSunday.toISOString().split('T')[0],
+                label: 'la semana pasada'
+            };
+        }
 
-                    if (amt > highestExpense.amount) {
-                        highestExpense = {
-                            amount: amt,
-                            category: mov.category,
-                            description: mov.description || mov.category,
-                            date: mov.date
-                        };
-                    }
+        // 5. El mes pasado
+        if (text.includes('mes pasado') || text.includes('last month') || text.includes('mes anterior')) {
+            const firstDay = new Date(currentYear, currentMonth - 1, 1);
+            const lastDay = new Date(currentYear, currentMonth, 0);
+            return {
+                startDate: firstDay.toISOString().split('T')[0],
+                endDate: lastDay.toISOString().split('T')[0],
+                label: 'el mes pasado'
+            };
+        }
+
+        // 6. Este mes
+        if (text.includes('este mes') || text.includes('this month') || text.includes('mes actual') || text.includes('del mes')) {
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            return {
+                startDate: firstDay.toISOString().split('T')[0],
+                endDate: lastDay.toISOString().split('T')[0],
+                label: 'este mes'
+            };
+        }
+
+        // 7. Este año
+        if (text.includes('este año') || text.includes('this year')) {
+            return {
+                startDate: `${currentYear}-01-01`,
+                endDate: `${currentYear}-12-31`,
+                label: 'este año'
+            };
+        }
+
+        // 8. El año pasado
+        if (text.includes('año pasado') || text.includes('last year')) {
+            const prevYear = currentYear - 1;
+            return {
+                startDate: `${prevYear}-01-01`,
+                endDate: `${prevYear}-12-31`,
+                label: `el año ${prevYear}`
+            };
+        }
+
+        // 9. ÚLtimos N días
+        if (text.includes('últimos 7 días') || text.includes('last 7 days')) {
+            const past = new Date(now);
+            past.setDate(now.getDate() - 7);
+            return {
+                startDate: past.toISOString().split('T')[0],
+                endDate: now.toISOString().split('T')[0],
+                label: 'últimos 7 días'
+            };
+        }
+
+        // Nombres de meses
+        const monthNames = [
+            { name: 'enero', monthIdx: 0 },
+            { name: 'febrero', monthIdx: 1 },
+            { name: 'marzo', monthIdx: 2 },
+            { name: 'abril', monthIdx: 3 },
+            { name: 'mayo', monthIdx: 4 },
+            { name: 'junio', monthIdx: 5 },
+            { name: 'julio', monthIdx: 6 },
+            { name: 'agosto', monthIdx: 7 },
+            { name: 'septiembre', monthIdx: 8 },
+            { name: 'octubre', monthIdx: 9 },
+            { name: 'noviembre', monthIdx: 10 },
+            { name: 'diciembre', monthIdx: 11 }
+        ];
+
+        for (const m of monthNames) {
+            if (text.includes(m.name)) {
+                let targetYear = currentYear;
+                if (m.monthIdx > currentMonth) {
+                    targetYear = currentYear - 1;
                 }
+                const firstDay = new Date(targetYear, m.monthIdx, 1);
+                const lastDay = new Date(targetYear, m.monthIdx + 1, 0);
+                return {
+                    startDate: firstDay.toISOString().split('T')[0],
+                    endDate: lastDay.toISOString().split('T')[0],
+                    label: `${m.name} ${targetYear}`
+                };
             }
+        }
 
-            recentMovements.push(mov);
+        // Por defecto: este mes
+        const defaultFirst = new Date(currentYear, currentMonth, 1);
+        const defaultLast = new Date(currentYear, currentMonth + 1, 0);
+        return {
+            startDate: defaultFirst.toISOString().split('T')[0],
+            endDate: defaultLast.toISOString().split('T')[0],
+            label: 'este mes'
+        };
+    }
+}
+
+// ==========================================
+// 3. CAPA DE HERRAMIENTAS FINANCIERAS (TOOLS)
+// ==========================================
+class FinancialToolsLayer {
+    static async getTransactions({ type, category, dateRange, minAmount, maxAmount, search } = {}) {
+        const movements = await FinxDataConnector.getMovements();
+        return movements.filter(mov => {
+            if (type && mov.type !== type) return false;
+            if (category && mov.category.toLowerCase() !== category.toLowerCase()) return false;
+            if (dateRange && dateRange.startDate && mov.date < dateRange.startDate) return false;
+            if (dateRange && dateRange.endDate && mov.date > dateRange.endDate) return false;
+            if (minAmount && Number(mov.amount) < minAmount) return false;
+            if (maxAmount && Number(mov.amount) > maxAmount) return false;
+            if (search) {
+                const s = search.toLowerCase();
+                const matchDesc = mov.description && mov.description.toLowerCase().includes(s);
+                const matchCat = mov.category && mov.category.toLowerCase().includes(s);
+                if (!matchDesc && !matchCat) return false;
+            }
+            return true;
+        }).sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+
+    static async getExpenses({ category, dateRange } = {}) {
+        const txs = await this.getTransactions({ type: 'expense', category, dateRange });
+        const total = txs.reduce((acc, t) => acc + Number(t.amount), 0);
+        return { total, transactions: txs, count: txs.length };
+    }
+
+    static async getIncome({ category, dateRange } = {}) {
+        const txs = await this.getTransactions({ type: 'income', category, dateRange });
+        const total = txs.reduce((acc, t) => acc + Number(t.amount), 0);
+        return { total, transactions: txs, count: txs.length };
+    }
+
+    static async getExpensesByCategory({ dateRange } = {}) {
+        const { transactions, total: totalExpenses } = await this.getExpenses({ dateRange });
+        const categoriesMap = {};
+
+        transactions.forEach(t => {
+            const cat = t.category || 'Otros';
+            categoriesMap[cat] = (categoriesMap[cat] || 0) + Number(t.amount);
         });
 
-        // Ordenar movimientos por fecha descendente
-        recentMovements.sort((a, b) => new Date(b.date) - new Date(a.date));
+        const result = Object.entries(categoriesMap).map(([category, amount]) => ({
+            category,
+            amount,
+            percentage: totalExpenses > 0 ? Math.round((amount / totalExpenses) * 100) : 0
+        })).sort((a, b) => b.amount - a.amount);
 
-        // Encontrar categoría con mayor gasto
-        let topCategory = { name: 'Ninguna', amount: 0, percentage: 0 };
-        for (const [cat, amt] of Object.entries(expensesByCategory)) {
-            if (amt > topCategory.amount) {
-                topCategory.name = cat;
-                topCategory.amount = amt;
-            }
-        }
-        if (totalExpenses > 0 && topCategory.amount > 0) {
-            topCategory.percentage = Math.round((topCategory.amount / totalExpenses) * 100);
-        }
+        return { categories: result, totalExpenses };
+    }
 
+    static async getUserBalance({ dateRange } = {}) {
+        const incomeRes = await this.getIncome({ dateRange });
+        const expenseRes = await this.getExpenses({ dateRange });
+        const totalIncome = incomeRes.total;
+        const totalExpenses = expenseRes.total;
         const netBalance = totalIncome - totalExpenses;
-        const goals = this.getGoals();
-        const totalTargetSavings = goals.reduce((acc, g) => acc + Number(g.target), 0);
-        const totalCurrentSavings = goals.reduce((acc, g) => acc + Number(g.current), 0);
-        const savingsProgressPct = totalTargetSavings > 0 ? Math.round((totalCurrentSavings / totalTargetSavings) * 100) : 0;
 
         return {
             totalIncome,
             totalExpenses,
             netBalance,
-            expensesByCategory,
-            highestExpense,
+            hasIncome: incomeRes.count > 0,
+            hasExpenses: expenseRes.count > 0,
+            totalMovements: incomeRes.count + expenseRes.count,
+            savingsRate: totalIncome > 0 ? Math.round((netBalance / totalIncome) * 100) : 0
+        };
+    }
+
+    static async getTopExpenses({ limit = 5, dateRange, category } = {}) {
+        const txs = await this.getTransactions({ type: 'expense', category, dateRange });
+        return txs.sort((a, b) => Number(b.amount) - Number(a.amount)).slice(0, limit);
+    }
+
+    static async comparePeriods(period1Range, period2Range) {
+        const p1Exp = await this.getExpenses({ dateRange: period1Range });
+        const p2Exp = await this.getExpenses({ dateRange: period2Range });
+
+        const p1Cat = await this.getExpensesByCategory({ dateRange: period1Range });
+        const p2Cat = await this.getExpensesByCategory({ dateRange: period2Range });
+
+        const diffTotal = p1Exp.total - p2Exp.total;
+        const pctChange = p2Exp.total > 0 ? Math.round((diffTotal / p2Exp.total) * 100) : 0;
+
+        const categoryDiffs = [];
+        const allCats = new Set([
+            ...p1Cat.categories.map(c => c.category),
+            ...p2Cat.categories.map(c => c.category)
+        ]);
+
+        allCats.forEach(cat => {
+            const amt1 = (p1Cat.categories.find(c => c.category === cat) || {}).amount || 0;
+            const amt2 = (p2Cat.categories.find(c => c.category === cat) || {}).amount || 0;
+            const diff = amt1 - amt2;
+            categoryDiffs.push({ category: cat, amt1, amt2, diff });
+        });
+
+        categoryDiffs.sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff));
+
+        return {
+            period1: { label: period1Range.label, total: p1Exp.total },
+            period2: { label: period2Range.label, total: p2Exp.total },
+            diffTotal,
+            pctChange,
+            categoryDiffs
+        };
+    }
+
+    static async getBudgetStatus() {
+        const dateRange = DateParser.parseNaturalDate('este mes');
+        const { categories, totalExpenses } = await this.getExpensesByCategory({ dateRange });
+        const budgets = await FinxDataConnector.getBudgets();
+
+        const statusList = budgets.map(b => {
+            const spentItem = categories.find(c => c.category.toLowerCase() === b.category.toLowerCase());
+            const spent = spentItem ? spentItem.amount : 0;
+            const remaining = b.limit - spent;
+            const pct = Math.round((spent / b.limit) * 100);
+            return {
+                category: b.category,
+                limit: b.limit,
+                spent,
+                remaining,
+                pct,
+                isExceeded: spent > b.limit
+            };
+        });
+
+        return { statusList, totalExpenses };
+    }
+
+    static async getFinancialSummary({ dateRange } = {}) {
+        const range = dateRange || DateParser.parseNaturalDate('este mes');
+        const balance = await this.getUserBalance({ dateRange: range });
+        const topCatRes = await this.getExpensesByCategory({ dateRange: range });
+        const topExpenses = await this.getTopExpenses({ limit: 1, dateRange: range });
+        const goals = await FinxDataConnector.getGoals();
+
+        const topCategory = topCatRes.categories[0] || null;
+
+        return {
+            periodLabel: range.label,
+            totalIncome: balance.totalIncome,
+            totalExpenses: balance.totalExpenses,
+            netBalance: balance.netBalance,
+            hasMovements: balance.totalMovements > 0,
+            hasIncome: balance.hasIncome,
+            hasExpenses: balance.hasExpenses,
             topCategory,
-            recentMovements: recentMovements.slice(0, 5),
-            goals,
-            totalTargetSavings,
-            totalCurrentSavings,
-            savingsProgressPct
+            categories: topCatRes.categories,
+            highestExpense: topExpenses[0] || null,
+            goals
         };
     }
 }
 
-class AIApiBridge {
-    /**
-     * Estructura extensible para llamadas a modelos reales como OpenAI, Gemini o Claude API.
-     */
-    static async callExternalAI(prompt, systemContext, apiKey = null) {
-        // En un entorno de producción, aquí se realizaría la llamada a la API externa de LLM
-        return null;
+// ==========================================
+// 4. ADMINISTRADOR DE MEMORIA Y CONTEXTO
+// ==========================================
+class ConversationContextManager {
+    constructor() {
+        this.history = [];
+        this.lastContext = {
+            intent: null,
+            category: null,
+            dateRange: null,
+            action: null
+        };
+    }
+
+    pushUserMessage(content) {
+        this.history.push({ role: 'user', content, timestamp: new Date() });
+    }
+
+    pushAssistantMessage(content, contextUpdate = {}) {
+        this.history.push({ role: 'assistant', content, timestamp: new Date() });
+        this.lastContext = { ...this.lastContext, ...contextUpdate };
+    }
+
+    resolveFollowUpContext(normalizedInput, newCategory, newDateRange) {
+        let activeCategory = newCategory;
+        let activeDateRange = newDateRange;
+        let activeIntent = null;
+
+        const isFollowUpPhrase = (
+            normalizedInput.includes('y el mes pasado') ||
+            normalizedInput.includes('y este mes') ||
+            normalizedInput.includes('y el año pasado') ||
+            normalizedInput.startsWith('y en ') ||
+            normalizedInput.startsWith('y para ') ||
+            normalizedInput.startsWith('y de ') ||
+            normalizedInput.includes('cuanto fue') ||
+            normalizedInput.includes('cuánto fue')
+        );
+
+        if (isFollowUpPhrase && this.lastContext.intent) {
+            activeIntent = this.lastContext.intent;
+            if (!activeCategory && this.lastContext.category) {
+                activeCategory = this.lastContext.category;
+            }
+            if (normalizedInput.includes('mes pasado') || normalizedInput.includes('semana pasada') || normalizedInput.includes('año pasado')) {
+                activeDateRange = DateParser.parseNaturalDate(normalizedInput);
+            } else if (!activeDateRange && this.lastContext.dateRange) {
+                activeDateRange = this.lastContext.dateRange;
+            }
+        }
+
+        return { activeCategory, activeDateRange, activeIntent };
     }
 }
 
+// ==========================================
+// 5. MOTOR PRINCIPAL DE IA FINANCIERA
+// ==========================================
 class FinancialAIEngine {
     constructor() {
-        this.conversationHistory = [];
-        this.lastTopicContext = null; // Mantiene el contexto conversacional
+        this.contextManager = new ConversationContextManager();
     }
 
-    /**
-     * Formatea montos en moneda local
-     */
     formatCurrency(amount) {
         return new Intl.NumberFormat('es-MX', {
             style: 'currency',
@@ -168,318 +523,452 @@ class FinancialAIEngine {
         }).format(amount);
     }
 
-    /**
-     * Procesa la entrada del usuario y responde dinámicamente
-     */
+    extractCategory(input) {
+        const text = input.toLowerCase();
+        const categoryMap = {
+            'comida': ['comida', 'restaurante', 'supermercado', 'restaurantes', 'alimentos', 'almuerzo', 'cena'],
+            'vivienda': ['vivienda', 'renta', 'alquiler', 'casa', 'departamento'],
+            'transporte': ['transporte', 'gasolina', 'uber', 'taxi', 'peaje'],
+            'entretenimiento': ['entretenimiento', 'cine', 'juegos', 'suscripciones', 'netflix', 'spotify'],
+            'servicios': ['servicios', 'luz', 'agua', 'internet', 'teléfono', 'gas'],
+            'salud': ['salud', 'farmacia', 'médico', 'doctor', 'medicinas'],
+            'compras': ['compras', 'ropa', 'zapatos', 'tecnología']
+        };
+
+        for (const [catName, synonyms] of Object.entries(categoryMap)) {
+            if (synonyms.some(s => text.includes(s))) {
+                return catName.charAt(0).toUpperCase() + catName.slice(1);
+            }
+        }
+        return null;
+    }
+
+    renderEmptyStateCard() {
+        return `
+            <div class="finx-empty-state-card text-center py-3 px-3">
+                <div class="empty-icon mb-2">
+                    <i class="bi bi-wallet2 fs-2 text-primary opacity-75"></i>
+                </div>
+                <h6 class="fw-bold mb-1">Aún no hay movimientos</h6>
+                <p class="text-muted small mb-3">Agrega tus primeros ingresos o gastos y podré ayudarte a analizarlos y entender mejor tus finanzas.</p>
+                <a href="dashboard.html" class="finx-action-link-btn m-0">
+                    <i class="bi bi-plus-circle-fill me-1"></i> Agregar movimiento
+                </a>
+            </div>
+        `;
+    }
+
     async processUserQuery(rawInput, lang = 'es') {
         const input = rawInput.trim();
         const normalizedInput = input.toLowerCase();
+        this.contextManager.pushUserMessage(input);
 
-        // Registrar mensaje en historial conversacional
-        this.conversationHistory.push({ role: 'user', content: input });
-
-        // 1. Verificar si la pregunta cae fuera del ámbito financiero
+        // A. Off-topic check (sin jerga técnica)
         if (this.isOffTopic(normalizedInput)) {
-            const offTopicResp = lang === 'en'
-                ? "I am Finx's personal financial assistant. 💡 I can help you analyze your expenses, income, savings goals, budgeting, investments, and money management. How can I assist with your finances today?"
-                : "Soy el asistente financiero inteligente de **Finx**. 💡 Estoy especializado en ayudarte con tus finanzas personales: análisis de gastos, ingresos, metas de ahorro, presupuestos, créditos y educación financiera.\n\n¿En qué puedo ayudarte hoy sobre tu dinero?";
-            
-            this.conversationHistory.push({ role: 'assistant', content: offTopicResp });
-            return { text: offTopicResp, type: 'off_topic' };
+            const text = lang === 'en'
+                ? "I am your Finx financial assistant. 💡 I can help you understand your expenses, income, budgets, and savings goals. How can I assist with your money today?"
+                : "Soy tu asistente financiero de **Finx** 💡. Puedo ayudarte a comprender tus gastos, ingresos, presupuestos, metas de ahorro y consejos para organizar tu dinero.\n\n¿En qué te gustaría que te ayude hoy?";
+            this.contextManager.pushAssistantMessage(text);
+            return { text, type: 'off_topic' };
         }
 
-        // Obtener datos frescos del sistema Finx
-        const metrics = FinxDataConnector.getMonthlyMetrics();
-        const profile = FinxDataConnector.getUserProfile();
-
-        // 2. Evaluar continuidad de contexto conversacional (Multi-turn conversation)
-        const isFollowUpCategoryQuery = (
-            (normalizedInput.includes('comida') || normalizedInput.includes('vivienda') || normalizedInput.includes('transporte') || normalizedInput.includes('entretenimiento') || normalizedInput.includes('servicios') || normalizedInput.includes('salud') || normalizedInput.includes('compras')) &&
-            (normalizedInput.includes('cuánto') || normalizedInput.includes('cuanto') || normalizedInput.includes('fue en') || normalizedInput.includes('gasté en') || normalizedInput.includes('gaste en') || this.lastTopicContext === 'monthly_expenses')
+        // B. Extraer datos y contexto
+        const extractedCategory = this.extractCategory(normalizedInput);
+        const parsedDateRange = DateParser.parseNaturalDate(normalizedInput);
+        const { activeCategory, activeDateRange, activeIntent } = this.contextManager.resolveFollowUpContext(
+            normalizedInput, extractedCategory, parsedDateRange
         );
 
-        if (isFollowUpCategoryQuery) {
-            let matchedCat = null;
-            const categories = ['Comida', 'Vivienda', 'Transporte', 'Entretenimiento', 'Servicios', 'Salud', 'Compras'];
-            for (const cat of categories) {
-                if (normalizedInput.includes(cat.toLowerCase())) {
-                    matchedCat = cat;
-                    break;
-                }
-            }
+        const category = activeCategory || extractedCategory;
+        const dateRange = activeDateRange || parsedDateRange;
 
-            if (matchedCat) {
-                const amountSpent = metrics.expensesByCategory[matchedCat] || 0;
-                const percentage = metrics.totalExpenses > 0 ? Math.round((amountSpent / metrics.totalExpenses) * 100) : 0;
-                
-                let resp = `En la categoría de **${matchedCat}** llevas gastados **${this.formatCurrency(amountSpent)}** este mes.`;
-                if (percentage > 0) {
-                    resp += ` Esto representa el **${percentage}%** de tus gastos totales del mes.`;
-                }
+        // Verificar si el usuario tiene movimientos registrados en total
+        const allUserMovements = await FinxDataConnector.getMovements();
+        const hasTotalMovements = allUserMovements.length > 0;
 
-                if (percentage >= 30) {
-                    resp += `\n\n💡 *Tip Finx:* Esta categoría absorbe una parte considerable de tu presupuesto. Considera revisar tus consumos recurrentes en ${matchedCat} para optimizar tu capacidad de ahorro.`;
-                }
-
-                this.lastTopicContext = 'category_detail';
-                this.conversationHistory.push({ role: 'assistant', content: resp });
-                return { text: resp, type: 'data_insight' };
-            }
+        // C. SALUDOS Y CONVERSACIÓN SOCIAL
+        if (this.matchesAny(normalizedInput, ['hola', 'buenas', 'que tal', 'qué tal', 'saludos', 'hi', 'hello']) && normalizedInput.length < 20) {
+            const text = lang === 'en'
+                ? "Hi! 👋 Great to see you here. Would you like to check how your expenses are going this month?"
+                : "¡Hola! 👋 Qué bueno verte por aquí. ¿Quieres que revisemos cómo van tus gastos este mes?";
+            this.contextManager.pushAssistantMessage(text);
+            return { text, type: 'greeting' };
         }
 
-        // 3. Consultas sobre datos del usuario (System Data Queries)
+        if (this.matchesAny(normalizedInput, ['gracias', 'muchas gracias', 'thanks', 'thank you'])) {
+            const text = lang === 'en'
+                ? "You're welcome! 😊 I'll be here whenever you want to check anything else about your money."
+                : "¡Con mucho gusto! 😊 Aquí estaré siempre que quieras revisar algo sobre tus finanzas.";
+            this.contextManager.pushAssistantMessage(text);
+            return { text, type: 'social' };
+        }
 
-        // A. ¿Cuánto gasté este mes?
-        if (this.matchesAny(normalizedInput, ['cuanto gaste', 'cuánto gasté', 'cuanto he gastado', 'mis gastos este mes', 'mis gastos del mes', 'gastos mensuales'])) {
-            this.lastTopicContext = 'monthly_expenses';
-            const { totalExpenses, totalIncome, topCategory } = metrics;
+        // D. DETECCIÓN DE ACCIONES (Agregar gasto)
+        const addExpenseMatch = normalizedInput.match(/(?:agrega|registra|añade|anota|gasté|gaste)\s+(?:un\s+gasto\s+de\s+)?\$?(\d+(?:\.\d+)?)\s+(?:en\s+)?([a-záéíóúñ\s]+)?/i);
+        if (addExpenseMatch && (normalizedInput.includes('gasto') || normalizedInput.includes('gasté') || normalizedInput.includes('gaste') || normalizedInput.includes('agrega'))) {
+            const amount = parseFloat(addExpenseMatch[1]);
+            const inferredCategory = category || 'Comida';
             
-            let resp = `Este mes llevas un total de **${this.formatCurrency(totalExpenses)}** en gastos registrados.\n\n`;
-            if (topCategory.amount > 0) {
-                resp += `📊 Tu categoría de mayor consumo es **${topCategory.name}** con **${this.formatCurrency(topCategory.amount)}** (${topCategory.percentage}% del gasto total).\n\n`;
-            }
-            if (totalIncome > 0) {
-                const spentPct = Math.round((totalExpenses / totalIncome) * 100);
-                resp += `Has ejecutado el **${spentPct}%** de tus ingresos mensuales (${this.formatCurrency(totalIncome)}).`;
-            }
+            const actionCardHtml = `
+                <div class="action-confirm-card">
+                    <div class="action-confirm-title">
+                        <i class="bi bi-plus-circle-fill text-success fs-5"></i> Confirmar registro de gasto
+                    </div>
+                    <div class="action-detail-list">
+                        • <strong>Monto:</strong> ${this.formatCurrency(amount)}<br>
+                        • <strong>Categoría:</strong> ${inferredCategory}<br>
+                        • <strong>Fecha:</strong> Hoy (${new Date().toLocaleDateString()})
+                    </div>
+                    <div class="action-buttons-group">
+                        <button class="btn-confirm-action" data-action="confirm_add_expense" data-amount="${amount}" data-category="${inferredCategory}">
+                            <i class="bi bi-check-circle-fill"></i> Confirmar y Guardar
+                        </button>
+                        <button class="btn-cancel-action" data-action="cancel_action">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            `;
 
-            this.conversationHistory.push({ role: 'assistant', content: resp });
-            return { text: resp, type: 'data_insight' };
+            const text = `Entendido. He preparado el registro de tu gasto por **${this.formatCurrency(amount)}** en **${inferredCategory}**. Por favor confirma para registrarlo.`;
+            this.contextManager.pushAssistantMessage(text, { intent: 'add_expense' });
+            return { text, htmlWidget: actionCardHtml, type: 'action_prompt' };
         }
 
-        // B. ¿Cuál fue mi gasto más grande?
-        if (this.matchesAny(normalizedInput, ['gasto mas grande', 'gasto más grande', 'mayor gasto', 'gasto mas alto', 'gasto más alto', 'gasto fuerte'])) {
-            this.lastTopicContext = 'highest_expense';
-            const { highestExpense } = metrics;
+        // D. CONSULTAS FINANCIERAS
 
-            if (highestExpense.amount > 0) {
-                const resp = `Tu gasto más grande registrado este mes fue de **${this.formatCurrency(highestExpense.amount)}** en la categoría **${highestExpense.category}** (${highestExpense.description}) el día ${highestExpense.date}.\n\n💡 *Recomendación Finx:* Revisa si este gasto es recurrente o puntual para planificarlo mejor en tu próximo presupuesto.`;
-                this.conversationHistory.push({ role: 'assistant', content: resp });
-                return { text: resp, type: 'data_insight' };
+        // 1. COMPARATIVA DE PERIODOS
+        if (activeIntent === 'period_comparison' || this.matchesAny(normalizedInput, ['compara', 'comparar', 'comparativa', 'comparado con', 'diferencia con el mes pasado', 'por que gaste mas', 'por qué gasté más'])) {
+            if (!hasTotalMovements) {
+                const text = `Aún no tienes movimientos registrados para comparar.`;
+                const htmlWidget = this.renderEmptyStateCard();
+                this.contextManager.pushAssistantMessage(text);
+                return { text, htmlWidget, type: 'data_insight' };
+            }
+
+            const p1Range = DateParser.parseNaturalDate('este mes');
+            const p2Range = DateParser.parseNaturalDate('el mes pasado');
+            const comp = await FinancialToolsLayer.comparePeriods(p1Range, p2Range);
+
+            let diffText = comp.diffTotal >= 0 
+                ? `un **aumento de ${this.formatCurrency(comp.diffTotal)}** (${comp.pctChange}% más que en ${comp.period2.label})`
+                : `una **disminución de ${this.formatCurrency(Math.abs(comp.diffTotal))}** (${Math.abs(comp.pctChange)}% menos que en ${comp.period2.label})`;
+
+            let text = `📊 **Comparativa (${comp.period1.label} vs ${comp.period2.label})**\n\n`;
+            text += `• **Gastos ${comp.period1.label}:** ${this.formatCurrency(comp.period1.total)}\n`;
+            text += `• **Gastos ${comp.period2.label}:** ${this.formatCurrency(comp.period2.total)}\n\n`;
+            text += `En el periodo actual registras ${diffText}.\n\n`;
+
+            if (comp.categoryDiffs.length > 0) {
+                text += `📌 **Variaciones principales:**\n`;
+                comp.categoryDiffs.slice(0, 3).forEach(c => {
+                    const sign = c.diff >= 0 ? '+' : '-';
+                    text += `• **${c.category}:** ${sign}${this.formatCurrency(Math.abs(c.diff))}\n`;
+                });
+            }
+
+            const actionLinks = `<a href="dashboard.html" class="finx-action-link-btn"><i class="bi bi-speedometer2"></i> Ver en Dashboard</a>`;
+            this.contextManager.pushAssistantMessage(text, { intent: 'period_comparison', dateRange: p1Range });
+            return { text, htmlWidget: actionLinks, type: 'data_insight' };
+        }
+
+        // 2. ¿EN QUÉ GASTÉ MÁS? / CATEGORÍAS
+        if (activeIntent === 'expenses_by_category' || this.matchesAny(normalizedInput, ['en que gasto mas', 'en qué gasto más', 'en que gasté mas', 'en qué gasté más', 'categoria donde gasto mas', 'donde se me va la plata', 'donde se va mi dinero'])) {
+            if (!hasTotalMovements) {
+                const text = `Aún no tienes movimientos registrados para analizar tus categorías.`;
+                const htmlWidget = this.renderEmptyStateCard();
+                this.contextManager.pushAssistantMessage(text);
+                return { text, htmlWidget, type: 'data_insight' };
+            }
+
+            const { categories, totalExpenses } = await FinancialToolsLayer.getExpensesByCategory({ dateRange });
+
+            if (totalExpenses === 0 || categories.length === 0) {
+                const text = `No registras gastos en **${dateRange.label}**.`;
+                this.contextManager.pushAssistantMessage(text);
+                return { text, type: 'data_insight' };
+            }
+
+            const top = categories[0];
+            let text = `En **${dateRange.label}**, la categoría donde más has gastado es **${top.category}** con **${this.formatCurrency(top.amount)}** (${top.percentage}% del total de tus gastos).\n\n`;
+
+            let widgetHtml = `<div class="finx-widget-card"><strong>Desglose de Gastos (${dateRange.label})</strong><div class="mt-2">`;
+            categories.slice(0, 5).forEach(cat => {
+                const colorClass = cat.percentage > 35 ? 'warning' : '';
+                widgetHtml += `
+                    <div class="cat-progress-item">
+                        <div class="cat-progress-header">
+                            <span class="cat-progress-name">${cat.category}</span>
+                            <span class="cat-progress-val">${this.formatCurrency(cat.amount)} (${cat.percentage}%)</span>
+                        </div>
+                        <div class="cat-bar-track">
+                            <div class="cat-bar-fill ${colorClass}" style="width: ${cat.percentage}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            widgetHtml += `</div><a href="dashboard.html" class="finx-action-link-btn"><i class="bi bi-bar-chart-line-fill"></i> Ver en Dashboard</a></div>`;
+
+            this.contextManager.pushAssistantMessage(text, { intent: 'expenses_by_category', dateRange });
+            return { text, htmlWidget: widgetHtml, type: 'data_insight' };
+        }
+
+        // 3. CONSULTA CATEGORÍA ESPECÍFICA
+        if (category && (normalizedInput.includes('gasté') || normalizedInput.includes('gaste') || normalizedInput.includes('cuanto') || normalizedInput.includes('cuánto') || activeIntent === 'category_detail')) {
+            if (!hasTotalMovements) {
+                const text = `Aún no tienes movimientos registrados en la categoría **${category}**.`;
+                const htmlWidget = this.renderEmptyStateCard();
+                this.contextManager.pushAssistantMessage(text);
+                return { text, htmlWidget, type: 'data_insight' };
+            }
+
+            const { total, transactions } = await FinancialToolsLayer.getExpenses({ category, dateRange });
+            const allExpenses = await FinancialToolsLayer.getExpenses({ dateRange });
+            const percentage = allExpenses.total > 0 ? Math.round((total / allExpenses.total) * 100) : 0;
+
+            let text = `En la categoría **${category}** has gastado **${this.formatCurrency(total)}** en **${dateRange.label}**.`;
+            if (percentage > 0) {
+                text += ` Representa el **${percentage}%** de tus gastos en este periodo.`;
+            }
+
+            if (transactions.length > 0) {
+                text += `\n\n📋 **Movimientos recientes:**\n`;
+                transactions.slice(0, 3).forEach(t => {
+                    text += `• ${t.date}: ${this.formatCurrency(t.amount)} (${t.description || t.category})\n`;
+                });
+            }
+
+            const actionLinks = `<a href="dashboard.html" class="finx-action-link-btn"><i class="bi bi-funnel-fill"></i> Filtrar en Dashboard</a>`;
+            this.contextManager.pushAssistantMessage(text, { intent: 'category_detail', category, dateRange });
+            return { text, htmlWidget: actionLinks, type: 'data_insight' };
+        }
+
+        // 4. ¿CUÁNTO GASTÉ ESTE MES / EN UN PERIODO?
+        if (activeIntent === 'monthly_expenses' || this.matchesAny(normalizedInput, ['cuanto he gastado', 'cuánto he gastado', 'cuanto gaste', 'cuánto gasté', 'gastos este mes', 'cuanto llevo gastado', 'mis gastos'])) {
+            if (!hasTotalMovements) {
+                const text = `¡Aún no tienes movimientos registrados! 💡`;
+                const htmlWidget = this.renderEmptyStateCard();
+                this.contextManager.pushAssistantMessage(text);
+                return { text, htmlWidget, type: 'data_insight' };
+            }
+
+            const { total: totalExpenses, count } = await FinancialToolsLayer.getExpenses({ dateRange });
+            const topCategoryRes = await FinancialToolsLayer.getExpensesByCategory({ dateRange });
+            const topCat = topCategoryRes.categories[0];
+
+            if (totalExpenses === 0) {
+                const text = `No tienes gastos registrados en **${dateRange.label}**.`;
+                this.contextManager.pushAssistantMessage(text);
+                return { text, type: 'data_insight' };
+            }
+
+            let text = `En **${dateRange.label}** tus gastos suman **${this.formatCurrency(totalExpenses)}** (${count} transacciones).\n\n`;
+            if (topCat && topCat.amount > 0) {
+                text += `📊 La categoría con mayor gasto es **${topCat.category}** con **${this.formatCurrency(topCat.amount)}** (${topCat.percentage}%).`;
+            }
+
+            const widgetHtml = `<a href="dashboard.html" class="finx-action-link-btn"><i class="bi bi-search"></i> Ver en Dashboard</a>`;
+            this.contextManager.pushAssistantMessage(text, { intent: 'monthly_expenses', dateRange });
+            return { text, htmlWidget: widgetHtml, type: 'data_insight' };
+        }
+
+        // 5. GASTO MÁS GRANDE
+        if (this.matchesAny(normalizedInput, ['gasto mas grande', 'gasto más grande', 'mayor gasto', 'gasto mas alto', 'gasto más alto', 'mayor compra'])) {
+            if (!hasTotalMovements) {
+                const text = `Aún no tienes compras o gastos registrados.`;
+                const htmlWidget = this.renderEmptyStateCard();
+                this.contextManager.pushAssistantMessage(text);
+                return { text, htmlWidget, type: 'data_insight' };
+            }
+
+            const topExpenses = await FinancialToolsLayer.getTopExpenses({ limit: 1, dateRange });
+            const top = topExpenses[0];
+
+            if (top) {
+                const text = `Tu gasto más alto en **${dateRange.label}** fue de **${this.formatCurrency(top.amount)}** en **${top.category}** (${top.description}) el ${top.date}.`;
+                this.contextManager.pushAssistantMessage(text, { intent: 'highest_expense', dateRange });
+                return { text, type: 'data_insight' };
             } else {
-                const resp = `Aún no tienes gastos registrados para este mes. ¡Buen momento para mantener tus finanzas al día!`;
-                this.conversationHistory.push({ role: 'assistant', content: resp });
-                return { text: resp, type: 'data_insight' };
+                const text = `No hay gastos registrados en **${dateRange.label}**.`;
+                this.contextManager.pushAssistantMessage(text);
+                return { text, type: 'data_insight' };
             }
         }
 
-        // C. ¿Cuánto dinero me queda este mes? / Balance
-        if (this.matchesAny(normalizedInput, ['cuanto me queda', 'cuánto me queda', 'dinero me queda', 'balance actual', 'mi balance', 'saldo disponible', 'cuanto dinero me queda'])) {
-            this.lastTopicContext = 'net_balance';
-            const { totalIncome, totalExpenses, netBalance } = metrics;
-
-            let statusEmoji = netBalance >= 0 ? '🟢' : '🔴';
-            let statusText = netBalance >= 0 ? 'Saludable' : 'Alerta de sobregiro';
-
-            let resp = `Actualmente tu balance neto disponible es de **${this.formatCurrency(netBalance)}** ${statusEmoji} (${statusText}).\n\n`;
-            resp += `• **Ingresos Totales:** ${this.formatCurrency(totalIncome)}\n`;
-            resp += `• **Gastos Totales:** ${this.formatCurrency(totalExpenses)}\n\n`;
-
-            if (netBalance > 0) {
-                const suggestedSavings = Math.round(netBalance * 0.4);
-                resp += `✨ *Sugerencia inteligente:* Te quedan ${this.formatCurrency(netBalance)}. Podrías destinar **${this.formatCurrency(suggestedSavings)}** (40% de lo restante) directamente a tus metas de ahorro.`;
-            } else {
-                resp += `⚠️ *Atención:* Tus gastos han superado tus ingresos en este periodo. Te sugiero recortar gastos no esenciales como entretenimiento o compras.`;
+        // 6. BALANCE Y DINERO DISPONIBLE
+        if (this.matchesAny(normalizedInput, ['cuanto dinero me queda', 'cuánto dinero me queda', 'cuanto me queda', 'cuánto me queda', 'balance actual', 'mi balance', 'saldo disponible'])) {
+            if (!hasTotalMovements) {
+                const text = `¡Aún no tienes movimientos registrados para calcular tu balance!`;
+                const htmlWidget = this.renderEmptyStateCard();
+                this.contextManager.pushAssistantMessage(text);
+                return { text, htmlWidget, type: 'data_insight' };
             }
 
-            this.conversationHistory.push({ role: 'assistant', content: resp });
-            return { text: resp, type: 'data_insight' };
+            const balance = await FinancialToolsLayer.getUserBalance({ dateRange });
+            let statusIcon = balance.netBalance >= 0 ? '🟢' : '🔴';
+
+            let text = `En **${dateRange.label}**, tu balance disponible es de **${this.formatCurrency(balance.netBalance)}** ${statusIcon}.\n\n`;
+            text += `• **Ingresos:** ${this.formatCurrency(balance.totalIncome)}\n`;
+            text += `• **Gastos:** ${this.formatCurrency(balance.totalExpenses)}\n`;
+
+            const widgetHtml = `
+                <div class="finx-metric-grid">
+                    <div class="finx-metric-item">
+                        <span class="finx-metric-label">Ingresos</span>
+                        <span class="finx-metric-value text-success">${this.formatCurrency(balance.totalIncome)}</span>
+                    </div>
+                    <div class="finx-metric-item">
+                        <span class="finx-metric-label">Gastos</span>
+                        <span class="finx-metric-value text-danger">${this.formatCurrency(balance.totalExpenses)}</span>
+                    </div>
+                    <div class="finx-metric-item">
+                        <span class="finx-metric-label">Balance</span>
+                        <span class="finx-metric-value">${this.formatCurrency(balance.netBalance)}</span>
+                    </div>
+                </div>
+            `;
+
+            this.contextManager.pushAssistantMessage(text, { intent: 'net_balance', dateRange });
+            return { text, htmlWidget: widgetHtml, type: 'data_insight' };
         }
 
-        // D. ¿En qué categoría gasto más?
-        if (this.matchesAny(normalizedInput, ['en que categoria gasto mas', 'en qué categoría gasto más', 'categoria mas alta', 'donde gasto mas', 'dónde gasto más'])) {
-            this.lastTopicContext = 'top_category';
-            const { topCategory, totalExpenses, expensesByCategory } = metrics;
+        // 7. PRESUPUESTOS
+        if (this.matchesAny(normalizedInput, ['presupuesto', 'estoy dentro de mi presupuesto', 'como voy con mi presupuesto', 'presupuestos'])) {
+            const { statusList } = await FinancialToolsLayer.getBudgetStatus();
 
-            if (topCategory.amount > 0) {
-                let resp = `La categoría donde más dinero gastas es **${topCategory.name}**, acumulando **${this.formatCurrency(topCategory.amount)}** (${topCategory.percentage}% del total de tus gastos).\n\n`;
-                resp += `📌 **Desglose de gastos por categoría:**\n`;
-                for (const [cat, amt] of Object.entries(expensesByCategory)) {
-                    const pct = Math.round((amt / totalExpenses) * 100);
-                    resp += `• **${cat}:** ${this.formatCurrency(amt)} (${pct}%)\n`;
-                }
+            let text = `📊 **Estado de tus Presupuestos**\n\n`;
+            let exceededCount = 0;
 
-                this.conversationHistory.push({ role: 'assistant', content: resp });
-                return { text: resp, type: 'data_insight' };
-            } else {
-                const resp = `Aún no hay suficientes categorías de gastos registradas este mes.`;
-                this.conversationHistory.push({ role: 'assistant', content: resp });
-                return { text: resp, type: 'data_insight' };
-            }
-        }
-
-        // E. Metas de Ahorro
-        if (this.matchesAny(normalizedInput, ['meta de ahorro', 'mis metas', 'como van mis metas', 'cómo van mis metas', 'voy bien con mi meta', 'avance de ahorro'])) {
-            this.lastTopicContext = 'goals';
-            const { goals, totalCurrentSavings, totalTargetSavings, savingsProgressPct } = metrics;
-
-            let resp = `🎯 **Progreso General de Metas:** Llevas ahorrado **${this.formatCurrency(totalCurrentSavings)}** de **${this.formatCurrency(totalTargetSavings)}** (**${savingsProgressPct}%** alcanzado).\n\n`;
-            resp += `📋 **Tus metas activas:**\n`;
-
-            goals.forEach(goal => {
-                const pct = Math.round((goal.current / goal.target) * 100);
-                const remaining = goal.target - goal.current;
-                resp += `• **${goal.title}:** ${this.formatCurrency(goal.current)} / ${this.formatCurrency(goal.target)} (${pct}%) — *Faltan ${this.formatCurrency(remaining)}*\n`;
+            statusList.forEach(b => {
+                const icon = b.isExceeded ? '⚠️' : '✅';
+                if (b.isExceeded) exceededCount++;
+                text += `${icon} **${b.category}:** Gastado ${this.formatCurrency(b.spent)} de ${this.formatCurrency(b.limit)} (${b.pct}%)\n`;
             });
 
-            if (savingsProgressPct >= 50) {
-                resp += `\n🚀 ¡Excelente disciplina! Vas en camino seguro hacia tus metas.`;
-            } else {
-                resp += `\n💡 *Tip de aceleración:* Si aumentas tu ahorro mensual un 10%, alcanzarás tu meta de **${goals[0]?.title || 'Ahorro'}** mucho antes.`;
+            if (exceededCount > 0) {
+                text += `\nTienes **${exceededCount} categoría(s)** excediendo su límite.`;
             }
 
-            this.conversationHistory.push({ role: 'assistant', content: resp });
-            return { text: resp, type: 'data_insight' };
+            const actionLinks = `<a href="dashboard.html" class="finx-action-link-btn"><i class="bi bi-wallet2"></i> Ver en Dashboard</a>`;
+            this.contextManager.pushAssistantMessage(text, { intent: 'budget_status' });
+            return { text, htmlWidget: actionLinks, type: 'data_insight' };
         }
 
-        // F. Resumen Financiero Completo
-        if (this.matchesAny(normalizedInput, ['resumen financiero', 'muestra un resumen', 'muestrame un resumen', 'mi resumen', 'analisis financiero', 'estado financiero'])) {
-            this.lastTopicContext = 'full_summary';
-            const { totalIncome, totalExpenses, netBalance, topCategory, goals, savingsProgressPct } = metrics;
+        // 8. METAS DE AHORRO
+        if (this.matchesAny(normalizedInput, ['meta', 'metas', 'ahorro', 'como van mis metas', 'mis metas de ahorro'])) {
+            const goals = await FinxDataConnector.getGoals();
 
-            let resp = `📊 **RESUMEN FINANCIERO PERSONAL DE FINX**\n\n`;
-            resp += `💰 **Ingresos del Mes:** ${this.formatCurrency(totalIncome)}\n`;
-            resp += `💸 **Gastos del Mes:** ${this.formatCurrency(totalExpenses)}\n`;
-            resp += `⚖️ **Balance Disponible:** ${this.formatCurrency(netBalance)}\n`;
-            resp += `🎯 **Progreso de Ahorro:** ${savingsProgressPct}% acumulado en metas\n`;
-            resp += `🏷️ **Categoría Principal de Gasto:** ${topCategory.name} (${this.formatCurrency(topCategory.amount)})\n\n`;
+            let text = `🎯 **Metas de Ahorro**\n\n`;
+            goals.forEach(g => {
+                const saved = g.saved || g.current || 0;
+                const pct = Math.min(100, Math.round((saved / g.target) * 100));
+                text += `• **${g.title || g.name}:** ${this.formatCurrency(saved)} / ${this.formatCurrency(g.target)} (${pct}%)\n`;
+            });
 
-            resp += `💡 **Recomendaciones Inteligentes:**\n`;
-            if (topCategory.percentage > 35) {
-                resp += `1. Tu gasto en **${topCategory.name}** es muy elevado (${topCategory.percentage}%). Intenta reducirlo un 10% para liberar ${this.formatCurrency(topCategory.amount * 0.1)} para ahorro.\n`;
-            } else {
-                resp += `1. Mantienes un control equilibrado entre tus categorías de gasto.\n`;
+            const actionLinks = `<a href="goals.html" class="finx-action-link-btn"><i class="bi bi-flag-fill"></i> Ver en Metas</a>`;
+            this.contextManager.pushAssistantMessage(text, { intent: 'goals_status' });
+            return { text, htmlWidget: actionLinks, type: 'data_insight' };
+        }
+
+        // 9. RESUMEN FINANCIERO COMPLETO
+        if (this.matchesAny(normalizedInput, ['resumen', 'resumen financiero', 'estado financiero', 'analisis financiero', 'cómo voy este mes'])) {
+            // REGLA CRÍTICA: SI EL USUARIO NO TIENE MOVIMIENTOS REGISTRADOS, MOSTRAR ÚNICAMENTE EL ESTADO VACÍO PROFESIONAL
+            if (!hasTotalMovements) {
+                const text = `¡Aún no tienes movimientos registrados! 💡`;
+                const htmlWidget = this.renderEmptyStateCard();
+                this.contextManager.pushAssistantMessage(text);
+                return { text, htmlWidget, type: 'data_insight' };
             }
-            if (netBalance > 0) {
-                resp += `2. Tienes un balance positivo de ${this.formatCurrency(netBalance)}. Asigna este excedente inmediatamente a tu meta de *${goals[0]?.title || 'Emergencia'}*.\n`;
-            } else {
-                resp += `2. Ajusta tus gastos no esenciales para mantener un margen de seguridad antes de fin de mes.\n`;
+
+            const summary = await FinancialToolsLayer.getFinancialSummary({ dateRange });
+
+            let text = `📊 **RESUMEN FINANCIERO PERSONAL (${summary.periodLabel})**\n\n`;
+
+            if (summary.totalIncome > 0) text += `💰 **Ingresos Totales:** ${this.formatCurrency(summary.totalIncome)}\n`;
+            if (summary.totalExpenses > 0) text += `💸 **Gastos Totales:** ${this.formatCurrency(summary.totalExpenses)}\n`;
+            text += `⚖️ **Balance Neto:** ${this.formatCurrency(summary.netBalance)}\n`;
+
+            if (summary.topCategory && summary.topCategory.amount > 0) {
+                text += `🏷️ **Categoría Principal:** ${summary.topCategory.category} (${this.formatCurrency(summary.topCategory.amount)})\n`;
             }
-            resp += `3. Mantén tus registros al día en el Dashboard para afinar la precisión de tus métricas.`;
 
-            this.conversationHistory.push({ role: 'assistant', content: resp });
-            return { text: resp, type: 'data_insight' };
+            // RECOMENDACIÓN: SOLO SI EXISTEN GASTOS Y CATEGORÍA REAL CON MONTO > 0
+            if (summary.topCategory && summary.topCategory.amount > 0 && summary.totalExpenses > 0) {
+                text += `\n💡 **Recomendación Personalizada:**\n`;
+                if (summary.topCategory.percentage > 35) {
+                    text += `Tus gastos en **${summary.topCategory.category}** representan el ${summary.topCategory.percentage}% del total. Optimizar esta categoría te ayudará a aumentar tu ahorro.`;
+                } else {
+                    text += `Mantienes una distribución equilibrada en tus categorías de gasto.`;
+                }
+            }
+
+            const actionLinks = `<a href="dashboard.html" class="finx-action-link-btn"><i class="bi bi-grid-fill"></i> Ver en Dashboard</a>`;
+            this.contextManager.pushAssistantMessage(text, { intent: 'financial_summary', dateRange });
+            return { text, htmlWidget: actionLinks, type: 'data_insight' };
         }
 
-        // 4. Consultas de Educación Financiera General
-
-        // Presupuesto
-        if (this.matchesAny(normalizedInput, ['como hago un presupuesto', 'como hacer presupuesto', 'que es un presupuesto', 'crear presupuesto', 'regla 50/30/20', 'presupuesto'])) {
-            const resp = `Un **presupuesto** es tu mapa de navegación financiera. Te sugiero aplicar la **Regla 50/30/20**:\n\n` +
-                `1. **50% Necesidades Bajas (Esenciales):** Renta, comida, servicios y transporte.\n` +
-                `2. **30% Deseos y Estilo de Vida:** Salidas, pasatiempos, entretenimiento y compras.\n` +
-                `3. **20% Ahorro e Inversión:** Fondo de emergencia, pago de deudas y metas a futuro.\n\n` +
-                `💡 En Finx puedes registrar tus ingresos y gastos diarios en el **Dashboard** para ver automáticamente cómo te distribuyes respecto a esta regla.`;
-            
-            this.conversationHistory.push({ role: 'assistant', content: resp });
-            return { text: resp, type: 'financial_education' };
+        // E. EDUCACIÓN FINANCIERA GENERAL
+        if (this.matchesAny(normalizedInput, ['interes compuesto', 'interés compuesto'])) {
+            const text = `El **Interés Compuesto** es cuando los rendimientos de tu dinero generan más rendimientos con el tiempo ("interés sobre interés").\n\n📈 **Ejemplo:** Si inviertes $1,000 al 10% anual, el primer año ganas $100. El segundo año ganas el 10% sobre $1,100 ($110). Con el tiempo, el crecimiento es exponencial.`;
+            this.contextManager.pushAssistantMessage(text);
+            return { text, type: 'financial_education' };
         }
 
-        // Interés Compuesto
-        if (this.matchesAny(normalizedInput, ['interes compuesto', 'interés compuesto', 'como funciona el interes compuesto'])) {
-            const resp = `El **Interés Compuesto** es cuando los intereses que ganas generan a su vez más intereses con el tiempo ("dinero produciendo dinero").\n\n` +
-                `📈 **Fórmula visual:**\n` +
-                `• Año 1: Inviertes $1,000 al 10% ➔ Tienes $1,100\n` +
-                `• Año 2: Ganas el 10% sobre $1,100 ➔ Tienes $1,210\n` +
-                `• Año 10: ¡Tus $1,000 se habrán transformado en **$2,593** sin añadir más capital!\n\n` +
-                `🔑 **Clave para jóvenes:** Empezar temprano es la mayor ventaja financiera que existe.`;
-
-            this.conversationHistory.push({ role: 'assistant', content: resp });
-            return { text: resp, type: 'financial_education' };
+        if (this.matchesAny(normalizedInput, ['50/30/20', 'regla 50 30 20', 'como distribuir mi dinero'])) {
+            const text = `La **Regla 50/30/20** sugiere dividir tus ingresos así:\n\n• **50% Necesidades:** Vivienda, comida, servicios, transporte.\n• **30% Deseos:** Entretenimiento, salidas, hobbies.\n• **20% Ahorro e Inversión:** Fondo de emergencia y metas a futuro.`;
+            this.contextManager.pushAssistantMessage(text);
+            return { text, type: 'financial_education' };
         }
 
-        // Tarjetas de Crédito
-        if (this.matchesAny(normalizedInput, ['tarjeta de credito', 'tarjetas de crédito', 'usar tarjeta de credito', 'bueno usar tarjeta'])) {
-            const resp = `La **tarjeta de crédito** es una herramienta excelente si sigues 3 reglas de oro:\n\n` +
-                `1. **Trátala como tarjeta de débito:** No gastes dinero que no tienes en tu cuenta bancaria.\n` +
-                `2. **Sé Totalero:** Paga siempre el "pago para no generar intereses" antes de la fecha límite.\n` +
-                `3. **No uses más del 30% de tu límite:** Esto mantiene tu puntaje e historial crediticio impecable.\n\n` +
-                `⚠️ *Evita pagar solo el pago mínimo*, ya que los intereses harán que la deuda crezca exponencialmente.`;
-
-            this.conversationHistory.push({ role: 'assistant', content: resp });
-            return { text: resp, type: 'financial_education' };
-        }
-
-        // Salir de deudas
-        if (this.matchesAny(normalizedInput, ['salir de deudas', 'como pagar deudas', 'pagar deudas', 'deuda'])) {
-            const resp = `Para salir de deudas eficientemente existen dos métodos comprobados:\n\n` +
-                `🧊 **1. Método Bola de Nieve (Motivación rápida):**\n` +
-                `Ordena tus deudas de la más pequeña a la más grande. Paga el mínimo en todas y enfoca todo tu dinero extra en liquidar la más pequeña primero.\n\n` +
-                `🔥 **2. Método Avalancha (Ahorro en intereses):**\n` +
-                `Ordena tus deudas por la tasa de interés de mayor a menor. Liquida primero la que cobre más intereses.\n\n` +
-                `💡 *Primer paso:* Congela nuevas deudas y destina un porcentaje fijo de tus ingresos para liquidarlas.`;
-
-            this.conversationHistory.push({ role: 'assistant', content: resp });
-            return { text: resp, type: 'financial_education' };
-        }
-
-        // Inversiones
-        if (this.matchesAny(normalizedInput, ['invertir', 'inversiones', 'donde invertir', 'como empiezo a invertir', 'inversion'])) {
-            const resp = `Antes de empezar a invertir, asegúrate de tener listo tu **Fondo de Emergencia** (de 3 a 6 meses de gastos).\n\n` +
-                `Pasos básicos para principiantes:\n` +
-                `1. **Cuentas de Alto Rendimiento / CETES / Renta Fija:** Ideales para bajo riesgo y dinero a corto plazo.\n` +
-                `2. **Fondos Indexados (ETF como S&P 500):** Para construir patrimonio a largo plazo diversificando en cientos de empresas.\n` +
-                `3. **Diversificación:** Nunca pongas todos tus huevos en la misma canasta.\n\n` +
-                `¿Te gustaría saber sobre alguna opción de inversión en particular?`;
-
-            this.conversationHistory.push({ role: 'assistant', content: resp });
-            return { text: resp, type: 'financial_education' };
-        }
-
-        // Ahorrar más
-        if (this.matchesAny(normalizedInput, ['como ahorro mas', 'cómo ahorro más', 'consejos para ahorrar', 'tips de ahorro', 'trucos para ahorrar'])) {
-            const resp = `💡 **5 Hábitos probados para aumentar tu ahorro rápidamente:**\n\n` +
-                `1. **Págate a ti mismo primero:** Tan pronto como recibas tus ingresos, traslada el 10%-20% a tu cuenta de ahorro antes de gastar.\n` +
-                `2. **Revisa suscripciones ocultas:** Cancela servicios de streaming o apps que no uses.\n` +
-                `3. **Aplica la regla de las 48 horas:** Para compras impulsivas, espera 2 días. Muchas veces se pasa el impulso.\n` +
-                `4. **Cocina más en casa:** La categoría de Comida fuera suele representar entre el 25% y 40% del gasto juvenil.\n` +
-                `5. **Revisa tus metas en Finx:** Mantener la visión clara de tu meta aumenta en un 80% tu disciplina.`;
-
-            this.conversationHistory.push({ role: 'assistant', content: resp });
-            return { text: resp, type: 'financial_education' };
-        }
-
-        // 5. Respuesta inteligente por defecto (Personal Finance & Assistant Guidance)
-        const defaultResp = lang === 'en'
-            ? `I can analyze your Finx account data or answer any financial questions. You can ask me:\n\n` +
-              `• *How much did I spend this month?*\n` +
-              `• *What was my highest expense?*\n` +
-              `• *Show me a financial summary*\n` +
-              `• *How are my savings goals doing?*\n` +
-              `• *How do I create a budget?*`
-            : `Estoy analizando tu consulta. Como tu asistente financiero de **Finx**, puedo guiarte con los datos reales de tu cuenta o educación financiera.\n\n` +
-              `Puedes preguntarme cosas como:\n` +
+        // F. RESPUESTA POR DEFECTO AMIGABLE
+        const defaultText = lang === 'en'
+            ? `I am your Finx Financial Assistant. You can ask me:\n\n• *How much did I spend this month?*\n• *Show me a financial summary*\n• *Which category do I spend the most in?*\n• *How are my savings goals doing?*`
+            : `Soy tu Asistente Financiero de Finx. Puedes preguntarme:\n\n` +
               `💰 *¿Cuánto gasté este mes?*\n` +
               `📊 *Muéstrame un resumen financiero*\n` +
-              `📉 *¿En qué categoría gasto más?*\n` +
-              `🎯 *¿Cómo van mis metas de ahorro?*\n` +
-              `💡 *¿Cómo hago un presupuesto eficientemente?*`;
+              `📈 *¿En qué categoría gasto más?*\n` +
+              `🎯 *¿Cómo van mis metas de ahorro?*`;
 
-        this.conversationHistory.push({ role: 'assistant', content: defaultResp });
-        return { text: defaultResp, type: 'general' };
+        this.contextManager.pushAssistantMessage(defaultText);
+        return { text: defaultText, type: 'general' };
     }
 
-    /**
-     * Verifica si una consulta es ajena a finanzas
-     */
+    async executeConfirmedAction(actionName, params) {
+        if (actionName === 'confirm_add_expense') {
+            const newMov = await FinxDataConnector.addMovement({
+                type: 'expense',
+                amount: parseFloat(params.amount),
+                category: params.category,
+                date: new Date().toISOString().split('T')[0],
+                description: `Gasto en ${params.category}`
+            });
+
+            return {
+                success: true,
+                message: `✅ Gasto de **${this.formatCurrency(newMov.amount)}** en **${newMov.category}** registrado exitosamente.`,
+                htmlWidget: `<a href="dashboard.html" class="finx-action-link-btn"><i class="bi bi-speedometer2"></i> Ver en Dashboard</a>`
+            };
+        }
+
+        return { success: false, message: 'Acción cancelada.' };
+    }
+
     isOffTopic(input) {
         const nonFinancialKeywords = [
-            'receta de cocina', 'clima', 'fútbol', 'futbol', 'película', 'pelicula',
-            'videojuego', 'horóscopo', 'horoscopo', 'chiste', 'canción', 'cancion',
-            'política', 'politica', 'programar en python', 'código java', 'capital de francia'
+            'receta de cocina', 'clima de hoy', 'partido de fútbol', 'película',
+            'videojuego', 'horóscopo', 'chiste', 'canción', 'política',
+            'programar en python', 'capital de francia'
         ];
         return nonFinancialKeywords.some(keyword => input.includes(keyword));
     }
 
-    /**
-     * Verifica coincidencias en lista de frases
-     */
     matchesAny(input, phrases) {
         return phrases.some(p => input.includes(p));
     }
 }
 
-// Exponer la instancia globalmente
+// Exponer globalmente
 window.FinxDataConnector = FinxDataConnector;
+window.FinancialToolsLayer = FinancialToolsLayer;
 window.FinancialAIEngine = FinancialAIEngine;
 window.financialAIEngineInstance = new FinancialAIEngine();
