@@ -2371,6 +2371,11 @@ const translations = {
         'privacy': 'Privacidad',
         'hero-title': '¡Aprende finanzas jugando! 🎮',
         'hero-lead': '🚀 Completa lecciones, gana puntos y domina tu dinero de forma divertida ⭐',
+        'hero-badge-level': '🏆 Nivel 2 Guerrero',
+        'hero-badge-quests': '⚡ 3 misiones completadas',
+        'hero-badge-streak': '🔥 Racha de 5 días',
+        'hero-next-level': '💎 Siguiente nivel: ¡160 XP para llegar!',
+        'hero-progress-level': '📊 60% para el Nivel 3',
         'level-label': '🏆 Nivel 2',
         'keep-moving': '⚡ ¡Sigue avanzando en tu camino de aprendizaje! 🚀',
         'completed': '📊 60% completado',
@@ -2405,6 +2410,16 @@ const translations = {
         'privacy': 'Privacy',
         'hero-title': '🎮 Learn Finance by Playing! 🎮',
         'hero-lead': '🚀 Complete lessons, earn points, and master your money in a fun way ⭐',
+        'hero-badge-level': '🏆 Level 2 Warrior',
+        'hero-badge-quests': '⚡ 3 Quests Completed',
+        'hero-badge-streak': '🔥 5 Day Streak',
+        'hero-next-level': '💎 Next Level: 160 XP to go!',
+        'hero-progress-level': '📊 60% to Level 3',
+        'hero-badge-level': '🏆 Level 2 Warrior',
+        'hero-badge-quests': '⚡ 3 Quests Completed',
+        'hero-badge-streak': '🔥 5 Day Streak',
+        'hero-next-level': '💎 Next Level: 160 XP to go!',
+        'hero-progress-level': '📊 60% to Level 3',
         'level-label': '🏆 Level 2',
         'keep-moving': '⚡ Keep moving forward on your learning path! 🚀',
         'completed': '📊 60% completed',
@@ -2466,9 +2481,19 @@ function setLanguage(lang) {
       // Hero
     document.querySelector('.trivia-hero h1').textContent = translations[lang]['hero-title'];
     document.querySelector('.trivia-hero .lead').textContent = translations[lang]['hero-lead'];
+    const heroBadges = document.querySelectorAll('.trivia-hero .hero-stats span');
+    if (heroBadges.length >= 3) {
+        heroBadges[0].textContent = translations[lang]['hero-badge-level'];
+        heroBadges[1].textContent = translations[lang]['hero-badge-quests'];
+        heroBadges[2].textContent = translations[lang]['hero-badge-streak'];
+    }
     // Progreso
     document.querySelector('.xp-progress-container h3').textContent = translations[lang]['level-label'];
     document.querySelector('.xp-progress-container p').textContent = translations[lang]['keep-moving'];
+    const nextLevelText = document.querySelector('.xp-progress-container small.text-primary');
+    if (nextLevelText) nextLevelText.textContent = translations[lang]['hero-next-level'];
+    const progressPercentText = document.querySelector('.xp-progress-container .d-flex span.text-muted');
+    if (progressPercentText) progressPercentText.textContent = translations[lang]['hero-progress-level'];
     
     // Update module content with dynamic system
     updateModuleTranslations(lang);

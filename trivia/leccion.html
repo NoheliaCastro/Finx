@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finx - The Basics Lesson</title>
+    <title>Finx - Lección Conceptos Básicos</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1021,8 +1021,8 @@
             <div class="container">
                 <!-- Dashboard Hero Section -->
                 <section class="dashboard-hero achievements-hero mb-4">
-                    <h1 class="dashboard-title">💰 The Basics</h1>
-                    <p class="lead">Learn the fundamental concepts of personal finance! 🚀</p>
+                    <h1 class="dashboard-title">💰 Conceptos Básicos</h1>
+                    <p class="lead">Aprende los conceptos fundamentales de finanzas personales 🚀</p>
                 </section>
                 
                 <!-- Summary Cards -->
@@ -1218,26 +1218,28 @@
         function updateLessonContent() {
             const lessonCard = document.getElementById('lessonCard');
             if (lessonCard) {
+                const lang = localStorage.getItem('finx_lang') || 'es';
+                const trans = translations[lang] || translations['es'];
                 lessonCard.innerHTML = `
-                    <h3 class="h4 mb-4">📖 Material de Estudio / Study Material</h3>
+                    <h3 class="h4 mb-4">${trans['study-material-title']}</h3>
                     
                     <!-- Video Section -->
                     <div class="video-container mb-4">
                         <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
-                            <h4 class="h5 mb-0 fw-bold">🎥 Free Cash Flow Explained</h4>
-                            <span class="badge bg-primary rounded-pill px-3 py-2">Nivel 1: Cash Flow & Gastos</span>
+                            <h4 class="h5 mb-0 fw-bold">${trans['video-title']}</h4>
+                            <span class="badge bg-primary rounded-pill px-3 py-2">${trans['video-level-badge']}</span>
                         </div>
                         <div class="ratio ratio-16x9 mb-3">
                             <iframe id="lessonVideoFrame" 
                                     src="https://www.youtube.com/embed/FC0ZODWFzpo?enablejsapi=1&rel=0" 
-                                    title="Free Cash Flow Explained" 
+                                    title="${trans['video-title']}" 
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                     allowfullscreen 
                                     class="rounded-3">
                             </iframe>
                         </div>
                         <p class="text-muted small mb-0">
-                            Aprende cómo funciona el Flujo de Caja Libre (Free Cash Flow), la gestión de ingresos vs gastos y la importancia del capital líquido para tus finanzas personales y corporativas.
+                            ${trans['video-description']}
                         </p>
                     </div>
 
@@ -1245,11 +1247,11 @@
                     <div class="text-center mb-4" id="videoProgressMessage">
                         <div class="alert alert-info d-flex align-items-center justify-content-between flex-wrap gap-2">
                             <div class="text-start">
-                                <h5 class="mb-1">📺 Mira el Video / Watch the Video</h5>
-                                <p class="mb-0 small">Al terminar de ver el video se desbloqueará el quiz automáticamente.</p>
+                                <h5 class="mb-1">${trans['watch-video-title']}</h5>
+                                <p class="mb-0 small">${trans['watch-video-text']}</p>
                             </div>
                             <button class="btn btn-outline-primary btn-sm rounded-pill px-3" onclick="unlockQuizManual()">
-                                <i class="bi bi-check-circle-fill me-1"></i> Marcar como visto
+                                <i class="bi bi-check-circle-fill me-1"></i> ${trans['mark-seen-button']}
                             </button>
                         </div>
                     </div>
@@ -1257,11 +1259,11 @@
                     <!-- Quiz Button (initially hidden) -->
                     <div class="text-center" id="quizButtonContainer" style="display: none;">
                         <div class="alert alert-success mb-3">
-                            <h5>🎉 ¡Video Completado! / Video Completed!</h5>
-                            <p class="mb-0">¡Excelente trabajo! Ahora puedes realizar el quiz para poner a prueba tus conocimientos.</p>
+                            <h5>${trans['video-completed-title']}</h5>
+                            <p class="mb-0">${trans['video-completed-text']}</p>
                         </div>
                         <button class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm" onclick="goToQuiz()">
-                            <i class="bi bi-question-circle me-2"></i> Realizar Quiz / Take Quiz
+                            <i class="bi bi-question-circle me-2"></i> ${trans['take-quiz-button']}
                         </button>
                     </div>
                 `;
@@ -1320,7 +1322,24 @@ const translations = {
         'logout': 'Cerrar sesión',
         'user': 'Usuario',
         'level': 'Nivel 2',
-        'financial-assistant': 'Asistente'
+        'financial-assistant': 'Asistente',
+        'hero-title': '💰 Conceptos Básicos',
+        'hero-lead': 'Aprende los conceptos fundamentales de finanzas personales 🚀',
+        'progress-card': 'Progreso',
+        'xp-card': 'XP Ganados',
+        'lessons-card': 'Lecciones',
+        'lesson-content-title': 'Contenido de la lección',
+        'lesson-content-text': 'Selecciona una lección del menú para comenzar a aprender. 🎓',
+        'study-material-title': '📖 Material de Estudio',
+        'video-title': '🎥 Free Cash Flow Explained',
+        'video-level-badge': 'Nivel 1: Cash Flow & Gastos',
+        'video-description': 'Aprende cómo funciona el Flujo de Caja Libre (Free Cash Flow), la gestión de ingresos vs gastos y la importancia del capital líquido para tus finanzas personales y corporativas.',
+        'watch-video-title': '📺 Mira el Video',
+        'watch-video-text': 'Al terminar de ver el video se desbloqueará el quiz automáticamente.',
+        'mark-seen-button': 'Marcar como visto',
+        'video-completed-title': '🎉 ¡Video Completado!',
+        'video-completed-text': '¡Excelente trabajo! Ahora puedes realizar el quiz para poner a prueba tus conocimientos.',
+        'take-quiz-button': 'Realizar Quiz'
     },
     en: {
         'management': 'Management',
@@ -1331,7 +1350,24 @@ const translations = {
         'logout': 'Logout',
         'user': 'User',
         'level': 'Level 2',
-        'financial-assistant': 'Assistant'
+        'financial-assistant': 'Assistant',
+        'hero-title': '💰 The Basics',
+        'hero-lead': 'Learn the fundamental concepts of personal finance! 🚀',
+        'progress-card': 'Progress',
+        'xp-card': 'XP Earned',
+        'lessons-card': 'Lessons',
+        'lesson-content-title': 'Lesson Content',
+        'lesson-content-text': 'Select a lesson from the menu to start learning! 🎓',
+        'study-material-title': '📖 Study Material',
+        'video-title': '🎥 Free Cash Flow Explained',
+        'video-level-badge': 'Level 1: Cash Flow & Expenses',
+        'video-description': 'Learn how Free Cash Flow works, manage income vs expenses, and understand the importance of liquidity for your personal and business finances.',
+        'watch-video-title': '📺 Watch the Video',
+        'watch-video-text': 'After watching the video, the quiz will unlock automatically.',
+        'mark-seen-button': 'Mark as watched',
+        'video-completed-title': '🎉 Video Completed!',
+        'video-completed-text': 'Great job! Now you can take the quiz to test your knowledge.',
+        'take-quiz-button': 'Take Quiz'
     }
 };
 function setLanguage(lang) {
@@ -1353,6 +1389,30 @@ function setLanguage(lang) {
     }
     if (document.querySelector('.user-level')) {
         document.querySelector('.user-level').textContent = translations[lang]['level'] || 'Level 2';
+    }
+    // Hero
+    if (document.querySelector('.dashboard-hero .dashboard-title')) {
+        document.querySelector('.dashboard-hero .dashboard-title').textContent = translations[lang]['hero-title'] || '💰 The Basics';
+    }
+    if (document.querySelector('.dashboard-hero .lead')) {
+        document.querySelector('.dashboard-hero .lead').textContent = translations[lang]['hero-lead'] || 'Learn the fundamental concepts of personal finance! 🚀';
+    }
+    // Summary cards
+    if (document.querySelector('#progressCard h3')) {
+        document.querySelector('#progressCard h3').textContent = translations[lang]['progress-card'] || 'Progress';
+    }
+    if (document.querySelector('#xpCard h3')) {
+        document.querySelector('#xpCard h3').textContent = translations[lang]['xp-card'] || 'XP Earned';
+    }
+    const lessonsCardHeading = document.querySelector('#cardsRow .col-md-4:last-child .summary-card h3');
+    if (lessonsCardHeading) {
+        lessonsCardHeading.textContent = translations[lang]['lessons-card'] || 'Lessons';
+    }
+    if (document.querySelector('#lessonCard h3')) {
+        document.querySelector('#lessonCard h3').textContent = translations[lang]['lesson-content-title'] || 'Lesson Content';
+    }
+    if (document.querySelector('#lessonCard p')) {
+        document.querySelector('#lessonCard p').textContent = translations[lang]['lesson-content-text'] || 'Select a lesson from the menu to start learning! 🎓';
     }
     // Menú desplegable
     if (document.querySelector('.dropdown-user-name')) {

@@ -4,6 +4,23 @@
 let movementsChartInstance = null;
 let chartUpdateInterval = null;
 
+function getCurrentLanguage() {
+    return localStorage.getItem('finx_lang') || 'es';
+}
+
+const chartTranslations = {
+    es: {
+        noData: 'No hay datos para mostrar',
+        income: 'Ingresos',
+        expense: 'Gastos'
+    },
+    en: {
+        noData: 'No data to display',
+        income: 'Income',
+        expense: 'Expense'
+    }
+};
+
 function renderMovementsChart() {
     const ctxContainer = document.getElementById('movementsChartContainer');
     if (!ctxContainer) return;
@@ -85,7 +102,9 @@ function renderMovementsChart() {
 
     // Si no hay movimientos en toda la semana, mostrar mensaje
     if (incomeData.every(v => v === 0) && expenseData.every(v => v === 0)) {
-        ctxContainer.innerHTML = '<span style="color:#888;">No data to display</span>';
+        const lang = getCurrentLanguage();
+        const noDataText = chartTranslations[lang]?.noData || chartTranslations['es'].noData;
+        ctxContainer.innerHTML = `<span style="color:#888;">${noDataText}</span>`;
         return;
     }
 
@@ -116,6 +135,9 @@ function renderMovementsChart() {
     expenseGradient.addColorStop(0, '#ef4444');
     expenseGradient.addColorStop(1, '#f59e42');
 
+    const lang = getCurrentLanguage();
+    const currentTranslations = chartTranslations[lang] || chartTranslations['es'];
+
     // Crear la gráfica
     movementsChartInstance = new Chart(ctx, {
         type: 'line',
@@ -123,7 +145,7 @@ function renderMovementsChart() {
             labels: dayLabels,
             datasets: [
                 {
-                    label: 'Income',
+                    label: currentTranslations.income,
                     data: incomeData,
                     backgroundColor: incomeGradient,
                     borderColor: incomeGradient,
@@ -142,7 +164,7 @@ function renderMovementsChart() {
                     pointShadowColor: 'rgba(0,0,0,0.18)'
                 },
                 {
-                    label: 'Expense',
+                    label: currentTranslations.expense,
                     data: expenseData,
                     backgroundColor: expenseGradient,
                     borderColor: expenseGradient,
