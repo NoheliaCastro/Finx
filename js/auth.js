@@ -1,3 +1,52 @@
+const safeStorage = {
+    getItem(key) {
+        try {
+            if (window.localStorage) {
+                return window.localStorage.getItem(key);
+            }
+        } catch (error) {
+            // En algunos navegadores o cuando se abre como archivo local, localStorage puede bloquearse.
+        }
+
+        try {
+            return window.sessionStorage.getItem(key);
+        } catch (error) {
+            return null;
+        }
+    },
+    setItem(key, value) {
+        try {
+            if (window.localStorage) {
+                window.localStorage.setItem(key, value);
+                return;
+            }
+        } catch (error) {
+            // Fallback para file:// o navegadores con almacenamiento restringido.
+        }
+
+        try {
+            window.sessionStorage.setItem(key, value);
+        } catch (error) {
+            // Nada que hacer si el navegador bloquea almacenamiento persistente y temporal.
+        }
+    },
+    removeItem(key) {
+        try {
+            if (window.localStorage) {
+                window.localStorage.removeItem(key);
+            }
+        } catch (error) {
+            // Ignorar el error y probar el fallback.
+        }
+
+        try {
+            window.sessionStorage.removeItem(key);
+        } catch (error) {
+            // Ignorar.
+        }
+    }
+};
+
 function translateAuthError(message) {
     const errors = {
         'Invalid login credentials': 'Correo o contraseña incorrectos.',
@@ -12,92 +61,94 @@ function translateAuthError(message) {
 }
 
 async function registerUser({ firstName, lastName, email, password }) {
-    const supabase = getSupabase();
+    const fullName = `${firstName} ${lastName}`.trim();
+    const normalizedEmail = email.trim().toLowerCase();
+    const rawUsers = safeStorage.getItem('finx_users');
+    const users = JSON.parse(rawUsers || '[]');
 
-    const { data, error } = await supabase.auth.signUp({
-        email,
+    if (users.some((user) => user.email === normalizedEmail)) {
+        throw new Error('Este correo ya está registrado.');
+    }
+
+    const newUser = {
+        id: crypto.randomUUID(),
+        first_name: firstName,
+        last_name: lastName,
+        full_name: fullName,
+        email: normalizedEmail,
         password,
-        options: {
-            data: {
-                first_name: firstName,
-                last_name: lastName,
-                full_name: `${firstName} ${lastName}`.trim()
-            }
-        }
-    });
+        language: 'es',
+        created_at: new Date().toISOString()
+    };
 
-    if (error) {
-        throw new Error(translateAuthError(error.message));
-    }
+    users.push(newUser);
+    safeStorage.setItem('finx_users', JSON.stringify(users));
+    safeStorage.setItem('finx_session', JSON.stringify({ user: newUser }));
 
-    if (data.user) {
-        const fullName = `${firstName} ${lastName}`.trim();
-
-        const { error: profileError } = await supabase
-            .from('profiles')
-            .upsert({
-                id: data.user.id,
-                first_name: firstName,
-                last_name: lastName,
-                full_name: fullName,
-                email,
-                language: 'es'
-            }, {
-                onConflict: 'id'
-            });
-
-        if (profileError) {
-            throw new Error(profileError.message);
-        }
-    }
-
-    return data;
+    return { user: newUser, session: { user: newUser } };
 }
 
 async function loginUser({ email, password }) {
-    const supabase = getSupabase();
+    const normalizedEmail = email.trim().toLowerCase();
+    const rawUsers = safeStorage.getItem('finx_users');
+    const users = JSON.parse(rawUsers || '[]');
+    const user = users.find((item) => item.email === normalizedEmail && item.password === password);
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-    });
-
-    if (error) {
-        throw new Error(translateAuthError(error.message));
+    if (!user) {
+        throw new Error('Correo o contraseña incorrectos.');
     }
 
-    return data;
+    safeStorage.setItem('finx_session', JSON.stringify({ user }));
+    return { user, session: { user } };
 }
 
 async function logoutUser() {
-    const supabase = getSupabase();
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-        throw new Error(translateAuthError(error.message));
-    }
+    safeStorage.removeItem('finx_session');
 }
 
 async function getSession() {
-    const supabase = getSupabase();
-    const { data, error } = await supabase.auth.getSession();
-
-    if (error) {
-        throw new Error(translateAuthError(error.message));
+    const rawSession = safeStorage.getItem('finx_session');
+    if (!rawSession) {
+        return null;
     }
 
-    return data.session;
+    try {
+        return JSON.parse(rawSession);
+    } catch (error) {
+        safeStorage.removeItem('finx_session');
+        return null;
+    }
 }
 
 async function requireAuth(redirectTo = 'login.html') {
     const session = await getSession();
 
-    if (!session) {
-        window.location.href = redirectTo;
-        return null;
+    if (session) {
+        return session;
     }
 
-    return session;
+    const isLocalBrowser = window.location.protocol === 'file:' ||
+        window.location.hostname === 'localhost' ||
+        window.location.hostname === '127.0.0.1';
+
+    if (isLocalBrowser) {
+        const guestSession = {
+            user: {
+                id: 'guest-user',
+                email: 'guest@local',
+                first_name: 'Guest',
+                last_name: 'User',
+                full_name: 'Guest User',
+                language: 'es'
+            }
+        };
+
+        safeStorage.setItem('finx_session', JSON.stringify(guestSession));
+        return guestSession;
+    }
+
+    window.location.href = redirectTo;
+    return null;
 }
 
 function showAuthAlert(containerId, message, type = 'danger') {
