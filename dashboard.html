@@ -1323,9 +1323,10 @@
         function fillMovementsTableByType(movements = dashboardMovements) {
             const tbody = document.getElementById('movementsTableBody');
             const type = document.getElementById('typeSelector').value;
+            const lang = localStorage.getItem('finx_lang') || 'es';
             tbody.innerHTML = '';
             if (movements.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="text-center">No movements yet</td></tr>';
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center">${translations[lang]['no-movements']}</td></tr>`;
                 return;
             }
             let filtered = movements;
@@ -1347,11 +1348,13 @@
                 </tr>`;
             });
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="text-center">No movements in this filter</td></tr>';
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center">${translations[lang]['no-movements-filter']}</td></tr>`;
             }
         }
-        document.getElementById('typeSelector').addEventListener('change', fillMovementsTableByType);
         document.addEventListener('DOMContentLoaded', async function() {
+            // Agregar evento change para el selector de tipo
+            document.getElementById('typeSelector').addEventListener('change', fillMovementsTableByType);
+            
             const session = await FinxAuth.requireAuth();
             if (!session) {
                 return;
@@ -1813,37 +1816,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('welcomeLogo').style.display = 'none'; // Ocultar el texto de bienvenida
             // Actualizar tabla de movimientos
             fillMovementsTableByType();
-        }
-        // Modificar fillMovementsTableByType para traducir mensajes vacíos
-        fillMovementsTableByType = function() {
-            const lang = localStorage.getItem('finx_lang') || 'es';
-            const tbody = document.getElementById('movementsTableBody');
-            const type = document.getElementById('typeSelector').value;
-            tbody.innerHTML = '';
-            if (dashboardMovements.length === 0) {
-                tbody.innerHTML = `<tr><td colspan=\"4\" class=\"text-center\">${translations[lang]['no-movements']}</td></tr>`;
-                return;
-            }
-            let filtered = dashboardMovements;
-            if (type !== 'all') {
-                filtered = dashboardMovements.filter(mov => mov.type === type);
-            }
-            filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
-            filtered.forEach(mov => {
-                const sign = mov.type === 'income' ? '+' : '-';
-                const color = mov.type === 'income' ? 'text-success' : 'text-danger';
-                const badge = mov.type === 'income' ? 'bg-success' : 'bg-danger';
-                tbody.innerHTML += `
-                <tr>
-                    <td>${mov.date}</td>
-                    <td>${mov.category}</td>
-                    <td class="${color}">${sign}$${formatAmount(Number(mov.amount))}</td>
-                    <td><span class=\"badge ${badge}\">${mov.type.charAt(0).toUpperCase() + mov.type.slice(1)}</span></td>
-                </tr>`;
-            });
-            if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan=\"4\" class=\"text-center\">${translations[lang]['no-movements-filter']}</td></tr>`;
-            }
+            // Actualizar gráfica de movimientos
+            if (window.renderMovementsChart) window.renderMovementsChart();
         }
         document.getElementById('langToggle').addEventListener('click', function() {
             const current = localStorage.getItem('finx_lang') || 'es';
