@@ -98,8 +98,9 @@ body.finx-app,
 .quiz-sidebar,
 .logros-sidebar {
     background: var(--surface-elevated);
-    border-right: 1px solid var(--surface-border);
-    box-shadow: var(--shadow-sm);
+    border: none;
+    border-right: none;
+    box-shadow: none;
     border-radius: 0;
     padding: var(--space-6) 0;
     height: 100vh;

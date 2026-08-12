@@ -6,7 +6,8 @@
 .logros-sidebar {
     background: var(--surface-elevated, var(--background-color));
     box-shadow: none;
-    border-right: 1px solid rgba(29, 72, 138, 0.08);
+    border: none;
+    border-right: none;
     border-radius: 0;
     padding: 2rem 0;
     height: 100vh;
@@ -39,7 +40,8 @@
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 10px;
     margin: 0 0.75rem;
-    border-left: 3px solid transparent;
+    border: none;
+    border-left: none;
 }
 
 .sidebar-nav a:hover {
@@ -53,7 +55,7 @@
     background: rgba(29, 72, 138, 0.08);
     color: var(--fun-primary);
     font-weight: 600;
-    border-left-color: var(--fun-primary);
+    border-left: none;
     transform: none;
     box-shadow: none;
 }
