@@ -715,32 +715,85 @@
         // Translation system
         const translations = {
             es: {
+                // Sidebar Navigation
                 'management': 'Gestión',
                 'lessons': 'Lecciones',
                 'achievements': 'Logros',
                 'goals': 'Metas',
                 'help': 'Ayuda',
-                'financial-assistant': 'Asistente'
+                'financial-assistant': 'Asistente',
+                
+                // Main Content
+                'wizard-title': '🧙‍♂️ Mago de la Riqueza',
+                'wizard-subtitle': '¡Desbloquea los secretos mágicos de la construcción de riqueza! ✨',
+                'progress': 'Progreso',
+                'xp-earned': 'XP Ganado',
+                'lessons-label': 'Lecciones',
+                'lesson-content': '📖 Contenido de la Lección',
+                'select-lesson': '¡Selecciona una lección del menú para comenzar a aprender! 📚'
             },
             en: {
+                // Sidebar Navigation
                 'management': 'Management',
                 'lessons': 'Lessons',
                 'achievements': 'Achievements',
                 'goals': 'Goals',
                 'help': 'Help',
-                'financial-assistant': 'Assistant'
+                'financial-assistant': 'Assistant',
+                
+                // Main Content
+                'wizard-title': '🧙‍♂️ Wealth Wizard',
+                'wizard-subtitle': 'Unlock the magical secrets of wealth building! ✨',
+                'progress': 'Progress',
+                'xp-earned': 'XP Earned',
+                'lessons-label': 'Lessons',
+                'lesson-content': '📖 Lesson Content',
+                'select-lesson': 'Select a lesson from the menu to start learning! 📚'
             }
         };
 
         function setLanguage(lang) {
             localStorage.setItem('finx_lang', lang);
             // Update sidebar
-            document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['management'];
-            document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
-            document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
-            document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
-            document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
-            document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['financial-assistant'];
+            const sidebarLinks = document.querySelectorAll('.sidebar-nav li span');
+            if (sidebarLinks.length >= 6) {
+                sidebarLinks[0].textContent = translations[lang]['management'];
+                sidebarLinks[1].textContent = translations[lang]['lessons'];
+                sidebarLinks[2].textContent = translations[lang]['achievements'];
+                sidebarLinks[3].textContent = translations[lang]['goals'];
+                sidebarLinks[4].textContent = translations[lang]['help'];
+                sidebarLinks[5].textContent = translations[lang]['financial-assistant'];
+            }
+            
+            // Update main title
+            const dashboardTitle = document.querySelector('.dashboard-title');
+            if (dashboardTitle) {
+                dashboardTitle.textContent = translations[lang]['wizard-title'];
+            }
+            
+            // Update subtitle
+            const leadText = document.querySelector('.lead');
+            if (leadText) {
+                leadText.textContent = translations[lang]['wizard-subtitle'];
+            }
+            
+            // Update summary cards
+            const summaryCards = document.querySelectorAll('.summary-card');
+            if (summaryCards.length >= 3) {
+                summaryCards[0].querySelector('h3').textContent = translations[lang]['progress'];
+                summaryCards[1].querySelector('h3').textContent = translations[lang]['xp-earned'];
+                summaryCards[2].querySelector('h3').textContent = translations[lang]['lessons-label'];
+            }
+            
+            // Update lesson card
+            const lessonCard = document.getElementById('lessonCard');
+            if (lessonCard) {
+                lessonCard.querySelector('h3').textContent = translations[lang]['lesson-content'];
+                const paragraphs = lessonCard.querySelectorAll('p');
+                if (paragraphs.length > 0) {
+                    paragraphs[0].textContent = translations[lang]['select-lesson'];
+                }
+            }
         }
 
         document.getElementById('langToggle').addEventListener('click', function() {

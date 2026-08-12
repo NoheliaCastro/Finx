@@ -41,42 +41,42 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 1.25rem;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(8px);
+    padding: 0.85rem 1.25rem;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
     border-radius: 1rem;
     margin-bottom: 1rem;
     border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 [data-bs-theme="dark"] .assistant-status-bar {
-    background: rgba(20, 23, 34, 0.7);
+    background: rgba(20, 23, 34, 0.8);
     border-color: rgba(255, 255, 255, 0.08);
 }
 
 .assistant-info {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.85rem;
 }
 
 .assistant-avatar {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #1D488A, #6366f1);
-    border-radius: 12px;
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #1D488A, #083066);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     box-shadow: 0 4px 12px rgba(29, 72, 138, 0.25);
 }
 
 .assistant-details h5 {
     margin: 0;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.05rem;
     color: var(--finx-primary-dark);
 }
 
@@ -85,7 +85,7 @@
 }
 
 .assistant-status-badge {
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     color: #10b981;
     display: flex;
     align-items: center;
@@ -304,11 +304,14 @@
     flex: 1;
     border: none !important;
     background: transparent !important;
-    padding: 0.5rem 0;
+    padding: 0.4rem 0;
     font-size: 0.98rem;
     color: var(--finx-text-light) !important;
     outline: none !important;
     box-shadow: none !important;
+    resize: none;
+    max-height: 120px;
+    line-height: 1.4;
 }
 
 [data-bs-theme="dark"] .chat-input {
@@ -381,6 +384,240 @@
     background: rgba(148, 163, 184, 0.7);
 }
 
+/* Visual Financial Cards and Widgets inside Chat Bubbles */
+/* Empty State Card */
+.finx-empty-state-card {
+    background: #ffffff;
+    border: 1px dashed rgba(29, 72, 138, 0.25);
+    border-radius: 1rem;
+    padding: 1.25rem 1rem;
+    margin: 0.75rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+[data-bs-theme="dark"] .finx-empty-state-card {
+    background: #1e2230;
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.finx-widget-card {
+    background: rgba(29, 72, 138, 0.04);
+    border: 1px solid rgba(29, 72, 138, 0.15);
+    border-radius: 0.85rem;
+    padding: 0.9rem 1.1rem;
+    margin: 0.75rem 0;
+    transition: all 0.2s ease;
+}
+
+[data-bs-theme="dark"] .finx-widget-card {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.finx-metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.75rem;
+    margin: 0.6rem 0;
+}
+
+.finx-metric-item {
+    background: #ffffff;
+    border-radius: 0.75rem;
+    padding: 0.7rem;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+}
+
+[data-bs-theme="dark"] .finx-metric-item {
+    background: #1e2230;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.finx-metric-label {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+[data-bs-theme="dark"] .finx-metric-label {
+    color: #94a3b8;
+}
+
+.finx-metric-value {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--finx-primary-dark);
+    margin-top: 0.2rem;
+}
+
+[data-bs-theme="dark"] .finx-metric-value {
+    color: #ffffff;
+}
+
+/* Category Visual Bars */
+.cat-progress-item {
+    margin-bottom: 0.65rem;
+}
+
+.cat-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.88rem;
+    margin-bottom: 0.25rem;
+}
+
+.cat-progress-name {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.cat-progress-val {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+[data-bs-theme="dark"] .cat-progress-val {
+    color: #f8fafc;
+}
+
+.cat-bar-track {
+    height: 8px;
+    background: rgba(148, 163, 184, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.cat-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #1D488A, #6366f1);
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cat-bar-fill.warning { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+.cat-bar-fill.success { background: linear-gradient(90deg, #10b981, #059669); }
+
+/* Confirmation Card for Executable Actions */
+.action-confirm-card {
+    background: #ffffff;
+    border: 2px dashed rgba(29, 72, 138, 0.3);
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+    margin: 0.75rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+[data-bs-theme="dark"] .action-confirm-card {
+    background: #1c2130;
+    border-color: rgba(99, 102, 241, 0.4);
+}
+
+.action-confirm-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--finx-primary-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+}
+
+[data-bs-theme="dark"] .action-confirm-title {
+    color: #a5b4fc;
+}
+
+.action-detail-list {
+    font-size: 0.88rem;
+    margin-bottom: 0.9rem;
+}
+
+.action-buttons-group {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.btn-confirm-action {
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 0.6rem;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: all 0.2s ease;
+}
+
+.btn-confirm-action:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
+.btn-cancel-action {
+    background: #64748b;
+    color: white;
+    border: none;
+    border-radius: 0.6rem;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel-action:hover {
+    background: #475569;
+}
+
+/* Dashboard Action Link Buttons */
+.finx-action-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(29, 72, 138, 0.1);
+    color: var(--finx-primary);
+    border: 1px solid rgba(29, 72, 138, 0.25);
+    border-radius: 0.6rem;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 0.5rem;
+    margin-right: 0.4rem;
+    transition: all 0.2s ease;
+}
+
+.finx-action-link-btn:hover {
+    background: var(--finx-primary);
+    color: #ffffff;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+[data-bs-theme="dark"] .finx-action-link-btn {
+    background: rgba(99, 102, 241, 0.15);
+    color: #a5b4fc;
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+[data-bs-theme="dark"] .finx-action-link-btn:hover {
+    background: #6366f1;
+    color: #ffffff;
+}
+
 /* Responsividad */
 @media (max-width: 768px) {
     .chatbot-main-content {
@@ -398,3 +635,4 @@
         padding-bottom: 0.5rem;
     }
 }
+
