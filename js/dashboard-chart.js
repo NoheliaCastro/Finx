@@ -4,6 +4,16 @@
 let movementsChartInstance = null;
 let chartUpdateInterval = null;
 
+// Traducciones para los mensajes de la gráfica
+const chartTranslations = {
+    es: {
+        'no-data': 'Sin datos para mostrar'
+    },
+    en: {
+        'no-data': 'No data to display'
+    }
+};
+
 function renderMovementsChart() {
     const ctxContainer = document.getElementById('movementsChartContainer');
     if (!ctxContainer) return;
@@ -85,7 +95,8 @@ function renderMovementsChart() {
 
     // Si no hay movimientos en toda la semana, mostrar mensaje
     if (incomeData.every(v => v === 0) && expenseData.every(v => v === 0)) {
-        ctxContainer.innerHTML = '<span style="color:#888;">No data to display</span>';
+        const lang = localStorage.getItem('finx_lang') || 'es';
+        ctxContainer.innerHTML = `<span style="color:#888;">${chartTranslations[lang]['no-data']}</span>`;
         return;
     }
 
