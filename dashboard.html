@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -1347,12 +1347,17 @@
                 const sign = mov.type === 'income' ? '+' : '-';
                 const color = mov.type === 'income' ? 'text-success' : 'text-danger';
                 const badge = mov.type === 'income' ? 'bg-success' : 'bg-danger';
+                const badgeText = mov.type === 'income'
+                    ? (translations[lang]['income-badge'] || 'Ingreso')
+                    : (translations[lang]['expense-badge'] || 'Gasto');
+                const translatedCategory = getCategoryTranslation(mov.category, lang);
+
                 tbody.innerHTML += `
                 <tr>
                     <td>${mov.date}</td>
-                    <td>${mov.category}</td>
+                    <td>${translatedCategory}</td>
                     <td class="${color}">${sign}$${formatAmount(Number(mov.amount))}</td>
-                    <td><span class="badge ${badge}">${mov.type.charAt(0).toUpperCase() + mov.type.slice(1)}</span></td>
+                    <td><span class="badge ${badge}">${badgeText}</span></td>
                 </tr>`;
             });
             if (filtered.length === 0) {
@@ -1630,6 +1635,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'all': 'Todos',
                 'income-option': 'Ingresos',
                 'expense-option': 'Gastos',
+                'income-badge': 'Ingreso',
+                'expense-badge': 'Gasto',
                 'clear-history': 'Limpiar historial',
                 'date': 'Fecha',
                 'category': 'Categoría',
@@ -1683,6 +1690,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'all': 'All',
                 'income-option': 'Income',
                 'expense-option': 'Expense',
+                'income-badge': 'Income',
+                'expense-badge': 'Expense',
                 'clear-history': 'Clear history',
                 'date': 'Date',
                 'category': 'Category',
@@ -1729,6 +1738,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 'salary-calculator': 'Salary Calculator'
             }
         };
+
+        function getCategoryTranslation(catName, lang) {
+            if (!catName) return '';
+            const norm = catName.trim().toLowerCase();
+            const map = {
+                'salario': 'salary', 'salary': 'salary',
+                'vivienda': 'housing', 'housing': 'housing',
+                'comida': 'food', 'food': 'food',
+                'servicios': 'utilities', 'utilities': 'utilities',
+                'transporte': 'transportation', 'transport': 'transportation', 'transportation': 'transportation',
+                'entretenimiento': 'entertainment', 'entertainment': 'entertainment',
+                'negocio': 'business', 'business': 'business',
+                'regalo': 'gift', 'gift': 'gift',
+                'freelance': 'freelance',
+                'inversiones': 'investments', 'investments': 'investments',
+                'beca': 'scholarship', 'scholarship': 'scholarship',
+                'reembolso': 'refund', 'refund': 'refund',
+                'salud': 'health', 'health': 'health',
+                'educación': 'education', 'educacion': 'education', 'education': 'education',
+                'compras': 'shopping', 'shopping': 'shopping',
+                'viajes': 'travel', 'travel': 'travel',
+                'seguro': 'insurance', 'insurance': 'insurance',
+                'mascotas': 'pets', 'pets': 'pets',
+                'otro': 'other', 'other': 'other'
+            };
+            const key = map[norm];
+            if (key && translations[lang] && translations[lang][key]) {
+                return translations[lang][key];
+            }
+            return catName;
+        }
         function setLanguage(lang) {
             localStorage.setItem('finx_lang', lang);
             // Navbar y sidebar
@@ -1780,10 +1820,12 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('clearHistoryBtn').innerHTML = `<i class=\"fas fa-trash-alt me-1\"></i> ${translations[lang]['clear-history']}`;
             // Tabla
             const ths = document.querySelectorAll('.table thead th');
-            ths[0].textContent = translations[lang]['date'];
-            ths[1].textContent = translations[lang]['category'];
-            ths[2].textContent = translations[lang]['amount'];
-            ths[3].textContent = translations[lang]['type'];
+            if (ths.length >= 4) {
+                ths[0].textContent = (translations[lang]['date'] || 'Fecha').toUpperCase();
+                ths[1].textContent = (translations[lang]['category'] || 'Categoría').toUpperCase();
+                ths[2].textContent = (translations[lang]['amount'] || 'Monto').toUpperCase();
+                ths[3].textContent = (translations[lang]['type'] || 'Tipo').toUpperCase();
+            }
             // Títulos de tarjetas
             document.querySelector('#movementsCard h3').textContent = translations[lang]['recent-movements'];
             // Modales

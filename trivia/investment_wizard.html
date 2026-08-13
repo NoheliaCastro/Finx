@@ -717,85 +717,133 @@
         // Translation system
         const translations = {
             es: {
-                // Sidebar Navigation
                 'management': 'Gestión',
                 'lessons': 'Lecciones',
                 'achievements': 'Logros',
                 'goals': 'Metas',
+                'calculator': 'Calculadora',
                 'help': 'Ayuda',
                 'financial-assistant': 'Asistente',
-                
-                // Main Content
+                'user': 'Usuario',
+                'level': 'Nivel 2',
+                'logout': 'Cerrar sesión',
                 'wizard-title': '🧙‍♂️ Mago de la Riqueza',
                 'wizard-subtitle': '¡Desbloquea los secretos mágicos de la construcción de riqueza! ✨',
                 'progress': 'Progreso',
-                'xp-earned': 'XP Ganado',
-                'lessons-label': 'Lecciones',
-                'lesson-content': '📖 Contenido de la Lección',
-                'select-lesson': '¡Selecciona una lección del menú para comenzar a aprender! 📚'
+                'xp-earned': 'XP Ganados',
+                'lessons-label': 'Hechizos',
+                'study-material': '🔮 Material de Estudio',
+                'video-title': '🎥 Activos vs Pasivos Explicados',
+                'level-badge': 'Nivel 3: Activos y Pasivos & Decisiones Financieras',
+                'video-desc': 'Aprende a diferenciar claramente entre un activo (lo que pone dinero en tu bolsillo) y un pasivo (lo que saca dinero de tu bolsillo), y cómo tomar decisiones financieras inteligentes para construir riqueza.',
+                'watch-video-title': '📺 Mira el Video',
+                'watch-video-sub': 'Al terminar de ver el video se desbloqueará el quiz automáticamente.',
+                'mark-watched': 'Marcar como visto',
+                'video-completed-title': '🎉 ¡Video Completado!',
+                'video-completed-sub': '¡Fantástico trabajo! Ahora puedes realizar el quiz de Mago de la Riqueza.',
+                'take-quiz': 'Realizar Quiz',
+                'back-to-lessons': 'Volver a todas las lecciones'
             },
             en: {
-                // Sidebar Navigation
                 'management': 'Management',
                 'lessons': 'Lessons',
                 'achievements': 'Achievements',
                 'goals': 'Goals',
+                'calculator': 'Salary Calculator',
                 'help': 'Help',
                 'financial-assistant': 'Assistant',
-                
-                // Main Content
+                'user': 'User',
+                'level': 'Level 2',
+                'logout': 'Logout',
                 'wizard-title': '🧙‍♂️ Wealth Wizard',
                 'wizard-subtitle': 'Unlock the magical secrets of wealth building! ✨',
                 'progress': 'Progress',
                 'xp-earned': 'XP Earned',
-                'lessons-label': 'Lessons',
-                'lesson-content': '📖 Lesson Content',
-                'select-lesson': 'Select a lesson from the menu to start learning! 📚'
+                'lessons-label': 'Spells',
+                'study-material': '🔮 Study Material',
+                'video-title': '🎥 Assets vs Liabilities Explained',
+                'level-badge': 'Level 3: Assets & Liabilities & Financial Decisions',
+                'video-desc': 'Learn to clearly differentiate between an asset (what puts money in your pocket) and a liability (what takes money out of your pocket), and how to make smart financial decisions to build wealth.',
+                'watch-video-title': '📺 Watch the Video',
+                'watch-video-sub': 'When you finish watching the video, the quiz will be unlocked automatically.',
+                'mark-watched': 'Mark as watched',
+                'video-completed-title': '🎉 Video Completed!',
+                'video-completed-sub': 'Fantastic job! Now you can take the Wealth Wizard quiz.',
+                'take-quiz': 'Take Quiz',
+                'back-to-lessons': 'Back to All Lessons'
             }
         };
 
         function setLanguage(lang) {
             localStorage.setItem('finx_lang', lang);
+            const t = translations[lang] || translations.es;
+
             // Update sidebar
             const sidebarLinks = document.querySelectorAll('.sidebar-nav li span');
             if (sidebarLinks.length >= 6) {
-                sidebarLinks[0].textContent = translations[lang]['management'];
-                sidebarLinks[1].textContent = translations[lang]['lessons'];
-                sidebarLinks[2].textContent = translations[lang]['achievements'];
-                sidebarLinks[3].textContent = translations[lang]['goals'];
-                sidebarLinks[4].textContent = translations[lang]['help'];
-                sidebarLinks[5].textContent = translations[lang]['financial-assistant'];
+                sidebarLinks[0].textContent = t['management'];
+                sidebarLinks[1].textContent = t['lessons'];
+                sidebarLinks[2].textContent = t['achievements'];
+                sidebarLinks[3].textContent = t['goals'];
+                sidebarLinks[4].textContent = t['help'];
+                sidebarLinks[5].textContent = t['financial-assistant'];
             }
             
-            // Update main title
+            // Update main title & subtitle
             const dashboardTitle = document.querySelector('.dashboard-title');
-            if (dashboardTitle) {
-                dashboardTitle.textContent = translations[lang]['wizard-title'];
-            }
+            if (dashboardTitle) dashboardTitle.textContent = t['wizard-title'];
             
-            // Update subtitle
-            const leadText = document.querySelector('.lead');
-            if (leadText) {
-                leadText.textContent = translations[lang]['wizard-subtitle'];
-            }
+            const leadText = document.querySelector('.dashboard-hero .lead');
+            if (leadText) leadText.textContent = t['wizard-subtitle'];
             
             // Update summary cards
-            const summaryCards = document.querySelectorAll('.summary-card');
+            const summaryCards = document.querySelectorAll('.summary-card h3');
             if (summaryCards.length >= 3) {
-                summaryCards[0].querySelector('h3').textContent = translations[lang]['progress'];
-                summaryCards[1].querySelector('h3').textContent = translations[lang]['xp-earned'];
-                summaryCards[2].querySelector('h3').textContent = translations[lang]['lessons-label'];
+                summaryCards[0].textContent = t['progress'];
+                summaryCards[1].textContent = t['xp-earned'];
+                summaryCards[2].textContent = t['lessons-label'];
             }
             
-            // Update lesson card
-            const lessonCard = document.getElementById('lessonCard');
-            if (lessonCard) {
-                lessonCard.querySelector('h3').textContent = translations[lang]['lesson-content'];
-                const paragraphs = lessonCard.querySelectorAll('p');
-                if (paragraphs.length > 0) {
-                    paragraphs[0].textContent = translations[lang]['select-lesson'];
-                }
-            }
+            // Study Material Section
+            const studyMat = document.querySelector('#lessonCard > h3');
+            if (studyMat) studyMat.textContent = t['study-material'];
+
+            const videoTitle = document.querySelector('.video-container h4');
+            if (videoTitle) videoTitle.textContent = t['video-title'];
+
+            const levelBadge = document.querySelector('.video-container .badge');
+            if (levelBadge) levelBadge.textContent = t['level-badge'];
+
+            const videoDesc = document.querySelector('.video-container p.text-muted');
+            if (videoDesc) videoDesc.textContent = t['video-desc'];
+
+            // Video Progress Message & Mark as Watched
+            const watchTitle = document.querySelector('#videoProgressMessage h5');
+            if (watchTitle) watchTitle.textContent = t['watch-video-title'];
+
+            const watchSub = document.querySelector('#videoProgressMessage p');
+            if (watchSub) watchSub.textContent = t['watch-video-sub'];
+
+            const markBtn = document.querySelector('#videoProgressMessage button');
+            if (markBtn) markBtn.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> ${t['mark-watched']}`;
+
+            // Video Completed Banner & Quiz Button
+            const completedTitle = document.querySelector('#quizButtonContainer h5');
+            if (completedTitle) completedTitle.textContent = t['video-completed-title'];
+
+            const completedSub = document.querySelector('#quizButtonContainer p');
+            if (completedSub) completedSub.textContent = t['video-completed-sub'];
+
+            const quizBtn = document.querySelector('#quizButtonContainer button');
+            if (quizBtn) quizBtn.innerHTML = `<i class="bi bi-question-circle me-2"></i> ${t['take-quiz']}`;
+
+            // Back button
+            const backBtn = document.querySelector('#lessonCard .text-center a.btn');
+            if (backBtn) backBtn.innerHTML = `<i class="bi bi-arrow-left me-1"></i> ${t['back-to-lessons']}`;
+
+            // User Profile
+            document.querySelectorAll('.user-name, .dropdown-user-name').forEach(el => el.textContent = t['user']);
+            document.querySelectorAll('.user-level, .dropdown-user-level').forEach(el => el.textContent = t['level']);
         }
 
         document.getElementById('langToggle').addEventListener('click', function() {

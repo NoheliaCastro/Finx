@@ -356,11 +356,11 @@
     <main class="main-content">
         <div class="salary-page">
             <header class="salary-hero">
-                <span class="badge-finx">
-                    <i class="bi bi-calculator"></i> Herramienta FINX
+                <span class="badge-finx" id="badgeFinx">
+                    <i class="bi bi-calculator"></i> <span id="badgeFinxText">Herramienta FINX</span>
                 </span>
-                <h1>Calculadora de Salario Neto</h1>
-                <p class="lead">
+                <h1 id="heroTitle">Calculadora de Salario Neto</h1>
+                <p class="lead" id="heroLead">
                     Calcula cuánto recibirás realmente después de impuestos y deducciones en Panamá.
                 </p>
             </header>
@@ -368,7 +368,7 @@
             <div class="salary-layout">
                 <section class="salary-card" aria-labelledby="formTitle">
                     <h2 id="formTitle">Tus datos salariales</h2>
-                    <p class="card-subtitle">
+                    <p class="card-subtitle" id="formSubtitle">
                         Completa el formulario para obtener una estimación de tu salario neto mensual.
                     </p>
 
@@ -392,34 +392,34 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" for="frecuencia">Frecuencia de pago</label>
+                            <label class="form-label" for="frecuencia" id="frecuenciaLabel">Frecuencia de pago</label>
                             <select class="form-select" id="frecuencia" name="frecuencia" aria-describedby="frecuenciaHint">
-                                <option value="mensual" selected>Mensual</option>
-                                <option value="quincenal">Quincenal</option>
+                                <option value="mensual" id="optMensual" selected>Mensual</option>
+                                <option value="quincenal" id="optQuincenal">Quincenal</option>
                             </select>
                             <span class="field-hint" id="frecuenciaHint">Si eliges quincenal, el monto se convertirá a equivalente mensual.</span>
                         </div>
 
                         <fieldset class="mb-3">
-                            <legend class="form-label">¿Desea incluir el cálculo del décimo tercer mes?</legend>
+                            <legend class="form-label" id="decimoLegend">¿Desea incluir el cálculo del décimo tercer mes?</legend>
                             <div class="option-group" role="radiogroup" aria-label="Incluir décimo tercer mes">
                                 <div class="option-chip">
                                     <input type="radio" id="incluirDecimoNo" name="incluirDecimo" value="no" checked>
-                                    <label for="incluirDecimoNo"><i class="bi bi-x-circle"></i> No</label>
+                                    <label for="incluirDecimoNo" id="labelDecimoNo"><i class="bi bi-x-circle"></i> <span>No</span></label>
                                 </div>
                                 <div class="option-chip">
                                     <input type="radio" id="incluirDecimoSi" name="incluirDecimo" value="si">
-                                    <label for="incluirDecimoSi"><i class="bi bi-check-circle"></i> Sí</label>
+                                    <label for="incluirDecimoSi" id="labelDecimoSi"><i class="bi bi-check-circle"></i> <span>Sí</span></label>
                                 </div>
                             </div>
                         </fieldset>
 
                         <div class="decimo-panel" id="decimoOptions" hidden aria-hidden="true">
-                            <p class="field-hint mb-2">
+                            <p class="field-hint mb-2" id="decimoHint">
                                 El décimo tercer mes corresponde a una prestación laboral pagada en tres partidas durante el año.
                                 No asumimos que trabajaste todo el período: indica el salario acumulado del período correspondiente.
                             </p>
-                            <label class="form-label" for="salarioAcumulado">Salario acumulado del período (B/.)</label>
+                            <label class="form-label" for="salarioAcumulado" id="salarioAcumuladoLabel">Salario acumulado del período (B/.)</label>
                             <input
                                 type="number"
                                 class="form-control"
@@ -436,7 +436,7 @@
                         </div>
 
                         <div class="mb-3 mt-3">
-                            <label class="form-label" for="otrosDescuentos">Otros descuentos voluntarios (B/.)</label>
+                            <label class="form-label" for="otrosDescuentos" id="otrosDescuentosLabel">Otros descuentos voluntarios (B/.)</label>
                             <input
                                 type="number"
                                 class="form-control"
@@ -454,10 +454,10 @@
 
                         <div class="form-actions">
                             <button type="submit" class="btn btn-salary-primary" id="btnCalcular">
-                                <i class="bi bi-calculator me-1"></i> Calcular mi salario
+                                <i class="bi bi-calculator me-1"></i> <span id="btnCalcularText">Calcular mi salario</span>
                             </button>
                             <button type="button" class="btn btn-salary-secondary" id="btnClear">
-                                <i class="bi bi-eraser me-1"></i> Limpiar
+                                <i class="bi bi-eraser me-1"></i> <span id="btnClearText">Limpiar</span>
                             </button>
                         </div>
                     </form>
@@ -472,56 +472,56 @@
                     aria-labelledby="resultsTitle"
                 >
                     <h2 id="resultsTitle">Resultados</h2>
-                    <p class="card-subtitle">Estimación referencial con base en las deducciones obligatorias principales.</p>
+                    <p class="card-subtitle" id="resultsSubtitle">Estimación referencial con base en las deducciones obligatorias principales.</p>
 
                     <div class="net-highlight">
-                        <div class="net-label">Tu salario neto estimado</div>
+                        <div class="net-label" id="netLabel">Tu salario neto estimado</div>
                         <div class="net-value" id="netSalaryValue">B/. 0.00</div>
-                        <div class="net-note">Monto aproximado que podrías recibir al mes</div>
+                        <div class="net-note" id="netNote">Monto aproximado que podrías recibir al mes</div>
                     </div>
 
                     <p class="conversion-note" id="conversionNote" hidden></p>
 
                     <ul class="breakdown-list" aria-label="Desglose de salario">
                         <li>
-                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">💰</span> Salario bruto</span>
+                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">💰</span> <span id="lblResultBruto">Salario bruto</span></span>
                             <span class="breakdown-value" id="resultBruto">B/. 0.00</span>
                         </li>
                         <li>
-                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">🏥</span> Seguro Social</span>
+                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">🏥</span> <span id="lblResultCSS">Seguro Social</span></span>
                             <span class="breakdown-value deduction-value" id="resultCSS">− B/. 0.00</span>
                         </li>
                         <li>
-                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">🎓</span> Seguro Educativo</span>
+                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">🎓</span> <span id="lblResultSE">Seguro Educativo</span></span>
                             <span class="breakdown-value deduction-value" id="resultSE">− B/. 0.00</span>
                         </li>
                         <li>
-                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">📊</span> Impuesto Sobre la Renta</span>
+                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">📊</span> <span id="lblResultISR">Impuesto Sobre la Renta</span></span>
                             <span class="breakdown-value deduction-value" id="resultISR">− B/. 0.00</span>
                         </li>
                         <li>
-                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">📌</span> Otros descuentos</span>
+                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">📌</span> <span id="lblResultOtros">Otros descuentos</span></span>
                             <span class="breakdown-value deduction-value" id="resultOtros">− B/. 0.00</span>
                         </li>
                         <li>
-                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">💵</span> Salario neto</span>
+                            <span class="breakdown-item"><span class="emoji" aria-hidden="true">💵</span> <span id="lblResultNeto">Salario neto</span></span>
                             <span class="breakdown-value" id="resultNeto">B/. 0.00</span>
                         </li>
                     </ul>
 
                     <div class="summary-stats">
                         <div class="stat-box">
-                            <span class="stat-label">Total de deducciones</span>
+                            <span class="stat-label" id="lblTotalDeducciones">Total de deducciones</span>
                             <span class="stat-value" id="totalDeducciones">B/. 0.00</span>
                         </div>
                         <div class="stat-box">
-                            <span class="stat-label">Porcentaje de tu salario que se descuenta</span>
+                            <span class="stat-label" id="lblPorcentajeDeducciones">Porcentaje de tu salario que se descuenta</span>
                             <span class="stat-value" id="porcentajeDeducciones">0.00%</span>
                         </div>
                     </div>
 
                     <div class="salary-bar-wrap">
-                        <div class="salary-bar-title">Distribución visual del salario</div>
+                        <div class="salary-bar-title" id="salaryBarTitle">Distribución visual del salario</div>
                         <div class="salary-bar" role="img" aria-label="Barra de distribución del salario bruto">
                             <span class="bar-neto" id="barNeto" style="width:0%" title="Salario neto"></span>
                             <span class="bar-css" id="barCSS" style="width:0%" title="CSS"></span>
@@ -530,49 +530,49 @@
                             <span class="bar-otros" id="barOtros" style="width:0%" title="Otros"></span>
                         </div>
                         <div class="bar-legend">
-                            <span><i class="legend-neto"></i> Neto</span>
-                            <span><i class="legend-css"></i> CSS</span>
-                            <span><i class="legend-se"></i> Seguro Educativo</span>
-                            <span><i class="legend-isr"></i> ISR</span>
-                            <span><i class="legend-otros"></i> Otros</span>
+                            <span><i class="legend-neto"></i> <span id="lgNetoText">Neto</span></span>
+                            <span><i class="legend-css"></i> <span id="lgCSSText">CSS</span></span>
+                            <span><i class="legend-se"></i> <span id="lgSEText">Seguro Educativo</span></span>
+                            <span><i class="legend-isr"></i> <span id="lgISRText">ISR</span></span>
+                            <span><i class="legend-otros"></i> <span id="lgOtrosText">Otros</span></span>
                         </div>
                     </div>
 
                     <div class="isr-explain">
-                        <h3>Cómo se estimó el ISR</h3>
-                        <p class="mb-1">Se proyecta el ingreso anual y se aplica la tarifa progresiva; luego se divide entre 12 para obtener la retención mensual estimada.</p>
+                        <h3 id="isrTitle">Cómo se estimó el ISR</h3>
+                        <p class="mb-1" id="isrDesc">Se proyecta el ingreso anual y se aplica la tarifa progresiva; luego se divide entre 12 para obtener la retención mensual estimada.</p>
                         <ul>
-                            <li>Ingreso anual estimado: <strong id="isrIngresoAnual">B/. 0.00</strong></li>
-                            <li>ISR anual estimado: <strong id="isrAnual">B/. 0.00</strong></li>
-                            <li>ISR mensual estimado: <strong id="isrMensualDetalle">B/. 0.00</strong></li>
+                            <li><span id="lblIsrIngresoAnual">Ingreso anual estimado:</span> <strong id="isrIngresoAnual">B/. 0.00</strong></li>
+                            <li><span id="lblIsrAnual">ISR anual estimado:</span> <strong id="isrAnual">B/. 0.00</strong></li>
+                            <li><span id="lblIsrMensual">ISR mensual estimado:</span> <strong id="isrMensualDetalle">B/. 0.00</strong></li>
                         </ul>
                     </div>
 
                     <div class="decimo-results" id="decimoResults" hidden>
-                        <h3>Estimación del décimo tercer mes</h3>
-                        <p class="field-hint mb-3">
+                        <h3 id="decimoResultsTitle">Estimación del décimo tercer mes</h3>
+                        <p class="field-hint mb-3" id="decimoResultsHint">
                             El décimo tercer mes corresponde a una prestación laboral pagada en tres partidas durante el año.
                             Estimación: salario acumulado ÷ 12, menos CSS (9.75%) y Seguro Educativo (1.25%).
                         </p>
                         <ul class="breakdown-list">
                             <li>
-                                <span class="breakdown-item">Décimo bruto estimado</span>
+                                <span class="breakdown-item" id="lblDecimoBruto">Décimo bruto estimado</span>
                                 <span class="breakdown-value" id="decimoBruto">B/. 0.00</span>
                             </li>
                             <li>
-                                <span class="breakdown-item">CSS sobre el décimo</span>
+                                <span class="breakdown-item" id="lblDecimoCSS">CSS sobre el décimo</span>
                                 <span class="breakdown-value deduction-value" id="decimoCSS">− B/. 0.00</span>
                             </li>
                             <li>
-                                <span class="breakdown-item">Seguro Educativo sobre el décimo</span>
+                                <span class="breakdown-item" id="lblDecimoSE">Seguro Educativo sobre el décimo</span>
                                 <span class="breakdown-value deduction-value" id="decimoSE">− B/. 0.00</span>
                             </li>
                             <li>
-                                <span class="breakdown-item">Deducciones aplicables</span>
+                                <span class="breakdown-item" id="lblDecimoDeducciones">Deducciones aplicables</span>
                                 <span class="breakdown-value deduction-value" id="decimoDeducciones">B/. 0.00</span>
                             </li>
                             <li>
-                                <span class="breakdown-item">Décimo neto estimado</span>
+                                <span class="breakdown-item" id="lblDecimoNeto">Décimo neto estimado</span>
                                 <span class="breakdown-value" id="decimoNeto">B/. 0.00</span>
                             </li>
                         </ul>
@@ -580,34 +580,33 @@
 
                     <p class="disclaimer">
                         <i class="bi bi-info-circle me-1"></i>
-                        Esta calculadora ofrece una <strong>estimación referencial</strong>. El cálculo real puede depender de tu situación fiscal,
-                        deducciones permitidas, tipo de contrato y la normativa vigente en Panamá.
+                        <span id="disclaimerText">Esta calculadora ofrece una <strong>estimación referencial</strong>. El cálculo real puede depender de tu situación fiscal, deducciones permitidas, tipo de contrato y la normativa vigente en Panamá.</span>
                     </p>
                 </section>
             </div>
 
             <section class="tips-section" aria-labelledby="tipsTitle">
                 <h2 id="tipsTitle">¿Sabías que?</h2>
-                <p class="tips-intro">Pequeños consejos para usar mejor tu salario neto.</p>
+                <p class="tips-intro" id="tipsIntro">Pequeños consejos para usar mejor tu salario neto.</p>
                 <div class="tips-grid">
                     <article class="tip-card">
                         <div class="tip-icon" aria-hidden="true"><i class="bi bi-wallet2"></i></div>
-                        <p>Tu salario bruto no es necesariamente el dinero que recibirás en tu cuenta.</p>
+                        <p id="tip1">Tu salario bruto no es necesariamente el dinero que recibirás en tu cuenta.</p>
                     </article>
                     <article class="tip-card">
                         <div class="tip-icon" aria-hidden="true"><i class="bi bi-pie-chart"></i></div>
-                        <p>Las deducciones reducen tu ingreso disponible.</p>
+                        <p id="tip2">Las deducciones reducen tu ingreso disponible.</p>
                     </article>
                     <article class="tip-card">
                         <div class="tip-icon" aria-hidden="true"><i class="bi bi-journal-check"></i></div>
-                        <p>Conocer tu salario neto te ayuda a crear un presupuesto realista.</p>
+                        <p id="tip3">Conocer tu salario neto te ayuda a crear un presupuesto realista.</p>
                     </article>
                     <article class="tip-card">
                         <div class="tip-icon" aria-hidden="true"><i class="bi bi-calendar-check"></i></div>
-                        <p>Antes de planificar tus gastos mensuales, utiliza tu salario neto como referencia.</p>
+                        <p id="tip4">Antes de planificar tus gastos mensuales, utiliza tu salario neto como referencia.</p>
                     </article>
                 </div>
-                <p class="finx-message">
+                <p class="finx-message" id="finxMessage">
                     FINX te ayuda a entender mejor cómo se distribuye tu dinero para que puedas tomar decisiones financieras más informadas.
                 </p>
             </section>
@@ -678,76 +677,15 @@
                 });
             }
 
-            // Traducción básica del sidebar
-            const translations = {
-                es: {
-                    management: 'Gestión',
-                    lessons: 'Lecciones',
-                    achievements: 'Logros',
-                    goals: 'Metas',
-                    calculator: 'Calculadora',
-                    help: 'Ayuda',
-                    assistant: 'Asistente',
-                    user: 'Usuario',
-                    level: 'Nivel 2',
-                    profile: 'Mi Perfil',
-                    settings: 'Configuración',
-                    privacy: 'Privacidad',
-                    logout: 'Cerrar Sesión'
-                },
-                en: {
-                    management: 'Management',
-                    lessons: 'Lessons',
-                    achievements: 'Achievements',
-                    goals: 'Goals',
-                    calculator: 'Salary Calculator',
-                    help: 'Help',
-                    assistant: 'Assistant',
-                    user: 'User',
-                    level: 'Level 2',
-                    profile: 'My Profile',
-                    settings: 'Settings',
-                    privacy: 'Privacy',
-                    logout: 'Logout'
-                }
-            };
-
-            function setLanguage(lang) {
-                localStorage.setItem('finx_lang', lang);
-                const t = translations[lang] || translations.es;
-                const items = document.querySelectorAll('.sidebar-nav li span');
-                if (items.length >= 7) {
-                    items[0].textContent = t.management;
-                    items[1].textContent = t.lessons;
-                    items[2].textContent = t.achievements;
-                    items[3].textContent = t.goals;
-                    items[4].textContent = t.calculator;
-                    items[5].textContent = t.help;
-                    items[6].textContent = t.assistant;
-                }
-                document.querySelectorAll('.user-name, .dropdown-user-name').forEach((el) => {
-                    el.textContent = t.user;
-                });
-                document.querySelectorAll('.user-level, .dropdown-user-level').forEach((el) => {
-                    el.textContent = t.level;
-                });
-                const dropdownSpans = document.querySelectorAll('.dropdown-item span');
-                if (dropdownSpans.length >= 4) {
-                    dropdownSpans[0].textContent = t.profile;
-                    dropdownSpans[1].textContent = t.settings;
-                    dropdownSpans[2].textContent = t.privacy;
-                    dropdownSpans[3].textContent = t.logout;
-                }
-            }
-
+            // Event listener para cambio de idioma
             const langToggle = document.getElementById('langToggle');
-            let currentLang = localStorage.getItem('finx_lang') || 'es';
-            setLanguage(currentLang);
-
             if (langToggle) {
                 langToggle.addEventListener('click', function () {
-                    currentLang = currentLang === 'es' ? 'en' : 'es';
-                    setLanguage(currentLang);
+                    const currentLang = localStorage.getItem('finx_lang') || 'es';
+                    const nextLang = currentLang === 'es' ? 'en' : 'es';
+                    if (typeof window.setLanguage === 'function') {
+                        window.setLanguage(nextLang);
+                    }
                 });
             }
         });

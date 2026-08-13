@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -1071,9 +1071,12 @@ const translations = {
         'level': 'Nivel 2',
         'contact-info': 'Información de Contacto',
         'email': 'Correo electrónico',
+        'email-val': 'contacto@ejemplo.com',
         'phone': 'Teléfono',
         'address': 'Dirección',
+        'address-val': '123 Calle Nombre, Ciudad, País',
         'hours': 'Horario',
+        'hours-val': 'Lun - Vie: 9:00 AM - 5:00 PM',
         'send-us-message': 'Envíanos un Mensaje',
         'fill-form': 'Completa el formulario y te responderemos pronto.',
         'name': 'Nombre',
@@ -1093,9 +1096,12 @@ const translations = {
         'level': 'Level 2',
         'contact-info': 'Contact Information',
         'email': 'Email',
+        'email-val': 'contact@example.com',
         'phone': 'Phone',
         'address': 'Address',
+        'address-val': '123 Street Name, City, Country',
         'hours': 'Hours',
+        'hours-val': 'Mon - Fri: 9:00 AM - 5:00 PM',
         'send-us-message': 'Send us a Message',
         'fill-form': "Fill out the form below and we'll get back to you soon.",
         'name': 'Name',
@@ -1105,47 +1111,91 @@ const translations = {
         'financial-assistant': 'Assistant'
     }
 };
+
 function setLanguage(lang) {
     localStorage.setItem('finx_lang', lang);
+    const t = translations[lang] || translations.es;
+
     // Sidebar
-    document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['management'] || 'Management';
-    document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
-    document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
-    document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
-    document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
-    document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['financial-assistant'];
-    // Botón de logout del sidebar
-    if (document.getElementById('sidebarLogoutBtn')) {
-        document.getElementById('sidebarLogoutBtn').title = translations[lang]['logout'];
+    const navItems = document.querySelectorAll('.sidebar-nav li span');
+    if (navItems.length >= 6) {
+        navItems[0].textContent = t['management'];
+        navItems[1].textContent = t['lessons'];
+        navItems[2].textContent = t['achievements'];
+        navItems[3].textContent = t['goals'];
+        navItems[4].textContent = t['help'];
+        navItems[5].textContent = t['financial-assistant'];
     }
-    // Perfil de usuario en navbar
+
+    if (document.getElementById('sidebarLogoutBtn')) {
+        document.getElementById('sidebarLogoutBtn').title = t['logout'];
+    }
     if (document.querySelector('.user-name')) {
-        document.querySelector('.user-name').textContent = translations[lang]['user'] || 'User';
+        document.querySelector('.user-name').textContent = t['user'];
     }
     if (document.querySelector('.user-level')) {
-        document.querySelector('.user-level').textContent = translations[lang]['level'] || 'Level 2';
+        document.querySelector('.user-level').textContent = t['level'];
     }
-    // Menú desplegable
     if (document.querySelector('.dropdown-user-name')) {
-        document.querySelector('.dropdown-user-name').textContent = translations[lang]['user'] || 'User';
+        document.querySelector('.dropdown-user-name').textContent = t['user'];
     }
     if (document.querySelector('.dropdown-user-level')) {
-        document.querySelector('.dropdown-user-level').textContent = translations[lang]['level'] || 'Level 2';
+        document.querySelector('.dropdown-user-level').textContent = t['level'];
     }
+
     // Contact info
-    document.querySelector('.contact-info-header h3').textContent = translations[lang]['contact-info'];
-    document.querySelectorAll('.info-content h4')[0].textContent = translations[lang]['email'];
-    document.querySelectorAll('.info-content h4')[1].textContent = translations[lang]['phone'];
-    document.querySelectorAll('.info-content h4')[2].textContent = translations[lang]['address'];
-    document.querySelectorAll('.info-content h4')[3].textContent = translations[lang]['hours'];
+    const contactHeader = document.querySelector('.contact-info-header h3');
+    if (contactHeader) contactHeader.textContent = t['contact-info'];
+
+    const infoHeaders = document.querySelectorAll('.info-content h4');
+    if (infoHeaders.length >= 4) {
+        infoHeaders[0].textContent = t['email'];
+        infoHeaders[1].textContent = t['phone'];
+        infoHeaders[2].textContent = t['address'];
+        infoHeaders[3].textContent = t['hours'];
+    }
+
+    const infoParas = document.querySelectorAll('.info-content p');
+    if (infoParas.length >= 4) {
+        infoParas[0].textContent = t['email-val'];
+        infoParas[1].textContent = '+1 234 567 890';
+        infoParas[2].textContent = t['address-val'];
+        infoParas[3].textContent = t['hours-val'];
+    }
+
     // Formulario
-    document.querySelector('.contact-form-header h3').textContent = translations[lang]['send-us-message'];
-    document.querySelector('.contact-form-header p').textContent = translations[lang]['fill-form'];
-    document.querySelector('label[for="contactName"]').textContent = translations[lang]['name'];
-    document.querySelector('label[for="contactEmail"]').textContent = translations[lang]['email'];
-    document.querySelector('label[for="contactSubject"]').textContent = translations[lang]['subject'];
-    document.querySelector('label[for="contactMessage"]').textContent = translations[lang]['message'];
-    document.querySelector('.contact-form button[type="submit"]').innerHTML = `<i class='fas fa-paper-plane me-2'></i>${translations[lang]['send-message']}`;
+    const formHeader = document.querySelector('.contact-form-header h3');
+    if (formHeader) formHeader.textContent = t['send-us-message'];
+
+    const formDesc = document.querySelector('.contact-form-header p');
+    if (formDesc) formDesc.textContent = t['fill-form'];
+
+    const lblName = document.querySelector('label[for="contactName"]');
+    if (lblName) lblName.textContent = t['name'];
+
+    const lblEmail = document.querySelector('label[for="contactEmail"]');
+    if (lblEmail) lblEmail.textContent = t['email'];
+
+    const lblSubj = document.querySelector('label[for="contactSubject"]');
+    if (lblSubj) lblSubj.textContent = t['subject'];
+
+    const lblMsg = document.querySelector('label[for="contactMessage"]');
+    if (lblMsg) lblMsg.textContent = t['message'];
+
+    const inputName = document.getElementById('contactName');
+    if (inputName) inputName.placeholder = t['name'];
+
+    const inputEmail = document.getElementById('contactEmail');
+    if (inputEmail) inputEmail.placeholder = t['email'];
+
+    const inputSubj = document.getElementById('contactSubject');
+    if (inputSubj) inputSubj.placeholder = t['subject'];
+
+    const inputMsg = document.getElementById('contactMessage');
+    if (inputMsg) inputMsg.placeholder = t['message'];
+
+    const submitBtn = document.querySelector('.contact-form button[type="submit"]');
+    if (submitBtn) submitBtn.innerHTML = `<i class='fas fa-paper-plane me-2'></i>${t['send-message']}`;
 }
 document.getElementById('langToggle').addEventListener('click', function() {
     const current = localStorage.getItem('finx_lang') || 'es';

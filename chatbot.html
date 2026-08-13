@@ -956,52 +956,77 @@
                 'lessons': 'Lecciones',
                 'achievements': 'Logros',
                 'goals': 'Metas',
+                'calculator': 'Calculadora',
                 'help': 'Ayuda',
                 'logout': 'Cerrar sesión',
                 'user': 'Usuario',
                 'level': 'Nivel 2',
-                'financial-assistant': 'Asistente'
+                'financial-assistant': 'Asistente',
+                'assistant-name': 'Asistente Finx',
+                'online': 'En línea',
+                'new-chat': 'Nueva conversación',
+                'input-placeholder': '💬 Pregúntame sobre tus finanzas...',
+                'send-title': 'Enviar mensaje'
             },
             en: {
                 'management': 'Management',
                 'lessons': 'Lessons',
                 'achievements': 'Achievements',
                 'goals': 'Goals',
+                'calculator': 'Salary Calculator',
                 'help': 'Help',
                 'logout': 'Logout',
                 'user': 'User',
                 'level': 'Level 2',
-                'financial-assistant': 'Assistant'
+                'financial-assistant': 'Assistant',
+                'assistant-name': 'Finx Assistant',
+                'online': 'Online',
+                'new-chat': 'New conversation',
+                'input-placeholder': '💬 Ask me about your finances...',
+                'send-title': 'Send message'
             }
         };
 
         function setLanguage(lang) {
             localStorage.setItem('finx_lang', lang);
+            const t = translations[lang] || translations.es;
+
             // Sidebar
-            document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['management'] || 'Management';
-            document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
-            document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
-            document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
-            document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
-            document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['financial-assistant'];
-            // Botón de logout del sidebar
+            const navItems = document.querySelectorAll('.sidebar-nav li span');
+            if (navItems.length >= 7) {
+                navItems[0].textContent = t['management'];
+                navItems[1].textContent = t['lessons'];
+                navItems[2].textContent = t['achievements'];
+                navItems[3].textContent = t['goals'];
+                navItems[4].textContent = t['calculator'];
+                navItems[5].textContent = t['help'];
+                navItems[6].textContent = t['financial-assistant'];
+            }
             if (document.getElementById('sidebarLogoutBtn')) {
-                document.getElementById('sidebarLogoutBtn').title = translations[lang]['logout'];
+                document.getElementById('sidebarLogoutBtn').title = t['logout'];
             }
-            // Perfil de usuario en navbar
-            if (document.querySelector('.user-name')) {
-                document.querySelector('.user-name').textContent = translations[lang]['user'] || 'User';
-            }
-            if (document.querySelector('.user-level')) {
-                document.querySelector('.user-level').textContent = translations[lang]['level'] || 'Level 2';
-            }
-            // Menú desplegable
-            if (document.querySelector('.dropdown-user-name')) {
-                document.querySelector('.dropdown-user-name').textContent = translations[lang]['user'] || 'User';
-            }
-            if (document.querySelector('.dropdown-user-level')) {
-                document.querySelector('.dropdown-user-level').textContent = translations[lang]['level'] || 'Level 2';
-            }
+            document.querySelectorAll('.user-name, .dropdown-user-name').forEach((el) => {
+                el.textContent = t['user'];
+            });
+            document.querySelectorAll('.user-level, .dropdown-user-level').forEach((el) => {
+                el.textContent = t['level'];
+            });
+
+            // Assistant UI
+            const assistantHeader = document.querySelector('.assistant-details h5');
+            if (assistantHeader) assistantHeader.textContent = t['assistant-name'];
+
+            const statusBadge = document.querySelector('.assistant-status-badge');
+            if (statusBadge) statusBadge.innerHTML = `<span class="pulse-dot"></span> ${t['online']}`;
+
+            const clearBtn = document.getElementById('clearChatBtn');
+            if (clearBtn) clearBtn.innerHTML = `<i class="bi bi-arrow-counterclockwise me-1"></i> ${t['new-chat']}`;
+
+            const chatInput = document.getElementById('chatbotInput');
+            if (chatInput) chatInput.placeholder = t['input-placeholder'];
+
+            const sendBtn = document.getElementById('chatbotSendBtn');
+            if (sendBtn) sendBtn.title = t['send-title'];
         }
         document.getElementById('langToggle').addEventListener('click', function () {
             const current = localStorage.getItem('finx_lang') || 'es';

@@ -44,10 +44,19 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    max-width: 680px;
+    margin: 0 auto;
+    transition: max-width 0.3s ease;
+}
+
+.salary-layout.has-results,
+.salary-layout:has(#resultsSection:not([hidden])) {
+    max-width: 100%;
 }
 
 @media (min-width: 992px) {
-    .salary-layout {
+    .salary-layout.has-results,
+    .salary-layout:has(#resultsSection:not([hidden])) {
         grid-template-columns: 1.05fr 0.95fr;
         align-items: start;
     }

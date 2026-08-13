@@ -691,32 +691,133 @@
         // Translation system
         const translations = {
             es: {
+                'title': '🥷 Ninja del Ahorro',
+                'lead': '¡Domina las técnicas ninja del ahorro inteligente! 🎯',
+                'progress': 'Progreso',
+                'xp': 'XP Ganados',
+                'lessons-count': 'Lecciones',
+                'study-material': '📖 Material de Estudio',
+                'video-title': '🎥 Valor del Dinero en el Tiempo Explicado',
+                'level-badge': 'Nivel 2: Interés Compuesto & Valor del Dinero',
+                'video-desc': 'Descubre cómo el dinero cambia de valor con el tiempo, el poder exponencial del interés compuesto y por qué comenzar a ahorrar e invertir temprano hace una diferencia gigantesca.',
+                'watch-video-title': '📺 Mira el Video',
+                'watch-video-sub': 'Al terminar de ver el video se desbloqueará el quiz automáticamente.',
+                'mark-watched': 'Marcar como visto',
+                'video-completed-title': '🎉 ¡Video Completado!',
+                'video-completed-sub': '¡Gran trabajo! Ahora puedes realizar el quiz de Savings Ninja.',
+                'take-quiz': 'Realizar Quiz',
+                'back-to-lessons': 'Volver a todas las lecciones',
                 'management': 'Gestión',
                 'lessons': 'Lecciones',
                 'achievements': 'Logros',
                 'goals': 'Metas',
+                'calculator': 'Calculadora',
                 'help': 'Ayuda',
-                'financial-assistant': 'Asistente'
+                'financial-assistant': 'Asistente',
+                'user': 'Usuario',
+                'level': 'Nivel 2',
+                'logout': 'Cerrar sesión'
             },
             en: {
+                'title': '🥷 Savings Ninja',
+                'lead': 'Master the ninja techniques of smart saving! 🎯',
+                'progress': 'Progress',
+                'xp': 'XP Earned',
+                'lessons-count': 'Lessons',
+                'study-material': '📖 Study Material',
+                'video-title': '🎥 Time Value of Money Explained',
+                'level-badge': 'Level 2: Compound Interest & Time Value of Money',
+                'video-desc': 'Discover how money changes value over time, the exponential power of compound interest, and why starting to save and invest early makes a huge difference.',
+                'watch-video-title': '📺 Watch the Video',
+                'watch-video-sub': 'When you finish watching the video, the quiz will be unlocked automatically.',
+                'mark-watched': 'Mark as watched',
+                'video-completed-title': '🎉 Video Completed!',
+                'video-completed-sub': 'Great job! Now you can take the Savings Ninja quiz.',
+                'take-quiz': 'Take Quiz',
+                'back-to-lessons': 'Back to All Lessons',
                 'management': 'Management',
                 'lessons': 'Lessons',
                 'achievements': 'Achievements',
                 'goals': 'Goals',
+                'calculator': 'Salary Calculator',
                 'help': 'Help',
-                'financial-assistant': 'Assistant'
+                'financial-assistant': 'Assistant',
+                'user': 'User',
+                'level': 'Level 2',
+                'logout': 'Logout'
             }
         };
 
         function setLanguage(lang) {
             localStorage.setItem('finx_lang', lang);
-            // Update sidebar
-            document.querySelectorAll('.sidebar-nav li')[0].querySelector('span').textContent = translations[lang]['management'];
-            document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
-            document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
-            document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
-            document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
-            document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['financial-assistant'];
+            const t = translations[lang] || translations.es;
+
+            // Update sidebar navigation
+            const sidebarSpans = document.querySelectorAll('.sidebar-nav li span');
+            if (sidebarSpans.length >= 6) {
+                sidebarSpans[0].textContent = t['management'];
+                sidebarSpans[1].textContent = t['lessons'];
+                sidebarSpans[2].textContent = t['achievements'];
+                sidebarSpans[3].textContent = t['goals'];
+                sidebarSpans[4].textContent = t['help'];
+                sidebarSpans[5].textContent = t['financial-assistant'];
+            }
+
+            // Hero section
+            const dashTitle = document.querySelector('.dashboard-title');
+            if (dashTitle) dashTitle.textContent = t['title'];
+
+            const dashLead = document.querySelector('.dashboard-hero .lead');
+            if (dashLead) dashLead.textContent = t['lead'];
+
+            // Cards (Progress, XP, Lessons)
+            const cards = document.querySelectorAll('.summary-card h3');
+            if (cards.length >= 3) {
+                cards[0].textContent = t['progress'];
+                cards[1].textContent = t['xp'];
+                cards[2].textContent = t['lessons-count'];
+            }
+
+            // Study Material Section
+            const studyMat = document.querySelector('#lessonCard > h3');
+            if (studyMat) studyMat.textContent = t['study-material'];
+
+            const videoTitle = document.querySelector('.video-container h4');
+            if (videoTitle) videoTitle.textContent = t['video-title'];
+
+            const levelBadge = document.querySelector('.video-container .badge');
+            if (levelBadge) levelBadge.textContent = t['level-badge'];
+
+            const videoDesc = document.querySelector('.video-container p.text-muted');
+            if (videoDesc) videoDesc.textContent = t['video-desc'];
+
+            // Video Progress Message & Mark as Watched
+            const watchTitle = document.querySelector('#videoProgressMessage h5');
+            if (watchTitle) watchTitle.textContent = t['watch-video-title'];
+
+            const watchSub = document.querySelector('#videoProgressMessage p');
+            if (watchSub) watchSub.textContent = t['watch-video-sub'];
+
+            const markBtn = document.querySelector('#videoProgressMessage button');
+            if (markBtn) markBtn.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> ${t['mark-watched']}`;
+
+            // Video Completed Banner & Quiz Button
+            const completedTitle = document.querySelector('#quizButtonContainer h5');
+            if (completedTitle) completedTitle.textContent = t['video-completed-title'];
+
+            const completedSub = document.querySelector('#quizButtonContainer p');
+            if (completedSub) completedSub.textContent = t['video-completed-sub'];
+
+            const quizBtn = document.querySelector('#quizButtonContainer button');
+            if (quizBtn) quizBtn.innerHTML = `<i class="bi bi-question-circle me-2"></i> ${t['take-quiz']}`;
+
+            // Back button
+            const backBtn = document.querySelector('#lessonCard .text-center a.btn');
+            if (backBtn) backBtn.innerHTML = `<i class="bi bi-arrow-left me-1"></i> ${t['back-to-lessons']}`;
+
+            // User Profile
+            document.querySelectorAll('.user-name, .dropdown-user-name').forEach(el => el.textContent = t['user']);
+            document.querySelectorAll('.user-level, .dropdown-user-level').forEach(el => el.textContent = t['level']);
         }
 
         document.getElementById('langToggle').addEventListener('click', function() {
