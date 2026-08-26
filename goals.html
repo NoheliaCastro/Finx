@@ -182,19 +182,19 @@
             .mobile-menu-toggle {
                 display: none;
             }
-        }html, body {
-            background: #fff;
+        }
+        }
+        html, body, .main-content, .main-section, .goals-section, .trivia-sidebar {
+            background: var(--light-background) !important;
+            border: none !important;
+            border-right: none !important;
+        }
+        html, body {
             margin: 0;
             padding: 0;
             width: 100vw;
             min-height: 100vh;
             overflow-x: hidden;
-        }
-        .main-section, .goals-section {
-            background: #fff;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
         }
 
         /* Responsive para sección de goals */
@@ -225,15 +225,18 @@
                 padding: 1rem 0.5rem !important;
             }
         }
-        [data-bs-theme="dark"] html, [data-bs-theme="dark"] body {
-            background: var(--brand-dark-blue);
-        }
-        [data-bs-theme="dark"] .main-section, [data-bs-theme="dark"] .goals-section {
-            background: linear-gradient(135deg, var(--brand-dark-blue) 0%, var(--brand-dark-blue) 100%);
+        [data-bs-theme="dark"] html,
+        [data-bs-theme="dark"] body,
+        [data-bs-theme="dark"] .main-content,
+        [data-bs-theme="dark"] .main-section,
+        [data-bs-theme="dark"] .goals-section,
+        [data-bs-theme="dark"] .trivia-sidebar {
+            background: var(--brand-dark-blue) !important;
         }
         [data-bs-theme="dark"] .trivia-sidebar {
             background: var(--brand-dark-blue) !important;
-            border-right: 1.5px solid var(--brand-dark-blue);
+            border: none !important;
+            border-right: none !important;
         }        .goal-title {
             font-weight: 800;
             color: var(--brand-deep-blue) !important;
@@ -645,7 +648,7 @@
            incluso cuando el usuario seleccionaba manualmente el modo claro.
            Ahora solo aplicamos estilos oscuros cuando realmente el atributo data-bs-theme="dark" está activo. */
         :root[data-bs-theme="dark"] body, [data-bs-theme="dark"] body {
-            background: #1a1d23;
+            background: var(--brand-dark-blue) !important;
         }
         :root[data-bs-theme="dark"] .goal-card, [data-bs-theme="dark"] .card.form-modern, [data-bs-theme="dark"] .modal-content {
             background: var(--brand-dark-blue) !important;
@@ -658,7 +661,7 @@
         }
         /* Forzar fondo claro limpio cuando data-bs-theme="light" aunque el SO esté en dark */
         :root[data-bs-theme="light"] body, [data-bs-theme="light"] body {
-            background: #ffffff !important;
+            background: var(--light-background) !important;
         }
         [data-bs-theme="dark"] .navbar {
             background: var(--brand-dark-blue) !important;

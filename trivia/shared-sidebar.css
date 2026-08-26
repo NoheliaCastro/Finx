@@ -4,7 +4,7 @@
 .trivia-sidebar,
 .quiz-sidebar,
 .logros-sidebar {
-    background: var(--surface-elevated, var(--background-color));
+    background: var(--card-bg, var(--background-color)) !important;
     box-shadow: none;
     border: none;
     border-right: none;
@@ -36,9 +36,9 @@
     text-decoration: none;
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.9375rem;
+    font-size: 1.1rem;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 10px;
+    border-radius: 0;
     margin: 0 0.75rem;
     border: none;
     border-left: none;
@@ -221,10 +221,15 @@
     .trivia-sidebar,
     .quiz-sidebar,
     .logros-sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        border-radius: 0;
+        width: 280px;
+        height: 100vh;
+        position: fixed;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .trivia-sidebar.show {
+        transform: translateX(0);
     }
 
     .main-content {

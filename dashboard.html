@@ -20,24 +20,46 @@
     <link rel="stylesheet" href="trivia/shared-sidebar.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
-        body {
-            background: #E6E5E5;
+        html,
+        body,
+        .main-content,
+        .dashboard-section {
+            background: var(--light-background) !important;
         }
-        [data-bs-theme="dark"] body {
-            background: #083066;
+        [data-bs-theme="dark"] html,
+        [data-bs-theme="dark"] body,
+        [data-bs-theme="dark"] .main-content,
+        [data-bs-theme="dark"] .dashboard-section {
+            background: var(--light-background) !important;
         }
         .dashboard-section {
             padding: 4rem 0 2rem 0;
-            background: linear-gradient(135deg, var(--light-background) 0%, var(--background-color) 100%);
             min-height: 100vh;
+            box-shadow: none !important;
+            border: none !important;
+            border-radius: 0 !important;
         }
-        [data-bs-theme="dark"] .dashboard-section {
-            background: linear-gradient(135deg, #0C3D7A 0%, #083066 100%);
+        .main-content {
+            box-shadow: none !important;
+            border: none !important;
+            border-radius: 0 !important;
         }
         /* Ajustar el fondo del sidebar en modo oscuro si es necesario */
+        .trivia-sidebar {
+            background: var(--card-bg, var(--background-color)) !important;
+            box-shadow: none !important;
+            border: none !important;
+            border-right: none !important;
+            border-radius: 0 !important;
+            min-height: 100vh;
+        }
+
         [data-bs-theme="dark"] .trivia-sidebar {
             background: #083066 !important;
-            border-right: 1.5px solid #0C3D7A;
+            box-shadow: none !important;
+            border: none !important;
+            border-right: none !important;
+            border-radius: 0 !important;
         }
         .dashboard-title {
             font-size: 2.5rem;
@@ -956,8 +978,11 @@
             padding-top: 0.2rem;
         }
         .sidebar-nav {
+            list-style: none;
             display: flex;
             flex-direction: column;
+            padding: 0;
+            margin: 2rem 0 0 0;
             gap: 0.2rem;
             max-height: 68vh;
             overflow-y: auto;
@@ -966,9 +991,36 @@
             margin-bottom: 0.1rem;
         }
         .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0;
             font-size: 1.13rem;
             padding: 0.85rem 1.3rem;
             font-weight: 500;
+            border-radius: 0;
+            margin: 0 0.75rem;
+            border: none;
+            border-left: none;
+        }
+        .sidebar-nav a.active {
+            background: rgba(29, 72, 138, 0.08);
+            color: var(--fun-primary);
+            font-weight: 500;
+            border: none;
+            border-left: none;
+            transform: none;
+            box-shadow: none;
+        }
+        .sidebar-nav i {
+            width: auto;
+            text-align: initial;
+            margin-right: 1rem;
+            opacity: 1;
+        }
+        [data-bs-theme="dark"] .sidebar-nav a:hover,
+        [data-bs-theme="dark"] .sidebar-nav a.active {
+            background: rgba(29, 72, 138, 0.06);
+            color: var(--fun-primary);
         }
     </style>
 </head>
