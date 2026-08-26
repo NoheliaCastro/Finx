@@ -1,4 +1,4 @@
-﻿// dashboard-chart.js
+// dashboard-chart.js
 // Renderiza una gráfica de líneas con los movimientos de ingresos y gastos
 
 let movementsChartInstance = null;
@@ -12,12 +12,14 @@ const chartTranslations = {
     es: {
         noData: 'No hay datos para mostrar',
         income: 'Ingresos',
-        expense: 'Gastos'
+        expense: 'Gastos',
+        thisWeek: 'Esta Semana'
     },
     en: {
         noData: 'No data to display',
         income: 'Income',
-        expense: 'Expense'
+        expense: 'Expense',
+        thisWeek: 'This Week'
     }
 };
 
@@ -208,7 +210,7 @@ function renderMovementsChart() {
                 },
                 title: {
                     display: true,
-                    text: `${ctxContainer.dataset.chartTitle || 'This Week'}`,
+                    text: ctxContainer.dataset.chartTitle || currentTranslations.thisWeek,
                     font: { 
                         size: window.innerWidth <= 576 ? 16 : window.innerWidth <= 768 ? 18 : 22, 
                         weight: 'bold', 
