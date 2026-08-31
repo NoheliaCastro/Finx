@@ -1,52 +1,3 @@
-const safeStorage = {
-    getItem(key) {
-        try {
-            if (window.localStorage) {
-                return window.localStorage.getItem(key);
-            }
-        } catch (error) {
-            // En algunos navegadores o cuando se abre como archivo local, localStorage puede bloquearse.
-        }
-
-        try {
-            return window.sessionStorage.getItem(key);
-        } catch (error) {
-            return null;
-        }
-    },
-    setItem(key, value) {
-        try {
-            if (window.localStorage) {
-                window.localStorage.setItem(key, value);
-                return;
-            }
-        } catch (error) {
-            // Fallback para file:// o navegadores con almacenamiento restringido.
-        }
-
-        try {
-            window.sessionStorage.setItem(key, value);
-        } catch (error) {
-            // Nada que hacer si el navegador bloquea almacenamiento persistente y temporal.
-        }
-    },
-    removeItem(key) {
-        try {
-            if (window.localStorage) {
-                window.localStorage.removeItem(key);
-            }
-        } catch (error) {
-            // Ignorar el error y probar el fallback.
-        }
-
-        try {
-            window.sessionStorage.removeItem(key);
-        } catch (error) {
-            // Ignorar.
-        }
-    }
-};
-
 function translateAuthError(message) {
     const errors = {
         'Invalid login credentials': 'Correo o contraseña incorrectos.',
@@ -54,69 +5,135 @@ function translateAuthError(message) {
         'Password should be at least 6 characters': 'La contraseña debe tener al menos 6 caracteres.',
         'Unable to validate email address: invalid format': 'El formato del correo no es válido.',
         'Email not confirmed': 'Debes confirmar tu correo antes de iniciar sesión.',
-        'Signup requires a valid password': 'Ingresa una contraseña válida.'
+        'Signup requires a valid password': 'Ingresa una contraseña válida.',
+        'Failed to fetch': 'No se pudo conectar con Supabase. Revisa la URL del proyecto y tu conexión.',
+        'Network request failed': 'No se pudo conectar con Supabase. Revisa la URL del proyecto y tu conexión.'
     };
 
-    return errors[message] || message || 'Ocurrió un error. Intenta de nuevo.';
+    if (!message) {
+        return 'Ocurrió un error. Intenta de nuevo.';
+    }
+
+    return errors[message] || message;
+}
+
+function mapNetworkError(error) {
+    const message = error && error.message ? error.message : String(error || '');
+    if (
+        message === 'Failed to fetch' ||
+        message === 'Network request failed' ||
+        message.includes('ERR_NAME_NOT_RESOLVED') ||
+        message.includes('Failed to resolve')
+    ) {
+        return new Error(
+            'No se pudo conectar con el proyecto de Supabase. Verifica en el dashboard que el proyecto exista y actualiza la URL en js/supabase-config.js.'
+        );
+    }
+
+    return error instanceof Error ? error : new Error(translateAuthError(message));
+}
+
+function mapUser(user) {
+    if (!user) {
+        return null;
+    }
+
+    const metadata = user.user_metadata || {};
+
+    return {
+        ...user,
+        first_name: metadata.first_name || user.first_name || '',
+        last_name: metadata.last_name || user.last_name || '',
+        full_name: metadata.full_name || user.full_name || '',
+        user_metadata: metadata
+    };
+}
+
+function mapSession(session) {
+    if (!session) {
+        return null;
+    }
+
+    return {
+        ...session,
+        user: mapUser(session.user)
+    };
 }
 
 async function registerUser({ firstName, lastName, email, password }) {
-    const fullName = `${firstName} ${lastName}`.trim();
-    const normalizedEmail = email.trim().toLowerCase();
-    const rawUsers = safeStorage.getItem('finx_users');
-    const users = JSON.parse(rawUsers || '[]');
+    try {
+        const supabase = getSupabase();
+        const { data, error } = await supabase.auth.signUp({
+            email: email.trim().toLowerCase(),
+            password,
+            options: {
+                data: {
+                    first_name: firstName,
+                    last_name: lastName,
+                    full_name: `${firstName} ${lastName}`.trim()
+                }
+            }
+        });
 
-    if (users.some((user) => user.email === normalizedEmail)) {
-        throw new Error('Este correo ya está registrado.');
+        if (error) {
+            throw new Error(translateAuthError(error.message));
+        }
+
+        return {
+            user: mapUser(data.user),
+            session: mapSession(data.session)
+        };
+    } catch (error) {
+        throw mapNetworkError(error);
     }
-
-    const newUser = {
-        id: crypto.randomUUID(),
-        first_name: firstName,
-        last_name: lastName,
-        full_name: fullName,
-        email: normalizedEmail,
-        password,
-        language: 'es',
-        created_at: new Date().toISOString()
-    };
-
-    users.push(newUser);
-    safeStorage.setItem('finx_users', JSON.stringify(users));
-    safeStorage.setItem('finx_session', JSON.stringify({ user: newUser }));
-
-    return { user: newUser, session: { user: newUser } };
 }
 
 async function loginUser({ email, password }) {
-    const normalizedEmail = email.trim().toLowerCase();
-    const rawUsers = safeStorage.getItem('finx_users');
-    const users = JSON.parse(rawUsers || '[]');
-    const user = users.find((item) => item.email === normalizedEmail && item.password === password);
+    try {
+        const supabase = getSupabase();
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email.trim().toLowerCase(),
+            password
+        });
 
-    if (!user) {
-        throw new Error('Correo o contraseña incorrectos.');
+        if (error) {
+            throw new Error(translateAuthError(error.message));
+        }
+
+        return {
+            user: mapUser(data.user),
+            session: mapSession(data.session)
+        };
+    } catch (error) {
+        throw mapNetworkError(error);
     }
-
-    safeStorage.setItem('finx_session', JSON.stringify({ user }));
-    return { user, session: { user } };
 }
 
 async function logoutUser() {
-    safeStorage.removeItem('finx_session');
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase.auth.signOut();
+
+        if (error) {
+            throw new Error(translateAuthError(error.message));
+        }
+    } catch (error) {
+        throw mapNetworkError(error);
+    }
 }
 
 async function getSession() {
-    const rawSession = safeStorage.getItem('finx_session');
-    if (!rawSession) {
-        return null;
-    }
-
     try {
-        return JSON.parse(rawSession);
+        const supabase = getSupabase();
+        const { data, error } = await supabase.auth.getSession();
+
+        if (error) {
+            throw new Error(translateAuthError(error.message));
+        }
+
+        return mapSession(data.session);
     } catch (error) {
-        safeStorage.removeItem('finx_session');
-        return null;
+        throw mapNetworkError(error);
     }
 }
 
@@ -125,26 +142,6 @@ async function requireAuth(redirectTo = 'login.html') {
 
     if (session) {
         return session;
-    }
-
-    const isLocalBrowser = window.location.protocol === 'file:' ||
-        window.location.hostname === 'localhost' ||
-        window.location.hostname === '127.0.0.1';
-
-    if (isLocalBrowser) {
-        const guestSession = {
-            user: {
-                id: 'guest-user',
-                email: 'guest@local',
-                first_name: 'Guest',
-                last_name: 'User',
-                full_name: 'Guest User',
-                language: 'es'
-            }
-        };
-
-        safeStorage.setItem('finx_session', JSON.stringify(guestSession));
-        return guestSession;
     }
 
     window.location.href = redirectTo;
