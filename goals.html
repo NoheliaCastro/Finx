@@ -1138,7 +1138,7 @@
             justify-content: center;
             align-items: center;
             margin-bottom: 1rem;
-            margin-top: 1rem;
+            margin-top: 0;
             padding: 0;
         }
         
@@ -1945,6 +1945,7 @@ const translations = {
         'achievements': 'Logros',
         'goals': 'Metas',
         'help': 'Ayuda',
+        'salary-calculator': 'Calculadora de Salario',
         'logout': 'Cerrar sesión',
         'assistant': 'Asistente',
         'user': 'Usuario',
@@ -1974,6 +1975,7 @@ const translations = {
         'achievements': 'Achievements',
         'goals': 'Goals',
         'help': 'Help',
+        'salary-calculator': 'Salary Calculator',
         'logout': 'Logout',
         'assistant': 'Assistant',
         'user': 'User',
@@ -2005,8 +2007,8 @@ function setLanguage(lang) {
     document.querySelectorAll('.sidebar-nav li')[1].querySelector('span').textContent = translations[lang]['lessons'];
     document.querySelectorAll('.sidebar-nav li')[2].querySelector('span').textContent = translations[lang]['achievements'];
     document.querySelectorAll('.sidebar-nav li')[3].querySelector('span').textContent = translations[lang]['goals'];
-    document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['help'];
-    document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['assistant'];
+    document.querySelectorAll('.sidebar-nav li')[4].querySelector('span').textContent = translations[lang]['salary-calculator'];
+    document.querySelectorAll('.sidebar-nav li')[5].querySelector('span').textContent = translations[lang]['help'];
     // Botón de logout del sidebar
     if (document.getElementById('sidebarLogoutBtn')) {
         document.getElementById('sidebarLogoutBtn').title = translations[lang]['logout'];

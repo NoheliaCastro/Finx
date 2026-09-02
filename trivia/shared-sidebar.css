@@ -20,12 +20,15 @@
 
 .sidebar-nav {
     list-style: none;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
     padding: 0;
     margin: 2rem 0 0 0;
 }
 
-.sidebar-nav li {
-    margin-bottom: 0.5rem;
+.sidebar-nav > li {
+    margin-bottom: 0 !important;
 }
 
 .sidebar-nav a {
@@ -63,6 +66,77 @@
 .sidebar-nav i {
     margin-right: 1rem;
     font-size: 1.2rem;
+}
+
+.sidebar-nav > li > a {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    min-height: 48px !important;
+    padding: 0.75rem 1rem !important;
+    margin: 0 0.75rem !important;
+    color: var(--light-text, #5A7294) !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+    text-decoration: none !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.sidebar-nav > li > a > i {
+    flex: 0 0 24px !important;
+    width: 24px !important;
+    margin: 0 !important;
+    color: currentColor !important;
+    font-size: 1.125rem !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    opacity: 0.85 !important;
+}
+
+.sidebar-nav > li > a > span {
+    font: inherit !important;
+    line-height: inherit !important;
+    letter-spacing: inherit !important;
+}
+
+.sidebar-nav > li > a:hover,
+.sidebar-nav > li > a:focus-visible {
+    background: rgba(29, 72, 138, 0.06) !important;
+    color: var(--fun-primary) !important;
+    outline: none;
+}
+
+.sidebar-nav > li > a.active {
+    background: rgba(29, 72, 138, 0.08) !important;
+    color: var(--fun-primary) !important;
+    font-weight: 500 !important;
+    border: 0 !important;
+}
+
+.sidebar-nav > li > a.active > i {
+    opacity: 1 !important;
+}
+
+[data-bs-theme="dark"] .sidebar-nav > li > a {
+    color: var(--light-text, #B8C7DC) !important;
+}
+
+[data-bs-theme="dark"] .sidebar-nav > li > a:hover,
+[data-bs-theme="dark"] .sidebar-nav > li > a:focus-visible {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: var(--secondary-color, #91A9CC) !important;
+}
+
+[data-bs-theme="dark"] .sidebar-nav > li > a.active {
+    background: rgba(145, 169, 204, 0.12) !important;
+    color: var(--accent-color, #FFDE32) !important;
 }
 
 /* Avatar compartido */
