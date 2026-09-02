@@ -156,7 +156,13 @@
         }        /* Responsive para sidebar toggle */
         @media (max-width: 991.98px) {
             .sidebar-toggle-btn {
-                display: none;
+                display: flex !important;
+                position: fixed !important;
+                left: 0 !important;
+                top: 50% !important;
+                width: 36px;
+                height: 48px;
+                z-index: 2100 !important;
             }
             
             /* En mobile, agregar un botón de menú en el navbar si es necesario */
@@ -1770,23 +1776,16 @@
             let sidebarHidden = false; // Forzar que esté abierto en goals.html
             
             function updateSidebarState() {
-                if (isDesktop()) {
-                    if (sidebarHidden) {
-                        sidebar.classList.add('hidden');
-                        mainContent.classList.add('sidebar-hidden');
-                        sidebarToggle.classList.add('sidebar-hidden');
-                        toggleIcon.className = 'bi bi-chevron-right';
-                    } else {
-                        sidebar.classList.remove('hidden');
-                        mainContent.classList.remove('sidebar-hidden');
-                        sidebarToggle.classList.remove('sidebar-hidden');
-                        toggleIcon.className = 'bi bi-chevron-left';
-                    }
-                } else {
-                    // En mobile, sidebar siempre oculto
+                if (sidebarHidden) {
                     sidebar.classList.add('hidden');
                     mainContent.classList.add('sidebar-hidden');
                     sidebarToggle.classList.add('sidebar-hidden');
+                    toggleIcon.className = 'bi bi-chevron-right';
+                } else {
+                    sidebar.classList.remove('hidden');
+                    mainContent.classList.remove('sidebar-hidden');
+                    sidebarToggle.classList.remove('sidebar-hidden');
+                    toggleIcon.className = 'bi bi-chevron-left';
                 }
             }
 
@@ -1795,11 +1794,9 @@
 
             // Toggle del sidebar
             sidebarToggle.addEventListener('click', function() {
-                if (isDesktop()) {
-                    sidebarHidden = !sidebarHidden;
-                    localStorage.setItem('sidebar-hidden', sidebarHidden.toString());
-                    updateSidebarState();
-                }
+                sidebarHidden = !sidebarHidden;
+                localStorage.setItem('sidebar-hidden', sidebarHidden.toString());
+                updateSidebarState();
             });
 
             // Actualizar en resize
@@ -2061,31 +2058,6 @@ document.getElementById('langToggle').addEventListener('click', function() {
     const next = current === 'es' ? 'en' : 'es';
     setLanguage(next);
 });
-document.addEventListener('DOMContentLoaded', function() {
-    const lang = localStorage.getItem('finx_lang') || 'es';
-    setLanguage(lang);
-    
-    // Event listener para el toggle del sidebar
-    document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
-});
-
-// Función para toggle del sidebar
-function toggleSidebar() {
-    const sidebar = document.querySelector('.trivia-sidebar, .leccion-sidebar');
-    const toggleBtn = document.getElementById('sidebarToggle');
-    const icon = toggleBtn.querySelector('i');
-    const mainContent = document.querySelector('.main-content');
-    
-    sidebar.classList.toggle('hidden');
-    toggleBtn.classList.toggle('sidebar-hidden');
-    mainContent.classList.toggle('sidebar-hidden');
-    
-    if (sidebar.classList.contains('hidden')) {
-        icon.className = 'bi bi-chevron-right';
-    } else {
-        icon.className = 'bi bi-chevron-left';
-    }
-}
 </script>
 </body>
 </html> 

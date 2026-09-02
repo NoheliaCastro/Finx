@@ -2243,3 +2243,222 @@ p, .lead, .text-muted {
     .footer .footer-desc { font-size: var(--text-base, 1rem); }
     .footer .footer-link { font-size: var(--text-sm, 0.875rem); }
 }
+
+/* Mobile layout safeguards */
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 767.98px) {
+    .navbar {
+        min-height: 64px;
+    }
+
+    .navbar .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .logo-img,
+    [data-bs-theme="dark"] .logo-img {
+        height: 64px;
+        max-width: 150px;
+    }
+
+    .navbar-collapse {
+        padding: 0.75rem 0 1rem;
+    }
+
+    .navbar-nav {
+        margin-left: 0;
+    }
+
+    .navbar .navbar-collapse > .d-flex {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-left: 0 !important;
+    }
+
+    .navbar .navbar-collapse > .d-flex .btn {
+        margin: 0 !important;
+    }
+
+    .hero {
+        padding: 3rem 0 2rem;
+    }
+
+    .hero-content {
+        max-width: none;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .hero .display-4,
+    .hero h1,
+    .hero-content h1 {
+        font-size: clamp(2rem, 9vw, 3rem);
+        letter-spacing: 0;
+    }
+
+    .hero .lead,
+    .hero-content p {
+        font-size: 1.05rem;
+    }
+
+    .hero-buttons,
+    .hero .d-flex.gap-3 {
+        align-items: stretch !important;
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+        margin-left: 0 !important;
+    }
+
+    .hero .btn-lg {
+        min-width: 0;
+        width: 100%;
+        font-size: 1.05rem;
+        padding: 0.8rem 1.25rem;
+    }
+
+    .hero-image-container {
+        height: min(90vw, 420px) !important;
+        min-height: 280px;
+        border-radius: 1rem;
+        overflow: hidden !important;
+    }
+
+    #heroCarousel {
+        border-radius: 1rem;
+        overflow: hidden !important;
+        contain: paint;
+    }
+
+    .carousel-overlay-bubbles {
+        contain: paint;
+    }
+
+    .features,
+    .statistics,
+    .benefits,
+    .plans {
+        padding: 3rem 1rem;
+    }
+
+    .features h2,
+    .benefits h2,
+    .plans h2 {
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+        margin-bottom: 2rem;
+    }
+
+    .features-beautiful-section,
+    .benefits-hero {
+        border-radius: 1rem;
+        padding: 2rem 1rem;
+    }
+
+    .features-text {
+        font-size: 1.05rem !important;
+        text-align: left !important;
+    }
+
+    .features-img-beautiful,
+    .benefits-hero-img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    .features-beautiful-section > div + div {
+        margin-top: 1.5rem;
+    }
+
+    .benefits-hero-title {
+        font-size: clamp(1.8rem, 8vw, 2.75rem) !important;
+    }
+
+    .benefits-hero-btn-main,
+    .benefits-hero-btn-secondary {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+
+    .subscription-plans-container,
+    .plans-grid {
+        gap: 1.25rem;
+    }
+
+    .newsletter-form .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .newsletter-form .row > [class*="col-"] {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .plan-card,
+    .subscription-plans-container .plan-card {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .plan-header {
+        font-size: 1.6rem;
+    }
+
+    .plan-body {
+        padding: 1.75rem 1rem;
+    }
+
+    .contact {
+        padding: 3rem 1rem;
+    }
+
+    .footer {
+        padding: 3rem 1rem 1.5rem;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .leccion-sidebar,
+    .camino-sidebar,
+    .trivia-sidebar,
+    .quiz-sidebar,
+    .logros-sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 420px) {
+    .navbar .navbar-collapse > .d-flex .btn {
+        flex: 1 1 auto;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-card,
+    .plan-card,
+    .contact-info,
+    .contact-form {
+        padding: 1.25rem;
+    }
+}
