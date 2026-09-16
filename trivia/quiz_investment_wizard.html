@@ -448,6 +448,7 @@
                 <li><a href="trivia.html" class="active"><i class="bi bi-book-fill"></i><span>Lecciones</span></a></li>
                 <li><a href="logros.html"><i class="bi bi-trophy-fill"></i><span>Logros</span></a></li>
                 <li><a href="../goals.html"><i class="bi bi-flag-fill"></i><span>Metas</span></a></li>
+                <li><a href="../calculadora-salario.html"><i class="bi bi-calculator-fill"></i><span>Calculadora de Salario</span></a></li>
                 <li><a href="../helpcenter2.html"><i class="bi bi-question-circle-fill"></i><span>Ayuda</span></a></li>
                 <li><a href="../chatbot.html"><i class="bi bi-robot"></i><span>Asistente</span></a></li>
             </ul>
@@ -718,6 +719,7 @@
                 'sidebar-lessons': 'Lecciones',
                 'sidebar-achievements': 'Logros',
                 'sidebar-goals': 'Metas',
+                'sidebar-calculator': 'Calculadora de Salario',
                 'sidebar-help': 'Ayuda',
                 'sidebar-assistant': 'Asistente'
             },
@@ -745,6 +747,7 @@
                 'sidebar-lessons': 'Lessons',
                 'sidebar-achievements': 'Achievements',
                 'sidebar-goals': 'Goals',
+                'sidebar-calculator': 'Salary Calculator',
                 'sidebar-help': 'Help',
                 'sidebar-assistant': 'Assistant'
             }
@@ -988,8 +991,9 @@
             sidebarLinks[1].textContent = translations[lang]['sidebar-lessons'];
             sidebarLinks[2].textContent = translations[lang]['sidebar-achievements'];
             sidebarLinks[3].textContent = translations[lang]['sidebar-goals'];
-            sidebarLinks[4].textContent = translations[lang]['sidebar-help'];
-            sidebarLinks[5].textContent = translations[lang]['sidebar-assistant'];
+            sidebarLinks[4].textContent = translations[lang]['sidebar-calculator'];
+            sidebarLinks[5].textContent = translations[lang]['sidebar-help'];
+            sidebarLinks[6].textContent = translations[lang]['sidebar-assistant'];
             
             // Actualizar pregunta actual si está visible
             if (currentQuestion < quizQuestions.length) {
