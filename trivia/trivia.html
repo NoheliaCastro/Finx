@@ -454,6 +454,8 @@
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             padding: 0.75rem 0;
             min-height: 95px;
+            position: relative;
+            z-index: 15000;
             transition: all 0.3s ease;
         }
 
@@ -2682,14 +2684,16 @@ function initializeLessonProgress() {
 // Update the user progress section with current stats
 function updateUserProgressDisplay() {
     const userProgress = getUserProgress();
-    const totalLessons = Object.keys(userProgress.lessons).length;
-    const completedLessons = Object.values(userProgress.lessons).filter(lesson => lesson.completed).length;
-    const completionPercentage = Math.round((completedLessons / totalLessons) * 100);
+    const lessons = userProgress.lessons || {};
+    const totalXP = userProgress.totalXP || 0;
+    const totalLessons = Object.keys(lessons).length;
+    const completedLessons = Object.values(lessons).filter(lesson => lesson.completed).length;
+    const completionPercentage = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
     
     // Update XP display
     const xpElement = document.querySelector('.xp-progress-container .d-flex span.text-primary');
     if (xpElement) {
-        xpElement.textContent = `${userProgress.totalXP} XP`;
+        xpElement.textContent = `${totalXP} XP`;
     }
     
     // Update completion percentage
@@ -2705,8 +2709,8 @@ function updateUserProgressDisplay() {
     }
     
     // Update level display
-    const level = Math.floor(userProgress.totalXP / 100) + 1;
-    const xpInCurrentLevel = userProgress.totalXP % 100;
+    const level = Math.floor(totalXP / 100) + 1;
+    const xpInCurrentLevel = totalXP % 100;
     const levelElement = document.querySelector('.xp-progress-container h3');
     if (levelElement) {
         levelElement.textContent = `Nivel ${level} (${xpInCurrentLevel}/100 XP)`;

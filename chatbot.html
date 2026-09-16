@@ -578,6 +578,8 @@
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             padding: 0.75rem 0;
             min-height: 95px;
+            position: relative;
+            z-index: 1100;
             transition: all 0.3s ease;
         }
 
@@ -1044,6 +1046,22 @@
         document.addEventListener('DOMContentLoaded', function () {
             const lang = localStorage.getItem('finx_lang') || 'es';
             setLanguage(lang);
+
+            const userProfile = document.querySelector('.user-profile-navbar');
+            if (userProfile) {
+                userProfile.addEventListener('click', function (event) {
+                    if (event.target.closest('.user-dropdown-menu')) {
+                        return;
+                    }
+                    userProfile.classList.toggle('open');
+                });
+
+                document.addEventListener('click', function (event) {
+                    if (!userProfile.contains(event.target)) {
+                        userProfile.classList.remove('open');
+                    }
+                });
+            }
 
             // Event listener para el toggle del sidebar
             document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
