@@ -428,6 +428,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="../calculadora-salario.html">
+                        <i class="bi bi-calculator-fill"></i>
+                        <span>Salary Calculator</span>
+                    </a>
+                </li>
+                <li>
                     <a href="../helpcenter2.html">
                         <i class="bi bi-question-circle-fill"></i>
                         <span>Help</span>
@@ -754,13 +760,14 @@
 
             // Update sidebar navigation
             const sidebarSpans = document.querySelectorAll('.sidebar-nav li span');
-            if (sidebarSpans.length >= 6) {
+            if (sidebarSpans.length >= 7) {
                 sidebarSpans[0].textContent = t['management'];
                 sidebarSpans[1].textContent = t['lessons'];
                 sidebarSpans[2].textContent = t['achievements'];
                 sidebarSpans[3].textContent = t['goals'];
-                sidebarSpans[4].textContent = t['help'];
-                sidebarSpans[5].textContent = t['financial-assistant'];
+                sidebarSpans[4].textContent = t['calculator'];
+                sidebarSpans[5].textContent = t['help'];
+                sidebarSpans[6].textContent = t['financial-assistant'];
             }
 
             // Hero section
