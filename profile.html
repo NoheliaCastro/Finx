@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" data-bs-theme="light">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finx - Mi Perfil</title>
+    <title>Finx - My Profile</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -120,6 +120,8 @@
             width: 40px;
             height: 40px;
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background-size: cover;
+            background-position: center;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -127,6 +129,7 @@
             color: white;
             font-size: 1.2rem;
             box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+            overflow: hidden;
         }
 
         .user-info-small {
@@ -244,6 +247,8 @@
             width: 48px;
             height: 48px;
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background-size: cover;
+            background-position: center;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -251,6 +256,7 @@
             color: white;
             font-size: 1.4rem;
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            overflow: hidden;
         }
 
         .dropdown-user-info {
@@ -446,9 +452,45 @@
             align-items: center;
             justify-content: center;
             background: rgba(255, 255, 255, 0.18);
+            background-size: cover;
+            background-position: center;
             border: 2px solid rgba(255, 255, 255, 0.25);
             font-size: 2.2rem;
             margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-avatar.has-photo i {
+            display: none;
+        }
+
+        .profile-avatar-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .profile-avatar-actions {
+                justify-content: flex-start;
+            }
+        }
+
+        .avatar-small.has-photo,
+        .dropdown-avatar.has-photo {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .avatar-small.has-photo i,
+        .dropdown-avatar.has-photo i {
+            display: none;
+        }
+
+        .profile-settings-form .form-label {
+            font-weight: 600;
         }
 
         .info-box {
@@ -548,7 +590,7 @@
                     </div>
                 </div>
                 <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
-                    <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
+                    <button class="trivia-theme-toggle" id="langToggle" title="Translate page">
                         <i class="bi bi-translate"></i>
                     </button>
                     <button class="trivia-theme-toggle" id="themeToggle" title="Change theme">
@@ -559,8 +601,8 @@
                             <i class="bi bi-person-fill"></i>
                         </div>
                         <div class="user-info-small">
-                            <span class="user-name">Usuario</span>
-                            <small class="user-level">Nivel 2</small>
+                            <span class="user-name">User</span>
+                            <small class="user-level">Level 1</small>
                         </div>
                         <div class="user-dropdown-menu">
                             <div class="dropdown-header">
@@ -568,34 +610,34 @@
                                     <i class="bi bi-person-fill"></i>
                                 </div>
                                 <div class="dropdown-user-info">
-                                    <span class="dropdown-user-name">Usuario</span>
-                                    <small class="dropdown-user-level">Nivel 2</small>
+                                    <span class="dropdown-user-name">User</span>
+                                    <small class="dropdown-user-level">Level 1</small>
                                 </div>
                             </div>
                             <div class="dropdown-divider"></div>
                             <a href="profile.html" class="dropdown-item">
                                 <div class="dropdown-item-content">
                                     <i class="bi bi-person-circle"></i>
-                                    <span>Mi Perfil</span>
+                                    <span data-translate="profile-my-profile">My Profile</span>
                                 </div>
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a href="#profileSettings" class="dropdown-item">
                                 <div class="dropdown-item-content">
                                     <i class="bi bi-gear"></i>
-                                    <span>Configuración</span>
+                                    <span data-translate="profile-settings">Settings</span>
                                 </div>
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a href="#profileSettings" class="dropdown-item">
                                 <div class="dropdown-item-content">
                                     <i class="bi bi-shield-check"></i>
-                                    <span>Privacidad</span>
+                                    <span data-translate="profile-privacy">Privacy</span>
                                 </div>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item dropdown-item-danger" id="logoutBtnNavbar">
                                 <div class="dropdown-item-content">
                                     <i class="bi bi-box-arrow-right"></i>
-                                    <span>Cerrar Sesión</span>
+                                    <span data-translate="profile-logout">Log out</span>
                                 </div>
                             </a>
                         </div>
@@ -608,12 +650,13 @@
         <div class="container">
             <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
                 <div>
-                    <p class="label-small mb-1">Cuenta</p>
-                    <h1 class="fw-bold mb-0">Mi Perfil</h1>
-                    <p class="profile-hero-subtitle mb-0">Aquí ves tu información básica y tu sesión guardada en el navegador.</p>
+                    <p class="label-small mb-1" data-translate="profile-account">Account</p>
+                    <h1 class="fw-bold mb-0" data-translate="profile-title">My Profile</h1>
+                    <p class="text-muted mb-0" data-translate="profile-subtitle">View and edit your personal information.</p>
                 </div>
                 <a href="dashboard.html" class="btn btn-primary">
-                    <i class="bi bi-arrow-left me-1"></i> Volver al dashboard
+                    <i class="bi bi-arrow-left me-1"></i>
+                    <span data-translate="profile-back">Back to dashboard</span>
                 </a>
             </div>
 
@@ -622,8 +665,8 @@
                     <div class="profile-stat">
                         <div class="d-flex align-items-center justify-content-between gap-3">
                             <div>
-                                <p class="profile-stat-label">Estado</p>
-                                <p class="profile-stat-value" id="profileStatusText">Activo</p>
+                                <p class="profile-stat-label" data-translate="profile-status">Status</p>
+                                <p class="profile-stat-value" id="profileStatusText" data-translate="profile-active">Active</p>
                             </div>
                             <i class="bi bi-check-circle-fill"></i>
                         </div>
@@ -633,7 +676,7 @@
                     <div class="profile-stat">
                         <div class="d-flex align-items-center justify-content-between gap-3">
                             <div>
-                                <p class="profile-stat-label">Nivel</p>
+                                <p class="profile-stat-label" data-translate="profile-level">Level</p>
                                 <p class="profile-stat-value" id="profileLevelMini">1</p>
                             </div>
                             <i class="bi bi-star-fill"></i>
@@ -644,8 +687,8 @@
                     <div class="profile-stat">
                         <div class="d-flex align-items-center justify-content-between gap-3">
                             <div>
-                                <p class="profile-stat-label">Idioma</p>
-                                <p class="profile-stat-value" id="profileLanguageMini">es</p>
+                                <p class="profile-stat-label" data-translate="profile-language">Language</p>
+                                <p class="profile-stat-value" id="profileLanguageMini">English</p>
                             </div>
                             <i class="bi bi-translate"></i>
                         </div>
@@ -657,17 +700,28 @@
                 <div class="profile-hero">
                     <div class="row align-items-center g-4">
                         <div class="col-md-auto text-center text-md-start">
-                            <div class="profile-avatar mx-auto mx-md-0">
+                            <div class="profile-avatar mx-auto mx-md-0" id="profileAvatar">
                                 <i class="bi bi-person-fill"></i>
                             </div>
+                            <div class="profile-avatar-actions">
+                                <button type="button" class="btn btn-sm btn-light" id="changePhotoBtn">
+                                    <i class="bi bi-camera me-1"></i>
+                                    <span data-translate="profile-change-photo">Change photo</span>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-light d-none" id="removePhotoBtn">
+                                    <span data-translate="profile-remove-photo">Remove photo</span>
+                                </button>
+                            </div>
+                            <input type="file" id="avatarInput" accept="image/*" hidden>
+                            <p class="small text-white-50 mt-2 mb-0" data-translate="profile-photo-hint">JPG, PNG, or WEBP. Your photo is stored on this device.</p>
                         </div>
                         <div class="col-md">
-                            <p class="label-small text-white-50 mb-1">Usuario autenticado</p>
-                            <h2 class="fw-bold mb-2" id="profileFullName">Cargando...</h2>
-                            <p class="mb-2" id="profileEmail">Cargando correo...</p>
+                            <p class="label-small text-white-50 mb-1" data-translate="profile-authenticated">Signed-in user</p>
+                            <h2 class="fw-bold mb-2" id="profileFullName">Loading...</h2>
+                            <p class="mb-2" id="profileEmail">Loading...</p>
                             <div class="d-flex flex-wrap gap-2">
-                                <span class="badge bg-light text-dark" id="profileLevel">Nivel 1</span>
-                                <span class="badge bg-success" id="profileStatus">Activo</span>
+                                <span class="badge bg-light text-dark" id="profileLevel">Level 1</span>
+                                <span class="badge bg-success" id="profileStatus" data-translate="profile-active">Active</span>
                             </div>
                         </div>
                     </div>
@@ -676,20 +730,20 @@
                     <div class="row g-3">
                         <div class="col-md-4">
                             <div class="section-card p-3 h-100">
-                                <p class="label-small mb-1">Nombre</p>
+                                <p class="label-small mb-1" data-translate="profile-first-name">First name</p>
                                 <h5 class="mb-0" id="profileFirstName">-</h5>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="section-card p-3 h-100">
-                                <p class="label-small mb-1">Apellido</p>
+                                <p class="label-small mb-1" data-translate="profile-last-name">Last name</p>
                                 <h5 class="mb-0" id="profileLastName">-</h5>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="section-card p-3 h-100">
-                                <p class="label-small mb-1">Usuario ID</p>
-                                <h5 class="mb-0 text-break" id="profileUserId">-</h5>
+                                <p class="label-small mb-1" data-translate="profile-email">Email</p>
+                                <h5 class="mb-0 text-break" id="profileEmailCard">-</h5>
                             </div>
                         </div>
                     </div>
@@ -700,24 +754,46 @@
                 <div class="col-lg-6">
                     <div class="card section-card h-100">
                         <div class="card-body p-4">
-                            <p class="label-small mb-2">Datos básicos</p>
+                            <p class="label-small mb-2" data-translate="profile-basic">Account details</p>
                             <ul class="list-unstyled mb-0">
-                                <li class="mb-2"><strong>Correo:</strong> <span id="profileEmailDetail">-</span></li>
-                                <li class="mb-2"><strong>Nombre completo:</strong> <span id="profileNameDetail">-</span></li>
-                                <li class="mb-2"><strong>Cuenta creada:</strong> <span id="profileCreatedAt">-</span></li>
-                                <li><strong>Idioma:</strong> <span id="profileLanguage">-</span></li>
+                                <li class="mb-2"><strong data-translate="profile-email">Email</strong>: <span id="profileEmailDetail">-</span></li>
+                                <li class="mb-2"><strong data-translate="profile-full-name">Full name</strong>: <span id="profileNameDetail">-</span></li>
+                                <li class="mb-2"><strong data-translate="profile-created">Account created</strong>: <span id="profileCreatedAt">-</span></li>
+                                <li><strong data-translate="profile-language">Language</strong>: <span id="profileLanguage">English</span></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="card section-card h-100">
+                    <div class="card section-card h-100" id="profileSettings">
                         <div class="card-body p-4">
-                            <p class="label-small mb-2">Próximo paso</p>
-                            <p class="mb-3">Más adelante podrás guardar avatar, metas personales y preferencias.</p>
-                            <div class="alert alert-info mb-0">
-                                Por ahora esta página muestra la información que ya existe en tu sesión local.
-                            </div>
+                            <p class="label-small mb-2" data-translate="profile-settings">Settings</p>
+                            <p class="mb-3" data-translate="profile-settings-desc">Update your name and profile photo. Language follows the translate button at the top.</p>
+                            <form class="profile-settings-form" id="profileSettingsForm">
+                                <div class="mb-3">
+                                    <label class="form-label" for="editFirstName" data-translate="profile-first-name">First name</label>
+                                    <input type="text" class="form-control" id="editFirstName" name="firstName" maxlength="60" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="editLastName" data-translate="profile-last-name">Last name</label>
+                                    <input type="text" class="form-control" id="editLastName" name="lastName" maxlength="60" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="editEmail" data-translate="profile-email">Email</label>
+                                    <input type="email" class="form-control" id="editEmail" readonly>
+                                    <div class="form-text" data-translate="profile-email-hint">Email cannot be changed here.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" data-translate="profile-language">Language</label>
+                                    <input type="text" class="form-control" id="editLanguage" readonly>
+                                    <div class="form-text" data-translate="profile-language-hint">Use the translate button at the top to switch language.</div>
+                                </div>
+                                <div id="profileSaveAlert" class="alert d-none mb-3" role="alert"></div>
+                                <button type="submit" class="btn btn-primary" id="saveProfileBtn">
+                                    <i class="bi bi-check-lg me-1"></i>
+                                    <span data-translate="profile-save">Save changes</span>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -732,102 +808,240 @@
     <script src="js/components.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async function () {
-            try {
-                const session = await FinxAuth.requireAuth();
-                const user = session.user;
-                const metadata = user.user_metadata || {};
-                const firstName = metadata.first_name || '';
-                const lastName = metadata.last_name || '';
-                const fullName = metadata.full_name || `${firstName} ${lastName}`.trim() || 'Usuario';
+            let currentUserId = '';
+            let currentLevel = '1';
 
-                document.getElementById('profileFullName').textContent = fullName;
-                document.getElementById('profileEmail').textContent = user.email || 'Sin correo';
-                document.getElementById('profileFirstName').textContent = firstName || '-';
-                document.getElementById('profileLastName').textContent = lastName || '-';
-                document.getElementById('profileUserId').textContent = user.id || '-';
-                document.getElementById('profileEmailDetail').textContent = user.email || '-';
-                document.getElementById('profileNameDetail').textContent = fullName;
-                document.getElementById('profileCreatedAt').textContent = user.created_at ? new Date(user.created_at).toLocaleString() : '-';
-                const language = localStorage.getItem('finx_lang') || 'es';
-                document.getElementById('profileLanguage').textContent = language;
-                document.getElementById('profileLanguageMini').textContent = language;
-
-                const level = metadata.level || '1';
-                document.getElementById('profileLevel').textContent = `Nivel ${level}`;
-                document.getElementById('profileLevelMini').textContent = level;
-                document.getElementById('profileStatusText').textContent = 'Activo';
-            } catch (error) {
-                console.error(error);
+            function t(key) {
+                const lang = getCurrentLanguage();
+                const dict = (typeof finxTranslations !== 'undefined' && finxTranslations[lang]) || {};
+                return dict[key] || key;
             }
-        });
 
-        function toggleTheme() {
-            const html = document.documentElement;
-            const icon = document.getElementById('themeIcon');
-            const currentTheme = html.getAttribute('data-bs-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-bs-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            if (newTheme === 'dark') {
-                icon.className = 'bi bi-sun-fill';
-            } else {
-                icon.className = 'bi bi-moon-fill';
+            function languageLabel(lang) {
+                return lang === 'es' ? t('profile-spanish') : t('profile-english');
             }
-        }
 
-        document.addEventListener('DOMContentLoaded', function() {
+            function avatarStorageKey(userId) {
+                return 'finx_avatar_' + userId;
+            }
+
+            function applyAvatar(dataUrl) {
+                document.querySelectorAll('.profile-avatar, .avatar-small, .dropdown-avatar').forEach(function (el) {
+                    if (dataUrl) {
+                        el.style.backgroundImage = 'url("' + dataUrl + '")';
+                        el.classList.add('has-photo');
+                    } else {
+                        el.style.backgroundImage = '';
+                        el.classList.remove('has-photo');
+                    }
+                });
+                const removeBtn = document.getElementById('removePhotoBtn');
+                if (removeBtn) {
+                    removeBtn.classList.toggle('d-none', !dataUrl);
+                }
+            }
+
+            function loadStoredAvatar(userId) {
+                if (!userId) {
+                    applyAvatar(null);
+                    return;
+                }
+                try {
+                    applyAvatar(localStorage.getItem(avatarStorageKey(userId)));
+                } catch (error) {
+                    applyAvatar(null);
+                }
+            }
+
+            function resizeImageFile(file) {
+                return new Promise(function (resolve, reject) {
+                    const img = new Image();
+                    const url = URL.createObjectURL(file);
+                    img.onload = function () {
+                        const max = 256;
+                        const scale = Math.min(1, max / Math.max(img.width, img.height));
+                        const canvas = document.createElement('canvas');
+                        canvas.width = Math.max(1, Math.round(img.width * scale));
+                        canvas.height = Math.max(1, Math.round(img.height * scale));
+                        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+                        URL.revokeObjectURL(url);
+                        resolve(canvas.toDataURL('image/jpeg', 0.85));
+                    };
+                    img.onerror = function () {
+                        URL.revokeObjectURL(url);
+                        reject(new Error('invalid'));
+                    };
+                    img.src = url;
+                });
+            }
+
+            function setText(id, value) {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
+            }
+
+            function updateLanguageLabels() {
+                const lang = getCurrentLanguage();
+                const label = languageLabel(lang);
+                setText('profileLanguage', label);
+                setText('profileLanguageMini', label);
+                const editLanguage = document.getElementById('editLanguage');
+                if (editLanguage) editLanguage.value = label;
+                const levelText = t('profile-level-prefix') + ' ' + currentLevel;
+                setText('profileLevel', levelText);
+                document.querySelectorAll('.user-level, .dropdown-user-level').forEach(function (el) {
+                    el.textContent = levelText;
+                });
+            }
+
+            function renderUser(user) {
+                const metadata = (user && user.user_metadata) || {};
+                const firstName = metadata.first_name || user.first_name || '';
+                const lastName = metadata.last_name || user.last_name || '';
+                const fullName = metadata.full_name || user.full_name || (firstName + ' ' + lastName).trim() || t('profile-user');
+                const email = user.email || t('profile-no-email');
+                currentLevel = String(metadata.level || '1');
+                currentUserId = user.id || '';
+
+                setText('profileFullName', fullName);
+                setText('profileEmail', email);
+                setText('profileFirstName', firstName || '-');
+                setText('profileLastName', lastName || '-');
+                setText('profileEmailCard', email);
+                setText('profileEmailDetail', email);
+                setText('profileNameDetail', fullName);
+                setText(
+                    'profileCreatedAt',
+                    user.created_at ? new Date(user.created_at).toLocaleString() : '-'
+                );
+
+                document.querySelectorAll('.user-name, .dropdown-user-name').forEach(function (el) {
+                    el.textContent = fullName;
+                });
+
+                const firstInput = document.getElementById('editFirstName');
+                const lastInput = document.getElementById('editLastName');
+                const emailInput = document.getElementById('editEmail');
+                if (firstInput) firstInput.value = firstName;
+                if (lastInput) lastInput.value = lastName;
+                if (emailInput) emailInput.value = user.email || '';
+
+                updateLanguageLabels();
+                loadStoredAvatar(currentUserId);
+            }
+
+            window.onFinxLanguageChange = function () {
+                updateLanguageLabels();
+            };
+
+            if (typeof initLanguageToggle === 'function') {
+                initLanguageToggle();
+            }
+
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-bs-theme', savedTheme);
             const icon = document.getElementById('themeIcon');
-            if (savedTheme === 'dark') {
-                icon.className = 'bi bi-sun-fill';
-            } else {
-                icon.className = 'bi bi-moon-fill';
+            if (icon) {
+                icon.className = savedTheme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
             }
-            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            document.getElementById('themeToggle').addEventListener('click', function () {
+                const html = document.documentElement;
+                const currentTheme = html.getAttribute('data-bs-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-bs-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                icon.className = newTheme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
+            });
 
             const userProfile = document.querySelector('.user-profile-navbar');
             const userMenu = document.querySelector('.user-dropdown-menu');
-
             if (userProfile && userMenu) {
-                userProfile.addEventListener('click', function(e) {
+                userProfile.addEventListener('click', function (e) {
                     e.stopPropagation();
                     userProfile.classList.toggle('open');
                 });
-
-                userMenu.addEventListener('click', function(e) {
+                userMenu.addEventListener('click', function (e) {
                     e.stopPropagation();
+                    if (e.target.closest('a')) {
+                        userProfile.classList.remove('open');
+                    }
                 });
-
-                document.addEventListener('click', function(e) {
-                    if (userProfile.classList.contains('open')) {
-                        if (!userProfile.contains(e.target)) {
-                            userProfile.classList.remove('open');
-                        }
+                document.addEventListener('click', function (e) {
+                    if (userProfile.classList.contains('open') && !userProfile.contains(e.target)) {
+                        userProfile.classList.remove('open');
                     }
                 });
             }
 
-            const logoutBtnNavbar = document.getElementById('logoutBtnNavbar');
-            if (logoutBtnNavbar) {
-                logoutBtnNavbar.addEventListener('click', async function(e) {
-                    e.preventDefault();
-                    if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
-                        try {
-                            await FinxAuth.logoutUser();
-                        } catch (error) {
-                            console.error(error);
-                        }
-                        window.location.href = 'index.html';
-                    }
-                });
-            }
-
-            document.getElementById('langToggle').addEventListener('click', function() {
-                const current = localStorage.getItem('finx_lang') || 'es';
-                const next = current === 'es' ? 'en' : 'es';
-                localStorage.setItem('finx_lang', next);
+            document.getElementById('logoutBtnNavbar').addEventListener('click', async function (e) {
+                e.preventDefault();
+                if (!confirm(t('profile-logout-confirm'))) return;
+                try {
+                    await FinxAuth.logoutUser();
+                } catch (error) {
+                    console.error(error);
+                }
+                window.location.href = 'index.html';
             });
+
+            const avatarInput = document.getElementById('avatarInput');
+            document.getElementById('changePhotoBtn').addEventListener('click', function () {
+                avatarInput.click();
+            });
+            document.getElementById('removePhotoBtn').addEventListener('click', function () {
+                if (!currentUserId) return;
+                localStorage.removeItem(avatarStorageKey(currentUserId));
+                applyAvatar(null);
+            });
+            avatarInput.addEventListener('change', async function () {
+                const file = avatarInput.files && avatarInput.files[0];
+                avatarInput.value = '';
+                if (!file) return;
+                if (!file.type || file.type.indexOf('image/') !== 0) {
+                    alert(t('profile-photo-invalid'));
+                    return;
+                }
+                try {
+                    const dataUrl = await resizeImageFile(file);
+                    if (currentUserId) {
+                        localStorage.setItem(avatarStorageKey(currentUserId), dataUrl);
+                    }
+                    applyAvatar(dataUrl);
+                } catch (error) {
+                    alert(t('profile-photo-invalid'));
+                }
+            });
+
+            document.getElementById('profileSettingsForm').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const firstName = document.getElementById('editFirstName').value.trim();
+                const lastName = document.getElementById('editLastName').value.trim();
+                const saveBtn = document.getElementById('saveProfileBtn');
+                const alertBox = document.getElementById('profileSaveAlert');
+                FinxAuth.setButtonLoading(saveBtn, true, t('profile-loading'));
+                try {
+                    const result = await FinxAuth.updateProfile({ firstName: firstName, lastName: lastName });
+                    renderUser(result.user);
+                    alertBox.className = 'alert alert-success mb-3';
+                    alertBox.textContent = t('profile-saved');
+                    alertBox.classList.remove('d-none');
+                } catch (error) {
+                    alertBox.className = 'alert alert-danger mb-3';
+                    alertBox.textContent = (error && error.message) || t('profile-save-error');
+                    alertBox.classList.remove('d-none');
+                } finally {
+                    FinxAuth.setButtonLoading(saveBtn, false);
+                }
+            });
+
+            try {
+                const session = await FinxAuth.requireAuth();
+                if (session && session.user) {
+                    renderUser(session.user);
+                }
+            } catch (error) {
+                console.error(error);
+            }
         });
     </script>
 </body>

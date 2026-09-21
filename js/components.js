@@ -303,7 +303,45 @@ const finxTranslations = {
         // About Us (sample keys)
         'about-hero-title': 'About Us',
     'about-hero-subtitle': 'We empower smarter financial decisions for everyone.',
-    'who-we-are-title': 'Who We Are?'
+    'who-we-are-title': 'Who We Are?',
+        // Profile
+        'profile-account': 'Account',
+        'profile-title': 'My Profile',
+        'profile-subtitle': 'View and edit your personal information.',
+        'profile-back': 'Back to dashboard',
+        'profile-status': 'Status',
+        'profile-active': 'Active',
+        'profile-level': 'Level',
+        'profile-language': 'Language',
+        'profile-authenticated': 'Signed-in user',
+        'profile-first-name': 'First name',
+        'profile-last-name': 'Last name',
+        'profile-email': 'Email',
+        'profile-full-name': 'Full name',
+        'profile-created': 'Account created',
+        'profile-basic': 'Account details',
+        'profile-settings': 'Settings',
+        'profile-photo': 'Profile photo',
+        'profile-change-photo': 'Change photo',
+        'profile-save': 'Save changes',
+        'profile-saved': 'Profile updated.',
+        'profile-save-error': 'Could not save your profile. Try again.',
+        'profile-my-profile': 'My Profile',
+        'profile-privacy': 'Privacy',
+        'profile-logout': 'Log out',
+        'profile-logout-confirm': 'Are you sure you want to log out?',
+        'profile-loading': 'Loading...',
+        'profile-no-email': 'No email',
+        'profile-english': 'English',
+        'profile-spanish': 'Spanish',
+        'profile-remove-photo': 'Remove photo',
+        'profile-user': 'User',
+        'profile-level-prefix': 'Level',
+        'profile-settings-desc': 'Update your name and profile photo. Language follows the translate button at the top.',
+        'profile-email-hint': 'Email cannot be changed here.',
+        'profile-photo-hint': 'JPG, PNG, or WEBP. Your photo is stored on this device.',
+        'profile-photo-invalid': 'Please choose an image file.',
+        'profile-language-hint': 'Use the translate button at the top to switch language.'
     },
     es: {
         // Navbar
@@ -398,34 +436,79 @@ const finxTranslations = {
         // About Us
         'about-hero-title': 'Sobre Nosotros',
     'about-hero-subtitle': 'Impulsamos decisiones financieras más inteligentes para todos.',
-    'who-we-are-title': '¿Quiénes Somos?'
+    'who-we-are-title': '¿Quiénes Somos?',
+        // Profile
+        'profile-account': 'Cuenta',
+        'profile-title': 'Mi Perfil',
+        'profile-subtitle': 'Consulta y edita tu información personal.',
+        'profile-back': 'Volver al dashboard',
+        'profile-status': 'Estado',
+        'profile-active': 'Activo',
+        'profile-level': 'Nivel',
+        'profile-language': 'Idioma',
+        'profile-authenticated': 'Usuario autenticado',
+        'profile-first-name': 'Nombre',
+        'profile-last-name': 'Apellido',
+        'profile-email': 'Correo',
+        'profile-full-name': 'Nombre completo',
+        'profile-created': 'Cuenta creada',
+        'profile-basic': 'Datos de la cuenta',
+        'profile-settings': 'Configuración',
+        'profile-photo': 'Foto de perfil',
+        'profile-change-photo': 'Cambiar foto',
+        'profile-save': 'Guardar cambios',
+        'profile-saved': 'Perfil actualizado.',
+        'profile-save-error': 'No se pudo guardar el perfil. Intenta de nuevo.',
+        'profile-my-profile': 'Mi Perfil',
+        'profile-privacy': 'Privacidad',
+        'profile-logout': 'Cerrar sesión',
+        'profile-logout-confirm': '¿Estás seguro que deseas cerrar sesión?',
+        'profile-loading': 'Cargando...',
+        'profile-no-email': 'Sin correo',
+        'profile-english': 'Inglés',
+        'profile-spanish': 'Español',
+        'profile-remove-photo': 'Quitar foto',
+        'profile-user': 'Usuario',
+        'profile-level-prefix': 'Nivel',
+        'profile-settings-desc': 'Actualiza tu nombre y foto de perfil. El idioma sigue el botón de traducir de arriba.',
+        'profile-email-hint': 'El correo no se puede cambiar aquí.',
+        'profile-photo-hint': 'JPG, PNG o WEBP. Tu foto se guarda en este dispositivo.',
+        'profile-photo-invalid': 'Elige un archivo de imagen.',
+        'profile-language-hint': 'Usa el botón de traducir de arriba para cambiar el idioma.'
     }
 };
 
 function getCurrentLanguage() {
-    return localStorage.getItem('lang') || 'en';
+    const stored = localStorage.getItem('lang') || localStorage.getItem('finx_lang');
+    return stored === 'es' || stored === 'en' ? stored : 'en';
+}
+
+function setCurrentLanguage(next) {
+    localStorage.setItem('lang', next);
+    localStorage.setItem('finx_lang', next);
 }
 
 function initLanguageToggle() {
     const btn = document.getElementById('langToggle');
     if (!btn) return;
     const label = document.getElementById('langToggleLabel');
+    setCurrentLanguage(getCurrentLanguage());
     const apply = () => {
         applyTranslations();
         if (label) {
             const current = getCurrentLanguage();
-            // Show next language code in button (e.g., if current en, show ES)
             label.textContent = current === 'en' ? 'ES' : 'EN';
         }
     };
-    btn.addEventListener('click', () => {
-        const current = getCurrentLanguage();
-        const next = current === 'en' ? 'es' : 'en';
-        localStorage.setItem('lang', next);
-        document.documentElement.setAttribute('lang', next);
-        apply();
-    });
-    // Inicial
+    if (!btn.dataset.langBound) {
+        btn.dataset.langBound = 'true';
+        btn.addEventListener('click', () => {
+            const next = getCurrentLanguage() === 'en' ? 'es' : 'en';
+            setCurrentLanguage(next);
+            document.documentElement.setAttribute('lang', next);
+            apply();
+        });
+    }
     document.documentElement.setAttribute('lang', getCurrentLanguage());
     apply();
 }
@@ -465,8 +548,7 @@ function applyTranslations() {
             }
         }
     });
-    // Título del documento si hay claves correspondientes
-    if (dict['hero-subtitle'] && document.title.includes('Finx')) {
-        // No sobrescribir títulos específicos de otras páginas sin clave dedicada
+    if (typeof window.onFinxLanguageChange === 'function') {
+        window.onFinxLanguageChange(lang);
     }
 }

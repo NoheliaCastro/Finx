@@ -1,12 +1,12 @@
 <!-- Header -->
 
 <nav class="navbar navbar-expand-lg shadow-sm">
-  <div class="container-fluid px-4">
+  <div class="container-fluid">
     <a class="navbar-brand" href="index.html">
       <img src="images/modo-claro.png" alt="Finx Logo" class="logo-img" id="logoLight">
       <img src="images/modo-oscuro.png" alt="Finx Logo" class="logo-img" id="logoDark" style="display: none;">
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -15,18 +15,18 @@
   <li class="nav-item"><a class="nav-link" href="about_us.html" data-translate="about-us">About us</a></li>
   <li class="nav-item"><a class="nav-link" href="Help_center_fixed.html" data-translate="help-center">Help center</a></li>
       </ul>
-      <div class="d-flex ms-lg-3">
-        <a href="register.html" class="btn btn-primary me-2">
+      <div class="d-flex align-items-center navbar-auth-actions ms-lg-3">
+        <a href="register.html" class="btn btn-primary">
           <i class="fas fa-user-plus me-1"></i> <span data-translate="register">Register</span>
         </a>
-        <a href="login.html" class="btn btn-outline-primary me-3">
+        <a href="login.html" class="btn btn-outline-primary">
           <i class="fas fa-sign-in-alt me-1"></i> <span data-translate="login">Login</span>
         </a>
-        <button class="btn btn-outline-secondary ms-2 me-2 d-flex align-items-center gap-1" id="langToggle" title="Change language" style="border-radius:30px;">
+        <button class="btn btn-outline-secondary d-flex align-items-center gap-1" id="langToggle" title="Change language">
           <i class="bi bi-translate"></i>
-          <span id="langToggleLabel" style="font-weight:600; font-size:0.85rem; letter-spacing:0.5px;">ES</span>
+          <span id="langToggleLabel">ES</span>
         </button>
-        <button class="btn btn-link theme-toggle ms-2" id="themeToggle" title="Cambiar tema">
+        <button class="btn btn-link theme-toggle" id="themeToggle" title="Cambiar tema">
           <i class="fas fa-moon"></i>
         </button>
       </div>

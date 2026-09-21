@@ -179,12 +179,35 @@ function setButtonLoading(button, isLoading, loadingText) {
     button.innerHTML = button.dataset.originalHtml || button.innerHTML;
 }
 
+async function updateProfile({ firstName, lastName }) {
+    try {
+        const supabase = getSupabase();
+        const fullName = `${firstName} ${lastName}`.trim();
+        const { data, error } = await supabase.auth.updateUser({
+            data: {
+                first_name: firstName,
+                last_name: lastName,
+                full_name: fullName
+            }
+        });
+
+        if (error) {
+            throw new Error(translateAuthError(error.message));
+        }
+
+        return { user: mapUser(data.user) };
+    } catch (error) {
+        throw mapNetworkError(error);
+    }
+}
+
 window.FinxAuth = {
     registerUser,
     loginUser,
     logoutUser,
     getSession,
     requireAuth,
+    updateProfile,
     showAuthAlert,
     hideAuthAlert,
     setButtonLoading

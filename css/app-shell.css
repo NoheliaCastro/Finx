@@ -543,7 +543,18 @@ body.finx-app,
 
     .summary-card,
     .finx-kpi-card {
-        padding: var(--space-5);
+        padding: var(--space-4);
+    }
+
+    .dashboard-section .btn,
+    .auth-section .btn-primary {
+        width: 100%;
+        padding: 0.7rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .navbar-logo {
+        max-height: 48px;
     }
 }
 
@@ -554,5 +565,14 @@ body.finx-app,
 
     .user-profile-navbar {
         padding: var(--space-2);
+    }
+
+    .trivia-navbar .navbar-toggler,
+    .leccion-navbar .navbar-toggler,
+    .camino-navbar .navbar-toggler {
+        width: 40px;
+        height: 40px;
+        margin-right: 0;
+        flex-shrink: 0;
     }
 }

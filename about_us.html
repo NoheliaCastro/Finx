@@ -424,6 +424,39 @@
         [data-bs-theme="dark"] .modern-desc {
             color: #d1d5db;
         }
+
+        .about-hero-copy {
+            padding-top: 0;
+            margin-top: 90px;
+        }
+
+        @media (max-width: 767.98px) {
+            .hero-section {
+                padding: 2rem 0 !important;
+            }
+
+            .about-hero-copy {
+                margin-top: 1rem;
+            }
+
+            .hero-section .btn-lg,
+            .btn-cta {
+                width: 100%;
+                display: inline-block;
+                text-align: center;
+                font-size: 1rem;
+                padding: 0.75rem 1.1rem;
+            }
+
+            .about-phone-img {
+                max-width: 260px !important;
+                margin: 1rem auto 0;
+            }
+
+            .content-section {
+                padding: 2.5rem 0 !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -434,7 +467,7 @@
     <section class="hero-section section-shadow" style="border-radius: 0 0 2rem 2rem; padding-top: 2rem; padding-bottom: 2rem;">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6" data-aos="fade-right" style="padding-top: 0; margin-top: 90px;">
+                <div class="col-lg-6 about-hero-copy" data-aos="fade-right">
                     <h1 class="display-4 fw-bold mb-4" data-translate="about-hero-title">Track, manage, and save with ease</h1>
                     <p class="lead mb-4" data-translate="about-hero-subtitle">Feeling overwhelmed by your finances? If you're like most people, managing your money — from tracking income and expenses to trying to save — can feel like a never-ending job.</p>
                     <a href="register.html" class="btn btn-primary btn-lg btn-animated" data-translate="hero-get-started">Get Started</a>

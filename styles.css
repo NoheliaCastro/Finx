@@ -197,7 +197,18 @@ body > :first-child {
 }
 
 .navbar-toggler {
-    padding: 0.5rem;
+    width: 42px;
+    height: 42px;
+    padding: 0.4rem;
+    margin-left: auto;
+    margin-right: 0;
+    border: 1.5px solid rgba(29, 72, 138, 0.35);
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: transparent;
     transition: var(--navbar-transition);
 }
 
@@ -207,44 +218,12 @@ body > :first-child {
 }
 
 .navbar-toggler-icon {
-    background-image: none;
-    position: relative;
-    width: 24px;
-    height: 2px;
-    background-color: var(--text-color);
-    transition: var(--navbar-transition);
+    width: 1.25em;
+    height: 1.25em;
 }
 
-.navbar-toggler-icon::before,
-.navbar-toggler-icon::after {
-    content: '';
-    position: absolute;
-    width: 24px;
-    height: 2px;
-    background-color: var(--text-color);
-    transition: var(--navbar-transition);
-}
-
-.navbar-toggler-icon::before {
-    top: -8px;
-}
-
-.navbar-toggler-icon::after {
-    bottom: -8px;
-}
-
-.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-    background-color: transparent;
-}
-
-.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
-    transform: rotate(45deg);
-    top: 0;
-}
-
-.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
-    transform: rotate(-45deg);
-    bottom: 0;
+[data-bs-theme="dark"] .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.35);
 }
 
 /* Theme Toggle Button */
@@ -2460,5 +2439,481 @@ canvas {
     .contact-info,
     .contact-form {
         padding: 1.25rem;
+    }
+}
+
+/* ─── Shared button + layout proportions ─── */
+.navbar-toolbar,
+.navbar-mobile-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.navbar-auth-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.navbar-auth-actions .btn {
+    padding: 0.45rem 1rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+#langToggleLabel {
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.hero-copy-col {
+    min-height: 0;
+}
+
+.hero-image-container {
+    height: min(520px, 70vw);
+}
+
+.benefits-hero-img {
+    max-width: 90%;
+    height: auto;
+    max-height: 420px;
+    object-fit: contain;
+}
+
+.benefits-hero-actions .btn {
+    min-width: 160px;
+}
+
+/* Phone + small tablet: keep buttons and sections in proportion */
+@media (max-width: 991.98px) {
+    .btn-same-width {
+        min-width: 0;
+    }
+
+    .navbar .container-fluid,
+    .navbar .container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        align-items: center;
+    }
+
+    .navbar-brand {
+        max-width: calc(100% - 52px);
+        min-width: 0;
+        margin-right: 0.5rem;
+    }
+
+    .navbar-expand-lg .navbar-toggler,
+    .navbar-toggler {
+        display: inline-flex !important;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    .navbar-expand-lg .navbar-collapse:not(.show) {
+        display: none !important;
+    }
+
+    .navbar-collapse {
+        flex-basis: 100%;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .navbar-auth-actions {
+        width: 100%;
+        margin: 0.75rem 0 0 !important;
+        justify-content: stretch;
+    }
+
+    .navbar-auth-actions .btn:not(.theme-toggle):not(.btn-link) {
+        flex: 1 1 calc(50% - 0.5rem);
+        justify-content: center;
+        text-align: center;
+    }
+
+    .navbar-auth-actions .theme-toggle,
+    .navbar-auth-actions #langToggle {
+        flex: 0 0 auto;
+    }
+
+    .hero .btn,
+    .hero .btn-lg,
+    .hero .btn-primary,
+    .hero .btn-outline-primary {
+        min-width: 0;
+        font-size: 1rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 1rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .btn:not(.btn-icon):not(.theme-toggle):not(.btn-link):not(.navbar-toggler):not(.btn-close):not(.carousel-control-prev):not(.carousel-control-next) {
+        min-width: 0 !important;
+        max-width: 100%;
+        font-size: 0.95rem !important;
+        padding: 0.7rem 1rem !important;
+        line-height: 1.3;
+        white-space: normal;
+        height: auto;
+    }
+
+    .btn-lg,
+    .btn.btn-lg,
+    a.btn-lg {
+        font-size: 1rem !important;
+        padding: 0.75rem 1.1rem !important;
+        border-radius: 0.9rem !important;
+    }
+
+    .btn-same-width,
+    .hero .btn-lg,
+    .hero .btn-same-width {
+        width: 100%;
+        min-width: 0 !important;
+    }
+
+    .navbar {
+        min-height: 64px;
+        padding: 0.35rem 0;
+    }
+
+    .logo-img,
+    [data-bs-theme="dark"] .logo-img,
+    .navbar.scrolled .logo-img,
+    [data-bs-theme="dark"] .navbar.scrolled .logo-img {
+        height: 52px !important;
+        max-width: 132px;
+    }
+
+    .navbar-toggler {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        margin-right: 0;
+        display: inline-flex !important;
+        flex-shrink: 0;
+    }
+
+    .user-info-small {
+        display: none !important;
+    }
+
+    .trivia-navbar .container-fluid,
+    .leccion-navbar .container-fluid,
+    .camino-navbar .container-fluid,
+    .quiz-navbar .container-fluid,
+    .logros-navbar .container-fluid {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+
+    .trivia-navbar .d-flex.w-100,
+    .leccion-navbar .d-flex.w-100 {
+        gap: 0.4rem;
+        min-width: 0;
+    }
+
+    .trivia-navbar .d-flex.w-100 > div,
+    .leccion-navbar .d-flex.w-100 > div {
+        flex: 0 1 auto !important;
+        min-width: 0;
+        gap: 0.4rem !important;
+    }
+
+    .trivia-navbar .d-flex.justify-content-end,
+    .leccion-navbar .d-flex.justify-content-end {
+        flex: 1 1 auto !important;
+        justify-content: flex-end !important;
+        flex-wrap: nowrap;
+    }
+
+    .navbar-collapse {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0.75rem !important;
+    }
+
+    .navbar-auth-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .navbar-auth-actions .btn:not(.theme-toggle):not(.btn-link),
+    .navbar-auth-actions #langToggle {
+        width: 100%;
+        flex: 1 1 auto;
+        margin: 0 !important;
+    }
+
+    .navbar-auth-actions .theme-toggle {
+        width: 44px;
+        height: 44px;
+        align-self: center;
+        padding: 0 !important;
+    }
+
+    .hero,
+    .hero.py-5 {
+        padding: 2rem 0 1.5rem !important;
+    }
+
+    .hero-copy-col,
+    .hero-copy,
+    .hero-copy > div {
+        min-height: 0 !important;
+        margin-left: 0 !important;
+        text-align: center !important;
+    }
+
+    .hero-buttons,
+    #heroButtons {
+        width: 100%;
+        margin-left: 0 !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        justify-content: center !important;
+        gap: 0.65rem !important;
+    }
+
+    .hero-or {
+        justify-content: center;
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .hero .display-4,
+    .hero h1,
+    .hero-content h1,
+    .display-3,
+    .display-4,
+    .display-5 {
+        font-size: clamp(1.75rem, 8vw, 2.35rem) !important;
+        line-height: 1.2;
+    }
+
+    .hero .lead,
+    .lead {
+        font-size: 1rem !important;
+    }
+
+    .hero-image-container {
+        height: min(72vw, 320px) !important;
+        min-height: 220px;
+        margin-top: 1.25rem;
+    }
+
+    .features-text {
+        font-size: 1rem !important;
+    }
+
+    .features-beautiful-section .btn,
+    .btn-features-pulse {
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .benefits-hero-img {
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: 260px;
+    }
+
+    .benefits-hero-actions,
+    .benefits .d-flex.gap-3 {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        width: 100%;
+    }
+
+    .benefits-hero-btn-main,
+    .benefits-hero-btn-secondary,
+    .benefits-hero-actions .btn {
+        width: 100%;
+        min-width: 0 !important;
+    }
+
+    .plan-card {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .plan-btn {
+        width: 100%;
+        font-size: 1rem !important;
+        padding: 0.7rem 1rem !important;
+    }
+
+    .newsletter-form .input-group {
+        flex-direction: column;
+        gap: 0.65rem;
+    }
+
+    .newsletter-input,
+    .newsletter-btn,
+    .newsletter-form .form-control,
+    .newsletter-form .btn {
+        width: 100%;
+        border-radius: 50px !important;
+        padding: 0.75rem 1.1rem !important;
+        font-size: 1rem !important;
+    }
+
+    .modal-footer {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .modal-footer .btn {
+        flex: 1 1 calc(50% - 0.5rem);
+    }
+
+    .auth-section {
+        padding: 1.5rem 0 !important;
+    }
+
+    .auth-section .card-body {
+        padding: 1.5rem 1.15rem !important;
+    }
+
+    .auth-form-meta {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: flex-start !important;
+    }
+
+    .auth-form-meta a,
+    .auth-section .form-check-label,
+    .auth-section p,
+    .auth-section .text-muted,
+    .form-check-label {
+        white-space: normal;
+        overflow-wrap: break-word;
+    }
+
+    .form-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.4rem;
+    }
+
+    .hero h1,
+    .hero .display-4,
+    .hero .lead {
+        letter-spacing: 0 !important;
+        overflow-wrap: break-word;
+    }
+
+    .auth-section .btn,
+    .login.html .btn {
+        width: 100%;
+    }
+
+    .hero-section .col-lg-6 {
+        margin-top: 0 !important;
+        padding-top: 0.5rem !important;
+    }
+
+    .btn-cta,
+    .about_us .btn-lg {
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+        padding: 1rem !important;
+        max-width: 100%;
+    }
+
+    .dashboard-section .d-flex.gap-2,
+    .dashboard-section .d-flex.justify-content-end,
+    .form-modern .d-flex.gap-2,
+    .form-action-row {
+        flex-direction: column;
+        align-items: stretch !important;
+        width: 100%;
+    }
+
+    .dashboard-section .btn,
+    .form-modern .btn,
+    .form-action-row .btn {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .auth-form-meta {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    #chatbot-toggle {
+        width: 52px;
+        height: 52px;
+        font-size: 1.35rem;
+        bottom: 16px;
+        right: 16px;
+    }
+
+    #chatbot-window {
+        min-width: 0 !important;
+        width: calc(100vw - 1.5rem);
+        height: min(640px, 82vh);
+        border-radius: 20px;
+    }
+
+    .user-dropdown-menu {
+        min-width: min(280px, calc(100vw - 1.5rem)) !important;
+        right: 0;
+        left: auto;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .container,
+    .container-fluid {
+        padding-left: 0.85rem;
+        padding-right: 0.85rem;
+    }
+
+    .navbar-auth-actions .btn i {
+        margin-right: 0.35rem;
+    }
+
+    .modal-footer .btn {
+        flex: 1 1 100%;
+    }
+
+    .section-padding,
+    .features,
+    .statistics,
+    .benefits,
+    .plans,
+    .contact,
+    .subscription-section,
+    .newsletter-section {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+}
+
+@media (hover: none) {
+    .hero .btn:hover,
+    .btn:hover,
+    .btn-animated:hover,
+    .plan-btn:hover,
+    .navbar-auth-actions .btn:hover {
+        transform: none !important;
     }
 }
