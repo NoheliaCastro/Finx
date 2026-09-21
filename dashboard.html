@@ -30,7 +30,10 @@
         [data-bs-theme="dark"] body,
         [data-bs-theme="dark"] .main-content,
         [data-bs-theme="dark"] .dashboard-section {
-            background: var(--light-background) !important;
+            background: #071d3d !important;
+        }
+        [data-bs-theme="dark"] .dashboard-section {
+            background: transparent !important;
         }
         .dashboard-section {
             padding: 1.5rem 0 2rem 0;
@@ -55,7 +58,7 @@
         }
 
         [data-bs-theme="dark"] .trivia-sidebar {
-            background: #071d3d !important;
+            background: linear-gradient(180deg, rgba(15, 23, 32, 0.98), rgba(14, 20, 28, 0.98)) !important;
             box-shadow: none !important;
             border: none !important;
             border-right: none !important;
@@ -78,7 +81,8 @@
             max-width: 100%;
         }
         [data-bs-theme="dark"] .dashboard-lead {
-            color: #fff;
+            color: #f3f4f6;
+            text-shadow: 0 2px 12px rgba(148, 163, 184, 0.14);
         }
         .summary-card i {
             font-size: 2.5rem;
@@ -109,6 +113,68 @@
             font-weight: 800;
             margin-bottom: 0.5rem;
             word-break: break-all;
+        }
+        [data-bs-theme="dark"] .summary-card {
+            background: linear-gradient(145deg, rgba(27, 34, 42, 0.98), rgba(17, 24, 31, 0.96));
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-bs-theme="dark"] .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #c0c0c0, #cd7f32);
+        }
+        [data-bs-theme="dark"] .summary-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 22px 48px rgba(15, 23, 42, 0.65);
+        }
+        [data-bs-theme="dark"] .summary-card i {
+            color: #91A9CC;
+            filter: drop-shadow(0 0 10px rgba(145, 169, 204, 0.28));
+        }
+        [data-bs-theme="dark"] .summary-card h3 {
+            color: #e5e7eb;
+        }
+        [data-bs-theme="dark"] .summary-card .stat-number {
+            color: #f3f4f6;
+            text-shadow: 0 0 16px rgba(148, 163, 184, 0.2);
+        }
+
+        [data-bs-theme="dark"] #incomeCard,
+        [data-bs-theme="dark"] #expenseCard {
+            background: linear-gradient(145deg, rgba(27, 34, 42, 0.98), rgba(17, 24, 31, 0.96)) !important;
+            border: 1px solid rgba(148, 163, 184, 0.16) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.06) !important;
+            color: #f3f4f6 !important;
+        }
+
+        [data-bs-theme="dark"] #incomeCard::before,
+        [data-bs-theme="dark"] #expenseCard::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #c0c0c0, #cd7f32);
+        }
+
+        [data-bs-theme="dark"] #incomeCard h3,
+        [data-bs-theme="dark"] #expenseCard h3 {
+            color: #f3f4f6 !important;
+        }
+
+        [data-bs-theme="dark"] #incomeCard .stat-number,
+        [data-bs-theme="dark"] #expenseCard .stat-number {
+            color: #f3f4f6 !important;
+            text-shadow: none;
         }
         @media (max-width: 991.98px) {
             .stat-number {
@@ -166,14 +232,239 @@
             border: 2px solid var(--brand-deep-blue);
             color: var(--brand-dark-blue);
         }
+        [data-bs-theme="dark"] .table thead th {
+            background: linear-gradient(135deg, #1d488a, #0f2747);
+            color: #f3f4f6;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        [data-bs-theme="dark"] .table {
+            background: rgba(26, 31, 39, 0.82);
+            color: #f3f4f6;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        [data-bs-theme="dark"] .table tbody tr {
+            background: rgba(38, 43, 52, 0.9);
+            color: #f3f4f6;
+        }
+        [data-bs-theme="dark"] .table tbody tr:nth-child(even) {
+            background: rgba(49, 55, 66, 0.95);
+        }
+        [data-bs-theme="dark"] .table tbody tr:hover {
+            background: rgba(29, 72, 138, 0.22);
+        }
+        [data-bs-theme="dark"] .card {
+            background: linear-gradient(180deg, rgba(28, 43, 63, 0.96), rgba(17, 28, 40, 0.96));
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            box-shadow: 0 12px 36px rgba(15, 23, 42, 0.45);
+            color: #f3f4f6;
+        }
+        [data-bs-theme="dark"] #movementsCard {
+            background: linear-gradient(180deg, rgba(22, 29, 36, 0.98), rgba(15, 21, 28, 0.98));
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 1.3rem;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02), 0 18px 36px rgba(2, 6, 23, 0.42);
+            padding: 1.25rem 1.25rem 0.75rem;
+        }
+        [data-bs-theme="dark"] #movementsCard h3 {
+            color: #f3f4f6;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+        [data-bs-theme="dark"] #movementsCard .table thead th {
+            background: linear-gradient(180deg, rgba(42, 49, 58, 0.98), rgba(26, 32, 39, 0.98));
+            color: #edf3ff;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 1rem 1.15rem;
+        }
+        [data-bs-theme="dark"] #movementsCard .table tbody td {
+            background: rgba(17, 24, 31, 0.72);
+            color: #f3f4f6;
+            border-color: rgba(255,255,255,0.05);
+            font-weight: 500;
+            padding: 1rem 1.15rem;
+        }
+        [data-bs-theme="dark"] #movementsCard .table tbody tr:hover td {
+            background: rgba(106, 122, 141, 0.08);
+        }
+        [data-bs-theme="dark"] #movementsCard .badge {
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 0.5rem 0.8rem;
+            border-radius: 0.55rem;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+        }
         [data-bs-theme="dark"] #typeSelector {
-            background: var(--brand-dark-blue);
-            color: var(--brand-yellow);
-            border: 2px solid var(--brand-yellow);
+            background: linear-gradient(180deg, rgba(39, 46, 56, 0.96), rgba(22, 28, 36, 0.96));
+            color: #f2f5f8;
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+            min-width: 110px;
+            font-weight: 600;
         }
         [data-bs-theme="dark"] #typeSelector option {
-            background: var(--brand-dark-blue);
-            color: var(--brand-yellow);
+            background: #1b222a;
+            color: #f2f5f8;
+        }
+        [data-bs-theme="dark"] #clearHistoryBtn {
+            background: linear-gradient(135deg, #d96a5f, #b84f4f);
+            border: none;
+            color: #fff;
+            box-shadow: 0 10px 22px rgba(184, 79, 79, 0.22);
+            font-weight: 700;
+        }
+        [data-bs-theme="dark"] #clearHistoryBtn:hover {
+            background: linear-gradient(135deg, #e47c70, #bf5656);
+            transform: translateY(-1px);
+        }
+        [data-bs-theme="dark"] .btn-danger {
+            background: linear-gradient(135deg, #ffde32, #f4c542);
+            color: #07264d;
+            border: none;
+            box-shadow: 0 8px 20px rgba(244, 197, 66, 0.3);
+        }
+        [data-bs-theme="dark"] .btn-danger:hover {
+            background: linear-gradient(135deg, #f4c542, #ffde32);
+            color: #07264d;
+        }
+        [data-bs-theme="dark"] .modal-content {
+            background: linear-gradient(180deg, rgba(26, 58, 98, 0.98), rgba(15, 25, 39, 0.98));
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            box-shadow: 0 20px 50px rgba(2, 6, 23, 0.6);
+            color: #f3f4f6;
+        }
+        [data-bs-theme="dark"] .modal-header {
+            background: linear-gradient(135deg, #1d488a, #143a6c);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+        [data-bs-theme="dark"] .modal-title,
+        [data-bs-theme="dark"] .modal-header .btn-close {
+            color: #fff;
+        }
+        [data-bs-theme="dark"] .modal-body {
+            background: rgba(15, 23, 42, 0.2);
+            color: #f3f4f6;
+        }
+        [data-bs-theme="dark"] .modal .form-label {
+            color: #f3f4f6;
+            font-weight: 600;
+        }
+        [data-bs-theme="dark"] .modal .form-control,
+        [data-bs-theme="dark"] .modal .form-select {
+            background: rgba(30, 41, 59, 0.9);
+            color: #f3f4f6;
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            box-shadow: none;
+        }
+        [data-bs-theme="dark"] .modal .form-control::placeholder,
+        [data-bs-theme="dark"] .modal .form-select option {
+            color: rgba(243, 244, 246, 0.8);
+        }
+        [data-bs-theme="dark"] .modal .form-control:focus,
+        [data-bs-theme="dark"] .modal .form-select:focus {
+            background: rgba(30, 41, 59, 0.96);
+            border-color: rgba(145, 169, 204, 0.8);
+            box-shadow: 0 0 0 0.2rem rgba(145, 169, 204, 0.18);
+        }
+        [data-bs-theme="dark"] .modal .btn-primary {
+            background: linear-gradient(135deg, #1d488a, #234d95);
+            border: none;
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(29, 72, 138, 0.24);
+        }
+        [data-bs-theme="dark"] .modal .btn-primary:hover {
+            background: linear-gradient(135deg, #234d95, #1d488a);
+        }
+        [data-bs-theme="dark"] .modal .btn-secondary {
+            background: rgba(148, 163, 184, 0.14);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            color: #f3f4f6;
+        }
+        [data-bs-theme="dark"] .modal .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.24);
+        }
+
+        /* Botones con el color del sidebar */
+        .main-content .btn-primary,
+        .main-content .btn-danger,
+        #clearHistoryBtn,
+        .modal .btn-primary,
+        .modal .btn-secondary,
+        #incomeTodayBtn,
+        #expenseTodayBtn,
+        #typeSelector {
+            background: linear-gradient(135deg, #1D488A, #91A9CC) !important;
+            border-color: #1D488A !important;
+            color: #fff !important;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content .btn-primary:hover,
+        .main-content .btn-danger:hover,
+        #clearHistoryBtn:hover,
+        .modal .btn-primary:hover,
+        .modal .btn-secondary:hover,
+        #incomeTodayBtn:hover,
+        #expenseTodayBtn:hover,
+        #typeSelector:hover {
+            background: linear-gradient(135deg, #91A9CC, #1D488A) !important;
+            border-color: #91A9CC !important;
+            color: #fff !important;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-bs-theme="dark"] #typeSelector option {
+            background: #1D488A;
+            color: #fff;
+        }
+        [data-bs-theme="dark"] .modal .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+            opacity: 1;
+        }
+        [data-bs-theme="dark"] #incomeTodayBtn,
+        [data-bs-theme="dark"] #expenseTodayBtn {
+            background: rgba(148, 163, 184, 0.14);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            color: #f3f4f6;
+        }
+
+        /* Controles con el mismo acabado del tema de logros */
+        [data-bs-theme="dark"] #typeSelector,
+        [data-bs-theme="dark"] #clearHistoryBtn,
+        [data-bs-theme="dark"] .modal .btn-primary,
+        [data-bs-theme="dark"] .modal .btn-secondary,
+        [data-bs-theme="dark"] #incomeTodayBtn,
+        [data-bs-theme="dark"] #expenseTodayBtn {
+            border-radius: 0.75rem;
+            min-height: 42px;
+            font-weight: 700;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        [data-bs-theme="dark"] #typeSelector:hover,
+        [data-bs-theme="dark"] #clearHistoryBtn:hover,
+        [data-bs-theme="dark"] .modal .btn-primary:hover,
+        [data-bs-theme="dark"] .modal .btn-secondary:hover,
+        [data-bs-theme="dark"] #incomeTodayBtn:hover,
+        [data-bs-theme="dark"] #expenseTodayBtn:hover {
+            transform: translateY(-2px);
+        }
+
+        [data-bs-theme="dark"] #incomeTodayBtn,
+        [data-bs-theme="dark"] #expenseTodayBtn,
+        [data-bs-theme="dark"] .modal .btn-secondary {
+            background: linear-gradient(135deg, rgba(148, 163, 184, 0.2), rgba(71, 85, 105, 0.28));
+            border: 1px solid rgba(148, 163, 184, 0.28);
+        }
+
+        [data-bs-theme="dark"] .modal .btn-primary {
+            background: linear-gradient(135deg, #1d488a, #234d95);
+            border: none;
+            box-shadow: 0 8px 18px rgba(29, 72, 138, 0.22);
         }
         .animated-fadein {
             opacity: 0;
@@ -207,7 +498,9 @@
         }
 
         [data-bs-theme="dark"] .trivia-navbar {
-            background-color: #071d3d !important;
+            background: linear-gradient(180deg, rgba(17, 24, 31, 0.98), rgba(11, 16, 22, 0.98)) !important;
+            border-bottom: none !important;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
         }
 
         /* Logo en el navbar */
@@ -753,8 +1046,10 @@
             height: auto !important;
         }
         [data-bs-theme="dark"] #movementsChartContainer {
-            background: #083066;
-            border:1px dashed #083066;
+            background: linear-gradient(180deg, rgba(27, 34, 42, 0.98), rgba(17, 24, 31, 0.98)) !important;
+            border: 1px solid rgba(148, 163, 184, 0.2) !important;
+            border-radius: 1.1rem;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02), 0 12px 24px rgba(15, 23, 42, 0.18);
             padding: 0;
             overflow: hidden;
         }
@@ -1260,11 +1555,6 @@
                     <button type="button" class="sidebar-menu-btn" id="sidebarMenuBtn" aria-label="Open menu" aria-controls="dashboardSidebar" aria-expanded="false">
                         <i class="bi bi-list"></i>
                     </button>
-                    <!-- Logo de Finx en navbar -->
-                    <div class="navbar-logo-container">
-                        <img src="images/modo-claro.png" alt="Finx Logo" class="navbar-logo navbar-logo-light">
-                        <img src="images/modo-oscuro.png" alt="Finx Logo" class="navbar-logo navbar-logo-dark">
-                    </div>
                 </div>
                 <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
                     <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">

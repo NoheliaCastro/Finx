@@ -22,6 +22,18 @@
             min-height: 95px;
         }
 
+        [data-bs-theme="dark"] body,
+        [data-bs-theme="dark"] .main-content {
+            background: #071d3d !important;
+            color: #f3f4f6;
+        }
+
+        [data-bs-theme="dark"] .trivia-navbar {
+            background: linear-gradient(180deg, rgba(17, 24, 31, 0.98), rgba(11, 16, 22, 0.98)) !important;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+        }
+
         .navbar-logo-container {
             display: flex;
             align-items: center;
@@ -200,6 +212,13 @@
             width: 100%;
         }
 
+        [data-bs-theme="dark"] .trivia-sidebar,
+        [data-bs-theme="dark"] .leccion-sidebar {
+            background: linear-gradient(180deg, rgba(15, 23, 32, 0.98), rgba(14, 20, 28, 0.98)) !important;
+            border: none !important;
+            box-shadow: 8px 0 28px rgba(2, 6, 23, 0.22) !important;
+        }
+
         @media (max-width: 991.98px) {
             .main-content {
                 margin-left: 0;
@@ -234,10 +253,6 @@
                     <button type="button" class="sidebar-menu-btn" id="sidebarMenuBtn" aria-label="Open menu" aria-expanded="false">
                         <i class="bi bi-list"></i>
                     </button>
-                    <div class="navbar-logo-container">
-                        <img src="images/modo-claro.png" alt="Finx Logo" class="navbar-logo navbar-logo-light">
-                        <img src="images/modo-oscuro.png" alt="Finx Logo" class="navbar-logo navbar-logo-dark">
-                    </div>
                 </div>
                 <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
                     <button class="trivia-theme-toggle" id="langToggle" title="Traducir página" type="button">

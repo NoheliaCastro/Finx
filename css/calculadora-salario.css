@@ -551,20 +551,22 @@
 
 [data-bs-theme="dark"] .salary-card,
 [data-bs-theme="dark"] .tip-card {
-    background: rgba(12, 61, 122, 0.55);
-    border-color: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(145deg, rgba(27, 34, 42, 0.98), rgba(17, 24, 31, 0.96));
+    border-color: rgba(148, 163, 184, 0.16);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.28);
 }
 
 [data-bs-theme="dark"] .option-chip label,
 [data-bs-theme="dark"] .stat-box,
 [data-bs-theme="dark"] .decimo-panel {
-    background: rgba(8, 48, 102, 0.55);
+    background: rgba(33, 41, 50, 0.78);
     color: var(--text-color, #F4F7FB);
+    border-color: rgba(148, 163, 184, 0.2);
 }
 
 [data-bs-theme="dark"] .form-control,
 [data-bs-theme="dark"] .form-select {
-    background-color: rgba(8, 48, 102, 0.65);
+    background-color: rgba(17, 24, 31, 0.82);
     color: #F4F7FB;
     border-color: rgba(145, 169, 204, 0.35);
 }

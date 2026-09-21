@@ -579,7 +579,54 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
-        
+
+            [data-bs-theme="dark"] body,
+            [data-bs-theme="dark"] .main-content,
+            [data-bs-theme="dark"] .main-section,
+            [data-bs-theme="dark"] .help-section,
+            [data-bs-theme="dark"] .contact {
+                background: #071d3d !important;
+                color: #f3f4f6;
+            }
+
+            [data-bs-theme="dark"] .trivia-navbar {
+                background: linear-gradient(180deg, rgba(17, 24, 31, 0.98), rgba(11, 16, 22, 0.98)) !important;
+                border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+                box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+            }
+
+            [data-bs-theme="dark"] .trivia-sidebar,
+            [data-bs-theme="dark"] .leccion-sidebar {
+                background: linear-gradient(180deg, rgba(15, 23, 32, 0.98), rgba(14, 20, 28, 0.98)) !important;
+                border: none !important;
+                box-shadow: 8px 0 28px rgba(2, 6, 23, 0.22);
+            }
+
+            [data-bs-theme="dark"] .contact-info-card,
+            [data-bs-theme="dark"] .contact-form-card {
+                background: linear-gradient(145deg, rgba(27, 34, 42, 0.98), rgba(17, 24, 31, 0.96));
+                border-color: rgba(148, 163, 184, 0.16);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.28);
+            }
+
+            [data-bs-theme="dark"] .info-item,
+            [data-bs-theme="dark"] .form-floating > .form-control {
+                background: rgba(33, 41, 50, 0.78);
+                color: #f3f4f6;
+                border-color: rgba(148, 163, 184, 0.2);
+            }
+
+            [data-bs-theme="dark"] .form-floating > label,
+            [data-bs-theme="dark"] .contact-form-header p,
+            [data-bs-theme="dark"] .info-content p {
+                color: #b8c1cc;
+            }
+
+                [data-bs-theme="dark"] .trivia-navbar {
+                    border-bottom: none !important;
+                    box-shadow: none !important;
+                }
+
         [data-bs-theme="dark"] .dropdown-header {
             background: linear-gradient(135deg, #2d3748, #1a202c);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
