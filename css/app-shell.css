@@ -488,12 +488,26 @@ body.finx-app,
     .trivia-sidebar,
     .quiz-sidebar,
     .logros-sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
+        width: min(280px, 86vw);
+        height: 100vh;
+        min-height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%);
+        transition: transform var(--duration-slow) var(--ease-default);
+        z-index: 2200;
+        overflow-y: auto;
         border-right: none;
-        border-bottom: 1px solid var(--surface-border);
         padding: var(--space-4) 0;
+    }
+
+    .trivia-sidebar.show,
+    .leccion-sidebar.show,
+    .camino-sidebar.show,
+    .quiz-sidebar.show,
+    .logros-sidebar.show {
+        transform: translateX(0);
     }
 
     .main-content {

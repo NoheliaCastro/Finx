@@ -741,7 +741,10 @@
     <nav class="navbar trivia-navbar">
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-between w-100">
-                <div style="flex:1; display:flex; align-items:center; gap: 1rem;">
+                <div style="flex:1; display:flex; align-items:center; gap: 0.75rem; min-width: 0;">
+                    <button type="button" class="sidebar-menu-btn" id="sidebarMenuBtn" aria-label="Open menu" aria-expanded="false">
+                        <i class="bi bi-list"></i>
+                    </button>
                 </div>
                 <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
                     <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
@@ -807,6 +810,9 @@
     <!-- sidebar instance (marker v1) -->
     <nav class="leccion-sidebar trivia-sidebar" data-sidebar-version="1">
         <div class="container-fluid">
+            <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close menu">
+                <i class="bi bi-x-lg"></i>
+            </button>
             <div class="sidebar-logo-container text-center mb-3">
                 <img src="images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
                 <img src="images/modo-oscuro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-dark">
@@ -857,6 +863,8 @@
             </ul>
         </div>
     </nav>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop" hidden></div>
 
     <!-- Sidebar Toggle Button -->
     <button class="sidebar-toggle-btn" id="sidebarToggle">
@@ -1058,8 +1066,6 @@
                 });
             }
 
-            // Event listener para el toggle del sidebar
-            document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
         });
 
         // Función para toggle del sidebar
@@ -1080,6 +1086,7 @@
             }
         }
     </script>
+    <script src="js/sidebar-menu.js"></script>
 </body>
 
 </html>

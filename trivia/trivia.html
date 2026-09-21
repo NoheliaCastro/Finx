@@ -1745,7 +1745,10 @@
     <!-- Navbar -->
     <nav class="navbar trivia-navbar navbar-expand-lg">
         <div class="container-fluid">
-            <div class="d-flex align-items-center justify-content-end w-100 navbar-mobile-bar">
+            <div class="d-flex align-items-center justify-content-between w-100 navbar-mobile-bar">
+                <button type="button" class="sidebar-menu-btn" id="sidebarMenuBtn" aria-label="Open menu" aria-expanded="false">
+                    <i class="bi bi-list"></i>
+                </button>
                 <div class="d-flex align-items-center navbar-toolbar">
                     <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
                         <i class="bi bi-translate"></i>
@@ -1800,9 +1803,6 @@
                             </a>
                         </div>
                     </div>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas" aria-label="Open menu">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
                 </div>
             </div>
         </div>
@@ -1811,6 +1811,9 @@
     <!-- Sidebar -->
     <nav class="leccion-sidebar trivia-sidebar">
         <div class="container-fluid">
+            <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close menu">
+                <i class="bi bi-x-lg"></i>
+            </button>
             <div class="sidebar-logo-container text-center mb-3">
                 <img src="../images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
                 <img src="../images/modo-oscuro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-dark">
@@ -1861,6 +1864,8 @@
             </ul>
         </div>
     </nav>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop" hidden></div>
 
     <!-- Botón para toggle del sidebar -->
     <button class="sidebar-toggle-btn" id="sidebarToggle">
@@ -2055,11 +2060,6 @@
             
             // Event listener para el botón de tema
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-            
-            // Event listener para el toggle del sidebar
-            document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
-            
-
         });
 
         // Función para toggle del sidebar
@@ -2713,5 +2713,6 @@ function updateUserProgressDisplay() {
     }
 }
 </script>
+<script src="../js/sidebar-menu.js"></script>
 </body>
 </html>

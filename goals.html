@@ -1506,7 +1506,10 @@
     <nav class="navbar trivia-navbar">
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-between w-100">
-                <div style="flex:1; display:flex; align-items:center; gap: 1rem;">
+                <div style="flex:1; display:flex; align-items:center; gap: 0.75rem; min-width: 0;">
+                    <button type="button" class="sidebar-menu-btn" id="sidebarMenuBtn" aria-label="Open menu" aria-expanded="false">
+                        <i class="bi bi-list"></i>
+                    </button>
                     <!-- Logo de Finx en navbar -->
                     <div class="navbar-logo-container">
                         <img src="images/modo-claro.png" alt="Finx Logo" class="navbar-logo navbar-logo-light">
@@ -1629,6 +1632,9 @@
     <!-- sidebar instance (marker v1) -->
     <nav class="leccion-sidebar trivia-sidebar" data-sidebar-version="1">
         <div class="container-fluid">
+            <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close menu">
+                <i class="bi bi-x-lg"></i>
+            </button>
             <div class="sidebar-logo-container text-center mb-3">
                 <img src="images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
                 <img src="images/modo-oscuro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-dark">
@@ -1679,6 +1685,8 @@
             </ul>
         </div>
     </nav>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop" hidden></div>
 
     <!-- Sidebar Toggle Button -->
     <button class="sidebar-toggle-btn" id="sidebarToggle">
@@ -1784,44 +1792,6 @@
                 });
             }
 
-            // Sidebar toggle functionality
-            const sidebarToggle = document.getElementById('sidebarToggle');
-            const sidebar = document.querySelector('.trivia-sidebar');
-            const mainContent = document.querySelector('.main-content');
-            const toggleIcon = sidebarToggle.querySelector('i');            // Verificar si estamos en desktop
-            function isDesktop() {
-                return window.innerWidth >= 992;
-            }
-
-            // Estado inicial del sidebar - Para goals.html siempre empezar con sidebar abierto
-            let sidebarHidden = false; // Forzar que esté abierto en goals.html
-            
-            function updateSidebarState() {
-                if (sidebarHidden) {
-                    sidebar.classList.add('hidden');
-                    mainContent.classList.add('sidebar-hidden');
-                    sidebarToggle.classList.add('sidebar-hidden');
-                    toggleIcon.className = 'bi bi-chevron-right';
-                } else {
-                    sidebar.classList.remove('hidden');
-                    mainContent.classList.remove('sidebar-hidden');
-                    sidebarToggle.classList.remove('sidebar-hidden');
-                    toggleIcon.className = 'bi bi-chevron-left';
-                }
-            }
-
-            // Aplicar estado inicial
-            updateSidebarState();
-
-            // Toggle del sidebar
-            sidebarToggle.addEventListener('click', function() {
-                sidebarHidden = !sidebarHidden;
-                localStorage.setItem('sidebar-hidden', sidebarHidden.toString());
-                updateSidebarState();
-            });
-
-            // Actualizar en resize
-            window.addEventListener('resize', updateSidebarState);
         });
     </script>
     <script>
@@ -2080,5 +2050,6 @@ document.getElementById('langToggle').addEventListener('click', function() {
     setLanguage(next);
 });
 </script>
+<script src="js/sidebar-menu.js"></script>
 </body>
 </html> 

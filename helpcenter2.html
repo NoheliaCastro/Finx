@@ -752,7 +752,10 @@
     <nav class="navbar trivia-navbar">
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-between w-100">
-                <div style="flex:1; display:flex; align-items:center; gap: 1rem;">
+                <div style="flex:1; display:flex; align-items:center; gap: 0.75rem; min-width: 0;">
+                    <button type="button" class="sidebar-menu-btn" id="sidebarMenuBtn" aria-label="Open menu" aria-expanded="false">
+                        <i class="bi bi-list"></i>
+                    </button>
                 </div>
                 <div style="flex:1; display:flex; justify-content:end; align-items:center; gap: 1rem;">
                     <button class="trivia-theme-toggle" id="langToggle" title="Traducir página">
@@ -818,6 +821,9 @@
     <!-- sidebar instance (marker v1) -->
     <nav class="leccion-sidebar trivia-sidebar" data-sidebar-version="1">
         <div class="container-fluid">
+            <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close menu">
+                <i class="bi bi-x-lg"></i>
+            </button>
             <div class="sidebar-logo-container text-center mb-3">
                 <img src="images/modo-claro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-light">
                 <img src="images/modo-oscuro.png" alt="Finx Logo" class="sidebar-logo sidebar-logo-dark">
@@ -870,6 +876,8 @@
     </nav>
 
     <!-- Botón para ocultar/mostrar sidebar -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop" hidden></div>
+
     <button id="sidebarToggle" class="sidebar-toggle-btn">
         <i class="bi bi-chevron-left"></i>
     </button>
@@ -1203,21 +1211,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lang = localStorage.getItem('finx_lang') || 'es';
     setLanguage(lang);
 });
-
-// Funcionalidad del toggle sidebar
-document.addEventListener('DOMContentLoaded', function() {
-    const toggleBtn = document.getElementById('sidebarToggle');
-    const sidebar = document.querySelector('.leccion-sidebar') || document.querySelector('.trivia-sidebar');
-    const mainContent = document.querySelector('.main-content');
-    
-    if (toggleBtn && sidebar && mainContent) {
-        toggleBtn.addEventListener('click', function() {
-            sidebar.classList.toggle('hidden');
-            toggleBtn.classList.toggle('sidebar-hidden');
-            mainContent.classList.toggle('sidebar-hidden');
-        });
-    }
-});
 </script>
+<script src="js/sidebar-menu.js"></script>
 </body>
 </html> 
